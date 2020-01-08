@@ -12,6 +12,43 @@ class Animals:
     """
     Description for the Animals class
     """
+
+    @classmethod
+    def set_parameters(
+            cls,
+            w_birth,
+            sigma_birth,
+            beta,
+            eta,
+            a_half,
+            phi_age,
+            w_half,
+            phi_weight,
+            mu,
+            lambda_,
+            gamma,
+            zeta,
+            xi,
+            omega,
+            f
+    ):
+        cls.w_birth = w_birth
+        cls.sigma_birth = sigma_birth
+        cls.beta = beta
+        cls.eta = eta
+        cls.a_half = a_half
+        cls.phi_age = phi_age
+        cls.w_half = w_half
+        cls.phi_weight = phi_weight
+        cls.mu = mu
+        cls.lambda_ = lambda_
+        cls.gamma = gamma
+        cls.zeta = zeta
+        cls.xi = xi
+        cls.omega = omega
+        cls.f = f
+
+
     def __init__(self, name, age=0, weight=None, fitness):
         """constructor"""
         self.name = name
@@ -90,3 +127,91 @@ class Animals:
             p = self.omega * (1 - self.fitness)
             probability_death = np.random.choice(2, p=[p, 1-p])
             return probability_death
+
+
+class Herbivore(Animals):
+
+    @classmethod
+    def set_parameters(
+            cls,
+            w_birth,
+            sigma_birth,
+            beta,
+            eta,
+            a_half,
+            phi_age,
+            w_half,
+            phi_weight,
+            mu,
+            lambda_,
+            gamma,
+            zeta,
+            xi,
+            omega,
+            f
+    ):
+        super(Herbivore, cls).set_parameters(
+            w_birth,
+            sigma_birth,
+            beta,
+            eta,
+            a_half,
+            phi_age,
+            w_half,
+            phi_weight,
+            mu,
+            lambda_,
+            gamma,
+            zeta,
+            xi,
+            omega,
+            f)
+
+
+    def __init__(self):
+        super().__init__()
+        pass
+
+
+class Carnivore(Animals):
+    @classmethod
+    def set_parameters(
+            cls,
+            w_birth,
+            sigma_birth,
+            beta,
+            eta,
+            a_half,
+            phi_age,
+            w_half,
+            phi_weight,
+            mu,
+            lambda_,
+            gamma,
+            zeta,
+            xi,
+            omega,
+            f,
+    delta_phi_max=None):
+        super(Carnivore, cls).set_parameters(
+            w_birth,
+            sigma_birth,
+            beta,
+            eta,
+            a_half,
+            phi_age,
+            w_half,
+            phi_weight,
+            mu,
+            lambda_,
+            gamma,
+            zeta,
+            xi,
+            omega,
+            f)
+        if delta_phi_max is None:
+            cls.delta_phi_max = delta_phi_max
+
+    def __init__(self):
+        super().__init__()
+        pass
