@@ -7,6 +7,7 @@ __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
 from src.biosim.animals import Animals, Herbivore, Carnivore
+import pytest
 
 
 class TestAnimals:
@@ -14,7 +15,7 @@ class TestAnimals:
         pass
 
     def test_aging(self):
-        """ Check that a"""
+        """ """
         a = Animals()
         a.aging()
         assert a.age == 1
@@ -46,6 +47,11 @@ class TestHerbivore:
         assert a.omega == 0.4
         assert a.f == 10.0
 
+    def test_birth_weight(self):
+        """ Test that birth_weight method returns positive number."""
+        a = Herbivore()
+        assert a.birth_weight() >= 0
+
 
     def test_condition(self):
         a = Herbivore()
@@ -53,7 +59,7 @@ class TestHerbivore:
         a.weight = 10
         a.age = 2
         a.evaluate_fitness()
-        assert round(a.fitness, 6) == 0.49975
+        assert a.fitness == pytest.approx(0.49975)
 
 
 class TestCarnivore:
