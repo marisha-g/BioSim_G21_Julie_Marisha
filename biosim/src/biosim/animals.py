@@ -90,5 +90,4 @@ class Animals:
         else:
             p = self.omega * (1 - self.fitness)
             probability_death = np.random.choice(2, p=[p, 1-p])
-            if probability_death == 0:
-                return probability_death
+            return probability_death
