@@ -69,7 +69,10 @@ class Animals:
         standard deviation.
         :return:
         """
-        return np.random.normal(self.w_birth, self.sigma_birth)  # ask TA
+        birth_weight = 0
+        while birth_weight <= 0:
+            birth_weight = np.random.normal(self.w_birth, self.sigma_birth)
+        return birth_weight
 
     def weight_gain(self, food):
         """
