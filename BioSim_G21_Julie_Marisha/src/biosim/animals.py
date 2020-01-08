@@ -7,7 +7,6 @@ __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
 import numpy as np
-import math
 
 
 class Animals:
@@ -54,6 +53,7 @@ class Animals:
         """constructor"""
         self.age = age
         self.weight = weight
+        self.fitness = None
 
     def aging(self):
         """
@@ -63,13 +63,13 @@ class Animals:
         """
         self.age += 1
 
-    def weight_birth(self):
+    def birth_weight(self):
         """
         Birth weight is drawn from a Gaussian distribution with mean and
         standard deviation.
         :return:
         """
-        self.weight += np.random.normal(self.w_birth, self.sigma_birth)
+        return np.random.normal(self.w_birth, self.sigma_birth)  # ask TA
 
     def weight_gain(self, food):
         """
@@ -77,7 +77,7 @@ class Animals:
         weight increases.
         :return:
         """
-        self.weight += self.beta * self.food
+        self.weight += self.beta * food
 
     def weight_loss(self):
         """
@@ -87,14 +87,19 @@ class Animals:
         self.weight -= self.eta * self.weight
 
     @property
-    def fitness(self):
+    def condition(self):
         """
         The overall condition of the animal is described by its fitness,
         which is calculated based on age and weight using a formula (4)
         :return:
         """
         if self.weight > 0:
-            self.fitness = (1 / (1 + exp(self.phi_age * (self.age - self.a_half)))) * (1 / (1 + exp(-self.phi_weight * (self.weight - self.w_half))))
+            self.fitness = (1 / (1 + np.exp(self.phi_age *
+                                            (self.age - self.a_half)))) * (
+                        1 / (1 + np.exp(-self.phi_weight *
+                                        (self.weight - self.w_half))))
+        else:
+            self.fitness = 0  # aka død
 
     def migration(self):
         """
