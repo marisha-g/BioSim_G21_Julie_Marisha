@@ -8,6 +8,7 @@ __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
 import numpy as np
 
+
 class Animals:
     """
     Description for the Animals class
@@ -49,12 +50,11 @@ class Animals:
         cls.f = f
 
 
-    def __init__(self, name, age=0, weight=None, fitness):
+    def __init__(self, name, age=0, weight=None):
         """constructor"""
         self.name = name
         self.age = age
         self.weight = weight
-        self.fitness = fitness
 
     def aging(self):
         """
@@ -93,6 +93,7 @@ class Animals:
         which is calculated based on age and weight using a formula (4)
         :return:
         """
+        pass
 
     def migration(self):
         """
