@@ -33,7 +33,10 @@ class Animals:
             omega,
             f
     ):
-        cls.w_birth = w_birth
+        if w_birth >=0:
+            cls.w_birth = w_birth
+        else:
+            raise ValueError
         cls.sigma_birth = sigma_birth
         cls.beta = beta
         cls.eta = eta
