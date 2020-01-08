@@ -3,12 +3,12 @@
 import textwrap
 import matplotlib.pyplot as plt
 
-from biosim.simulation import BioSim
+from BioSim_G21_Julie_Marisha.simulation import BioSim
 
 """
 Compatibility check for BioSim simulations.
 
-This script shall function with biosim packages written for
+This script shall function with BioSim_G21_Julie_Marisha packages written for
 the INF200 project January 2019.
 """
 
