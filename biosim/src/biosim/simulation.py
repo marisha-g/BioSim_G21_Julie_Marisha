@@ -2,9 +2,8 @@
 
 """
 """
-
-__author__ = ""
-__email__ = ""
+__author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
+__email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
 
 class BioSim:
