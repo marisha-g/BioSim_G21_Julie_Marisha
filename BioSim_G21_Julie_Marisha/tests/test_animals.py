@@ -11,8 +11,13 @@ import pytest
 
 
 class TestAnimals:
-    def default(self):
-        pass
+    def test_value_error_for_negative_values(self):
+        with pytest.raises(ValueError):
+            a = Animals()
+            a.set_parameters(
+                -8.0, -1.5, -0.9,  -0.05, -40.0, -0.2, -10.0, -0.1,
+                -0.25, -1.0, -0.2, -3.5, -1.2, -0.4, -10.0
+            )
 
     def test_aging(self):
         """ """
@@ -84,3 +89,15 @@ class TestCarnivore:
         assert a.xi == 1.1
         assert a.omega == 0.9
         assert a.f == 50.0
+        assert a.delta_phi_max == 10.0
+
+    def test_delta_phi_max_value_error(self):
+        with pytest.raises(ValueError):
+            a = Carnivore()
+            a.set_parameters(delta_phi_max=0)
+            a.set_parameters(delta_phi_max=-2)
+
+    def test_value_error_for_mu(self):
+        with pytest.raises(ValueError):
+            a = Carnivore()
+            a.set_parameters(mu=2)
