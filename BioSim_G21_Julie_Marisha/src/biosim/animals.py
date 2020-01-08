@@ -86,8 +86,7 @@ class Animals:
         """
         self.weight -= self.eta * self.weight
 
-    @property
-    def condition(self):
+    def evaluate_fitness(self):
         """
         The overall condition of the animal is described by its fitness,
         which is calculated based on age and weight using a formula (4)
@@ -176,7 +175,6 @@ class Herbivore(Animals):
 
     def __init__(self, age=0, weight=None):
         super().__init__(age, weight)
-        pass
 
 
 class Carnivore(Animals):
@@ -219,4 +217,3 @@ class Carnivore(Animals):
 
     def __init__(self, age=0, weight=None):
         super().__init__(age, weight)
-        pass
