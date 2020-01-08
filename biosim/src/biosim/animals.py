@@ -8,6 +8,7 @@ __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
 import numpy as np
 
+
 class Animals:
     """
     Description for the Animals class
@@ -49,12 +50,11 @@ class Animals:
         cls.f = f
 
 
-    def __init__(self, name, age=0, weight=None, fitness):
+    def __init__(self, name, age=0, weight=None):
         """constructor"""
         self.name = name
         self.age = age
         self.weight = weight
-        self.fitness = fitness
 
     def aging(self):
         """
@@ -93,6 +93,7 @@ class Animals:
         which is calculated based on age and weight using a formula (4)
         :return:
         """
+        pass
 
     def migration(self):
         """
@@ -134,21 +135,21 @@ class Herbivore(Animals):
     @classmethod
     def set_parameters(
             cls,
-            w_birth,
-            sigma_birth,
-            beta,
-            eta,
-            a_half,
-            phi_age,
-            w_half,
-            phi_weight,
-            mu,
-            lambda_,
-            gamma,
-            zeta,
-            xi,
-            omega,
-            f
+            w_birth=8.0,
+            sigma_birth=1.5,
+            beta=0.9,
+            eta=0.05,
+            a_half=40.0,
+            phi_age=0.2,
+            w_half=10.0,
+            phi_weight=0.1,
+            mu=0.25,
+            lambda_=1.0,
+            gamma=0.2,
+            zeta=3.5,
+            xi=1.2,
+            omega=0.4,
+            f=10.0
     ):
         super(Herbivore, cls).set_parameters(
             w_birth,
@@ -177,22 +178,23 @@ class Carnivore(Animals):
     @classmethod
     def set_parameters(
             cls,
-            w_birth,
-            sigma_birth,
-            beta,
-            eta,
-            a_half,
-            phi_age,
-            w_half,
-            phi_weight,
-            mu,
-            lambda_,
-            gamma,
-            zeta,
-            xi,
-            omega,
-            f,
-    delta_phi_max=None):
+            w_birth=6.0,
+            sigma_birth=1.0,
+            beta=0.75,
+            eta=0.125,
+            a_half=60.0,
+            phi_age=0.4,
+            w_half=4.0,
+            phi_weight=0.4,
+            mu=0.4,
+            lambda_=1.0,
+            gamma=0.8,
+            zeta=3.5,
+            xi=1.1,
+            omega=0.9,
+            f=50.0,
+            delta_phi_max=10.0
+    ):
         super(Carnivore, cls).set_parameters(
             w_birth,
             sigma_birth,
@@ -209,9 +211,7 @@ class Carnivore(Animals):
             xi,
             omega,
             f)
-        if delta_phi_max is None:
-            cls.delta_phi_max = delta_phi_max
 
     def __init__(self):
-        super().__init__()
+        super().__init__(age=0, weight=None)
         pass
