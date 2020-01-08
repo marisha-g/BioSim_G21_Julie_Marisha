@@ -36,21 +36,63 @@ class Animals:
         if w_birth >=0:
             cls.w_birth = w_birth
         else:
-            raise ValueError
-        cls.sigma_birth = sigma_birth
-        cls.beta = beta
-        cls.eta = eta
-        cls.a_half = a_half
-        cls.phi_age = phi_age
-        cls.w_half = w_half
-        cls.phi_weight = phi_weight
-        cls.mu = mu
-        cls.lambda_ = lambda_
-        cls.gamma = gamma
-        cls.zeta = zeta
-        cls.xi = xi
-        cls.omega = omega
-        cls.f = f
+            raise ValueError('w_birth can not be a negative value.')
+        if sigma_birth >=0:
+            cls.sigma_birth = sigma_birth
+        else:
+            raise ValueError('sigma_birth can not be a negative value.')
+        if beta >=0:
+            cls.beta = beta
+        else:
+            raise ValueError('beta can not be a negative value.')
+        if eta >=0:
+            cls.eta = eta
+        else:
+            raise ValueError('eta can not be a negative value.')
+        if a_half >=0:
+            cls.a_half = a_half
+        else:
+            raise ValueError('a_half can not be a negative value.')
+        if phi_age >=0:
+            cls.phi_age = phi_age
+        else:
+            raise ValueError('phi_age can not be a negative value.')
+        if w_half >=0:
+            cls.w_half = w_half
+        else:
+            raise ValueError('w_half can not be a negative value.')
+        if phi_weight >=0:
+            cls.phi_weight = phi_weight
+        else:
+            raise ValueError('phi_weight can not be a negative value.')
+        if 0 <= mu <= 1:
+            cls.mu = mu
+        else:
+            raise ValueError('mu can not be a negative value.')
+        if lambda_ >=0:
+            cls.lambda_ = lambda_
+        else:
+            raise ValueError('lambda_ can not be a negative value.')
+        if gamma >=0:
+            cls.gamma = gamma
+        else:
+            raise ValueError('gamma can not be a negative value.')
+        if zeta >=0:
+            cls.zeta = zeta
+        else:
+            raise ValueError('zeta can not be a negative value.')
+        if xi >=0:
+            cls.xi = xi
+        else:
+            raise ValueError('xi can not be a negative value.')
+        if omega >=0:
+            cls.omega = omega
+        else:
+            raise ValueError('omega can not be a negative value.')
+        if f >=0:
+            cls.f = f
+        else:
+            raise ValueError('f can not be a negative value.')
 
     def __init__(self, age=0, weight=None):
         """constructor"""
@@ -219,7 +261,12 @@ class Carnivore(Animals):
             zeta,
             xi,
             omega,
-            f)
+            f
+        )
+        if delta_phi_max > 0:
+            cls.delta_phi_max = 10.0
+        else:
+            raise ValueError('delta_phi_max must be strictly positive.')
 
     def __init__(self, age=0, weight=None):
         super().__init__(age, weight)
