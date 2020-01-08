@@ -6,7 +6,7 @@
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
-from ..src.biosim.animals import Herbivore
+from src.biosim.animals import Herbivore
 
 
 class TestAnimals:
@@ -15,6 +15,9 @@ class TestAnimals:
     """
     def test_default_parameters(self):
         a = Herbivore()
+        assert a.age == 0
+        assert a.weight is None
+
         a.set_parameters()
         assert a.w_birth == 8.0
         assert a.sigma_birth == 1.5

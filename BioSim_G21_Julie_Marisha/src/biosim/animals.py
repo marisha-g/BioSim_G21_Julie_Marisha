@@ -7,6 +7,7 @@ __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
 import numpy as np
+import math
 
 
 class Animals:
@@ -49,10 +50,8 @@ class Animals:
         cls.omega = omega
         cls.f = f
 
-
-    def __init__(self, name, age=0, weight=None):
+    def __init__(self, age=0, weight=None):
         """constructor"""
-        self.name = name
         self.age = age
         self.weight = weight
 
@@ -72,13 +71,13 @@ class Animals:
         """
         self.weight += np.random.normal(self.w_birth, self.sigma_birth)
 
-    def weight_gain(self):
+    def weight_gain(self, food):
         """
         When an animal eats an amount F of fodder, its
         weight increases.
         :return:
         """
-        self.weight += self.beta * self.F
+        self.weight += self.beta * self.food
 
     def weight_loss(self):
         """
@@ -87,13 +86,15 @@ class Animals:
         """
         self.weight -= self.eta * self.weight
 
+    @property
     def fitness(self):
         """
         The overall condition of the animal is described by its fitness,
         which is calculated based on age and weight using a formula (4)
         :return:
         """
-        pass
+        if self.weight > 0:
+            self.fitness = (1 / (1 + exp(self.phi_age * (self.age - self.a_half)))) * (1 / (1 + exp(-self.phi_weight * (self.weight - self.w_half))))
 
     def migration(self):
         """
@@ -168,9 +169,8 @@ class Herbivore(Animals):
             omega,
             f)
 
-
-    def __init__(self):
-        super().__init__()
+    def __init__(self, age=0, weight=None):
+        super().__init__(age, weight)
         pass
 
 
@@ -212,6 +212,6 @@ class Carnivore(Animals):
             omega,
             f)
 
-    def __init__(self):
-        super().__init__(age=0, weight=None)
+    def __init__(self, age=0, weight=None):
+        super().__init__(age, weight)
         pass
