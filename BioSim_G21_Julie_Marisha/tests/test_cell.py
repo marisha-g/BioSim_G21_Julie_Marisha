@@ -35,11 +35,17 @@ class TestSavannah:
         s = Savannah()
         assert isinstance(s, Savannah)
 
-    def test_default_values(self):
-        s1 = Savannah()
-        assert s1.f_max
+    def test_classmethod_set_parameters(self):
+        """Classmethod set_parameters is callable,
+         and default parameters are set."""
+        Savannah.set_parameters()
+        assert Savannah.f_max == 300.0
+        assert Savannah.alpha == 0.3
 
-
+    def test_value_error(self):
+        with pytest.raises(ValueError):
+            Savannah.set_parameters(f_max=-100)
+            Savannah.set_parameters(alpha=-0.3)
 
 
 class TestJungle:
