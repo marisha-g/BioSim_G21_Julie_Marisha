@@ -10,6 +10,9 @@ import textwrap
 
 
 class Landscape:
+    """
+    Landscape class description.
+    """
 
     default_geogr = """\
                   OOOOOOOOOOOOOOOOOOOOO
@@ -27,18 +30,11 @@ class Landscape:
                   OOOOOOOOOOOOOOOOOOOOO"""
     default_geogr = textwrap.dedent(default_geogr)
 
-    def __init__(self, geogr=None, f_sav_max=None, f_jungle_max=None, alpha=None):
+    def __init__(self, geogr=None):
+        self.fodder_in_cell = None
+
         if geogr is None:
             self.geogr = Landscape.default_geogr
-
-        if f_sav_max is None:
-            self.f_sav_max = 300.0
-
-        if f_jungle_max is None:
-            self.f_jungle_max = 800.0
-
-        if alpha is None:
-            self.alpha = 0.3
 
         self.geography_map = self.make_geography_coordinates()
 
@@ -53,29 +49,55 @@ class Landscape:
         geography_map = {}
         for i_index, line in enumerate(geogr_list):
             for j_index, cell in enumerate(line):
-                geography_map[(i_index+1, j_index+1)] = [cell, None]
+                geography_map[(i_index+1, j_index+1)] = cell
 
         return geography_map
 
-    def fodder_first_year(self):
+    def fodder_first_year(self, f_max):
         """
         Sets max fodder in Savannah and Jungle cells.
         """
-        for cell in self.geography_map:
-            if self.geography_map[cell][0] == "S":
-                self.geography_map[cell][1] = self.f_sav_max
-            if self.geography_map[cell][0] == "J":
-                self.geography_map[cell][1] = self.f_jungle_max
+        self.fodder_in_cell = f_max
 
-    def regrowth_fodder(self):
-        """
-        Updating fodder in Savannah and Jungle cells at the beginning
-        of a new cycle.
-        """
-        for cell in self.geography_map:
-            if self.geography_map[cell][0] == "S":
-                current_fodder = self.geography_map[cell][1]
-                self.geography_map[cell][1] = current_fodder + self.alpha * (self.f_sav_max - current_fodder)
 
-            if self.geography_map[cell][0] == "J":
-                self.geography_map[cell][1] = self.f_jungle_max
+class Savannah(Landscape):
+    def __init__(self, f_sav_max=None, alpha=None):
+        super().__init__(f_sav_max)
+        if f_sav_max is None:
+            self.f_sav_max = 300.0
+        if alpha is None:
+            self.alpha = 0.3
+
+    def set_initial_fodder(self):
+        super().fodder_first_year(self.f_sav_max)
+    
+    def regrow_fodder(self):
+        self.fodder_in_cell = self.fodder_in_cell + self.alpha*(self.f_sav_max - self.fodder_in_cell)
+
+
+class Jungle(Landscape):
+    def __init__(self, f_jungle_max=None):
+        super().__init__(f_jungle_max)
+        if f_jungle_max is None:
+            self.f_jungle_max = 800.0
+
+    def set_initial_fodder(self):
+        super().fodder_first_year(self.f_jungle_max)
+
+    def regrow_fodder(self):
+        self.fodder_in_cell = self.f_jungle_max
+
+
+class Desert(Landscape):
+    def __init__(self):
+        super().__init__()
+        self.fodder_in_cell = 0
+
+
+class MountainAndOcean:
+    def __init__(self):
+        super().__init__()
+        self.fodder_in_cell = 0
+
+
+
