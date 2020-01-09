@@ -22,7 +22,8 @@ class Cell:
         """
         Sets max fodder in Savannah and Jungle cells.
         """
-        self.fodder_in_cell = f_max
+        if f_max > 0:
+            self.fodder_in_cell = f_max
 
 
 class Savannah(Cell):
@@ -32,6 +33,10 @@ class Savannah(Cell):
             cls.f_max = 300.0
         if alpha is None:
             cls.alpha = 0.3
+        if f_max <= 0:
+            raise ValueError('f_max must be a positive number.')
+        if alpha <= 0:
+            raise ValueError('alpha must be a positive number.')
 
     def __init__(self):
         super().__init__()
@@ -47,6 +52,8 @@ class Jungle(Cell):
     def set_parameters(cls, f_max=None):
         if f_max is None:
             cls.f_jungle_max = 800.0
+        if f_max <= 0:
+            raise ValueError('f_max must be a positive number')
 
     def __init__(self):
         super().__init__()
