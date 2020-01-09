@@ -59,7 +59,7 @@ class Desert(Cell):
         self.fodder_in_cell = 0
 
 
-class MountainAndOcean:
+class MountainAndOcean(Cell):
     def __init__(self):
         super().__init__()
         self.fodder_in_cell = 0
