@@ -19,6 +19,14 @@ class TestCell:
         c = Cell()
         assert isinstance(c, Cell)
 
+    def test_fodder_first_year(self):
+        """ Tests that fodder_first_year method
+         changes fodder_in_cell attribute"""
+        c = Cell()
+        assert c.fodder_in_cell is None
+        c.fodder_first_year(10)
+        assert c.fodder_in_cell == 10
+
 
 class TestSavannah:
     """ Tests for Savannah class."""
