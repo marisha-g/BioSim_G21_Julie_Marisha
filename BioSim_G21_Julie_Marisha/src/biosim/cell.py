@@ -30,13 +30,16 @@ class Savannah(Cell):
     @classmethod
     def set_parameters(cls, f_max=None, alpha=None):
         if f_max is None:
-            cls.f_max = 300.0
+            f_max = 300.0
         if alpha is None:
-            cls.alpha = 0.3
-        if f_max <= 0:
-            raise ValueError('f_max must be a positive number.')
-        if alpha <= 0:
-            raise ValueError('alpha must be a positive number.')
+            alpha = 0.3
+
+        if f_max < 0:
+            raise ValueError('f_max can not be negative.')
+        if alpha < 0:
+            raise ValueError('alpha can not be negative.')
+
+        cls.f_max = f_max
 
     def __init__(self):
         super().__init__()
