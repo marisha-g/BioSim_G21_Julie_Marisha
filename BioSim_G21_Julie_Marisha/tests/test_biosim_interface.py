@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Test set for BioSim class interface for INF200 January 2019.
+Test set for BioSim class interface for INF200 January 2020.
 
 This set of tests checks the interface of the BioSim class to be provided by
 the simulation module of the BioSim_G21_Julie_Marisha package.
