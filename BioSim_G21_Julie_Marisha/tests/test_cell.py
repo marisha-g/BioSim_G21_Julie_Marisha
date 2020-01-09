@@ -55,6 +55,16 @@ class TestJungle:
         j = Jungle()
         assert isinstance(j, Jungle)
 
+    def test_classmethod_set_parameters(self):
+        """Classmethod set_parameters is callable,
+         and default parameters are set."""
+        Jungle.set_parameters()
+        assert Jungle.f_max == 800.0
+
+    def test_value_error(self):
+        with pytest.raises(ValueError):
+            Jungle.set_parameters(f_max=-100)
+
 
 class TestDesert:
     """ Tests for Desert class."""
