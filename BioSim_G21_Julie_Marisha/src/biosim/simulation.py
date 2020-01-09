@@ -5,11 +5,13 @@
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
+
 import textwrap
+import random
 
 
 class BioSim:
-    default_geogr = """\
+    default_map = """\
                       OOOOOOOOOOOOOOOOOOOOO
                       OOOOOOOOSMMMMJJJJJJJO
                       OSSSSSJJJJMMJJJJJJJOO
@@ -23,7 +25,10 @@ class BioSim:
                       OOSSSSJJJJJJJJOOOOOOO
                       OOOSSSSJJJJJJJOOOOOOO
                       OOOOOOOOOOOOOOOOOOOOO"""
-    default_geogr = textwrap.dedent(default_geogr)
+
+    default_map = textwrap.dedent(default_map)
+
+    cell_code = {"S": Savannah, "J": Jungle, "D": Desert, "O": MountainAndOcean, "M": MountainAndOcean}
 
     def __init__(
         self,
@@ -59,7 +64,7 @@ class BioSim:
         img_base should contain a path and beginning of a file name.
         """
         if island_map is None:
-            self.geogr = BioSim.default_geogr
+            self.default_map = BioSim.default_map
 
         self.geography_map = self.make_geography_coordinates()
 
@@ -70,11 +75,16 @@ class BioSim:
 
         :return: dict
         """
-        geogr_list = self.geogr.split('\n')
+        list_island_map = self.default_map.split('\n')
         geography_map = {}
-        for i_index, line in enumerate(geogr_list):
+        for i_index, line in enumerate(list_island_map):
             for j_index, cell in enumerate(line):
-                geography_map[(i_index+1, j_index+1)] = cell
+                geography_map[(i_index+1, j_index+1)] = {
+                    "cell type": BioSim.cell_code[cell](),
+                    "total pop": 0,
+                    "herbivores": 0,
+                    "carnivores": 0
+                }
 
         return geography_map
 
@@ -85,6 +95,10 @@ class BioSim:
         :param species: String, name of animal species
         :param params: Dict with valid parameter specification for species
         """
+        if species == "Herbivore":
+            Herbivore.set_parameters(**params)
+        if species == "Carnivore":
+            Carnivore.set_parameters(**params)
 
     def set_landscape_parameters(self, landscape, params):
         """
@@ -93,6 +107,10 @@ class BioSim:
         :param landscape: String, code letter for landscape
         :param params: Dict with valid parameter specification for landscape
         """
+        if landscape == "S":
+            Savannah.set_parameters(**params)
+        if landscape == "J":
+            Jungle.set_parameters(**params)
 
     def simulate(self, num_years, vis_years=1, img_years=None):
         """
