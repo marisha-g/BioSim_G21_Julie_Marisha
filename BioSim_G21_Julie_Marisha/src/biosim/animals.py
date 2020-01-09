@@ -263,9 +263,10 @@ class Carnivore(Animals):
             omega,
             f
         )
-        if delta_phi_max > 0:
+        if delta_phi_max is None:
             cls.delta_phi_max = 10.0
-        else:
+
+        if delta_phi_max <=0:
             raise ValueError('delta_phi_max must be strictly positive.')
 
     def __init__(self, age=0, weight=None):

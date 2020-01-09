@@ -6,12 +6,10 @@
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
-import textwrap
 
-
-class Landscape:
+class Cell:
     """
-    Landscape class description.
+    Cell class description.
     """
 
     def __init__(self):
@@ -26,42 +24,36 @@ class Landscape:
         self.fodder_in_cell = f_max
 
 
-class Savannah(Landscape):
+class Savannah(Cell):
     @classmethod
-    def set_parameters(cls, f_sav_max=None, alpha=None):
-        if f_sav_max is None:
-            cls.f_sav_max = 300.0
+    def set_parameters(cls, f_max=None, alpha=None):
+        if f_max is None:
+            cls.f_max = 300.0
         if alpha is None:
             cls.alpha = 0.3
 
     def __init__(self):
         super().__init__()
 
-    def set_initial_fodder(self):
-        super().fodder_first_year(self.f_sav_max)
-
     def regrow_fodder(self):
-        self.fodder_in_cell = self.fodder_in_cell + self.alpha*(self.f_sav_max - self.fodder_in_cell)
+        self.fodder_in_cell = self.fodder_in_cell + self.alpha * (self.f_max - self.fodder_in_cell)
 
 
-class Jungle(Landscape):
+class Jungle(Cell):
 
     @classmethod
-    def set_parameters(cls, f_jungle_max):
-        if f_jungle_max is None:
+    def set_parameters(cls, f_max):
+        if f_max is None:
             cls.f_jungle_max = 800.0
 
     def __init__(self):
         super().__init__()
 
-    def set_initial_fodder(self):
-        super().fodder_first_year(self.f_jungle_max)
-
     def regrow_fodder(self):
         self.fodder_in_cell = self.f_jungle_max
 
 
-class Desert(Landscape):
+class Desert(Cell):
     def __init__(self):
         super().__init__()
         self.fodder_in_cell = 0
