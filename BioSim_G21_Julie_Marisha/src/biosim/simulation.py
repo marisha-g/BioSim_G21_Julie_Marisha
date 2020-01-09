@@ -5,13 +5,31 @@
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
+import textwrap
+
 
 class BioSim:
+    default_geogr = """\
+                      OOOOOOOOOOOOOOOOOOOOO
+                      OOOOOOOOSMMMMJJJJJJJO
+                      OSSSSSJJJJMMJJJJJJJOO
+                      OSSSSSSSSSMMJJJJJJOOO
+                      OSSSSSJJJJJJJJJJJJOOO
+                      OSSSSSJJJDDJJJSJJJOOO
+                      OSSJJJJJDDDJJJSSSSOOO
+                      OOSSSSJJJDDJJJSOOOOOO
+                      OSSSJJJJJDDJJJJJJJOOO
+                      OSSSSJJJJDDJJJJOOOOOO
+                      OOSSSSJJJJJJJJOOOOOOO
+                      OOOSSSSJJJJJJJOOOOOOO
+                      OOOOOOOOOOOOOOOOOOOOO"""
+    default_geogr = textwrap.dedent(default_geogr)
+
     def __init__(
         self,
-        island_map,
-        ini_pop,
-        seed,
+        island_map=None,
+        ini_pop=None,
+        seed=None,
         ymax_animals=None,
         cmax_animals=None,
         img_base=None,
@@ -40,6 +58,25 @@ class BioSim:
         where img_no are consecutive image numbers starting from 0.
         img_base should contain a path and beginning of a file name.
         """
+        if island_map is None:
+            self.geogr = BioSim.default_geogr
+
+        self.geography_map = self.make_geography_coordinates()
+
+    def make_geography_coordinates(self):
+        """
+        Making a dictionary with coordinates as keys and lists with cell
+        types "O, M, S, J, D" and fodder in cell as values.
+
+        :return: dict
+        """
+        geogr_list = self.geogr.split('\n')
+        geography_map = {}
+        for i_index, line in enumerate(geogr_list):
+            for j_index, cell in enumerate(line):
+                geography_map[(i_index+1, j_index+1)] = cell
+
+        return geography_map
 
     def set_animal_parameters(self, species, params):
         """
