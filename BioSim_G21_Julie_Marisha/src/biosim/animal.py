@@ -9,7 +9,7 @@ __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 import numpy as np
 
 
-class Animals:
+class Animal:
     """
     Description for the Animals class
     """
@@ -183,7 +183,7 @@ class Animals:
             return probability_death
 
 
-class Herbivore(Animals):
+class Herbivore(Animal):
 
     @classmethod
     def set_parameters(
@@ -225,7 +225,7 @@ class Herbivore(Animals):
         super().__init__(age, weight)
 
 
-class Carnivore(Animals):
+class Carnivore(Animal):
     @classmethod
     def set_parameters(
             cls,
