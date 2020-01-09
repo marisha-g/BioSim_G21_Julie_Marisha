@@ -35,6 +35,12 @@ class TestSavannah:
         s = Savannah()
         assert isinstance(s, Savannah)
 
+    def test_default_values(self):
+        s1 = Savannah()
+        assert s1.f_max is None
+
+
+
 
 class TestJungle:
     """ Tests for Jungle class."""

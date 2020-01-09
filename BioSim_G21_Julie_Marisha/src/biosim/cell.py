@@ -14,6 +14,7 @@ class Cell:
 
     def __init__(self):
         self.fodder_in_cell = None
+        self.f_max = None
         self.location = None
         self.population = None
 
@@ -34,6 +35,7 @@ class Savannah(Cell):
 
     def __init__(self):
         super().__init__()
+        self.set_parameters()
 
     def regrow_fodder(self):
         self.fodder_in_cell = self.fodder_in_cell + self.alpha * (self.f_max - self.fodder_in_cell)
@@ -42,12 +44,13 @@ class Savannah(Cell):
 class Jungle(Cell):
 
     @classmethod
-    def set_parameters(cls, f_max):
+    def set_parameters(cls, f_max=None):
         if f_max is None:
             cls.f_jungle_max = 800.0
 
     def __init__(self):
         super().__init__()
+        self.set_parameters()
 
     def regrow_fodder(self):
         self.fodder_in_cell = self.f_jungle_max
