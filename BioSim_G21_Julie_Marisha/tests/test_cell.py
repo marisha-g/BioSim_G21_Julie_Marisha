@@ -43,6 +43,7 @@ class TestSavannah:
         assert Savannah.alpha == 0.3
 
     def test_value_error(self):
+        """Negative parameters raises ValueError."""
         with pytest.raises(ValueError):
             Savannah.set_parameters(f_max=-100)
             Savannah.set_parameters(alpha=-0.3)
@@ -62,6 +63,7 @@ class TestJungle:
         assert Jungle.f_max == 800.0
 
     def test_value_error(self):
+        """Negative parameters raises ValueError."""
         with pytest.raises(ValueError):
             Jungle.set_parameters(f_max=-100)
 
