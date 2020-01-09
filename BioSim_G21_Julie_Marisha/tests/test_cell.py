@@ -37,7 +37,7 @@ class TestSavannah:
 
     def test_default_values(self):
         s1 = Savannah()
-        assert s1.f_max is None
+        assert s1.f_max
 
 
 
