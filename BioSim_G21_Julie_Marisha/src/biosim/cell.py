@@ -53,15 +53,16 @@ class Jungle(Cell):
     @classmethod
     def set_parameters(cls, f_max=None):
         if f_max is None:
-            cls.f_jungle_max = 800.0
+            f_max = 800.0
         if f_max <= 0:
             raise ValueError('f_max must be a positive number')
+        cls.f_max = f_max
 
     def __init__(self):
         super().__init__()
 
     def regrow_fodder(self):
-        self.fodder_in_cell = self.f_jungle_max
+        self.fodder_in_cell = self.f_max
 
 
 class Desert(Cell):
