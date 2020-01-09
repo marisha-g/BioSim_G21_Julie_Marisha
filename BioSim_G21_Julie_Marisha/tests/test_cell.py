@@ -6,41 +6,46 @@
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
-from src.biosim.landscape import Landscape
-import textwrap
+from src.biosim.cell import Cell, Savannah, Jungle, Desert, MountainAndOcean
 
-class TestLandscape:
-    """
+import pytest
 
-    """
 
-    def test_constructor_default(self):
-        """Default constructor is callable"""
-        b = Landscape()
-        assert isinstance(b, Landscape)
+class TestCell:
+    """Tests for Cell class."""
+    def test_constructor(self):
+        """Default constructor is callable."""
+        c = Cell()
+        assert isinstance(c, Cell)
 
-    def test_default_parameters(self):
-        """Test if default parameters are correct"""
-        b = Landscape()
-        assert b.f_sav_max == 300.0
-        assert b.f_jungle_max == 800.0
-        assert b.alpha == 0.3
 
-        default_map = """\
-                      OOOOOOOOOOOOOOOOOOOOO
-                      OOOOOOOOSMMMMJJJJJJJO
-                      OSSSSSJJJJMMJJJJJJJOO
-                      OSSSSSSSSSMMJJJJJJOOO
-                      OSSSSSJJJJJJJJJJJJOOO
-                      OSSSSSJJJDDJJJSJJJOOO
-                      OSSJJJJJDDDJJJSSSSOOO
-                      OOSSSSJJJDDJJJSOOOOOO
-                      OSSSJJJJJDDJJJJJJJOOO
-                      OSSSSJJJJDDJJJJOOOOOO
-                      OOSSSSJJJJJJJJOOOOOOO
-                      OOOSSSSJJJJJJJOOOOOOO
-                      OOOOOOOOOOOOOOOOOOOOO"""
-        default_map = textwrap.dedent(default_map)
-        assert b.geogr == default_map
+class TestSavannah:
+    """ Tests for Savannah class."""
+    def test_constructor(self):
+        """Default constructor is callable. """
+        s = Savannah()
+        assert isinstance(s, Savannah)
 
-        assert isinstance(b.geography_map, dict)
+
+class TestJungle:
+    """ Tests for Jungle class."""
+    def test_constructor(self):
+        """Default constructor is callable. """
+        j = Jungle()
+        assert isinstance(j, Jungle)
+
+
+class TestDesert:
+    """ Tests for Desert class."""
+    def test_constructor(self):
+        """Default constructor is callable. """
+        d = Desert()
+        assert isinstance(d, Desert)
+
+
+class TestMountainAndOcean:
+    """ Tests for MountainAndOcean class."""
+    def test_constructor(self):
+        """Default constructor is callable. """
+        p = MountainAndOcean()
+        assert isinstance(p, MountainAndOcean)
