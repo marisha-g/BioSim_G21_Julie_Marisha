@@ -31,7 +31,9 @@ class Animal:
             zeta,
             xi,
             omega,
-            f
+            f,
+            *args,
+            **kwargs
     ):
         if w_birth >= 0:
             cls.w_birth = w_birth

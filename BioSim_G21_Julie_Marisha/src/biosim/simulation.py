@@ -84,13 +84,15 @@ class BioSim:
                 geography_map[(i_index+1, j_index+1)] = {
                     "cell type": BioSim.cell_code[cell](),
                     "total pop": 0,
-                    "herbivores": 0,
-                    "carnivores": 0
+                    "herbivores": [],
+                    "carnivores": [],
+
                 }
 
         return geography_map
 
-    def set_animal_parameters(self, species, params):
+    @staticmethod
+    def set_animal_parameters(species, params):
         """
         Set parameters for animal species.
 
@@ -102,7 +104,8 @@ class BioSim:
         if species == "Carnivore":
             Carnivore.set_parameters(**params)
 
-    def set_landscape_parameters(self, landscape, params):
+    @staticmethod
+    def set_landscape_parameters(landscape, params):
         """
         Set parameters for landscape type.
 
