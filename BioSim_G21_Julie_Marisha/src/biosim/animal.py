@@ -31,7 +31,7 @@ class Animal:
             zeta,
             xi,
             omega,
-            f,
+            F,
             *args,
             **kwargs
     ):
@@ -91,8 +91,8 @@ class Animal:
             cls.omega = omega
         else:
             raise ValueError('omega can not be a negative value.')
-        if f >= 0:
-            cls.f = f
+        if F >= 0:
+            cls.f = F
         else:
             raise ValueError('f can not be a negative value.')
 
@@ -148,7 +148,7 @@ class Animal:
                                    1 / (1 + np.exp(-self.phi_weight *
                                                    (self.weight - self.w_half))))
         else:
-            self.fitness = 0  # aka død
+            self.fitness = 0
 
     def migration(self):
         """
@@ -204,7 +204,7 @@ class Herbivore(Animal):
             zeta=3.5,
             xi=1.2,
             omega=0.4,
-            f=10.0
+            F=10.0
     ):
         super(Herbivore, cls).set_parameters(
             w_birth,
@@ -221,7 +221,7 @@ class Herbivore(Animal):
             zeta,
             xi,
             omega,
-            f)
+            F)
 
     def __init__(self, age=0, weight=None):
         super().__init__(age, weight)
@@ -245,7 +245,7 @@ class Carnivore(Animal):
             zeta=3.5,
             xi=1.1,
             omega=0.9,
-            f=50.0,
+            F=50.0,
             delta_phi_max=10.0
     ):
         super(Carnivore, cls).set_parameters(
@@ -263,7 +263,7 @@ class Carnivore(Animal):
             zeta,
             xi,
             omega,
-            f
+            F
         )
         if delta_phi_max is None:
             cls.delta_phi_max = 10.0
