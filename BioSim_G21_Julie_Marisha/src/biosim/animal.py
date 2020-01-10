@@ -179,9 +179,20 @@ class Animal:
             return 0.0
         else:
             p = self.omega * (1 - self.fitness)
-            probability_death = np.random.choice(2, p=[p, 1 - p])
+            probability_death = np.random.choice(2, p=[p, 1-p])
             return probability_death
 
+    def prob_migration(self):
+        """
+        Depends on fitness and availability of fodder in neighboring cells.
+        Cannot move to ocean or mountain cells. Probability for moving is given
+        by formula (5 - 7).
+        :param:
+        :return: float
+        """
+        p = self.mu * self.fitness
+        probability_migration = np.random.choice(2, p=[p, 1-p])
+        return probability_migration
 
 class Herbivore(Animal):
 
