@@ -10,8 +10,10 @@ from src.biosim.animal import Animal, Herbivore, Carnivore
 import pytest
 
 
-class TestAnimals:
+class TestAnimal:
+    """Tests for class Animal."""
     def test_value_error_for_negative_values(self):
+        """Negative values raises ValueError."""
         with pytest.raises(ValueError):
             a = Animal()
             a.set_parameters(
@@ -20,17 +22,21 @@ class TestAnimals:
             )
 
     def test_aging(self):
-        """ """
+        """Test if aging method increments age by 1."""
         a = Animal()
         a.aging()
         assert a.age == 1
 
 
 class TestHerbivore:
-    """
-    Tests for Animals class
-    """
+    """Tests for subclass Herbivore."""
+    def test_constructor_default(self):
+        """Default constructor callable."""
+        a = Herbivore()
+        assert isinstance(a, Herbivore)
+
     def test_default_parameters(self):
+        """Test if default parameters are given."""
         a = Herbivore()
         assert a.age == 0
         assert a.weight is None
@@ -57,8 +63,24 @@ class TestHerbivore:
         a = Herbivore()
         assert a.birth_weight() >= 0
 
+    def test_value_error_for_age_and_weight(self):
+        """Check if ValueError is raised for negative inputs. """
+        with pytest.raises(ValueError):
+            a = Herbivore(age=-4, weight=-5)
 
-    def test_condition(self):
+    def test_draw_birth_weight(self):
+        """If weight parameter is not given, check if random birth weight
+        is drawn."""
+        a = Herbivore(age=0)
+        assert a.weight != 0
+
+    def test_zero_weight_gives_zero_fitness(self):
+        """Fitness is zero if weight is zero. """
+        a = Herbivore(weight=0)
+        assert a.fitness == 0.0
+
+    def test_evaluate_fitness(self):
+        """Tests if the formula for evaluating fitness works."""
         a = Herbivore()
         a.set_parameters()
         a.weight = 10
@@ -68,7 +90,14 @@ class TestHerbivore:
 
 
 class TestCarnivore:
+    """Tests for subclass Carnivore"""
+    def test_constructor_default(self):
+        """Default constructor callable."""
+        a = Carnivore()
+        assert isinstance(a, Carnivore)
+
     def test_default_parameters(self):
+        """Tests if default parameters are given."""
         a = Carnivore()
         assert a.age == 0
         assert a.weight is None
@@ -92,12 +121,14 @@ class TestCarnivore:
         assert a.DeltaPhiMax == 10.0
 
     def test_delta_phi_max_value_error(self):
+        """Test that delta phi max must be strictly positive."""
         with pytest.raises(ValueError):
             a = Carnivore()
             a.set_parameters(DeltaPhiMax=0)
             a.set_parameters(DeltaPhiMax=-2)
 
     def test_value_error_for_mu(self):
+        """Test that mu can not be greater than 1."""
         with pytest.raises(ValueError):
             a = Carnivore()
             a.set_parameters(mu=2)
