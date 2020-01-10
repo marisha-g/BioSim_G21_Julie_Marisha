@@ -97,13 +97,23 @@ class Animal:
         else:
             raise ValueError('f can not be a negative value.')
 
-    def __init__(self, age=0, weight=None):
+    def __init__(self, age=None, weight=None):
         """ Constructor initiate animal.
         """
+        if age is None:
+            age = 0
+        if age < 0:
+            raise ValueError("Age can not have negative value.")
         self.age = age
-        self.weight = weight
-        self.fitness = None
 
+        if weight is None:
+            self.set_parameters()
+            weight = self.draw_birth_weight()
+        if weight < 0:
+            raise ValueError("Weight can not have negative value")
+        self.weight = weight
+
+        self.fitness = None
         self.set_parameters()
         self.evaluate_fitness()
 
@@ -195,6 +205,7 @@ class Animal:
         probability_migration = np.random.choice(2, p=[p, 1-p])
         return probability_migration
 
+
 class Herbivore(Animal):
 
     @classmethod
@@ -237,7 +248,6 @@ class Herbivore(Animal):
 
     def __init__(self, age=0, weight=None):
         super().__init__(age, weight)
-
 
 class Carnivore(Animal):
     @classmethod
