@@ -18,10 +18,14 @@ class Cell:
             raise ValueError('f_max must be a positive number')
         cls.f_max = f_max
 
-    def __init__(self):
+    def __init__(self, herbivores=None, carnivores=None):
         self.fodder_in_cell = None
-        self.population = None
-        self.animals = None
+        self.animal_can_enter = True
+
+        if herbivores is None:
+            self.herbivores = []
+        if carnivores is None:
+            self.carnivores = []
 
     def fodder_first_year(self, f_max):
         """
@@ -30,10 +34,11 @@ class Cell:
         self.fodder_in_cell = f_max
 
     def abundance_of_fodder(self):
-        rel_abundance_of_fodder =  self.fodder_in_cell /
-    def propensity_migration(self, ):
+        rel_abundance_of_fodder =  self.fodder_in_cell
+        pass
 
-
+    def propensity_migration(self):
+        pass
 
 
 class Savannah(Cell):
@@ -79,3 +84,4 @@ class MountainAndOcean(Cell):
     def __init__(self):
         super().__init__()
         self.fodder_in_cell = 0
+        self.animal_can_enter = False
