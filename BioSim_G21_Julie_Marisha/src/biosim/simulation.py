@@ -66,11 +66,15 @@ class BioSim:
         img_base should contain a path and beginning of a file name.
         """
         if island_map is None:
-            self.default_map = BioSim.default_map
+            self.island_map = BioSim.default_map
 
-        self.geography_map = self.make_geography_coordinates()
+        if self.check_map_input(island_map):
+            self.island_map = island_map
+            self.island_map = self.make_geography_coordinates(self.island_map)
+        else:
+            raise ValueError('Map is not compatible.')
 
-    def make_geography_coordinates(self):
+    def make_geography_coordinates(self, input_map):
         """
         Making a dictionary with coordinates as keys and lists with cell
         types "O, M, S, J, D" and fodder in cell as values.
@@ -116,6 +120,12 @@ class BioSim:
             Savannah.set_parameters(**params)
         if landscape == "J":
             Jungle.set_parameters(**params)
+
+    def single_simulation(self):
+        """
+        Run one single simulation.
+        :return:
+        """
 
     def simulate(self, num_years, vis_years=1, img_years=None):
         """
