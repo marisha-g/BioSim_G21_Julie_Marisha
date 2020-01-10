@@ -22,8 +22,7 @@ class Cell:
         """
         Sets max fodder in Savannah and Jungle cells.
         """
-        if f_max > 0:
-            self.fodder_in_cell = f_max
+        self.fodder_in_cell = f_max
 
 
 class Savannah(Cell):
