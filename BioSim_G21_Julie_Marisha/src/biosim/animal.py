@@ -270,10 +270,11 @@ class Carnivore(Animal):
             F
         )
         if DeltaPhiMax is None:
-            cls.DeltaPhiMax = 10.0
+            DeltaPhiMax = 10.0
 
         if DeltaPhiMax <= 0:
             raise ValueError('delta_phi_max must be strictly positive.')
+        cls.DeltaPhiMax = DeltaPhiMax
 
     def __init__(self, age=0, weight=None):
         super().__init__(age, weight)
