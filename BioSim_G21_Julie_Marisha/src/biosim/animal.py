@@ -11,7 +11,7 @@ import numpy as np
 
 class Animal:
     """
-    Description for the Animals class
+    Superclass for animal in Biosim.
     """
 
     @classmethod
@@ -35,6 +35,7 @@ class Animal:
             *args,
             **kwargs
     ):
+
         if w_birth >= 0:
             cls.w_birth = w_birth
         else:
@@ -97,24 +98,26 @@ class Animal:
             raise ValueError('f can not be a negative value.')
 
     def __init__(self, age=0, weight=None):
-        """constructor"""
+        """ Constructor initiate animal.
+        """
         self.age = age
         self.weight = weight
         self.fitness = None
 
+        self.evaluate_fitness()
+
     def aging(self):
         """
-        At birth,each animal has age a=0. Age increases by one year for
+        At birth, each animal has age a=0. Age increases by one year for
         each year that passes.
-        :return:
         """
         self.age += 1
 
-    def birth_weight(self):
+    def draw_birth_weight(self):
         """
         Birth weight is drawn from a Gaussian distribution with mean and
         standard deviation.
-        :return:
+        :return: float
         """
         birth_weight = 0
         while birth_weight <= 0:
@@ -123,16 +126,14 @@ class Animal:
 
     def weight_gain(self, food):
         """
-        When an animal eats an amount F of fodder, its
+        When an animal eats an amount 'food' of fodder, its
         weight increases.
-        :return:
         """
         self.weight += self.beta * food
 
     def weight_loss(self):
         """
         Every year, the weight of the animal decreases.
-        :return:
         """
         self.weight -= self.eta * self.weight
 
@@ -140,45 +141,42 @@ class Animal:
         """
         The overall condition of the animal is described by its fitness,
         which is calculated based on age and weight using a formula (4)
-        :return:
         """
         if self.weight > 0:
             self.fitness = (1 / (1 + np.exp(self.phi_age *
-                                            (self.age - self.a_half)))) * (
+                                            (self.age - self.a_half)
+                                            )
+                                 )
+                            ) * \
+                           (
                                    1 / (1 + np.exp(-self.phi_weight *
-                                                   (self.weight - self.w_half))))
+                                                   (self.weight - self.w_half)
+                                                   )
+                                        )
+                           )
         else:
-            self.fitness = 0
+            self.fitness = 0.0
 
-    def migration(self):
-        """
-        Depends on fitness and availability of fodder in neighboring cells.
-        Cannot move to ocean or mountain cells. Probability for moving is given
-        by formula (5 - 7).
-        :return:
-        """
-
-    def procreation(self, n):
+    def prob_procreation(self, n):
         """
         Animals can mate if there are at least two animals of the same species
         in a cell. Probability to give birth is given by fomula (8)
-        :return:
+        :return: float
         """
         if self.weight < self.zeta * (self.w_birth + self.sigma_birth):
-            return 0
+            return 0.0
         else:
             p = min(1, self.gamma * self.fitness * (n - 1))
             probability_procreation = np.random.choice(2, p=[p, 1 - p])
             return probability_procreation
 
-    def death(self):
+    def prob_death(self):
         """
-        An animal dies following formula (9)
-        Får vi 0 så dør dyret, får vi 1 overlever den.
-        :return:
+        An animal dies with probability following formula (9)
+        :return: float
         """
         if self.fitness == 0:
-            return 0
+            return 0.0
         else:
             p = self.omega * (1 - self.fitness)
             probability_death = np.random.choice(2, p=[p, 1 - p])
