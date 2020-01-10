@@ -2,6 +2,8 @@
 
 """
 """
+from BioSim_G21_Julie_Marisha.src.biosim.cell import Savannah, Jungle, Desert, MountainAndOcean
+
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
