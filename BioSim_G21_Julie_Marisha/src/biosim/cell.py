@@ -14,7 +14,6 @@ class Cell:
 
     def __init__(self):
         self.fodder_in_cell = None
-        self.f_max = None
         self.location = None
         self.population = None
 
