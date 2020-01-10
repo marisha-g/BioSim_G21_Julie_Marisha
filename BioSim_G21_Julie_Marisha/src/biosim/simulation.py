@@ -67,12 +67,38 @@ class BioSim:
         """
         if island_map is None:
             self.island_map = BioSim.default_map
-
         if self.check_map_input(island_map):
             self.island_map = island_map
             self.island_map = self.make_geography_coordinates(self.island_map)
-        else:
-            raise ValueError('Map is not compatible.')
+
+    @staticmethod
+    def check_map_input(island_map):
+        island_map_list = island_map.split("\n")
+        length_row = len(island_map_list[0])
+        n = len(island_map_list)
+
+        for row in island_map_list:
+            if len(row) != length_row:
+                raise ValueError("Inconsistent line length.")
+
+        for row in island_map_list:
+            for cell in row:
+                if cell not in BioSim.cell_code:
+                    raise ValueError("Invalid landscape type.")
+
+        for cell in island_map_list[0]:
+            if cell != "O":
+                raise ValueError("Non-ocean boundary.")
+        for cell in island_map_list[n-1]:
+            if cell != "O":
+                raise ValueError("Non-ocean boundary.")
+        for row in island_map_list:
+            num_cells = len(row)
+            if row[0] != "O":
+                raise ValueError("Non-ocean boundary.")
+            if row[num_cells-1] != "O":
+                raise ValueError("Non-ocean boundary.")
+        return True
 
     def make_geography_coordinates(self, input_map):
         """
