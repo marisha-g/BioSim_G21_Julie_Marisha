@@ -39,6 +39,7 @@ class Savannah(Cell):
             raise ValueError('alpha can not be negative.')
 
         cls.f_max = f_max
+        cls.alpha = alpha
 
     def __init__(self):
         super().__init__()
