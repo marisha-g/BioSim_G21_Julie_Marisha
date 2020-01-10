@@ -122,11 +122,8 @@ class BioSim:
                     "total pop": 0,
                     "Herbivores": [],
                     "Carnivores": [],
-
                 }
-
         return geography_map
-
 
     @staticmethod
     def set_animal_parameters(species, params):
