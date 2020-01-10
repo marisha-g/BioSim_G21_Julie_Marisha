@@ -11,10 +11,15 @@ class Cell:
     """
     Cell class description.
     """
+    @classmethod
+    def set_parameters(cls, f_max):
+
+        if f_max < 0:
+            raise ValueError('f_max must be a positive number')
+        cls.f_max = f_max
 
     def __init__(self):
         self.fodder_in_cell = None
-        self.location = None
         self.population = None
 
     def fodder_first_year(self, f_max):
@@ -26,18 +31,14 @@ class Cell:
 
 class Savannah(Cell):
     @classmethod
-    def set_parameters(cls, f_max=None, alpha=None):
-        if f_max is None:
-            f_max = 300.0
+    def set_parameters(cls, f_max=300.0, alpha=0.3):
+
+        super(Savannah, cls).set_parameters(f_max)
         if alpha is None:
             alpha = 0.3
-
-        if f_max < 0:
-            raise ValueError('f_max can not be negative.')
         if alpha < 0:
             raise ValueError('alpha can not be negative.')
 
-        cls.f_max = f_max
         cls.alpha = alpha
 
     def __init__(self):
@@ -50,12 +51,9 @@ class Savannah(Cell):
 class Jungle(Cell):
 
     @classmethod
-    def set_parameters(cls, f_max=None):
-        if f_max is None:
-            f_max = 800.0
-        if f_max <= 0:
-            raise ValueError('f_max must be a positive number')
-        cls.f_max = f_max
+    def set_parameters(cls, f_max=800.0):
+
+        super(Jungle, cls).set_parameters(f_max)
 
     def __init__(self):
         super().__init__()
