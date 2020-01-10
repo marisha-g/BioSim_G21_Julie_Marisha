@@ -6,14 +6,14 @@
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
-from src.biosim.animals import Animals, Herbivore, Carnivore
+from src.biosim.animal import Animal, Herbivore, Carnivore
 import pytest
 
 
 class TestAnimals:
     def test_value_error_for_negative_values(self):
         with pytest.raises(ValueError):
-            a = Animals()
+            a = Animal()
             a.set_parameters(
                 -8.0, -1.5, -0.9,  -0.05, -40.0, -0.2, -10.0, -0.1,
                 -0.25, -1.0, -0.2, -3.5, -1.2, -0.4, -10.0
@@ -21,7 +21,7 @@ class TestAnimals:
 
     def test_aging(self):
         """ """
-        a = Animals()
+        a = Animal()
         a.aging()
         assert a.age == 1
 
@@ -50,7 +50,7 @@ class TestHerbivore:
         assert a.zeta == 3.5
         assert a.xi == 1.2
         assert a.omega == 0.4
-        assert a.f == 10.0
+        assert a.F == 10.0
 
     def test_birth_weight(self):
         """ Test that birth_weight method returns positive number."""
@@ -88,8 +88,8 @@ class TestCarnivore:
         assert a.zeta == 3.5
         assert a.xi == 1.1
         assert a.omega == 0.9
-        assert a.f == 50.0
-        assert a.delta_phi_max == 10.0
+        assert a.F == 50.0
+        assert a.DeltaPhiMax == 10.0
 
     def test_delta_phi_max_value_error(self):
         with pytest.raises(ValueError):
