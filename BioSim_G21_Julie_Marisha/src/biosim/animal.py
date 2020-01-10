@@ -104,6 +104,7 @@ class Animal:
         self.weight = weight
         self.fitness = None
 
+        self.set_parameters()
         self.evaluate_fitness()
 
     def aging(self):
