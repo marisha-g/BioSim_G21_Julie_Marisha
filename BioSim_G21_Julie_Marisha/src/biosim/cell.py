@@ -28,6 +28,16 @@ class Cell:
         """
         self.fodder_in_cell = f_max
 
+    def migration(self, animal):
+        """
+        Depends on fitness and availability of fodder in neighboring cells.
+        Cannot move to ocean or mountain cells. Probability for moving is given
+        by formula (5 - 7).
+        :param animal:
+        :return:
+        """
+        p = self.mu * animal.fitness
+
 
 class Savannah(Cell):
     @classmethod
