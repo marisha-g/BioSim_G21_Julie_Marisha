@@ -2,6 +2,7 @@
 
 """
 """
+from BioSim_G21_Julie_Marisha.src.biosim.animal import Herbivore, Carnivore
 from BioSim_G21_Julie_Marisha.src.biosim.cell import Savannah, Jungle, Desert, MountainAndOcean
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
@@ -71,6 +72,11 @@ class BioSim:
             self.island_map = island_map
             self.island_map = self.make_geography_coordinates(self.island_map)
 
+        if ini_pop is None:
+            self.add_population(BioSim.default_ini_pop)
+        else:
+            self.add_population(ini_pop)
+
     @staticmethod
     def check_map_input(island_map):
         island_map_list = island_map.split("\n")
@@ -114,12 +120,13 @@ class BioSim:
                 geography_map[(i_index+1, j_index+1)] = {
                     "cell type": BioSim.cell_code[cell](),
                     "total pop": 0,
-                    "herbivores": [],
-                    "carnivores": [],
+                    "Herbivores": [],
+                    "Carnivores": [],
 
                 }
 
         return geography_map
+
 
     @staticmethod
     def set_animal_parameters(species, params):
@@ -170,6 +177,17 @@ class BioSim:
 
         :param population: List of dictionaries specifying population
         """
+        for cell_dict in population:
+            location = cell_dict['loc']
+
+            for pop_dict in cell_dict['pop']:
+                species = pop_dict['species']
+                age = pop_dict['age']
+                weight = pop_dict['weight']
+                if species == 'Herbivore':
+                    self.island_map[location]['Herbivores'].append(Herbivore(age, weight))
+                if species == 'Carnivore':
+                    self.island_map[location]['Carnivores'].append(Carnivore(age, weight))
 
     @property
     def year(self):
