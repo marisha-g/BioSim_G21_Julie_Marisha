@@ -94,8 +94,8 @@ class TestCarnivore:
     def test_delta_phi_max_value_error(self):
         with pytest.raises(ValueError):
             a = Carnivore()
-            a.set_parameters(delta_phi_max=0)
-            a.set_parameters(delta_phi_max=-2)
+            a.set_parameters(DeltaPhiMax=0)
+            a.set_parameters(DeltaPhiMax=-2)
 
     def test_value_error_for_mu(self):
         with pytest.raises(ValueError):

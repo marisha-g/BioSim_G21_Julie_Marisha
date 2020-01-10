@@ -92,7 +92,7 @@ class Animal:
         else:
             raise ValueError('omega can not be a negative value.')
         if F >= 0:
-            cls.f = F
+            cls.F = F
         else:
             raise ValueError('f can not be a negative value.')
 
@@ -204,7 +204,9 @@ class Herbivore(Animal):
             zeta=3.5,
             xi=1.2,
             omega=0.4,
-            F=10.0
+            F=10.0,
+            *args,
+            **kwargs
     ):
         super(Herbivore, cls).set_parameters(
             w_birth,
@@ -246,7 +248,9 @@ class Carnivore(Animal):
             xi=1.1,
             omega=0.9,
             F=50.0,
-            delta_phi_max=10.0
+            DeltaPhiMax=10.0,
+            *args,
+            **kwargs
     ):
         super(Carnivore, cls).set_parameters(
             w_birth,
@@ -265,10 +269,10 @@ class Carnivore(Animal):
             omega,
             F
         )
-        if delta_phi_max is None:
-            cls.delta_phi_max = 10.0
+        if DeltaPhiMax is None:
+            cls.DeltaPhiMax = 10.0
 
-        if delta_phi_max <= 0:
+        if DeltaPhiMax <= 0:
             raise ValueError('delta_phi_max must be strictly positive.')
 
     def __init__(self, age=0, weight=None):
