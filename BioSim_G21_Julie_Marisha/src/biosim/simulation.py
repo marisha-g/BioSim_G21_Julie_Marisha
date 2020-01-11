@@ -4,6 +4,7 @@
 """
 from BioSim_G21_Julie_Marisha.src.biosim.animal import Herbivore, Carnivore
 from BioSim_G21_Julie_Marisha.src.biosim.cell import Savannah, Jungle, Desert, MountainAndOcean
+from BioSim_G21_Julie_Marisha.src.biosim.rossumoya import Rossumoya
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
@@ -44,6 +45,10 @@ class BioSim:
         where img_no are consecutive image numbers starting from 0.
         img_base should contain a path and beginning of a file name.
         """
+        self.rossumoya = Rossumoya(island_map, ini_pop)
+        if seed is None:
+            seed = 1
+        self.seed = seed
 
     @staticmethod
     def set_animal_parameters(species, params):
@@ -77,6 +82,7 @@ class BioSim:
         :return:
         """
 
+
     def simulate(self, num_years, vis_years=1, img_years=None):
         """
         Run simulation while visualizing the result.
@@ -94,6 +100,7 @@ class BioSim:
 
         :param population: List of dictionaries specifying population
         """
+        self.rossumoya.add_population(population)
 
     @property
     def year(self):
