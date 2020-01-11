@@ -114,7 +114,8 @@ class BioSim:
     def num_animals(self):
         """Total number of animals on island."""
         num_animals = 0
-        for cell in self.rossumoya.island_map:
+        for loc in self.rossumoya.island_map:
+            cell = self.rossumoya.island_map[loc]
             num_animals += cell.total_population
         return num_animals
 
@@ -124,7 +125,8 @@ class BioSim:
         num_herb = 0
         num_carn = 0
 
-        for cell in self.rossumoya.island_map:
+        for loc in self.rossumoya.island_map:
+            cell = self.rossumoya.island_map[loc]
             num_herb += cell.total_herbivores
             num_carn += cell.total_carnivores
 
