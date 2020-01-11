@@ -40,6 +40,21 @@ class Cell:
     def propensity_migration(self):
         pass
 
+    @property
+    def total_population(self):
+        tot_pop = len(self.herbivores) + len(self.carnivores)
+        return tot_pop
+
+    @property
+    def total_herbivores(self):
+        tot_herb = len(self.herbivores)
+        return tot_herb
+
+    @property
+    def total_carnivores(self):
+        tot_carn = len(self.carnivores)
+        return tot_carn
+
 
 class Savannah(Cell):
     @classmethod
