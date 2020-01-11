@@ -107,15 +107,12 @@ class Animal:
         self.age = age
 
         if weight is None:
-            self.set_parameters()
-            weight = self.draw_birth_weight()
+            weight = 10
         if weight < 0:
             raise ValueError("Weight can not have negative value")
-        self.weight = weight
 
-        self.fitness = None
-        self.set_parameters()
-        self.evaluate_fitness()
+        self.weight = weight
+        self._fitness = None
 
     def aging(self):
         """
@@ -124,6 +121,7 @@ class Animal:
         """
         self.age += 1
 
+    @property
     def draw_birth_weight(self):
         """
         Birth weight is drawn from a Gaussian distribution with mean and
@@ -148,25 +146,27 @@ class Animal:
         """
         self.weight -= self.eta * self.weight
 
-    def evaluate_fitness(self):
+    @property
+    def fitness(self):
         """
         The overall condition of the animal is described by its fitness,
         which is calculated based on age and weight using a formula (4)
         """
         if self.weight > 0:
-            self.fitness = (1 / (1 + np.exp(self.phi_age *
-                                            (self.age - self.a_half)
-                                            )
-                                 )
-                            ) * \
-                           (
-                                   1 / (1 + np.exp(-self.phi_weight *
-                                                   (self.weight - self.w_half)
-                                                   )
-                                        )
-                           )
+            self._fitness = (1 / (1 + np.exp(self.phi_age *
+                                             (self.age - self.a_half)
+                                             )
+                                  )
+                             ) * \
+                            (
+                                    1 / (1 + np.exp(-self.phi_weight *
+                                                    (self.weight - self.w_half)
+                                                    )
+                                         )
+                            )
         else:
-            self.fitness = 0.0
+            self._fitness = 0.0
+        return self._fitness
 
     def prob_procreation(self, n):
         """
@@ -190,7 +190,7 @@ class Animal:
             return 0.0
         else:
             p = self.omega * (1 - self.fitness)
-            probability_death = np.random.choice(2, p=[p, 1-p])
+            probability_death = np.random.choice(2, p=[p, 1 - p])
             return probability_death
 
     def prob_migration(self):
@@ -202,7 +202,7 @@ class Animal:
         :return: float
         """
         p = self.mu * self.fitness
-        probability_migration = np.random.choice(2, p=[p, 1-p])
+        probability_migration = np.random.choice(2, p=[p, 1 - p])
         return probability_migration
 
 
@@ -246,8 +246,9 @@ class Herbivore(Animal):
             omega,
             F)
 
-    def __init__(self, age=0, weight=None):
+    def __init__(self, age=None, weight=None):
         super().__init__(age, weight)
+
 
 class Carnivore(Animal):
     @classmethod
@@ -296,5 +297,5 @@ class Carnivore(Animal):
             raise ValueError('delta_phi_max must be strictly positive.')
         cls.DeltaPhiMax = DeltaPhiMax
 
-    def __init__(self, age=0, weight=None):
+    def __init__(self, age=None, weight=None):
         super().__init__(age, weight)
