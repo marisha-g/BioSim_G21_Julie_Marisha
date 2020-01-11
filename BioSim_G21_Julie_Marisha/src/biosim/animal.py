@@ -125,6 +125,8 @@ class Animal:
 
         self.weight = weight
         self._fitness = None
+        self._prob_migration = None
+        self._prob_death = None
 
     def aging(self):
         """
@@ -159,18 +161,6 @@ class Animal:
             probability_procreation = np.random.choice(2, p=[p, 1 - p])
             return probability_procreation
 
-    def prob_migration(self):
-        """
-        Depends on fitness and availability of fodder in neighboring cells.
-        Cannot move to ocean or mountain cells. Probability for moving is given
-        by formula (5 - 7).
-        :param:
-        :return: float
-        """
-        p = self.mu * self.fitness
-        probability_migration = np.random.choice(2, p=[p, 1 - p])
-        return probability_migration
-
     @property
     def fitness(self):
         """
@@ -194,22 +184,39 @@ class Animal:
         return self._fitness
 
     @property
+    def prob_migration(self):
+        """
+        Depends on fitness and availability of fodder in neighboring cells.
+        Cannot move to ocean or mountain cells. Probability for moving is given
+        by formula (5 - 7).
+        :param:
+        :return: float
+        """
+        p = self.mu * self.fitness
+        self._prob_migration = np.random.choice(2, p=[p, 1 - p])
+        return self._prob_migration
+
+    @prob_migration.setter
+    def prob_migration(self, value):
+        self._prob_migration = value
+
+    @property
     def prob_death(self):
         """
         An animal dies with probability following formula (9)
         :return: float
         """
         if self.fitness == 0:
-            self.prob_death = 0
+            self._prob_death = 0
         else:
             p = self.omega * (1 - self.fitness)
-            self.prob_death = np.random.choice(2, p=[p, 1 - p])
+            self._prob_death = np.random.choice(2, p=[p, 1 - p])
 
-        return self.prob_death
+        return self._prob_death
 
     @prob_death.setter
     def prob_death(self, value):
-        self.prob_death = value
+        self._prob_death = value
 
 
 class Herbivore(Animal):
