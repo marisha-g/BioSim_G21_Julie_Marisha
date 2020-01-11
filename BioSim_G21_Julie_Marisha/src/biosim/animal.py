@@ -97,6 +97,18 @@ class Animal:
         else:
             raise ValueError('f can not be a negative value.')
 
+    @classmethod
+    def draw_birth_weight(self):
+        """
+        Birth weight is drawn from a Gaussian distribution with mean and
+        standard deviation.
+        :return: float
+        """
+        birth_weight = 0
+        while birth_weight <= 0:
+            birth_weight = np.random.normal(self.w_birth, self.sigma_birth)
+        return birth_weight
+
     def __init__(self, age=None, weight=None):
         """ Constructor initiate animal.
         """
@@ -121,18 +133,6 @@ class Animal:
         """
         self.age += 1
 
-    @property
-    def draw_birth_weight(self):
-        """
-        Birth weight is drawn from a Gaussian distribution with mean and
-        standard deviation.
-        :return: float
-        """
-        birth_weight = 0
-        while birth_weight <= 0:
-            birth_weight = np.random.normal(self.w_birth, self.sigma_birth)
-        return birth_weight
-
     def weight_gain(self, food):
         """
         When an animal eats an amount 'food' of fodder, its
@@ -145,6 +145,31 @@ class Animal:
         Every year, the weight of the animal decreases.
         """
         self.weight -= self.eta * self.weight
+
+    def prob_procreation(self, n):
+        """
+        Animals can mate if there are at least two animals of the same species
+        in a cell. Probability to give birth is given by fomula (8)
+        :return: float
+        """
+        if self.weight < self.zeta * (self.w_birth + self.sigma_birth):
+            return 0.0
+        else:
+            p = min(1, self.gamma * self.fitness * (n - 1))
+            probability_procreation = np.random.choice(2, p=[p, 1 - p])
+            return probability_procreation
+
+    def prob_migration(self):
+        """
+        Depends on fitness and availability of fodder in neighboring cells.
+        Cannot move to ocean or mountain cells. Probability for moving is given
+        by formula (5 - 7).
+        :param:
+        :return: float
+        """
+        p = self.mu * self.fitness
+        probability_migration = np.random.choice(2, p=[p, 1 - p])
+        return probability_migration
 
     @property
     def fitness(self):
@@ -168,19 +193,7 @@ class Animal:
             self._fitness = 0.0
         return self._fitness
 
-    def prob_procreation(self, n):
-        """
-        Animals can mate if there are at least two animals of the same species
-        in a cell. Probability to give birth is given by fomula (8)
-        :return: float
-        """
-        if self.weight < self.zeta * (self.w_birth + self.sigma_birth):
-            return 0.0
-        else:
-            p = min(1, self.gamma * self.fitness * (n - 1))
-            probability_procreation = np.random.choice(2, p=[p, 1 - p])
-            return probability_procreation
-
+    @property
     def prob_death(self):
         """
         An animal dies with probability following formula (9)
@@ -192,18 +205,6 @@ class Animal:
             p = self.omega * (1 - self.fitness)
             probability_death = np.random.choice(2, p=[p, 1 - p])
             return probability_death
-
-    def prob_migration(self):
-        """
-        Depends on fitness and availability of fodder in neighboring cells.
-        Cannot move to ocean or mountain cells. Probability for moving is given
-        by formula (5 - 7).
-        :param:
-        :return: float
-        """
-        p = self.mu * self.fitness
-        probability_migration = np.random.choice(2, p=[p, 1 - p])
-        return probability_migration
 
 
 class Herbivore(Animal):
