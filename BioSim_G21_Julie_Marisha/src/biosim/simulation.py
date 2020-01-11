@@ -52,6 +52,10 @@ class BioSim:
             seed = 1
         self.seed = seed
         self._year = 0
+        self.herbivore_params_are_set = False
+        self.carnivore_params_are_set = False
+        self.savannah_params_are_set = False
+        self.jungle_params_are_set = False
 
     @staticmethod
     def set_animal_parameters(species, params):
@@ -63,8 +67,10 @@ class BioSim:
         """
         if species == "Herbivore":
             Herbivore.set_parameters(**params)
+            self.herbivore_params_are_set = True
         if species == "Carnivore":
             Carnivore.set_parameters(**params)
+            self.carnivore_params_are_set = True
 
     @staticmethod
     def set_landscape_parameters(landscape, params):
@@ -76,8 +82,10 @@ class BioSim:
         """
         if landscape == "S":
             Savannah.set_parameters(**params)
+            self.savannah_params_are_set = True
         if landscape == "J":
             Jungle.set_parameters(**params)
+            self.jungle_params_are_set = True
 
     def single_simulation(self):
         """
@@ -96,6 +104,17 @@ class BioSim:
 
         Image files will be numbered consecutively.
         """
+        if not self.herbivore_params_are_set:
+            Herbivore.set_parameters()
+        if not self.carnivore_params_are_set:
+            Carnivore.set_parameters()
+        if not self.savannah_params_are_set:
+            Savannah.set_parameters()
+        if not self.jungle_params_are_set:
+            Jungle.set_parameters()
+
+        for year in range(num_years):
+            self.single_simulation()
 
     def add_population(self, population):
         """
