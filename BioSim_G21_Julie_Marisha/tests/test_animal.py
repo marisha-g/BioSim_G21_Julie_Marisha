@@ -12,20 +12,27 @@ import pytest
 
 class TestAnimal:
     """Tests for class Animal."""
+
     def test_value_error_for_negative_values(self):
         """Negative values raises ValueError."""
         with pytest.raises(ValueError):
-            a = Animal()
-            a.set_parameters(
+            Animal.set_parameters(
                 -8.0, -1.5, -0.9,  -0.05, -40.0, -0.2, -10.0, -0.1,
                 -0.25, -1.0, -0.2, -3.5, -1.2, -0.4, -10.0
             )
 
     def test_aging(self):
-        """Test if aging method increments age by 1."""
-        a = Animal()
-        a.aging()
-        assert a.age == 1
+        """Test if aging method increments an animal's age by 1."""
+        herb = Herbivore()
+        carn = Carnivore()
+        herb.age = 0
+        carn.age = 0
+        herb.aging()
+        carn.aging()
+
+        assert herb.age == 1
+        assert carn.age == 1
+    
 
 
 class TestHerbivore:
