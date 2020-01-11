@@ -54,8 +54,8 @@ class Rossumoya:
 
     def __init__(self, island_map=None, ini_pop=None):
         if island_map is None:
-            self.island_map = Rossumoya.default_map
-            self.island_map = self.make_geography_coordinates(self.island_map)
+            island_map = Rossumoya.default_map
+            self.island_map = self.make_geography_coordinates(island_map)
 
         else:
             if self.check_map_input(island_map):
@@ -66,6 +66,14 @@ class Rossumoya:
             self.add_population(Rossumoya.default_ini_carns)
         else:
             self.add_population(ini_pop)
+
+        # Set all parameters to default
+        # BioSim.set_landscape_parameters and
+        # Biosim.set_animal_parameters methods will override if called upon.
+        Savannah.set_parameters()
+        Jungle.set_parameters()
+        Herbivore.set_parameters()
+        Carnivore.set_parameters()
 
     @staticmethod
     def check_map_input(island_map):
