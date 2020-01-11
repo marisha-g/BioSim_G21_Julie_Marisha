@@ -111,7 +111,7 @@ class Rossumoya:
         geography_map = {}
         for i_index, line in enumerate(list_island_map):
             for j_index, cell in enumerate(line):
-                geography_map[(i_index + 1, j_index + 1)] = Rossumoya.cell_code[cell]()
+                geography_map[(i_index, j_index)] = Rossumoya.cell_code[cell]()
         return geography_map
 
     def add_population(self, population):
