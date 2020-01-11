@@ -32,7 +32,6 @@ class TestAnimal:
 
         assert herb.age == 1
         assert carn.age == 1
-    
 
 
 class TestHerbivore:
@@ -46,7 +45,7 @@ class TestHerbivore:
         """Test if default parameters are given."""
         a = Herbivore()
         assert a.age == 0
-        assert a.weight is None
+        assert a.weight == 10
 
         a.set_parameters()
         assert a.w_birth == 8.0
@@ -65,21 +64,15 @@ class TestHerbivore:
         assert a.omega == 0.4
         assert a.F == 10.0
 
-    def test_birth_weight(self):
+    def test_draw_birth_weight(self):
         """ Test that birth_weight method returns positive number."""
         a = Herbivore()
-        assert a.birth_weight() >= 0
+        assert a.draw_birth_weight >= 0
 
     def test_value_error_for_age_and_weight(self):
         """Check if ValueError is raised for negative inputs. """
         with pytest.raises(ValueError):
             a = Herbivore(age=-4, weight=-5)
-
-    def test_draw_birth_weight(self):
-        """If weight parameter is not given, check if random birth weight
-        is drawn."""
-        a = Herbivore(age=0)
-        assert a.weight != 0
 
     def test_zero_weight_gives_zero_fitness(self):
         """Fitness is zero if weight is zero. """
@@ -92,7 +85,6 @@ class TestHerbivore:
         a.set_parameters()
         a.weight = 10
         a.age = 2
-        a.evaluate_fitness()
         assert a.fitness == pytest.approx(0.49975)
 
 
@@ -107,7 +99,7 @@ class TestCarnivore:
         """Tests if default parameters are given."""
         a = Carnivore()
         assert a.age == 0
-        assert a.weight is None
+        assert a.weight == 10
 
         a.set_parameters()
         assert a.w_birth == 6.0
