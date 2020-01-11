@@ -34,7 +34,7 @@ class Cell:
         self.fodder_in_cell = f_max
 
     def abundance_of_fodder(self):
-        rel_abundance_of_fodder =  self.fodder_in_cell
+        rel_abundance_of_fodder = self.fodder_in_cell
         pass
 
     def propensity_migration(self):
@@ -57,7 +57,8 @@ class Savannah(Cell):
         super().__init__()
 
     def regrow_fodder(self):
-        self.fodder_in_cell = self.fodder_in_cell + self.alpha * (self.f_max - self.fodder_in_cell)
+        self.fodder_in_cell = self.fodder_in_cell + \
+                              self.alpha * (self.f_max - self.fodder_in_cell)
 
 
 class Jungle(Cell):
@@ -78,10 +79,12 @@ class Desert(Cell):
     def __init__(self):
         super().__init__()
         self.fodder_in_cell = 0
+        self.f_max = 0
 
 
 class MountainAndOcean(Cell):
     def __init__(self):
         super().__init__()
         self.fodder_in_cell = 0
+        self.f_max = 0
         self.animal_can_enter = False

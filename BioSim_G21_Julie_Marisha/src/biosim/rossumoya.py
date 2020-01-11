@@ -57,8 +57,7 @@ class Rossumoya:
 
         else:
             if self.check_map_input(island_map):
-                self.island_map = island_map
-                self.island_map = self.make_geography_coordinates(self.island_map)
+                self.island_map = self.make_geography_coordinates(island_map)
 
         if ini_pop is None:
             self.add_population(Rossumoya.default_ini_herbs)
@@ -95,7 +94,8 @@ class Rossumoya:
                 raise ValueError("Non-ocean boundary.")
         return True
 
-    def make_geography_coordinates(self, input_map):
+    @staticmethod
+    def make_geography_coordinates(input_map):
         """
         Making a dictionary with coordinates as keys and lists with cell
         types "O, M, S, J, D" and fodder in cell as values.
