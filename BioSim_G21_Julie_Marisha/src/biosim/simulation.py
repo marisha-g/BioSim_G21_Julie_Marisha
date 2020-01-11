@@ -5,6 +5,8 @@
 from BioSim_G21_Julie_Marisha.src.biosim.animal import Herbivore, Carnivore
 from BioSim_G21_Julie_Marisha.src.biosim.cell import Savannah, Jungle, Desert, MountainAndOcean
 from BioSim_G21_Julie_Marisha.src.biosim.rossumoya import Rossumoya
+import pandas as pd
+
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
@@ -133,8 +135,19 @@ class BioSim:
 
     @property
     def animal_distribution(self):
-        """Pandas DataFrame with animal count per species for each cell on island."""
+        """Pandas DataFrame with animal count per species
+         for each cell on island."""
+        data_dict = {}
+        for loc in self.rossumoya.island_map:
+            cell = self.rossumoya.island_map[loc]
+            data_dict[loc] = [cell.total_herbivores, cell.total_carnivores]
 
+        data_frame = pd.DataFrame.from_dict(data_dict, orient='index')
+        data_frame.columns = ['total_herbivores',
+                              'total_carnivores']
+        data_frame.index.name = 'Coordinates'
+
+        return data_frame
 
     def make_movie(self):
         """Create MPEG4 movie from visualization images saved."""
