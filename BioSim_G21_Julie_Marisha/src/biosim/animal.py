@@ -200,11 +200,16 @@ class Animal:
         :return: float
         """
         if self.fitness == 0:
-            return 0.0
+            self.prob_death = 0
         else:
             p = self.omega * (1 - self.fitness)
-            probability_death = np.random.choice(2, p=[p, 1 - p])
-            return probability_death
+            self.prob_death = np.random.choice(2, p=[p, 1 - p])
+
+        return self.prob_death
+
+    @prob_death.setter
+    def prob_death(self, value):
+        self.prob_death = value
 
 
 class Herbivore(Animal):
