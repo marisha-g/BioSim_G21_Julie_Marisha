@@ -49,6 +49,7 @@ class BioSim:
         if seed is None:
             seed = 1
         self.seed = seed
+        self._year = 0
 
     @staticmethod
     def set_animal_parameters(species, params):
@@ -81,7 +82,7 @@ class BioSim:
         Run one single simulation.
         :return:
         """
-
+        self._year += 1
 
     def simulate(self, num_years, vis_years=1, img_years=None):
         """
@@ -105,18 +106,35 @@ class BioSim:
     @property
     def year(self):
         """Last year simulated."""
+        return self._year
 
     @property
     def num_animals(self):
         """Total number of animals on island."""
+        num_animals = 0
+        for cell in self.rossumoya.island_map:
+            num_animals += cell.total_population
+        return num_animals
 
     @property
     def num_animals_per_species(self):
         """Number of animals per species in island, as dictionary."""
+        num_herb = 0
+        num_carn = 0
+
+        for cell in self.rossumoya.island_map:
+            num_herb += cell.total_herbivores
+            num_carn += cell.total_carnivores
+
+        num_animals_per_species = {'Herbivores': num_herb,
+                                   'Carnivores': num_carn}
+
+        return num_animals_per_species
 
     @property
     def animal_distribution(self):
         """Pandas DataFrame with animal count per species for each cell on island."""
+
 
     def make_movie(self):
         """Create MPEG4 movie from visualization images saved."""
