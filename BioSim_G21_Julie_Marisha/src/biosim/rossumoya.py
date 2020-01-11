@@ -2,6 +2,8 @@
 
 """
 """
+import numpy as np
+
 from BioSim_G21_Julie_Marisha.src.biosim.animal import Herbivore, Carnivore
 from BioSim_G21_Julie_Marisha.src.biosim.cell import Savannah, Jungle, Desert, MountainAndOcean
 
@@ -113,6 +115,32 @@ class Rossumoya:
             for j_index, cell in enumerate(line):
                 geography_map[(i_index, j_index)] = Rossumoya.cell_code[cell]()
         return geography_map
+
+    def procreation(self):
+        for loc, cell in self.island_map.items():
+            if cell.animal_can_enter:
+                herb_pop = len(cell.herbivores)
+                carn_pop = len(cell.carnivores)
+
+                if herb_pop > 1:
+                    for herbivore in cell.herbivores:
+                        p = herbivore.prob_procreation()
+                        if np.random.choice(2, p=[1-p, p]):
+                            weight = herbivore.draw_birth_weight()
+                            self.add_population([{'loc': loc,
+                                                  'pop': {'species': Herbivore,
+                                                          'age': 0,
+                                                          'weight': weight}}])
+
+                if carn_pop > 1:
+                    for carnivore in cell.carnivores:
+                        p = carnivore.prob_procreation()
+                        if np.random.choice(2, p=[1-p, p]):
+                            weight = carnivore.draw_birth_weight()
+                            self.add_population([{'loc': loc,
+                                                  'pop': {'species': Carnivore,
+                                                          'age': 0,
+                                                          'weight': weight}}])
 
     def add_population(self, population):
         """
