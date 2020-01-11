@@ -12,7 +12,6 @@ import pytest
 
 class TestAnimal:
     """Tests for class Animal."""
-
     def test_value_error_for_negative_values(self):
         """Negative values raises ValueError."""
         with pytest.raises(ValueError):
@@ -20,6 +19,23 @@ class TestAnimal:
                 -8.0, -1.5, -0.9,  -0.05, -40.0, -0.2, -10.0, -0.1,
                 -0.25, -1.0, -0.2, -3.5, -1.2, -0.4, -10.0
             )
+
+    def test_draw_birth_weight(self):
+        """ Test that birth_weight method returns positive number."""
+        herb = Herbivore()
+        carn = Carnivore()
+
+        Herbivore.set_parameters()
+        Carnivore.set_parameters()
+
+        assert herb.draw_birth_weight() >= 0
+        assert carn.draw_birth_weight() >= 0
+
+    def test_value_error_for_age_and_weight(self):
+        """Check if ValueError is raised for negative inputs. """
+        with pytest.raises(ValueError):
+            Herbivore(age=-4, weight=-5)
+            Carnivore(age=-60, weight=-2.2)
 
     def test_aging(self):
         """Test if aging method increments an animal's age by 1."""
@@ -32,6 +48,70 @@ class TestAnimal:
 
         assert herb.age == 1
         assert carn.age == 1
+
+    def test_weight_gain(self):
+        """Weight increases when weight gain method is called. """
+        herb = Herbivore()
+        carn = Carnivore()
+
+        Herbivore.set_parameters()
+        Carnivore.set_parameters()
+
+        herb_weight_1 = herb.weight
+        carn_weight_1 = carn.weight
+
+        herb.weight_gain(5)
+        carn.weight_gain(5)
+
+        assert herb_weight_1 < herb.weight
+        assert carn_weight_1 < carn.weight
+
+    def test_weight_loss(self):
+        """Weight decreases when weight loss method is called."""
+        herb = Herbivore()
+        carn = Carnivore()
+
+        Herbivore.set_parameters()
+        Carnivore.set_parameters()
+
+        herb_weight_1 = herb.weight
+        carn_weight_1 = carn.weight
+
+        herb.weight_loss()
+        carn.weight_loss()
+
+        assert herb_weight_1 > herb.weight
+        assert carn_weight_1 > carn.weight
+
+    def test_prob_procreation(self):
+        """Probability for procreation is 0 when weight is 0."""
+        herb = Herbivore()
+        carn = Carnivore()
+
+        Herbivore.set_parameters()
+        Carnivore.set_parameters()
+
+        herb.weight = 0
+        carn.weight = 0
+
+        assert herb.prob_procreation(10) == 0
+        assert carn.prob_procreation(13) == 0
+
+    def test_fitness(self):
+        """Tests if the formula for evaluating fitness works."""
+        a = Herbivore()
+        a.set_parameters()
+        a.weight = 10
+        a.age = 2
+        assert a.fitness == pytest.approx(0.49975)
+
+    def test_prob_death_is_callable(self):
+        """Property prob_death is callable."""
+        Herbivore.set_parameters()
+        Carnivore.set_parameters()
+
+        Herbivore.prob_death
+        Carnivore.prob_death
 
 
 class TestHerbivore:
@@ -46,6 +126,7 @@ class TestHerbivore:
         a = Herbivore()
         assert a.age == 0
         assert a.weight == 10
+        assert a._fitness is None
 
         a.set_parameters()
         assert a.w_birth == 8.0
@@ -64,28 +145,10 @@ class TestHerbivore:
         assert a.omega == 0.4
         assert a.F == 10.0
 
-    def test_draw_birth_weight(self):
-        """ Test that birth_weight method returns positive number."""
-        a = Herbivore()
-        assert a.draw_birth_weight >= 0
-
-    def test_value_error_for_age_and_weight(self):
-        """Check if ValueError is raised for negative inputs. """
-        with pytest.raises(ValueError):
-            a = Herbivore(age=-4, weight=-5)
-
     def test_zero_weight_gives_zero_fitness(self):
         """Fitness is zero if weight is zero. """
         a = Herbivore(weight=0)
         assert a.fitness == 0.0
-
-    def test_evaluate_fitness(self):
-        """Tests if the formula for evaluating fitness works."""
-        a = Herbivore()
-        a.set_parameters()
-        a.weight = 10
-        a.age = 2
-        assert a.fitness == pytest.approx(0.49975)
 
 
 class TestCarnivore:
