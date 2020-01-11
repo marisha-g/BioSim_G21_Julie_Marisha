@@ -67,6 +67,11 @@ class Rossumoya:
 
     @staticmethod
     def check_map_input(island_map):
+        """
+        Checks if the input map is compatible.
+        :param island_map: str
+        :return: bool
+        """
         island_map_list = island_map.split("\n")
         length_row = len(island_map_list[0])
         n = len(island_map_list)
