@@ -160,14 +160,15 @@ class Rossumoya:
         cell_right = (x, y+1)
         cell_up = (x-1, y)
         cell_down = (x+1, y)
+        locations = [cell_left, cell_right, cell_up, cell_down]
 
-        if species == 'Herbiovre':
-            calculate_propensities_herb = self.propensity_calculator(Herbivore)
-            propensities = calculate_propensities_herb(loc)
+        if species == 'Herbivore':
+            calculate_propensities_herb = self.propensity_calculator('Herbivore')
+            propensities = calculate_propensities_herb(locations)
 
         if species == 'Carnivore':
-            calculate_propensities_carn = self.propensity_calculator(Carnivore)
-            propensities = calculate_propensities_carn(loc)
+            calculate_propensities_carn = self.propensity_calculator('Carnivore')
+            propensities = calculate_propensities_carn(locations)
 
         sum_propensities = sum(propensities)
         pl = propensities[0] / sum_propensities * propensities[0]
@@ -175,21 +176,21 @@ class Rossumoya:
         pu = propensities[2] / sum_propensities * propensities[2]
         pd = propensities[3] / sum_propensities * propensities[3]
 
-        choice = np.random.choice([cell_left, cell_right, cell_up, cell_down], p=[pl, pr, pu, pd])
+        choice = np.random.choice(locations, p=[pl, pr, pu, pd])
         return choice
 
     def propensity_calculator(self, species):
         propensities = []
         if species == 'Herbivore':
-            def calculator(loc):
-                for cell in loc:
+            def calculator(locations):
+                for cell in locations:
                     propensities.append(self.island_map[cell].propensity_migration_herb)
                 return propensities
             return calculator
 
         if species == 'Carnivore':
-            def calculator(loc):
-                for cell in loc:
+            def calculator(locations):
+                for cell in locations:
                     propensities.append(self.island_map[cell].propensity_migration_carn)
                 return propensities
             return calculator
