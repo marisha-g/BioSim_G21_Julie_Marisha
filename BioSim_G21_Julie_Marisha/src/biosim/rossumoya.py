@@ -127,28 +127,20 @@ class Rossumoya:
     def procreation(self):
         for loc, cell in self.island_map.items():
             if cell.animal_can_enter:
-                herb_pop = len(cell.herbivores)
-                carn_pop = len(cell.carnivores)
+                for animal in cell.animals:
+                    species = type(animal).__name__
+                    if species == 'Herbivore':
+                        p = animal.prob_procreation(cell.total_herbivores)
+                    if species == 'Carnivore':
+                        p = animal.prob_procreation(cell.total_carnivores)
 
-                if herb_pop > 1:
-                    for herbivore in cell.herbivores:
-                        p = herbivore.prob_procreation()
-                        if np.random.choice(2, p=[1-p, p]):
-                            weight = herbivore.draw_birth_weight()
-                            self.add_population([{'loc': loc,
-                                                  'pop': {'species': Herbivore,
-                                                          'age': 0,
-                                                          'weight': weight}}])
-
-                if carn_pop > 1:
-                    for carnivore in cell.carnivores:
-                        p = carnivore.prob_procreation()
-                        if np.random.choice(2, p=[1-p, p]):
-                            weight = carnivore.draw_birth_weight()
-                            self.add_population([{'loc': loc,
-                                                  'pop': {'species': Carnivore,
-                                                          'age': 0,
-                                                          'weight': weight}}])
+                    if np.random.choice(2, p=[1-p, p]):
+                        weight = animal.draw_birth_weight()
+                           self.add_population([{'loc': loc,
+                                                 'pop': {
+                                                     'species': type(animal),
+                                                     'age': 0,
+                                                     'weight': weight}}])
 
     def migration_herbs(self):
         for loc, cell in self.island_map.items():
