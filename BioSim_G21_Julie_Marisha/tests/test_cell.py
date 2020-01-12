@@ -27,7 +27,6 @@ class TestCell:
         c.fodder_first_year(10)
         assert c.fodder_in_cell == 10
 
-
 class TestSavannah:
     """ Tests for Savannah class."""
     def test_constructor(self):
@@ -75,6 +74,12 @@ class TestDesert:
         d = Desert()
         assert isinstance(d, Desert)
 
+    def test_parameters_desert(self):
+        """Test that parameters for subclass Desert are correct."""
+        d = Desert()
+        assert d.fodder_in_cell == 0
+        assert d.f_max == 0
+
 
 class TestMountainAndOcean:
     """ Tests for MountainAndOcean class."""
@@ -82,3 +87,10 @@ class TestMountainAndOcean:
         """Default constructor is callable. """
         p = MountainAndOcean()
         assert isinstance(p, MountainAndOcean)
+
+    def test_parameters_mountain_and_ocean(self):
+        """Test that parameters for subclass MountainAndOcean are correct."""
+        mo = MountainAndOcean()
+        assert mo.fodder_in_cell == 0
+        assert mo.f_max == 0
+        assert mo.animal_can_enter is False
