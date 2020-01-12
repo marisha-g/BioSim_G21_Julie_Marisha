@@ -3,6 +3,7 @@
 """
 """
 from BioSim_G21_Julie_Marisha.src.biosim.animal import Carnivore, Herbivore
+import math
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
@@ -49,8 +50,13 @@ class Cell:
                                   (self.total_carnivores + 1) * Carnivore.F
         return rel_abundance_of_fodder
 
-    def propensity_migration(self):
-        pass
+    @property
+    def propensity_migration_herb(self):
+        return math.exp(Herbivore.lambda_ * self.abundance_of_fodder_herbivores)
+
+    @property
+    def propensity_migration_carn(self):
+        return math.exp(Carnivore.lambda_ * self.abundance_of_fodder_carnivores)
 
     @property
     def total_population(self):
@@ -113,3 +119,6 @@ class MountainAndOcean(Cell):
         self.fodder_in_cell = 0
         self.f_max = 0
         self.animal_can_enter = False
+
+    def propensity_migration(self):
+        return 0
