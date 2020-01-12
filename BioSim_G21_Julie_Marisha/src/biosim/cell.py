@@ -2,6 +2,7 @@
 
 """
 """
+from BioSim_G21_Julie_Marisha.src.biosim.animal import Carnivore, Herbivore
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
@@ -18,14 +19,12 @@ class Cell:
             raise ValueError('f_max must be a positive number')
         cls.f_max = f_max
 
-    def __init__(self, herbivores=None, carnivores=None):
+    def __init__(self, animals=None):
         self.fodder_in_cell = None
         self.animal_can_enter = True
 
-        if herbivores is None:
-            self.herbivores = []
-        if carnivores is None:
-            self.carnivores = []
+        if animals is None:
+            self.animals = []
 
     def fodder_first_year(self, f_max):
         """
@@ -42,18 +41,16 @@ class Cell:
 
     @property
     def total_population(self):
-        tot_pop = len(self.herbivores) + len(self.carnivores)
-        return tot_pop
+        return len(self.animals)
+
 
     @property
     def total_herbivores(self):
-        tot_herb = len(self.herbivores)
-        return tot_herb
+        return self.animals.count(Herbivore)
 
     @property
     def total_carnivores(self):
-        tot_carn = len(self.carnivores)
-        return tot_carn
+        return self.animals.count(Carnivore)
 
 
 class Savannah(Cell):
