@@ -13,6 +13,7 @@ class Cell:
     """
     Cell class description.
     """
+
     @classmethod
     def set_parameters(cls, f_max):
 
@@ -35,7 +36,7 @@ class Cell:
 
     @property
     def abundance_of_fodder_herbivores(self):
-        rel_abundance_of_fodder = self.fodder_in_cell /\
+        rel_abundance_of_fodder = self.fodder_in_cell / \
                                   (self.total_herbivores + 1) * Herbivore.F
         return rel_abundance_of_fodder
 
@@ -46,7 +47,7 @@ class Cell:
             if type(animal).__name__ == 'Herbivore':
                 weight_of_herbs += animal.weight
 
-        rel_abundance_of_fodder = weight_of_herbs /\
+        rel_abundance_of_fodder = weight_of_herbs / \
                                   (self.total_carnivores + 1) * Carnivore.F
         return rel_abundance_of_fodder
 
@@ -61,7 +62,6 @@ class Cell:
     @property
     def total_population(self):
         return len(self.animals)
-
 
     @property
     def total_herbivores(self):
@@ -96,7 +96,6 @@ class Jungle(Cell):
 
     @classmethod
     def set_parameters(cls, f_max=800.0):
-
         super(Jungle, cls).set_parameters(f_max)
 
     def __init__(self):
@@ -120,5 +119,10 @@ class MountainAndOcean(Cell):
         self.f_max = 0
         self.animal_can_enter = False
 
-    def propensity_migration(self):
+    @property
+    def propensity_migration_herb(self):
+        return 0
+
+    @property
+    def propensity_migration_carn(self):
         return 0
