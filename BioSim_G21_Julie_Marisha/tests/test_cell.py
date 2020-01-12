@@ -8,6 +8,7 @@ __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
 from src.biosim.cell import Cell, Savannah, Jungle, Desert, MountainAndOcean
+from BioSim_G21_Julie_Marisha.src.biosim.animal import Herbivore, Carnivore
 
 import pytest
 
@@ -19,6 +20,13 @@ class TestCell:
         c = Cell()
         assert isinstance(c, Cell)
 
+    def test_default_parameters(self):
+        """Default parameters are set correctly."""
+        c = Cell()
+        assert c.fodder_in_cell is None
+        assert c.animal_can_enter is True
+        assert c.animals == []
+
     def test_fodder_first_year(self):
         """ Tests that fodder_first_year method
          changes fodder_in_cell attribute"""
@@ -26,6 +34,22 @@ class TestCell:
         assert c.fodder_in_cell is None
         c.fodder_first_year(10)
         assert c.fodder_in_cell == 10
+
+    def test_abundance_of_fodder_herbivores(self):
+        """Abundance of fodder is equal to 0 when there is no fodder in cell."""
+        c = Cell()
+        Herbivore.set_parameters()
+        c.fodder_in_cell = 0
+        assert c.abundance_of_fodder_herbivores == 0
+
+    def test_abundance_of_fodder_carnivores(self):
+        """Abundance of fodder is equal to 0 when there is no Herbivore
+        in cell. """
+        c = Cell()
+        c.animals = []
+        Carnivore.set_parameters()
+        assert c.abundance_of_fodder_carnivores == 0
+
 
 class TestSavannah:
     """ Tests for Savannah class."""
@@ -79,6 +103,7 @@ class TestDesert:
         d = Desert()
         assert d.fodder_in_cell == 0
         assert d.f_max == 0
+        assert d.animal_can_enter is True
 
 
 class TestMountainAndOcean:
