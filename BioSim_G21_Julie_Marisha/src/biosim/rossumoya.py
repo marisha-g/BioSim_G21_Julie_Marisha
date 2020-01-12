@@ -147,7 +147,7 @@ class Rossumoya:
             if cell.animal_can_enter:
                 for animal in cell.animals:
                     if animal.prob_migration:
-                        new_loc = self.choose_cell(loc, type(animal))
+                        new_loc = self.choose_cell(loc, type(animal).__name__)
                         self.island_map[new_loc].animals.append(animal)
                         self.island_map[loc].animals.remove(animal)
 
