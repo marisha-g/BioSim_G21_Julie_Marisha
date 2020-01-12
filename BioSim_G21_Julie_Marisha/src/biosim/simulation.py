@@ -131,8 +131,8 @@ class BioSim:
             num_herb += cell.total_herbivores
             num_carn += cell.total_carnivores
 
-        num_animals_per_species = {'Herbivores': num_herb,
-                                   'Carnivores': num_carn}
+        num_animals_per_species = {'Herbivore': num_herb,
+                                   'Carnivore': num_carn}
 
         return num_animals_per_species
 
