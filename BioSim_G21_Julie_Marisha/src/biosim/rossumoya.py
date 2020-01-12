@@ -136,29 +136,20 @@ class Rossumoya:
 
                     if np.random.choice(2, p=[1-p, p]):
                         weight = animal.draw_birth_weight()
-                           self.add_population([{'loc': loc,
-                                                 'pop': {
-                                                     'species': type(animal),
+                        self.add_population([{'loc': loc,
+                                              'pop': {
+                                                     'species': species,
                                                      'age': 0,
                                                      'weight': weight}}])
 
-    def migration_herbs(self):
+    def migration(self):
         for loc, cell in self.island_map.items():
             if cell.animal_can_enter:
-                for herbivore in cell.herbivores:
-                    if herbivore.prob_migration:
-                        new_loc = self.choose_cell(loc, 'herbivore')
-                        self.island_map[new_loc].herbivores.append(herbivore)
-                        self.island_map[loc].herbivores.remove(herbivore)
-
-    def migration_carnivores(self):
-        if cell.animal_can_enter:
-            for loc, cell in self.island_map.items():
-                for carnivore in cell.carnivores:
-                    if carnivore.prob_migration:
-                        new_loc = self.choose_cell(loc, 'carnivore')
-                        self.island_map[new_loc].herbivores.append(carnivore)
-                        self.island_map[loc].carnivores.remove(carnivore)
+                for animal in cell.animals:
+                    if animal.prob_migration:
+                        new_loc = self.choose_cell(loc, type(animal))
+                        self.island_map[new_loc].animals.append(animal)
+                        self.island_map[loc].animals.remove(animal)
 
     def choose_cell(self, loc, species):
         pass
@@ -177,6 +168,6 @@ class Rossumoya:
                 age = pop_dict['age']
                 weight = pop_dict['weight']
                 if species == 'Herbivore':
-                    self.island_map[location].carnivores.append(Herbivore(age, weight))
+                    self.island_map[location].animals.append(Herbivore(age, weight))
                 if species == 'Carnivore':
-                    self.island_map[location].carnivores.append(Carnivore(age, weight))
+                    self.island_map[location].animals.append(Carnivore(age, weight))
