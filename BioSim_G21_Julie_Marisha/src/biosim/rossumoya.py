@@ -152,6 +152,49 @@ class Rossumoya:
                         self.island_map[loc].animals.remove(animal)
 
     def choose_cell(self, loc, species):
+        """ Returns cooridnates of chosen cell to migrate to.
+        :return: choice
+        """
+        x, y = loc
+        cell_left = (x, y-1)
+        cell_right = (x, y+1)
+        cell_up = (x-1, y)
+        cell_down = (x+1, y)
+
+        if species == 'Herbiovre':
+            calculate_propensities_herb = self.propensity_calculator(Herbivore)
+            propensities = calculate_propensities_herb(loc)
+
+        if species == 'Carnivore':
+            calculate_propensities_carn = self.propensity_calculator(Carnivore)
+            propensities = calculate_propensities_carn(loc)
+
+        sum_propensities = sum(propensities)
+        pl = propensities[0] / sum_propensities * propensities[0]
+        pr = propensities[1] / sum_propensities * propensities[1]
+        pu = propensities[2] / sum_propensities * propensities[2]
+        pd = propensities[3] / sum_propensities * propensities[3]
+
+        choice = np.random.choice([cell_left, cell_right, cell_up, cell_down], p=[pl, pr, pu, pd])
+        return choice
+
+    def propensity_calculator(self, species):
+        propensities = []
+        if species == 'Herbivore':
+            def calculator(loc):
+                for cell in loc:
+                    propensities.append(self.island_map[cell].propensity_migration_herb)
+                return propensities
+            return calculator
+
+        if species == 'Carnivore':
+            def calculator(loc):
+                for cell in loc:
+                    propensities.append(self.island_map[cell].propensity_migration_carn)
+                return propensities
+            return calculator
+
+    def probability_migrate(self):
         pass
 
     def add_population(self, population):
