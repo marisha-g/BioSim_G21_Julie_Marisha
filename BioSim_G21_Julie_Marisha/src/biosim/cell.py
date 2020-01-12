@@ -32,9 +32,22 @@ class Cell:
         """
         self.fodder_in_cell = f_max
 
-    def abundance_of_fodder(self):
-        rel_abundance_of_fodder = self.fodder_in_cell
-        pass
+    @property
+    def abundance_of_fodder_herbivores(self):
+        rel_abundance_of_fodder = self.fodder_in_cell /\
+                                  (self.total_herbivores + 1) * Herbivore.F
+        return rel_abundance_of_fodder
+
+    @property
+    def abundance_of_fodder_carnivores(self):
+        weight_of_herbs = 0
+        for animal in self.animals:
+            if type(animal).__name__ == 'Herbivore':
+                weight_of_herbs += animal.weight
+
+        rel_abundance_of_fodder = weight_of_herbs /\
+                                  (self.total_carnivores + 1) * Carnivore.F
+        return rel_abundance_of_fodder
 
     def propensity_migration(self):
         pass
