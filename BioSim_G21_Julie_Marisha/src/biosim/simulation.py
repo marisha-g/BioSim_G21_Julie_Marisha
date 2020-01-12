@@ -141,7 +141,7 @@ class BioSim:
         """Pandas DataFrame with animal count per species
          for each cell on island."""
         data_dict = {}
-        for cell in self.rossumoya.island_map.values():
+        for loc, cell in self.rossumoya.island_map.items():
             data_dict[loc] = [cell.total_herbivores, cell.total_carnivores]
 
         data_frame = pd.DataFrame.from_dict(data_dict, orient='index')
