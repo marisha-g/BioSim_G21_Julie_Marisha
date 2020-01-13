@@ -169,18 +169,9 @@ class Animal:
         which is calculated based on age and weight using a formula (4)
         """
         if self.weight > 0:
-            self.fitness = \
-                expit(
-                    self.phi_age * (self.age - self.a_half)
-                ) * expit(
-                    - self.phi_age * (self.weight - self.w_half)
-                )
-
-        #   self._fitness = (1 / (1 + np.exp(self.phi_age *
-        #                                   (self.age - self.a_half))))
-        #                       * \(1 / (1 + np.exp(-self.phi_weight *
-        #                                        (self.weight - self.w_half))))
-
+            age_sigma = expit(-self.phi_age * (self.age - self.a_half))
+            weight_sigma = expit(self.phi_weight * (self.weight - self.w_half))
+            self._fitness = age_sigma * weight_sigma
         else:
             self._fitness = 0.0
         return self._fitness
