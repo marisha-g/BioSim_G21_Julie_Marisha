@@ -195,6 +195,14 @@ class Animal:
         """
         self.weight -= self.eta * self.weight
 
+    def weight_loss_birth(self, weight_offspring):
+        """
+        Calculates weight loss when an animal gives birth.
+        :param weight_offspring: weight of the offspring
+        :type: float
+        """
+        self.weight -= self.xi * weight_offspring
+
     def prob_procreation(self, n):
         """
         Animals can mate if there are at least two animals of the same species
