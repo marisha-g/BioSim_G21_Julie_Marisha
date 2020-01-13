@@ -212,16 +212,26 @@ class Rossumoya:
                         )
 
                     if animal_gives_birth:
-                        self.animal_give_birth(animal, loc)
+                        self.add_offspring(animal, loc)
 
-    def animal_give_birth(self, animal, loc):
+    def add_offspring(self, animal, loc):
+        """
+        Adds baby to population in the location, and decrease weight of the
+         mother.
+        :param animal: Mother who gives birth
+        :type: type
+        :param loc: Location coordinates
+        :type: tuple
+        """
         weight = animal.draw_birth_weight()
-        baby = [{'loc': loc,
-                'pop': {
-                    'species': type(animal).__name__,
-                    'age': 0,
-                    'weight': weight}}]
-        self.add_population(baby)
+        offspring = [{'loc': loc,
+                      'pop': {
+                          'species': type(animal).__name__,
+                          'age': 0,
+                          'weight': weight}}]
+
+        self.add_population(offspring)
+        animal.weight_loss_birth(weight)
 
     def migration(self):
         """
