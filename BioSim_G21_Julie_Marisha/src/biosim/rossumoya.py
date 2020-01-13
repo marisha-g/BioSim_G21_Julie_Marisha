@@ -15,7 +15,7 @@ import textwrap
 
 class Rossumoya:
     """
-    Island in Biosim.
+    Island in BioSim.
     """
     default_ini_herbs = [
         {
@@ -154,7 +154,7 @@ class Rossumoya:
                     cell.animals.remove(animal_list)
 
     def choose_cell(self, loc, species):
-        """ Returns cooridnates of chosen cell to migrate to.
+        """ Returns coordinates of chosen cell to migrate to.
         :return: choice
         """
         x, y = loc
@@ -196,9 +196,6 @@ class Rossumoya:
                     propensities.append(self.island_map[cell].propensity_migration_carn)
                 return propensities
             return calculator
-
-    def probability_migrate(self):
-        pass
 
     def add_population(self, population):
         """
