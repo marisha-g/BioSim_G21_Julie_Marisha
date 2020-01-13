@@ -35,6 +35,9 @@ class Cell:
         """
         self.fodder_in_cell = f_max
 
+    def regrow_fodder(self):
+        self.fodder_in_cell = self.f_max
+
     @property
     def abundance_of_fodder_herbivores(self):
         rel_abundance_of_fodder = self.fodder_in_cell / \
@@ -101,9 +104,6 @@ class Jungle(Cell):
 
     def __init__(self):
         super().__init__()
-
-    def regrow_fodder(self):
-        self.fodder_in_cell = self.f_max
 
 
 class Desert(Cell):
