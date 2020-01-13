@@ -22,12 +22,15 @@ class Cell:
         cls.f_max = f_max
 
     def __init__(self, animals=None):
-        self.fodder_in_cell = None
+        self._fodder_in_cell = None
         self.animal_can_enter = True
 
         if animals is None:
             animals = []
         self.animals = animals
+
+        self.set_parameters()
+        self.fodder_first_year(self.f_max)
 
     def fodder_first_year(self, f_max):
         """
@@ -68,6 +71,14 @@ class Cell:
         list_of_carnivores = [animal for animal in self.animals if isinstance(animal, Carnivore)]
         sorted_carnivores = sorted(list_of_carnivores, key=lambda x: x.fitness, reverse=True)
         return sorted_carnivores
+
+    @property
+    def fodder_in_cell(self):
+        return self._fodder_in_cell
+
+    @fodder_in_cell.setter
+    def fodder_in_cell(self, value):
+        self._fodder_in_cell = value
 
     @property
     def abundance_of_fodder_herbivores(self):
@@ -138,13 +149,20 @@ class Jungle(Cell):
 
 
 class Desert(Cell):
+    @classmethod
+    def set_parameters(cls, f_max=0):
+        super(Desert, cls).set_parameters(f_max)
+
     def __init__(self):
         super().__init__()
         self.fodder_in_cell = 0
-        self.f_max = 0
 
 
 class MountainAndOcean(Cell):
+    @classmethod
+    def set_parameters(cls, f_max=0):
+        super(MountainAndOcean, cls).set_parameters(f_max)
+
     def __init__(self):
         super().__init__()
         self.fodder_in_cell = 0
