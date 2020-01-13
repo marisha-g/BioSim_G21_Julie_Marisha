@@ -38,11 +38,42 @@ class Cell:
     def regrow_fodder(self):
         self.fodder_in_cell = self.f_max
 
+    def herbivores_eat(self):
+        if self.fodder_in_cell != 0:
+            for herbivore in self.list_of_sorted_herbivores:
+                if self.fodder_in_cell >= herbivore.F:
+                    self.fodder_in_cell -= herbivore.F
+                    herbivore.weight_gain(herbivore.F)
+                else:
+                    herbivore.weight_gain(self.fodder_in_cell)
+                    self.fodder_in_cell = 0
+
+    def carnivores_eat(self):
+        if self.total_herbivores != 0:
+            for carnivore in self.list_of_sorted_carnivores:
+                for herbivore in reversed(self.list_of_sorted_herbivores):
+                    if carnivore.prob_carnivore_kill(herbivore.fitness):
+                        weight_prey = herbivore.weight
+                        self.animals.remove(herbivore)
+                        carnivore.weight_gain(weight_prey)
+
+    @property
+    def list_of_sorted_herbivores(self):
+        list_of_herbivores = [animal for animal in self.animals if isinstance(animal, Herbivore)]
+        sorted_herbivores = sorted(list_of_herbivores, key=lambda x: x.fitness, reverse=True)
+        return sorted_herbivores
+
+    @property
+    def list_of_sorted_carnivores(self):
+        list_of_carnivores = [animal for animal in self.animals if isinstance(animal, Carnivore)]
+        sorted_carnivores = sorted(list_of_carnivores, key=lambda x: x.fitness, reverse=True)
+        return sorted_carnivores
+
     @property
     def abundance_of_fodder_herbivores(self):
         rel_abundance_of_fodder = self.fodder_in_cell / \
                                   (self.total_herbivores + 1) * Herbivore.F
-        return rel_abundance_of_fodder
+        return rel_abundance_of_fodder\
 
     @property
     def abundance_of_fodder_carnivores(self):
