@@ -15,7 +15,7 @@ import textwrap
 
 class Rossumoya:
     """
-    Island in BioSim.
+    Island class in simulation BioSim.
     """
     default_ini_herbs = [
         {
@@ -50,9 +50,21 @@ class Rossumoya:
 
     default_map = textwrap.dedent(default_map)
 
-    cell_code = {"S": Savannah, "J": Jungle, "D": Desert, "O": MountainAndOcean, "M": MountainAndOcean}
+    cell_code = {"S": Savannah,
+                 "J": Jungle,
+                 "D": Desert,
+                 "O": MountainAndOcean,
+                 "M": MountainAndOcean}
 
     def __init__(self, island_map=None, ini_pop=None):
+        """
+        Constructor initiate Rossumoya class instance.
+        :param island_map: Multiline string indicating geography of the island.
+        :type: str
+        :param ini_pop: List of dictionaries indicating
+         initial population and location.
+        :type: list
+        """
         if island_map is None:
             island_map = Rossumoya.default_map
             self.island_map = self.make_geography_coordinates(island_map)
@@ -78,63 +90,76 @@ class Rossumoya:
     @staticmethod
     def check_map_input(island_map):
         """
-        Checks if the input map is compatible.
-        :param island_map: str
-        :return: bool
+        Raises ValueError if input map is not compatible and does not
+         follows restrictions for the geography of the island. Returns True
+         otherwise.
+        :param island_map: Multiline string indicating the geography
+         of the island.
+        :type: str
+        :return: True
+        :type: bool
         """
+        # All lines must be of same length
         island_map_list = island_map.split("\n")
-        length_row = len(island_map_list[0])
-        n = len(island_map_list)
-
+        length_first_row = len(island_map_list[0])
         for row in island_map_list:
-            if len(row) != length_row:
+            if len(row) != length_first_row:
                 raise ValueError("Inconsistent line length.")
 
+        # All cells must be of valid landscape type
         for row in island_map_list:
             for cell in row:
                 if cell not in Rossumoya.cell_code:
                     raise ValueError("Invalid landscape type.")
 
+        # All outer cells must be of type Ocean
         for cell in island_map_list[0]:
             if cell != "O":
                 raise ValueError("Non-ocean boundary.")
-        for cell in island_map_list[n - 1]:
+        for cell in island_map_list[-1]:
             if cell != "O":
                 raise ValueError("Non-ocean boundary.")
         for row in island_map_list:
-            num_cells = len(row)
             if row[0] != "O":
                 raise ValueError("Non-ocean boundary.")
-            if row[num_cells - 1] != "O":
+            if row[-1] != "O":
                 raise ValueError("Non-ocean boundary.")
         return True
 
-    @staticmethod
-    def make_geography_coordinates(input_map):
+    def add_population(self, population):
         """
-        Making a dictionary with coordinates as keys and lists with cell
-        types "O, M, S, J, D" and fodder in cell as values.
+        Add a population to the island
 
-        :return: dict
+        :param population: List of dictionaries specifying population
         """
-        list_island_map = input_map.split('\n')
-        geography_map = {}
-        for i_index, line in enumerate(list_island_map):
-            for j_index, cell in enumerate(line):
-                geography_map[(i_index, j_index)] = Rossumoya.cell_code[cell]()
-        return geography_map
+        for cell_dict in population:
+            location = cell_dict['loc']
+
+            for pop_dict in cell_dict['pop']:
+                species = pop_dict['species']
+                age = pop_dict['age']
+                weight = pop_dict['weight']
+                if species == 'Herbivore':
+                    self.island_map[location].animals.append(Herbivore(age, weight))
+                if species == 'Carnivore':
+                    self.island_map[location].animals.append(Carnivore(age, weight))
 
     def procreation(self):
+        """
+        If an animal gives birth, a new animal of the same species with
+        age zero and weight drawn from draw_birth_weight is added to the same
+        cell.
+        """
         for loc, cell in self.island_map.items():
             if cell.animal_can_enter:
                 for animal in cell.animals:
                     species = type(animal).__name__
                     if species == 'Herbivore':
-                        p = animal.prob_procreation(cell.total_herbivores)
+                        animal_gives_birth = animal.prob_procreation(cell.total_herbivores)
                     if species == 'Carnivore':
-                        p = animal.prob_procreation(cell.total_carnivores)
+                        animal__gives_birth = animal.prob_procreation(cell.total_carnivores)
 
-                    if np.random.choice(2, p=[1-p, p]):
+                    if animal_gives_birth:
                         weight = animal.draw_birth_weight()
                         self.add_population([{'loc': loc,
                                               'pop': {
@@ -143,19 +168,31 @@ class Rossumoya:
                                                      'weight': weight}}])
 
     def migration(self):
+        """
+        Moves animal from current cell to one of the possible
+        neighbouring cells, if prob_migrate returns 1.
+        """
         for loc, cell in self.island_map.items():
             if cell.animal_can_enter:
                 for animal in cell.animals:
-                    animal_list = []
+                    migrating_animals = []
                     if animal.prob_migration:
                         new_loc = self.choose_cell(loc, type(animal).__name__)
                         self.island_map[new_loc].animals.append(animal)
-                        animal_list.append(animal)
-                    cell.animals.remove(animal_list)
+                        migrating_animals.append(animal)
+                    for gone_animal in migrating_animals:
+                        cell.animals.remove(gone_animal)
 
     def choose_cell(self, loc, species):
-        """ Returns coordinates of chosen cell to migrate to.
-        :return: choice
+        """
+        Calculate propensities and returns
+        coordinates of chosen cell to migrate to.
+        :param: loc: Location coordinates before migration
+        :type: tuple
+        :param: species: Herbivore or Carnivore
+        :type: str
+        :return: choice: Chosen cell coordinates to migrate to.
+        :type: tuple
         """
         x, y = loc
         cell_left = (x, y-1)
@@ -206,20 +243,18 @@ class Rossumoya:
             for dead_animal in dead_animals:
                 cell.animals.remove(dead_animal)
 
-    def add_population(self, population):
+    @staticmethod
+    def make_geography_coordinates(input_map):
         """
-        Add a population to the island
-
-        :param population: List of dictionaries specifying population
+        Makes a dictionary with coordinates as keys and Cell subclass instances
+        (Savannah, Jungle, Desert, MountainAndOcean) as values,
+        initiated with default parameters.
+        :return: geography_map
+        :type: dict
         """
-        for cell_dict in population:
-            location = cell_dict['loc']
-
-            for pop_dict in cell_dict['pop']:
-                species = pop_dict['species']
-                age = pop_dict['age']
-                weight = pop_dict['weight']
-                if species == 'Herbivore':
-                    self.island_map[location].animals.append(Herbivore(age, weight))
-                if species == 'Carnivore':
-                    self.island_map[location].animals.append(Carnivore(age, weight))
+        list_island_map = input_map.split('\n')
+        geography_map = {}
+        for i_index, line in enumerate(list_island_map):
+            for j_index, cell in enumerate(line):
+                geography_map[(i_index, j_index)] = Rossumoya.cell_code[cell]()
+        return geography_map
