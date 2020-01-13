@@ -82,24 +82,32 @@ class BioSim:
     def single_simulation(self):
         """
         Run one single simulation.
-        :return:
         """
+        # Fodder regrows
         for cell in self.rossumoya.island_map.values():
             cell.regrow_fodder()
-
+        
+        # Herbivores eat, then carnivores prey on herbivores
         for cell in self.rossumoya.island_map.values():
             cell.herbivores_eat()
             cell.carnivores_eat()
 
+        # Animals mate
         self.rossumoya.procreation()
+
+        # Animals migrate
         self.rossumoya.migration()
 
+        # Animals age and loose weight
         for cell in self.rossumoya.island_map.values():
             for animal in cell.animals:
                 animal.aging()
                 animal.weight_loss()
+
+        # Animals die
         self.rossumoya.death()
 
+        # Simulation year increments by one
         self.year += 1
 
     def simulate(self, num_years, vis_years=1, img_years=None):
