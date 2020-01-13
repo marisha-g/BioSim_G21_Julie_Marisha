@@ -312,15 +312,22 @@ class Carnivore(Animal):
 
     def __init__(self, age=None, weight=None):
         super().__init__(age, weight)
+        self._prob_carnivore_kill = None
 
+    @property
     def prob_carnivore_kill(self, fitness_prey):
         if self.fitness <= fitness_prey:
-            return 0
+            self._prob_carnivore_kill = 0
+            return self._prob_carnivore_kill
         elif 0 < self.fitness - fitness_prey < self.DeltaPhiMax:
             p = (self.fitness - fitness_prey) / self.DeltaPhiMax
             choice = np.random.choice(2, p=[p-1, p])
-            return choice
+            self._prob_carnivore_kill = choice
+            return self._prob_carnivore_kill
         else:
-            return 1
+            self._prob_carnivore_kill = 1
+            return self._prob_carnivore_kill
 
-
+    @prob_carnivore_kill.setter
+    def prob_carnivore_kill(self, value):
+        self._prob_carnivore_kill = value
