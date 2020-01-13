@@ -7,6 +7,7 @@ __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
 import numpy as np
+from scipy.special import expit
 
 
 class Animal:
@@ -168,20 +169,25 @@ class Animal:
         which is calculated based on age and weight using a formula (4)
         """
         if self.weight > 0:
-            self._fitness = (1 / (1 + np.exp(self.phi_age *
-                                             (self.age - self.a_half)
-                                             )
-                                  )
-                             ) * \
-                            (
-                                    1 / (1 + np.exp(-self.phi_weight *
-                                                    (self.weight - self.w_half)
-                                                    )
-                                         )
-                            )
+            self.fitness = \
+                expit(
+                    self.phi_age * (self.age - self.a_half)
+                ) * expit(
+                    - self.phi_age * (self.weight - self.w_half)
+                )
+
+        #   self._fitness = (1 / (1 + np.exp(self.phi_age *
+        #                                   (self.age - self.a_half))))
+        #                       * \(1 / (1 + np.exp(-self.phi_weight *
+        #                                        (self.weight - self.w_half))))
+
         else:
             self._fitness = 0.0
         return self._fitness
+
+    @fitness.setter
+    def fitness(self, value):
+        self.fitness = value
 
     @property
     def prob_migration(self):
@@ -321,7 +327,7 @@ class Carnivore(Animal):
             return self._prob_carnivore_kill
         elif 0 < self.fitness - fitness_prey < self.DeltaPhiMax:
             p = (self.fitness - fitness_prey) / self.DeltaPhiMax
-            choice = np.random.choice(2, p=[p-1, p])
+            choice = np.random.choice(2, p=[p - 1, p])
             self._prob_carnivore_kill = choice
             return self._prob_carnivore_kill
         else:
