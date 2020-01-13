@@ -26,7 +26,8 @@ class Cell:
         self.animal_can_enter = True
 
         if animals is None:
-            self.animals = []
+            animals = []
+        self.animals = animals
 
     def fodder_first_year(self, f_max):
         """
@@ -65,11 +66,11 @@ class Cell:
 
     @property
     def total_herbivores(self):
-        return self.animals.count(Herbivore)
+        return len([animal for animal in self.animals if isinstance(animal, Herbivore)])
 
     @property
     def total_carnivores(self):
-        return self.animals.count(Carnivore)
+        return len([animal for animal in self.animals if isinstance(animal, Carnivore)])
 
 
 class Savannah(Cell):
