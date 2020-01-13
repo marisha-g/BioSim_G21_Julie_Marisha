@@ -15,18 +15,25 @@ import textwrap
 
 
 class PropensityCalculator:
-    def __init__(self, locs, island_map):
+    def __init__(self, locations, island_map):
         """
         Constructor initiate PropensityCalculator
-        :param locs:
+        :param locations: List of the four neighbouring cells,
+         in this exact order: [Left, Right, Up, Down].
         :type: list
-        :param island_map:
+        :param island_map: Dictionary with all cells and their locations
         :type: dict
         """
-        self.locations = locs
+        self.locations = locations
         self.island_map = island_map
 
     def herbs(self):
+        """
+        Calculate the propensities of the four cells for herbivores.
+        :return: propensities: List with the four neighbouring cells
+         corresponding propensities.
+        :type: list
+        """
         propensities = []
         for cell in self.locations:
             cell = self.island_map[cell]
@@ -34,6 +41,13 @@ class PropensityCalculator:
         return propensities
 
     def carns(self):
+        """
+        Calculate the propensities of the four cells for carnivores.
+
+        :return: propensities: List with the four neighbouring cells
+         corresponding propensities.
+        :type: list
+        """
         propensities = []
         for cell in self.locations:
             cell = self.island_map[cell]
@@ -119,8 +133,8 @@ class Rossumoya:
     def check_map_input(island_map):
         """
         Raises ValueError if input map is not compatible and does not
-         follows restrictions for the geography of the island. Returns True
-         otherwise.
+        follows restrictions for the geography of the island. Returns True
+        otherwise.
         :param island_map: Multiline string indicating the geography
          of the island.
         :type: str
@@ -156,9 +170,10 @@ class Rossumoya:
 
     def add_population(self, population):
         """
-        Add a population to the island
-
-        :param population: List of dictionaries specifying population
+        Add population to the island.
+        :param population: List of dictionaries specifying
+         population and locations.
+        :type: list
         """
         for cell_dict in population:
             location = cell_dict['loc']
