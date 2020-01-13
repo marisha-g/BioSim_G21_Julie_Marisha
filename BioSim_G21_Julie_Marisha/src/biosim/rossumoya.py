@@ -203,7 +203,8 @@ class Rossumoya:
             for animal in cell.animals:
                 if animal.prob_death:
                     dead_animals.append(animal)
-            cell.animals.remove(dead_animals)     
+            for dead_animal in dead_animals:
+                cell.animals.remove(dead_animal)
 
     def add_population(self, population):
         """
