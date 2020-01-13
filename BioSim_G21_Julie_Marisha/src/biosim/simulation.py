@@ -140,14 +140,15 @@ class BioSim:
     def animal_distribution(self):
         """Pandas DataFrame with animal count per species
          for each cell on island."""
-        data_dict = {}
+        data_dict = {'Row': [], 'Col': [], 'Herbivore': [], 'Carnivore': []}
         for loc, cell in self.rossumoya.island_map.items():
-            data_dict[loc] = [cell.total_herbivores, cell.total_carnivores]
+            x, y = loc
+            data_dict['Row'].append(x)
+            data_dict['Col'].append(y)
+            data_dict['Herbivore'].append(cell.total_herbivores)
+            data_dict['Carnivore'].append(cell.total_carnivores)
 
-        data_frame = pd.DataFrame.from_dict(data_dict, orient='index')
-        data_frame.columns = ['total_herbivores',
-                              'total_carnivores']
-        data_frame.index.name = 'Coordinates'
+        data_frame = pd.DataFrame.from_dict(data_dict)
 
         return data_frame
 
