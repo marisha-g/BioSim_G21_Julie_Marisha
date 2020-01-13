@@ -146,10 +146,12 @@ class Rossumoya:
         for loc, cell in self.island_map.items():
             if cell.animal_can_enter:
                 for animal in cell.animals:
+                    animal_list = []
                     if animal.prob_migration:
                         new_loc = self.choose_cell(loc, type(animal).__name__)
                         self.island_map[new_loc].animals.append(animal)
-                        self.island_map[loc].animals.remove(animal)
+                        animal_list.append(animal)
+                    cell.animals.remove(animal_list)
 
     def choose_cell(self, loc, species):
         """ Returns cooridnates of chosen cell to migrate to.
