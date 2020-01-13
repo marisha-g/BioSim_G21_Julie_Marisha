@@ -100,7 +100,7 @@ class BioSim:
                 animal.weight_loss()
         self.rossumoya.death()
 
-        self._year += 1
+        self.year += 1
 
     def simulate(self, num_years, vis_years=1, img_years=None):
         """
@@ -115,6 +115,10 @@ class BioSim:
 
         for year in range(num_years):
             self.single_simulation()
+            if self.year % vis_years == 0:
+                update_visualization()
+            if self.year % img_years == 0:
+                save_file()
 
     def add_population(self, population):
         """
@@ -128,6 +132,10 @@ class BioSim:
     def year(self):
         """Last year simulated."""
         return self._year
+
+    @year.setter
+    def year(self, value):
+        self._year = value
 
     @property
     def num_animals(self):
