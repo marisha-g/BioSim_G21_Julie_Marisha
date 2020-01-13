@@ -197,6 +197,14 @@ class Rossumoya:
                 return propensities
             return calculator
 
+    def death(self):
+        for cell in self.island_map.values():
+            dead_animals = []
+            for animal in cell.animals:
+                if animal.prob_death:
+                    dead_animals.append(animal)
+            cell.animals.remove(dead_animals)     
+
     def add_population(self, population):
         """
         Add a population to the island
