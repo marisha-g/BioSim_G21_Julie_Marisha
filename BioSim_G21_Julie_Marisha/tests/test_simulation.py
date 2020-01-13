@@ -33,8 +33,6 @@ class TestBiosim:
         """Default animal distribution in cells are created correctly."""
         sim1 = BioSim()
         data_frame = sim1.animal_distribution
-        num_herbivore_list = data_frame['total_herbivores'][[(10, 10)]]
-        assert num_herbivore_list.to_list() == [150]
-
-        num_carnivore_list = data_frame['total_carnivores'][[(10, 10)]]
-        assert num_carnivore_list.to_list() == [40]
+        data_frame.set_index(["Row", "Col"], inplace=True)
+        assert data_frame.loc[(10, 10)].Herbivore == 150
+        assert data_frame.loc[(10, 10)].Carnivore == 40
