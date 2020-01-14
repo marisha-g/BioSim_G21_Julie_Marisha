@@ -11,10 +11,7 @@ from scipy.special import expit
 
 
 class Animal:
-    """
-    Superclass for animal in BioSim.
-    """
-
+    """Superclass for animal in BioSim."""
     @classmethod
     def set_parameters(
             cls,
@@ -151,6 +148,10 @@ class Animal:
             cls.birth_weight = np.random.normal(cls.w_birth, cls.sigma_birth)
         return cls.birth_weight
 
+    @classmethod
+    def reset_migration(cls):
+        cls.has_migrated = False
+
     def __init__(self, age=None, weight=None):
         """
         Constructor that initiate class Animal.
@@ -255,6 +256,7 @@ class Animal:
         """
         p = self.mu * self.fitness
         self._prob_migration = np.random.choice(2, p=[p, 1 - p])
+        self.has_migrated = True
         return self._prob_migration
 
     @prob_migration.setter
