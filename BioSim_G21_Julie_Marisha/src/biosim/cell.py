@@ -14,6 +14,7 @@ class Cell:
     """
     Superclass for cell in BioSim.
     """
+
     @classmethod
     def set_parameters(cls, f_max):
         """
@@ -127,46 +128,95 @@ class Cell:
 
     @property
     def abundance_of_fodder_herbivores(self):
-        rel_abundance_of_fodder = self.fodder_in_cell / \
-                                  (self.total_herbivores + 1) * Herbivore.F
+        """
+        Calculates the relative abundance of fodder for Herbivores.
+        :return: rel_abundance_of_fodder
+        :type: float
+        """
+        rel_abundance_of_fodder = self.fodder_in_cell / (
+                self.total_herbivores + 1
+        ) * Herbivore.F
+
         return rel_abundance_of_fodder
 
     @property
     def abundance_of_fodder_carnivores(self):
+        """
+        Calculates the relative abundance of fodder for Carnivores.
+        :return: rel_abundance_of_fodder
+        :type: float
+        """
         weight_of_herbs = 0
         for animal in self.animals:
             if type(animal).__name__ == 'Herbivore':
                 weight_of_herbs += animal.weight
 
-        rel_abundance_of_fodder = weight_of_herbs / \
-                                  (self.total_carnivores + 1) * Carnivore.F
+        rel_abundance_of_fodder = weight_of_herbs / (
+                self.total_carnivores + 1
+        ) * Carnivore.F
+
         return rel_abundance_of_fodder
 
     @property
     def propensity_migration_herb(self):
+        """
+        Calculates the propensity for a Herbivore to move from one cell
+        to another.
+        :return: formula for calculating propensity
+        :type: float
+        """
         return math.exp(Herbivore.lambda_ * self.abundance_of_fodder_herbivores)
 
     @property
     def propensity_migration_carn(self):
+        """
+        Calculates the propensity for a Carnivore to move from one cell
+        to another.
+        :return: formula for calculating propensity
+        :type: float
+        """
         return math.exp(Carnivore.lambda_ * self.abundance_of_fodder_carnivores)
 
     @property
     def total_population(self):
+        """
+        Returns the total amount of animals on Rossumøya.
+        :return: length of the Animal list
+        :type: int
+        """
         return len(self.animals)
 
     @property
     def total_herbivores(self):
+        """
+        :returns: the total amount of Herbivores on Rossumøya.
+        :type: int
+        """
         return len([animal for animal in self.animals if isinstance(animal, Herbivore)])
 
     @property
     def total_carnivores(self):
+        """
+        :returns: the total amount of Carnivores on Rossumøya.
+        :type: int
+        """
         return len([animal for animal in self.animals if isinstance(animal, Carnivore)])
 
 
 class Savannah(Cell):
+    """
+    Class instance of class Cell for the cell type Savannah.
+    """
+
     @classmethod
     def set_parameters(cls, f_max=300.0, alpha=0.3):
-
+        """
+        Set default parameters for class instance Savannah.
+        :param f_max: maximum fodder available in cell type Savannah
+        :type: float
+        :param alpha: constant
+        :type: float
+        """
         super(Savannah, cls).set_parameters(f_max)
         if alpha is None:
             alpha = 0.3
@@ -176,39 +226,79 @@ class Savannah(Cell):
         cls.alpha = alpha
 
     def __init__(self):
+        """
+        Constructor that initiate class instance Savannah.
+        """
         super().__init__()
 
     def regrow_fodder(self):
-        self.fodder_in_cell = self.fodder_in_cell + \
-                              self.alpha * (self.f_max - self.fodder_in_cell)
+        """
+        Calculates regrowth of fodder in cell type Savannah.
+        """
+        self.fodder_in_cell = self.fodder_in_cell + self.alpha * (
+                self.f_max - self.fodder_in_cell
+        )
 
 
 class Jungle(Cell):
+    """
+    Class instance of class Cell for the cell type Jungle.
+    """
 
     @classmethod
     def set_parameters(cls, f_max=800.0):
+        """
+        Set default parameters for class instance Jungle.
+        :param f_max: maximum fodder available in cell type Jungle
+        :type: float
+        """
         super(Jungle, cls).set_parameters(f_max)
 
     def __init__(self):
+        """
+        Constructor that initiate class instance Jungle.
+        """
         super().__init__()
 
 
 class Desert(Cell):
+    """
+    Class instance of class Cell for the cell type Desert.
+    """
     @classmethod
     def set_parameters(cls, f_max=0):
+        """
+        Set default parameters for class instance Desert.
+        :param f_max: maximum fodder available in cell type Desert
+        :type: float
+        """
         super(Desert, cls).set_parameters(f_max)
 
     def __init__(self):
+        """
+        Constructor that initiate class instance Desert.
+        """
         super().__init__()
         self.fodder_in_cell = 0
 
 
 class MountainAndOcean(Cell):
+    """
+    Class instance of class Cell for the cell types Mountain and Ocean.
+    """
     @classmethod
     def set_parameters(cls, f_max=0):
+        """
+        Set default parameters for class instance MountainAndOcean.
+        :param f_max: maximum fodder available in cell type Mountain and Ocean
+        :type: float
+        """
         super(MountainAndOcean, cls).set_parameters(f_max)
 
     def __init__(self):
+        """
+        Constructor that initiate class instance MountainAndOcean.
+        """
         super().__init__()
         self.fodder_in_cell = 0
         self.f_max = 0
@@ -216,8 +306,20 @@ class MountainAndOcean(Cell):
 
     @property
     def propensity_migration_herb(self):
+        """
+        Sets the propensity for a Herbivore to migrate to zero,
+        because Mountain and Ocean cells are impassable.
+        :return: 0
+        :type: int
+        """
         return 0
 
     @property
     def propensity_migration_carn(self):
+        """
+        Sets the propensity for a Carnivore to migrate to zero,
+        because Mountain and Ocean cells are impassable.
+        :return: 0
+        :type: int
+        """
         return 0

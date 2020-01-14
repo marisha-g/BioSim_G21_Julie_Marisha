@@ -17,7 +17,7 @@ import textwrap
 class MigrationProbabilityCalculator:
     def __init__(self, loc, island_map, species):
         """
-        Constructor initiate PropensityCalculator
+        Constructor that initiate MigrationProbabilityCalculator.
         :param loc: Coordinates for the current position
         :type: tuple
         :param island_map: Dictionary with all cells and their locations
@@ -40,9 +40,9 @@ class MigrationProbabilityCalculator:
 
     def propensity_herb(self):
         """
-        Calculate the propensities of the four cells for herbivores.
+        Calculate the propensities of the four cells for Herbivores.
         :return: propensities: List with the four neighbouring cells
-         corresponding propensities.
+                 corresponding propensities.
         :type: list
         """
         propensities = []
@@ -53,9 +53,9 @@ class MigrationProbabilityCalculator:
 
     def propensity_carns(self):
         """
-        Calculate the propensities of the four cells for carnivores.
+        Calculate the propensities of the four cells for Carnivores.
         :return: propensities: List with the four neighbouring cells
-         corresponding propensities.
+                 corresponding propensities.
         :type: list
         """
         propensities = []
@@ -123,11 +123,11 @@ class Rossumoya:
 
     def __init__(self, island_map=None, ini_pop=None):
         """
-        Constructor initiate Rossumoya class instance.
+        Constructor that initiate Rossumoya class instance.
         :param island_map: Multiline string indicating geography of the island.
         :type: str
         :param ini_pop: List of dictionaries indicating
-         initial population and location.
+               initial population and location.
         :type: list
         """
         if island_map is None:
@@ -156,10 +156,10 @@ class Rossumoya:
     def check_map_input(island_map):
         """
         Raises ValueError if input map is not compatible and does not
-        follows restrictions for the geography of the island. Returns True
+        follow restrictions for the geography of the island. Returns True
         otherwise.
         :param island_map: Multiline string indicating the geography
-         of the island.
+               of the island.
         :type: str
         :return: True
         :type: bool
@@ -195,7 +195,7 @@ class Rossumoya:
         """
         Add population to the island.
         :param population: List of dictionaries specifying
-         population and locations.
+                           population and locations.
         :type: list
         """
         for cell_dict in population:
@@ -239,8 +239,8 @@ class Rossumoya:
 
     def add_offspring(self, animal, loc):
         """
-        Adds baby to population in the location, and decrease weight of the
-         mother.
+        Adds offspring to population in the location, and decrease weight of the
+        mother.
         :param animal: Mother who gives birth
         :type: type
         :param loc: Location coordinates
