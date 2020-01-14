@@ -76,11 +76,17 @@ class TestRossumoya:
             island_map_string = "OOOO\nOKJO\nOOOO"
             self.rossumoya.check_map_input(island_map_string)
 
-            island_map_string = "OOOA\nOJSO\nOOOO"
+            island_map_string = "OOOJ\nOJSO\nOOOO"
             self.rossumoya.check_map_input(island_map_string)
 
-    def test_add_population(self):
-        pass
+    def test_procreation(self):
+        """ """
+        animal = Herbivore
+        class_instance_to_str = type(animal).__name__
+        assert isinstance(class_instance_to_str, str)
 
+    def test_add_offspring(self):
+        """add_offspring() method is callable. """
+        self.rossumoya.add_offspring(Carnivore(), (4, 6))
 
-
+    def
