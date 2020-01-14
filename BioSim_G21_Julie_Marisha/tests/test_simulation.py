@@ -14,7 +14,7 @@ import pytest
 
 class TestBiosim:
     """Tests for class BioSim."""
-    @pytest.fixture
+    @pytest.fixture(autouse=True)
     def create_sim(self):
         self.biosim = BioSim()
 
