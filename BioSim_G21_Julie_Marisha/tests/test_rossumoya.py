@@ -67,4 +67,21 @@ class TestRossumoya:
         """add_population can be called."""
         self.rossumoya.add_population(self.rossumoya.default_ini_herbs)
 
+    def test_value_error_check_map_input(self):
+        """Test that ValueError is raised for check_map_input"""
+        with pytest.raises(ValueError):
+            island_map_string = "OOOO\nOAO\nOOOO"
+            self.rossumoya.check_map_input(island_map_string)
+
+            island_map_string = "OOOO\nOKJO\nOOOO"
+            self.rossumoya.check_map_input(island_map_string)
+
+            island_map_string = "OOOA\nOJSO\nOOOO"
+            self.rossumoya.check_map_input(island_map_string)
+
+    def test_add_population(self):
+        population = [{}]
+
+
+
 
