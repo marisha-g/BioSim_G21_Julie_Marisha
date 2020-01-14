@@ -500,7 +500,7 @@ class Carnivore(Animal):
             return self._prob_carnivore_kill
         elif 0 < self.fitness - fitness_prey < self.DeltaPhiMax:
             p = (self.fitness - fitness_prey) / self.DeltaPhiMax
-            choice = np.random.choice(2, p=[p - 1, p])
+            choice = np.random.choice(2, p=[1 - p, p])
             self._prob_carnivore_kill = choice
             return self._prob_carnivore_kill
         else:
