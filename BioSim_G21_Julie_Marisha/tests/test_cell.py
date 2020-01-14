@@ -57,13 +57,12 @@ class TestCell:
     def test_add_population(self):
         """Test that population is added."""
         pop_list = [{"species": "Herbivore", "age": 5, "weight": 20} for _ in range(150)]
-
-        length_list_1 = len(self.cell.animals)
-
+        num_animals_1 = len(self.cell.animals)
         self.cell.add_population(pop_list)
-        length_list_2 = len(self.cell.animals)
-
-        assert length_list_2 > length_list_1
+        num_animals_2 = len(self.cell.animals)
+        assert num_animals_2 > num_animals_1
+        assert num_animals_1 == 0
+        assert num_animals_2 == 150
 
     def test_remove_dead_animal(self):
         """remove_dead_animal method is callable and removes
