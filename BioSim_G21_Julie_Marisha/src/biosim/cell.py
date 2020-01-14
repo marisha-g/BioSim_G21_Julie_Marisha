@@ -73,9 +73,9 @@ class Cell:
 
     def carnivores_eat(self):
         """
-        Carnivore with the highest fitness eat first. The Carnivore try to
-        kill the Herbivore with lowest fitness first. The weight of the
-        Carnivore increases by the weight of the Herbivore killed.
+        Carnivore with the highest fitness eat first. The Carnivore tries to
+        kill the Herbivore with lowest fitness first. The increase in weight
+        of the Carnivore is proportional to the weight of the Herbivore killed.
         """
         if self.total_herbivores != 0:
             for carnivore in self.list_of_sorted_carnivores:
