@@ -94,8 +94,11 @@ class Cell:
         :return: sorted_herbivores
         :type: list
         """
-        list_of_herbivores = [animal for animal in self.animals if isinstance(animal, Herbivore)]
-        sorted_herbivores = sorted(list_of_herbivores, key=lambda x: x.fitness, reverse=True)
+        list_of_herbivores = [animal for animal in self.animals
+                              if isinstance(animal, Herbivore)]
+        sorted_herbivores = sorted(list_of_herbivores,
+                                   key=lambda x: x.fitness,
+                                   reverse=True)
         return sorted_herbivores
 
     @property
@@ -105,8 +108,11 @@ class Cell:
         :return: sorted_carnivores
         :type: list
         """
-        list_of_carnivores = [animal for animal in self.animals if isinstance(animal, Carnivore)]
-        sorted_carnivores = sorted(list_of_carnivores, key=lambda x: x.fitness, reverse=True)
+        list_of_carnivores = [animal for animal in self.animals
+                              if isinstance(animal, Carnivore)]
+        sorted_carnivores = sorted(list_of_carnivores,
+                                   key=lambda x: x.fitness,
+                                   reverse=True)
         return sorted_carnivores
 
     @property
