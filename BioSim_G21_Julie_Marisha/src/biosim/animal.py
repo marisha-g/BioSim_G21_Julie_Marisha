@@ -147,6 +147,10 @@ class Animal:
         while cls.birth_weight <= 0:
             cls.birth_weight = np.random.normal(cls.w_birth, cls.sigma_birth)
         return cls.birth_weight
+    
+    @classmethod
+    def reset_migrated(cls):
+        cls.has_migrated = False
 
     def __init__(self, age=None, weight=None):
         """
