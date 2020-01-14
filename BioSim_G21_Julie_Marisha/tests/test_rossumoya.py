@@ -80,8 +80,7 @@ class TestRossumoya:
             self.rossumoya.check_map_input(island_map_string)
 
     def test_add_population(self):
-        population = [{}]
-
+        pass
 
 
 

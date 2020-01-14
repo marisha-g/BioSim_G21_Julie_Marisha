@@ -3,14 +3,12 @@
 """
 Tests for classes in cell.py using pytest.
 """
-from biosim.rossumoya import Rossumoya
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
 from biosim.cell import Cell, Savannah, Jungle, Desert, MountainAndOcean
-from  biosim.animal import Herbivore, Carnivore
-
+from biosim.animal import Herbivore, Carnivore
 import pytest
 
 
