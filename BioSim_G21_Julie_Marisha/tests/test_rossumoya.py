@@ -8,6 +8,7 @@ __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
 from biosim import animal
+from biosim.cell import Jungle
 from biosim.rossumoya import Rossumoya
 from biosim.rossumoya import MigrationProbabilityCalculator
 from biosim.animal import Herbivore, Carnivore
@@ -95,5 +96,8 @@ class TestRossumoya:
         assert isinstance(
             self.rossumoya.choose_cell((5, 7), "Herbivore"), tuple
                           )
-    def test_death(self):
-        """ """
+
+    def test_death_callable(self):
+        """death() method is callable. """
+        self.rossumoya.death()
+
