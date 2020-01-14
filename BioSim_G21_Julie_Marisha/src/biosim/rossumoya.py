@@ -207,19 +207,9 @@ class Rossumoya:
         """
         for cell_dict in population:
             location = cell_dict['loc']
-
-            for pop_dict in cell_dict['pop']:
-                species = pop_dict['species']
-                age = pop_dict['age']
-                weight = pop_dict['weight']
-                if species == 'Herbivore':
-                    self.island_map[location].animals.append(
-                        Herbivore(age, weight)
-                    )
-                if species == 'Carnivore':
-                    self.island_map[location].animals.append(
-                        Carnivore(age, weight)
-                    )
+            pop_dict = cell_dict['pop']
+            cell = self.island_map[location]
+            cell.add_population(pop_dict)
 
     def procreation(self):
         """

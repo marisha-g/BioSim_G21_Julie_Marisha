@@ -59,6 +59,19 @@ class Cell:
         """
         self.fodder_in_cell = self.f_max
 
+    def add_population(self, pop_dict):
+        species = pop_dict['species']
+        age = pop_dict['age']
+        weight = pop_dict['weight']
+        if species == 'Herbivore':
+            self.animals.append(
+                Herbivore(age, weight)
+            )
+        if species == 'Carnivore':
+            self.animals.append(
+                Carnivore(age, weight)
+            )
+
     def herbivores_eat(self):
         """
         Herbivore with the highest fitness eat first. The Herbivore's weight
@@ -94,8 +107,11 @@ class Cell:
         :return: sorted_herbivores
         :type: list
         """
-        list_of_herbivores = [animal for animal in self.animals if isinstance(animal, Herbivore)]
-        sorted_herbivores = sorted(list_of_herbivores, key=lambda x: x.fitness, reverse=True)
+        list_of_herbivores = [animal for animal in self.animals
+                              if isinstance(animal, Herbivore)]
+        sorted_herbivores = sorted(list_of_herbivores,
+                                   key=lambda x: x.fitness,
+                                   reverse=True)
         return sorted_herbivores
 
     @property
@@ -105,8 +121,11 @@ class Cell:
         :return: sorted_carnivores
         :type: list
         """
-        list_of_carnivores = [animal for animal in self.animals if isinstance(animal, Carnivore)]
-        sorted_carnivores = sorted(list_of_carnivores, key=lambda x: x.fitness, reverse=True)
+        list_of_carnivores = [animal for animal in self.animals
+                              if isinstance(animal, Carnivore)]
+        sorted_carnivores = sorted(list_of_carnivores,
+                                   key=lambda x: x.fitness,
+                                   reverse=True)
         return sorted_carnivores
 
     @property
