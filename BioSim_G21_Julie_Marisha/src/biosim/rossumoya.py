@@ -237,7 +237,7 @@ class Rossumoya:
                             cell.total_herbivores
                         )
                     if species == 'Carnivore':
-                        animal__gives_birth = animal.prob_procreation(
+                        animal_gives_birth = animal.prob_procreation(
                             cell.total_carnivores
                         )
 
