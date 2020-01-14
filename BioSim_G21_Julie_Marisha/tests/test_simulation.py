@@ -10,6 +10,7 @@ __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
 from biosim.simulation import BioSim
 from biosim.animal import Herbivore, Carnivore
+from biosim.cell import Savannah, Jungle
 import pytest
 
 
@@ -53,7 +54,7 @@ class TestBiosim:
         assert data_frame.loc[(10, 10)].Herbivore == 150
         assert data_frame.loc[(10, 10)].Carnivore == 40
 
-    def test_set_animal_parameters_callabe(self):
+    def test_set_animal_parameters_callable(self):
         """set_animal_parameters method can be called."""
         params = {}
         self.biosim.set_animal_parameters('Herbivore', params)
@@ -67,6 +68,14 @@ class TestBiosim:
         self.biosim.set_animal_parameters('Carnivore', params2)
         assert Herbivore.gamma == 0.5
         assert Carnivore.xi == 0.4
+
+    def test_set_landscape_parameters(self):
+        params1 = {'alpha': 0.4}
+        params2 = {'f_max': 500}
+        self.biosim.set_landscape_parameters('S', params1)
+        self.biosim.set_landscape_parameters('J', params2)
+        assert Savannah.alpha == 0.4
+        assert Jungle.f_max == 500
 
     def test_add_population(self):
         """ add_population method can be called."""
