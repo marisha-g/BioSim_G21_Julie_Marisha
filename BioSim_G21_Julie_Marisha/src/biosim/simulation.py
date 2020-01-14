@@ -97,6 +97,8 @@ class BioSim:
 
         # Animals migrate
         self.rossumoya.migration()
+        Herbivore.reset_migration()
+        Carnivore.reset_migration()
 
         # Animals age and loose weight
         for cell in self.rossumoya.island_map.values():
