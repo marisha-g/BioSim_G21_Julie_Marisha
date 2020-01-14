@@ -47,24 +47,24 @@ class TestMigrationProbabilityCalculator:
 class TestRossumoya:
     """Tests for class Rossumoya."""
 
+    @pytest.fixture(autouse=True)
+    def create_rossumoya(self):
+        self.rossumoya = Rossumoya()
+
     def test_constructor_default(self):
         """Default constructor callable."""
-        c = Rossumoya()
-        assert isinstance(c, Rossumoya)
+        assert isinstance(self.rossumoya, Rossumoya)
 
     def test_island_map(self):
         """Checks if the island_map is a dictionary."""
-        c = Rossumoya()
-        assert isinstance(c.island_map, dict)
+        assert isinstance(self.rossumoya.island_map, dict)
 
     def test_geography_coordinates_method(self):
         """make_geography_coordinates can be called."""
-        c = Rossumoya()
-        c.make_geography_coordinates(Rossumoya.default_map)
+        self.rossumoya.make_geography_coordinates(self.rossumoya.default_map)
 
     def test_add_population_method(self):
         """add_population can be called."""
-        c = Rossumoya()
-        c.add_population(Rossumoya.default_ini_herbs)
+        self.rossumoya.add_population(self.rossumoya.default_ini_herbs)
 
 
