@@ -15,53 +15,56 @@ import pytest
 
 class TestCell:
     """Tests for Cell class."""
+    @pytest.fixture(autouse=True)
+    def create_cell(self):
+        self.cell = Cell()
+
     def test_constructor(self):
         """Default constructor is callable."""
-        c = Cell()
-        assert isinstance(c, Cell)
+        assert isinstance(self.cell, Cell)
 
     def test_default_parameters(self):
         """Default parameters are set correctly."""
-        c = Cell()
-        assert c.fodder_in_cell == 0
-        assert c.animal_can_enter is True
-        assert c.animals == []
+        assert self.cell.fodder_in_cell == 0
+        assert self.cell.animal_can_enter is True
+        assert self.cell.animals == []
 
     def test_fodder_first_year(self):
         """ Tests that fodder_first_year method
          changes fodder_in_cell attribute"""
-        c = Cell()
-        assert c.fodder_in_cell == 0
-        c.fodder_first_year(10)
-        assert c.fodder_in_cell == 10
+        assert self.cell.fodder_in_cell == 0
+        self.cell.fodder_first_year(10)
+        assert self.cell.fodder_in_cell == 10
 
     def test_abundance_of_fodder_herbivores(self):
         """Abundance of fodder is equal to 0 when there is no fodder in cell."""
-        c = Cell()
         Herbivore.set_parameters()
-        c.fodder_in_cell = 0
-        assert c.abundance_of_fodder_herbivores == 0
+        self.cell.fodder_in_cell = 0
+        assert self.cell.abundance_of_fodder_herbivores == 0
 
     def test_abundance_of_fodder_carnivores(self):
         """Abundance of fodder is equal to 0 when there is no Herbivore
         in cell. """
-        c = Cell()
-        c.animals = []
+        self.cell.animals = []
         Carnivore.set_parameters()
-        assert c.abundance_of_fodder_carnivores == 0
+        assert self.cell.abundance_of_fodder_carnivores == 0
 
 
 class TestSavannah:
     """ Tests for Savannah class."""
+
+    @pytest.fixture(autouse=True)
+    def create_cell(self):
+        self.s = Savannah()
+
     def test_constructor(self):
         """Default constructor is callable. """
-        s = Savannah()
-        assert isinstance(s, Savannah)
+        assert isinstance(self.s, Savannah)
 
     def test_classmethod_set_parameters(self):
         """Classmethod set_parameters is callable,
          and default parameters are set."""
-        Savannah.set_parameters()
+        self.s.set_parameters()
         assert Savannah.f_max == 300.0
         assert Savannah.alpha == 0.3
 
@@ -74,10 +77,13 @@ class TestSavannah:
 
 class TestJungle:
     """ Tests for Jungle class."""
+    @pytest.fixture(autouse=True)
+    def create_cell(self):
+        self.j = Jungle()
+
     def test_constructor(self):
         """Default constructor is callable. """
-        j = Jungle()
-        assert isinstance(j, Jungle)
+        assert isinstance(self.j, Jungle)
 
     def test_classmethod_set_parameters(self):
         """Classmethod set_parameters is callable,
@@ -93,29 +99,33 @@ class TestJungle:
 
 class TestDesert:
     """ Tests for Desert class."""
+    @pytest.fixture(autouse=True)
+    def create_cell(self):
+        self.d = Desert()
+
     def test_constructor(self):
         """Default constructor is callable. """
-        d = Desert()
-        assert isinstance(d, Desert)
+        assert isinstance(self.d, Desert)
 
     def test_parameters_desert(self):
         """Test that parameters for subclass Desert are correct."""
-        d = Desert()
-        assert d.fodder_in_cell == 0
-        assert d.f_max == 0
-        assert d.animal_can_enter is True
+        assert self.d.fodder_in_cell == 0
+        assert self.d.f_max == 0
+        assert self.d.animal_can_enter is True
 
 
 class TestMountainAndOcean:
     """ Tests for MountainAndOcean class."""
+    @pytest.fixture(autouse=True)
+    def create_cell(self):
+        self.mo = MountainAndOcean()
+
     def test_constructor(self):
         """Default constructor is callable. """
-        p = MountainAndOcean()
-        assert isinstance(p, MountainAndOcean)
+        assert isinstance(self.mo, MountainAndOcean)
 
     def test_parameters_mountain_and_ocean(self):
         """Test that parameters for subclass MountainAndOcean are correct."""
-        mo = MountainAndOcean()
-        assert mo.fodder_in_cell == 0
-        assert mo.f_max == 0
-        assert mo.animal_can_enter is False
+        assert self.mo.fodder_in_cell == 0
+        assert self.mo.f_max == 0
+        assert self.mo.animal_can_enter is False
