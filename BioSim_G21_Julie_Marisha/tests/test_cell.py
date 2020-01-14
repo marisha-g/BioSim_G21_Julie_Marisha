@@ -23,7 +23,7 @@ class TestCell:
     def test_default_parameters(self):
         """Default parameters are set correctly."""
         c = Cell()
-        assert c.fodder_in_cell is None
+        assert c.fodder_in_cell == 0
         assert c.animal_can_enter is True
         assert c.animals == []
 
@@ -31,7 +31,7 @@ class TestCell:
         """ Tests that fodder_first_year method
          changes fodder_in_cell attribute"""
         c = Cell()
-        assert c.fodder_in_cell is None
+        assert c.fodder_in_cell == 0
         c.fodder_first_year(10)
         assert c.fodder_in_cell == 10
 

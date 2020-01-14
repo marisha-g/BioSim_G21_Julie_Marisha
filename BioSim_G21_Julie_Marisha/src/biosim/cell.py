@@ -16,12 +16,14 @@ class Cell:
     """
 
     @classmethod
-    def set_parameters(cls, f_max):
+    def set_parameters(cls, f_max=None):
         """
         Set default parameters for class Cell.
         :param f_max: maximum fodder available in a cell type
         :type: float
         """
+        if f_max is None:
+            f_max = 0
 
         if f_max < 0:
             raise ValueError('f_max must be a positive number')
@@ -266,7 +268,7 @@ class Desert(Cell):
     Class instance of class Cell for the cell type Desert.
     """
     @classmethod
-    def set_parameters(cls, f_max=0):
+    def set_parameters(cls, f_max=None):
         """
         Set default parameters for class instance Desert.
         :param f_max: maximum fodder available in cell type Desert
@@ -301,7 +303,6 @@ class MountainAndOcean(Cell):
         """
         super().__init__()
         self.fodder_in_cell = 0
-        self.f_max = 0
         self.animal_can_enter = False
 
     @property
