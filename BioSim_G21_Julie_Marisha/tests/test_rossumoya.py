@@ -36,7 +36,7 @@ class TestMigrationProbabilityCalculator:
         """propensity_herb() method returns a list."""
         assert isinstance(self.calculator.propensity_herb(), list)
 
-    def test_propensity_herb(self):
+    def test_propensity_carns(self):
         """propensity_carns() method returns a list."""
         assert isinstance(self.calculator.propensity_carns(), list)
 
