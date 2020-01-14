@@ -65,6 +65,15 @@ class TestCell:
 
         assert length_list_2 > length_list_1
 
+    def test_remove_dead_animal(self):
+        """remove_dead_animal method is callable and removes
+         the dead animal from the cell."""
+        animal = Carnivore()
+        self.cell.animals.append(animal)
+        self.cell.remove_dead_animal(animal)
+        assert self.cell.total_carnivores == 0
+
+
     def test_list_of_sorted_herbivores(self):
         """list_of_sorted_herbivores property is callable and sorts the
         herbivores in descending order by fitness.
