@@ -14,20 +14,31 @@ __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 import textwrap
 
 
-class PropensityCalculator:
-    def __init__(self, locations, island_map):
+class MigrationProbabilityCalculator:
+    def __init__(self, loc, island_map, species):
         """
         Constructor initiate PropensityCalculator
-        :param locations: List of the four neighbouring cells,
-         in this exact order: [Left, Right, Up, Down].
-        :type: list
+        :param loc: Coordinates for the current position
+        :type: tuple
         :param island_map: Dictionary with all cells and their locations
         :type: dict
+        :param: species: Herbivore or Carnivore
+        :type: str
         """
+
+        x, y = loc
+        cell_left = (x, y - 1)
+        cell_right = (x, y + 1)
+        cell_up = (x - 1, y)
+        cell_down = (x + 1, y)
+
+        locations = [cell_left, cell_right, cell_up, cell_down]
+
         self.locations = locations
         self.island_map = island_map
+        self.species = species
 
-    def herbs(self):
+    def propensity_herb(self):
         """
         Calculate the propensities of the four cells for herbivores.
         :return: propensities: List with the four neighbouring cells
@@ -40,7 +51,7 @@ class PropensityCalculator:
             propensities.append(cell.propensity_migration_herb)
         return propensities
 
-    def carns(self):
+    def propensity_carns(self):
         """
         Calculate the propensities of the four cells for carnivores.
 
@@ -53,6 +64,19 @@ class PropensityCalculator:
             cell = self.island_map[cell]
             propensities.append(cell.propensity_migration_carn)
         return propensities
+
+    def probability(self):
+        if self.species == 'Herbivore':
+            propensities = self.propensity_herb()
+        if self.species == 'Carnivore':
+            propensities = self.propensity_carns()
+
+        probabilities = []
+        sum_propensities = sum(propensities)
+        for prop in propensities:
+            p = prop / sum_propensities * prop
+            probabilities.append(p)
+        return self.locations, probabilities
 
 
 class Rossumoya:
@@ -242,7 +266,8 @@ class Rossumoya:
             if cell.animal_can_enter:
                 for animal in cell.animals:
                     migrating_animals = []
-                    if animal.prob_migration:
+
+                    if animal.prob_migration and not animal.has_migrated:
                         new_loc = self.choose_cell(loc, type(animal).__name__)
                         self.island_map[new_loc].animals.append(animal)
                         migrating_animals.append(animal)
@@ -260,28 +285,11 @@ class Rossumoya:
         :return: choice: Chosen cell coordinates to migrate to.
         :type: tuple
         """
-        x, y = loc
-        cell_left = (x, y-1)
-        cell_right = (x, y+1)
-        cell_up = (x-1, y)
-        cell_down = (x+1, y)
-        locations = [cell_left, cell_right, cell_up, cell_down]
+        locations, probabilities = MigrationProbabilityCalculator(
+            loc, self.island_map, species
+        )
 
-        if species == 'Herbivore':
-            calculator = PropensityCalculator(locations, self.island_map)
-            propensities = calculator.herbs()
-
-        if species == 'Carnivore':
-            calculate_prop_carn = self.propensity_calculator('Carnivore')
-            propensities = calculate_prop_carn(locations)
-
-        sum_propensities = sum(propensities)
-        pl = propensities[0] / sum_propensities * propensities[0]
-        pr = propensities[1] / sum_propensities * propensities[1]
-        pu = propensities[2] / sum_propensities * propensities[2]
-        pd = propensities[3] / sum_propensities * propensities[3]
-
-        choice = np.random.choice(locations, p=[pl, pr, pu, pd])
+        choice = np.random.choice(locations, p=probabilities)
         return choice
 
     def death(self):
