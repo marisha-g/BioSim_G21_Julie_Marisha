@@ -7,7 +7,6 @@ from BioSim_G21_Julie_Marisha.src.biosim.cell import Savannah, Jungle, Desert, M
 from BioSim_G21_Julie_Marisha.src.biosim.rossumoya import Rossumoya
 import pandas as pd
 
-
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
@@ -15,14 +14,14 @@ __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 class BioSim:
 
     def __init__(
-        self,
-        island_map=None,
-        ini_pop=None,
-        seed=None,
-        ymax_animals=None,
-        cmax_animals=None,
-        img_base=None,
-        img_fmt="png",
+            self,
+            island_map=None,
+            ini_pop=None,
+            seed=None,
+            ymax_animals=None,
+            cmax_animals=None,
+            img_base=None,
+            img_fmt="png",
     ):
         """
         :param island_map: Multi-line string specifying island geography
@@ -86,7 +85,7 @@ class BioSim:
         # Fodder regrows
         for cell in self.rossumoya.island_map.values():
             cell.regrow_fodder()
-        
+
         # Herbivores eat, then carnivores prey on herbivores
         for cell in self.rossumoya.island_map.values():
             cell.herbivores_eat()
@@ -125,10 +124,10 @@ class BioSim:
 
         for year in range(num_years):
             self.single_simulation()
-            if self.year % vis_years == 0:
-                update_visualization()
-            if self.year % img_years == 0:
-                save_file()
+        #   if self.year % vis_years == 0:
+        #      self.update_visualization()
+        # if self.year % img_years == 0:
+        #    self.save_file()
 
     def add_population(self, population):
         """
@@ -186,6 +185,12 @@ class BioSim:
 
         return data_frame
 
+    def update_visualization(self):
+        pass
+
+    def save_file(self):
+        pass
+
     def make_movie(self):
         """Create MPEG4 movie from visualization images saved."""
         pass
@@ -193,7 +198,7 @@ class BioSim:
 
 if __name__ == '__main__':
     sim1 = BioSim()
-    sim1.single_simulation()
+    sim1.simulate(num_years=10)
     print(sim1.year)
     print(sim1.animal_distribution)
     print(sim1.num_animals_per_species)
