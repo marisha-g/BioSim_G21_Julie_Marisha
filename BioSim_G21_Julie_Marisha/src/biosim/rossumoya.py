@@ -243,10 +243,11 @@ class Rossumoya:
         """
         weight = animal.draw_birth_weight()
         offspring = [{'loc': loc,
-                      'pop': {
+                      'pop': [{
                           'species': type(animal).__name__,
                           'age': 0,
-                          'weight': weight}}]
+                          'weight': weight}]
+                      }]
 
         self.add_population(offspring)
         animal.weight_loss_birth(weight)
