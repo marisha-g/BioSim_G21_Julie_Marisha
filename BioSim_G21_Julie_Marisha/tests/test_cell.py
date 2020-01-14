@@ -54,6 +54,17 @@ class TestCell:
         Carnivore.set_parameters()
         assert self.cell.abundance_of_fodder_carnivores == 0
 
+    def test_add_population(self):
+        """ """
+        pop_list = [{"species": "Herbivore", "age": 5, "weight": 20} for _ in range(150)]
+
+        length_list_1 = len(self.cell.animals)
+
+        self.cell.add_population(pop_list)
+        length_list_2 = len(self.cell.animals)
+
+        assert length_list_2 > length_list_1
+
     def test_list_of_sorted_herbivores(self):
         """list_of_sorted_herbivores property is callable and sorts the
         herbivores in descending order by fitness.
