@@ -102,6 +102,10 @@ class Cell:
                         self.animals.remove(herbivore)
                         carnivore.weight_gain(weight_prey)
 
+    def remove_dead_animal(self, dead_animal):
+        """ """
+        self.animals.remove(dead_animal)
+
     @property
     def list_of_sorted_herbivores(self):
         """
