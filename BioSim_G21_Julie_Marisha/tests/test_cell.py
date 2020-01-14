@@ -3,6 +3,7 @@
 """
 Tests for classes in cell.py using pytest.
 """
+from BioSim_G21_Julie_Marisha.src.biosim.rossumoya import Rossumoya
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
@@ -55,11 +56,27 @@ class TestCell:
         Carnivore.set_parameters()
         assert self.cell.abundance_of_fodder_carnivores == 0
 
-
     def test_list_of_sorted_herbivores(self):
-        pass
+        """list_of_sorted_herbivores property is callable and sorts the
+        herbivores in descending order by fitness.
+        """
+        pop_list = [{"species": "Herbivore", "age": 5, "weight": 20} for _ in range(150)]
+        Herbivore.set_parameters()
+        self.cell.add_population(pop_list)
+        sorted_list = self.cell.list_of_sorted_herbivores
+        assert all(sorted_list[i].fitness <= sorted_list[i+1].fitness for
+                   i in range(len(sorted_list)-1))
 
-
+    def test_list_of_sorted_carnivores(self):
+        """list_of_sorted_carnivores property is callable and sorts the
+        carnivores in descending order by fitness.
+        """
+        pop_list = [{"species": "Carnivore", "age": 5, "weight": 20} for _ in range(150)]
+        Carnivore.set_parameters()
+        self.cell.add_population(pop_list)
+        sorted_list = self.cell.list_of_sorted_carnivores
+        assert all(sorted_list[i].fitness <= sorted_list[i+1].fitness for
+                   i in range(len(sorted_list)-1))
 
 
 class TestSavannah:
