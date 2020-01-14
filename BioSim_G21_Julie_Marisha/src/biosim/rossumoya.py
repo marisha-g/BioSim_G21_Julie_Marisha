@@ -4,8 +4,8 @@
 """
 import numpy as np
 
-from BioSim_G21_Julie_Marisha.src.biosim.animal import Herbivore, Carnivore
-from BioSim_G21_Julie_Marisha.src.biosim.cell import Savannah, \
+from biosim.animal import Herbivore, Carnivore
+from biosim.cell import Savannah, \
     Jungle, Desert, MountainAndOcean
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'

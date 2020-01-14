@@ -3,7 +3,7 @@
 """
 
 """
-from BioSim_G21_Julie_Marisha.src.biosim.animal import Carnivore, Herbivore
+from biosim.animal import Carnivore, Herbivore
 import numpy as np
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
@@ -111,8 +111,7 @@ class Cell:
         list_of_herbivores = [animal for animal in self.animals
                               if isinstance(animal, Herbivore)]
         sorted_herbivores = sorted(list_of_herbivores,
-                                   key=lambda x: x.fitness,
-                                   reverse=True)
+                                   key=lambda x: x.fitness)
         return sorted_herbivores
 
     @property
@@ -125,8 +124,7 @@ class Cell:
         list_of_carnivores = [animal for animal in self.animals
                               if isinstance(animal, Carnivore)]
         sorted_carnivores = sorted(list_of_carnivores,
-                                   key=lambda x: x.fitness,
-                                   reverse=True)
+                                   key=lambda x: x.fitness)
         return sorted_carnivores
 
     @property

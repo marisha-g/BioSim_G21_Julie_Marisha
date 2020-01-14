@@ -6,7 +6,7 @@
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
-from src.biosim.animal import Animal, Herbivore, Carnivore
+from biosim.animal import Animal, Herbivore, Carnivore
 import pytest
 
 

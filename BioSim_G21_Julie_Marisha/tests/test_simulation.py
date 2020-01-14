@@ -8,7 +8,7 @@ __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
 
-from BioSim_G21_Julie_Marisha.src.biosim.simulation import BioSim
+from biosim.simulation import BioSim
 
 
 class TestBiosim:

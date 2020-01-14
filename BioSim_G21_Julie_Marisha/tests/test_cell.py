@@ -3,13 +3,13 @@
 """
 Tests for classes in cell.py using pytest.
 """
-from BioSim_G21_Julie_Marisha.src.biosim.rossumoya import Rossumoya
+from biosim.rossumoya import Rossumoya
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
-from src.biosim.cell import Cell, Savannah, Jungle, Desert, MountainAndOcean
-from BioSim_G21_Julie_Marisha.src.biosim.animal import Herbivore, Carnivore
+from biosim.cell import Cell, Savannah, Jungle, Desert, MountainAndOcean
+from  biosim.animal import Herbivore, Carnivore
 
 import pytest
 
@@ -64,7 +64,7 @@ class TestCell:
         Herbivore.set_parameters()
         self.cell.add_population(pop_list)
         sorted_list = self.cell.list_of_sorted_herbivores
-        assert all(sorted_list[i].fitness <= sorted_list[i+1].fitness for
+        assert all(sorted_list[i].fitness >= sorted_list[i+1].fitness for
                    i in range(len(sorted_list)-1))
 
     def test_list_of_sorted_carnivores(self):
@@ -75,7 +75,7 @@ class TestCell:
         Carnivore.set_parameters()
         self.cell.add_population(pop_list)
         sorted_list = self.cell.list_of_sorted_carnivores
-        assert all(sorted_list[i].fitness <= sorted_list[i+1].fitness for
+        assert all(sorted_list[i].fitness >= sorted_list[i+1].fitness for
                    i in range(len(sorted_list)-1))
 
 

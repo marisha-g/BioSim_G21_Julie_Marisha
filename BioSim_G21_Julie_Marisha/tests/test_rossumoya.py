@@ -7,9 +7,9 @@ Tests for classes in cell.py using pytest.
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
-from src.biosim.rossumoya import Rossumoya
-from BioSim_G21_Julie_Marisha.src.biosim.rossumoya import MigrationProbabilityCalculator
-from BioSim_G21_Julie_Marisha.src.biosim.animal import Herbivore, Carnivore
+from biosim.rossumoya import Rossumoya
+from biosim.rossumoya import MigrationProbabilityCalculator
+from biosim.animal import Herbivore, Carnivore
 import pytest
 
 

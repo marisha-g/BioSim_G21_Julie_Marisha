@@ -2,9 +2,10 @@
 
 """
 """
-from BioSim_G21_Julie_Marisha.src.biosim.animal import Herbivore, Carnivore
-from BioSim_G21_Julie_Marisha.src.biosim.cell import Savannah, Jungle, Desert, MountainAndOcean
-from BioSim_G21_Julie_Marisha.src.biosim.rossumoya import Rossumoya
+
+from biosim.animal import Herbivore, Carnivore
+from biosim.cell import Savannah, Jungle, Desert, MountainAndOcean
+from biosim.rossumoya import Rossumoya
 import pandas as pd
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
