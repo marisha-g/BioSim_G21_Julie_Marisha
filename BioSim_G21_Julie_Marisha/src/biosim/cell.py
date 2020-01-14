@@ -4,7 +4,7 @@
 
 """
 from BioSim_G21_Julie_Marisha.src.biosim.animal import Carnivore, Herbivore
-import math
+import numpy as np
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
@@ -167,7 +167,7 @@ class Cell:
         :return: formula for calculating propensity
         :type: float
         """
-        return math.exp(Herbivore.lambda_ * self.abundance_of_fodder_herbivores)
+        return np.exp(Herbivore.lambda_ * self.abundance_of_fodder_herbivores)
 
     @property
     def propensity_migration_carn(self):
@@ -177,7 +177,7 @@ class Cell:
         :return: formula for calculating propensity
         :type: float
         """
-        return math.exp(Carnivore.lambda_ * self.abundance_of_fodder_carnivores)
+        return np.exp(Carnivore.lambda_ * self.abundance_of_fodder_carnivores)
 
     @property
     def total_population(self):
