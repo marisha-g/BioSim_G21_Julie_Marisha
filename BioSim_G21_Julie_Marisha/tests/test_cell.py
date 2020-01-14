@@ -52,9 +52,14 @@ class TestCell:
     def test_abundance_of_fodder_carnivores(self):
         """Abundance of fodder is equal to 0 when there is no Herbivore
         in cell. """
-        self.cell.animals = []
         Carnivore.set_parameters()
         assert self.cell.abundance_of_fodder_carnivores == 0
+
+
+    def test_list_of_sorted_herbivores(self):
+        pass
+
+
 
 
 class TestSavannah:
@@ -92,10 +97,15 @@ class TestJungle:
         """Default constructor is callable. """
         assert isinstance(self.j, Jungle)
 
+    def test_default_parameters(self):
+        assert self.j.f_max == 800.0
+        assert self.j.animal_can_enter is True
+        assert self.j.animals == []
+        assert self.j.fodder_in_cell == self.j.f_max
+
     def test_classmethod_set_parameters(self):
         """Classmethod set_parameters is callable,
          and default parameters are set."""
-        Jungle.set_parameters()
         assert Jungle.f_max == 800.0
 
     def test_value_error(self):
