@@ -188,3 +188,13 @@ class BioSim:
 
     def make_movie(self):
         """Create MPEG4 movie from visualization images saved."""
+        pass
+
+
+if __name__ == '__main__':
+    sim1 = BioSim()
+    sim1.single_simulation()
+    print(sim1.year)
+    print(sim1.animal_distribution)
+    print(sim1.num_animals_per_species)
+    print(sim1.num_animals)
