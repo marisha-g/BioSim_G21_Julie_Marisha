@@ -80,7 +80,15 @@ class MigrationProbabilityCalculator:
         for prop in propensities:
             p = prop / sum_propensities * prop
             probabilities.append(p)
-        return self.locations, probabilities
+
+        scaled_probabilities = []
+        sum_probabilities = sum(probabilities)
+        for probaility in probabilities:
+            scaled_probabilities.append(
+                probabilities[probaility] / sum_probabilities
+            )
+
+        return self.locations, scaled_probabilities
 
 
 class Rossumoya:
@@ -282,10 +290,11 @@ class Rossumoya:
         """
         locations, probabilities = MigrationProbabilityCalculator(
             loc, self.island_map, species
-        )
+        ).probability()
 
-        choice = np.random.choice(locations, p=probabilities)
-        return choice
+        choice = np.random.choice(4, p=probabilities)
+        chosen_cell = locations[choice]
+        return chosen_cell
 
     def death(self):
         """
