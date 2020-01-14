@@ -493,7 +493,6 @@ class Carnivore(Animal):
         super().__init__(age, weight)
         self._prob_carnivore_kill = None
 
-    @property
     def prob_carnivore_kill(self, fitness_prey):
         """
         Probability for a Carnivore to kill a Herbivore.
@@ -515,13 +514,12 @@ class Carnivore(Animal):
             self._prob_carnivore_kill = 1
             return self._prob_carnivore_kill
 
-    @prob_carnivore_kill.setter
-    def prob_carnivore_kill(self, value):
-        """
-        Set the choice for probability for a Carnivore to kill a Herbivore.
-        Setting the choice to a new value will reconfigure the animal
-        automatically.
-        :param value: new value
-        :type: float
-        """
-        self._prob_carnivore_kill = value
+    # @prob_carnivore_kill.setter
+    # def prob_carnivore_kill(self, value):
+    #        """
+    #       Set the choice for probability for a Carnivore to kill a Herbivore.
+    #      Setting the choice to a new value will reconfigure the animal
+    #     automatically.
+    #   :type: float
+    #  """
+    # self._prob_carnivore_kill = value
