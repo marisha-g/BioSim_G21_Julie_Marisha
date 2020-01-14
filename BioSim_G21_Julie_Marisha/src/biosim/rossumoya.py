@@ -54,7 +54,6 @@ class MigrationProbabilityCalculator:
     def propensity_carns(self):
         """
         Calculate the propensities of the four cells for carnivores.
-
         :return: propensities: List with the four neighbouring cells
          corresponding propensities.
         :type: list
@@ -147,7 +146,7 @@ class Rossumoya:
 
         # Set all parameters to default
         # BioSim.set_landscape_parameters and
-        # Biosim.set_animal_parameters methods will override if called upon.
+        # BioSim.set_animal_parameters methods will override if called upon.
         Savannah.set_parameters()
         Jungle.set_parameters()
         Herbivore.set_parameters()
