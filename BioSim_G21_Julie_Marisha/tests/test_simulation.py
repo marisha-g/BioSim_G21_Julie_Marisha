@@ -19,17 +19,24 @@ class TestBiosim:
         self.biosim = BioSim()
 
     def test_year_before_first_simulation(self):
-        """Year property return 0 if there has been no simulations. """
+        """Year property returns 0 before simulation. """
         assert self.biosim.year == 0
 
     def test_default_num_animals(self):
-        """Test that default number of animals before the first simulation
-        is created correctly."""
+        """num_animals property returns
+        default value before simulation."""
         assert self.biosim.num_animals == 190
 
     def test_num_animals_per_species(self):
-        """Test that num_animals_per_species returns a dictionary."""
+        """num_animals_per_species returns a dictionary."""
         assert isinstance(self.biosim.num_animals_per_species, dict)
+
+    def test_default_animals_per_species(self):
+        """animal_per_species property returns default values
+        before simulation."""
+        num_animals_per_species = {'Herbivore': 150,
+                                   'Carnivore': 40}
+        assert self.biosim.num_animals_per_species == num_animals_per_species
 
     def test_default_animal_distribution(self):
         """Default animal distribution in cells are created correctly."""
