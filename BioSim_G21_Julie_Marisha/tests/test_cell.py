@@ -55,7 +55,7 @@ class TestCell:
         assert self.cell.abundance_of_fodder_carnivores == 0
 
     def test_add_population(self):
-        """ """
+        """Test that population is added."""
         pop_list = [{"species": "Herbivore", "age": 5, "weight": 20} for _ in range(150)]
 
         length_list_1 = len(self.cell.animals)
