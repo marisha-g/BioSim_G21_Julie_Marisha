@@ -30,10 +30,17 @@ class TestCell:
         assert self.cell.animals == []
 
     def test_fodder_first_year(self):
-        """ Tests that fodder_first_year method
-         changes fodder_in_cell attribute"""
+        """ Tests that fodder_first_year method is callable and
+         changes fodder_in_cell attribute."""
         assert self.cell.fodder_in_cell == 0
         self.cell.fodder_first_year(10)
+        assert self.cell.fodder_in_cell == 10
+
+    def test_regrow_fodder(self):
+        """ Test regrow_fodder method is callable and regrows fodder
+        according to f_max."""
+        self.cell.f_max = 10
+        self.cell.regrow_fodder()
         assert self.cell.fodder_in_cell == 10
 
     def test_abundance_of_fodder_herbivores(self):
