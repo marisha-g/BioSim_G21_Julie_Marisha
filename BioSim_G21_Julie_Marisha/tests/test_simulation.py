@@ -9,6 +9,7 @@ __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
 
 from biosim.simulation import BioSim
+import pytest
 
 
 class TestBiosim:
