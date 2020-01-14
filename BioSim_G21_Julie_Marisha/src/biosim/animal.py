@@ -11,10 +11,7 @@ from scipy.special import expit
 
 
 class Animal:
-    """
-    Superclass for animal in BioSim.
-    """
-
+    """Superclass for animal in BioSim."""
     @classmethod
     def set_parameters(
             cls,
