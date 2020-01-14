@@ -7,7 +7,6 @@ Tests for classes in cell.py using pytest.
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
-from biosim import animal
 from biosim.rossumoya import Rossumoya
 from biosim.rossumoya import MigrationProbabilityCalculator
 from biosim.animal import Herbivore, Carnivore
@@ -95,5 +94,14 @@ class TestRossumoya:
         assert isinstance(
             self.rossumoya.choose_cell((5, 7), "Herbivore"), tuple
                           )
-    def test_death(self):
-        """ """
+
+    def test_death_callable(self):
+        """death() method is callable. """
+        self.rossumoya.death()
+
+    def test_make_geography_coordinates(self):
+        """make_geography_coordinates() method returns a dictionary. """
+        island_map = "OOO\nOJO\nOOO"
+        assert isinstance(
+            self.rossumoya.make_geography_coordinates(island_map), dict
+        )

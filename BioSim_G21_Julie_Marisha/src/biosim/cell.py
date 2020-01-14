@@ -102,8 +102,20 @@ class Cell:
                         self.animals.remove(herbivore)
                         carnivore.weight_gain(weight_prey)
 
+    def remove_migrated_animal(self, gone_animal):
+        """
+        Removes animal that has migrated.
+        :param gone_animal: list of animals that has migrated
+        :type: list
+        """
+        self.animals.remove(gone_animal)
+
     def remove_dead_animal(self, dead_animal):
-        """ """
+        """
+        Removes animal that has died.
+        :param dead_animal: list of animals that has died
+        :type: list
+        """
         self.animals.remove(dead_animal)
 
     @property
