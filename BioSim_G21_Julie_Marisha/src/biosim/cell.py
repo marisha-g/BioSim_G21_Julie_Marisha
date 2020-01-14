@@ -3,11 +3,12 @@
 """
 
 """
-from biosim.animal import Carnivore, Herbivore
-import numpy as np
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
+
+from biosim.animal import Carnivore, Herbivore
+import numpy as np
 
 
 class Cell:

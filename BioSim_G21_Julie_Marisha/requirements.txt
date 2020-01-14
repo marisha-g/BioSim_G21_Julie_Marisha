@@ -1,3 +1,6 @@
+scipy
+pandas
+numpy
 pytest
 tox
 tox-conda

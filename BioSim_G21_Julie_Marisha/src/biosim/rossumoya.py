@@ -2,16 +2,14 @@
 
 """
 """
-import numpy as np
-
-from biosim.animal import Herbivore, Carnivore
-from biosim.cell import Savannah, \
-    Jungle, Desert, MountainAndOcean
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
+from biosim.animal import Herbivore, Carnivore
+from biosim.cell import Savannah, Jungle, Desert, MountainAndOcean
 import textwrap
+import numpy as np
 
 
 class MigrationProbabilityCalculator:
