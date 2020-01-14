@@ -101,3 +101,9 @@ class TestRossumoya:
         """death() method is callable. """
         self.rossumoya.death()
 
+    def test_make_geography_coordinates(self):
+        """make_geography_coordinates() method returns a dictionary. """
+        island_map = "OOO\nOJO\nOOO"
+        assert isinstance(
+            self.rossumoya.make_geography_coordinates(island_map), dict
+        )
