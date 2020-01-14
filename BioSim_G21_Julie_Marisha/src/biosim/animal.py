@@ -11,7 +11,9 @@ from scipy.special import expit
 
 
 class Animal:
-    """Superclass for animal in BioSim."""
+    """
+    Superclass for animal in BioSim.
+    """
     @classmethod
     def set_parameters(
             cls,
@@ -296,7 +298,10 @@ class Animal:
 
 
 class Herbivore(Animal):
-    """Class instance of class Animal for the Herbivore species."""
+    """
+    Class instance of class Animal for the Herbivore species.
+    """
+
     @classmethod
     def set_parameters(
             cls,
@@ -386,7 +391,10 @@ class Herbivore(Animal):
 
 
 class Carnivore(Animal):
-    """Class instance of class Animal for the Carnivore species."""
+    """
+    Class instance of class Animal for the Carnivore species.
+    """
+
     @classmethod
     def set_parameters(
             cls,
