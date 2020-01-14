@@ -65,6 +65,13 @@ class MigrationProbabilityCalculator:
         return propensities
 
     def probability(self):
+        """
+        Calculates probability for an animal to move from one cell to
+        another using the propensities.
+        :return: self.locations, probabilities: current location and the
+                 probabilities to move from that location.
+        :type: tuple, list
+        """
         if self.species == 'Herbivore':
             propensities = self.propensity_herb()
         if self.species == 'Carnivore':
