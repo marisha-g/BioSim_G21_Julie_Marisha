@@ -60,8 +60,8 @@ class Cell:
         """
         self.fodder_in_cell = self.f_max
 
-    def add_population(self, pop__list):
-        for pop_dict in pop__list:
+    def add_population(self, pop_list):
+        for pop_dict in pop_list:
             species = pop_dict['species']
             age = pop_dict['age']
             weight = pop_dict['weight']
