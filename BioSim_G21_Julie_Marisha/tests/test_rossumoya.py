@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for classes in cell.py using pytest.
+Tests for classes in rossumoya.py using pytest.
 """
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
@@ -91,10 +91,9 @@ class TestRossumoya:
             self.rossumoya.check_map_input(island_map_string)
 
     def test_procreation(self):
-        """ """
-        animal = Herbivore
-        class_instance_to_str = type(animal).__name__
-        assert isinstance(class_instance_to_str, str)
+        """procreation() method is callable. """
+        self.rossumoya.add_offspring(Herbivore(), (2, 2))
+        self.rossumoya.procreation()
 
     def test_add_offspring(self):
         """add_offspring() method is callable. """
