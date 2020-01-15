@@ -19,6 +19,8 @@ class TestCell:
         self.cell = BaseCell()
         self.carnivore = Carnivore()
         self.herbivore = Herbivore()
+        Herbivore.set_parameters()
+        Carnivore.set_parameters()
 
     def test_constructor(self):
         """Default constructor is callable."""
@@ -46,14 +48,12 @@ class TestCell:
 
     def test_abundance_of_fodder_herbivores(self):
         """Abundance of fodder is equal to 0 when there is no fodder in cell."""
-        Herbivore.set_parameters()
         self.cell.fodder_in_cell = 0
         assert self.cell.abundance_of_fodder_herbivores == 0
 
     def test_abundance_of_fodder_carnivores(self):
         """Abundance of fodder is equal to 0 when there is no Herbivore
         in cell. """
-        Carnivore.set_parameters()
         assert self.cell.abundance_of_fodder_carnivores == 0
 
     def test_add_population(self):
@@ -70,8 +70,9 @@ class TestCell:
         """Herbivore eat the fodder in the cell, and gain weight."""
         self.cell.fodder_in_cell = 300
         self.herbivore.set_parameters(F=300)
-        weight1 = self.herbivore.weight
         self.cell.animals.append(self.herbivore)
+
+        weight1 = self.herbivore.weight
         self.cell.herbivores_eat()
         assert self.cell.fodder_in_cell == 0
         assert weight1 < self.herbivore.weight
@@ -82,9 +83,6 @@ class TestCell:
                 'weight': 10}
                for _ in range(40)]
         self.cell.add_population(pop)
-
-        Carnivore.set_parameters()
-        Herbivore.set_parameters()
 
         self.carnivore.fitness = 1
         self.carnivore.F = 100
@@ -112,7 +110,6 @@ class TestCell:
         herbivores in descending order by fitness.
         """
         pop_list = [{"species": "Herbivore", "age": 5, "weight": 20} for _ in range(150)]
-        Herbivore.set_parameters()
         self.cell.add_population(pop_list)
         sorted_list = self.cell.list_of_sorted_herbivores
         assert all(sorted_list[i].fitness >= sorted_list[i+1].fitness for
@@ -123,7 +120,6 @@ class TestCell:
         carnivores in descending order by fitness.
         """
         pop_list = [{"species": "Carnivore", "age": 5, "weight": 20} for _ in range(150)]
-        Carnivore.set_parameters()
         self.cell.add_population(pop_list)
         sorted_list = self.cell.list_of_sorted_carnivores
         assert all(sorted_list[i].fitness >= sorted_list[i+1].fitness for
@@ -144,7 +140,6 @@ class TestSavannah:
     def test_classmethod_set_parameters(self):
         """Classmethod set_parameters is callable,
          and default parameters are set."""
-        self.s.set_parameters()
         assert Savannah.f_max == 300.0
         assert Savannah.alpha == 0.3
 
