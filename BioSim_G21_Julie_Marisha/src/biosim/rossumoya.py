@@ -308,8 +308,7 @@ class Rossumoya:
             for animal in cell.animals:
                 if animal.prob_death:
                     dead_animals.append(animal)
-            for dead_animal in dead_animals:
-                cell.remove_dead_animal(dead_animal)
+            cell.remove_dead_animals(dead_animals)
 
     @staticmethod
     def make_geography_coordinates(input_map):

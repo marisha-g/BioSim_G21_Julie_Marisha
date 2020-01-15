@@ -69,7 +69,7 @@ class TestCell:
          the dead animal from the cell."""
         animal = Carnivore()
         self.cell.animals.append(animal)
-        self.cell.remove_dead_animal(animal)
+        self.cell.remove_dead_animals(animal)
         assert self.cell.total_carnivores == 0
 
     def test_list_of_sorted_herbivores(self):
