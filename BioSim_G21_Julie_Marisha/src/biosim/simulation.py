@@ -199,7 +199,7 @@ class BioSim:
 
 if __name__ == '__main__':
     sim1 = BioSim()
-    sim1.simulate(num_years=10)
+    sim1.simulate(num_years=100)
     print(sim1.year)
     print(sim1.animal_distribution)
     print(sim1.num_animals_per_species)
