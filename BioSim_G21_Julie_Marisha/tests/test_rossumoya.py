@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for classes in cell.py using pytest.
+Tests for classes in rossumoya.py using pytest.
 """
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
@@ -94,7 +94,7 @@ class TestRossumoya:
         """procreation() method is callable. """
         self.rossumoya.add_offspring(Herbivore(), (2, 2))
         self.rossumoya.procreation()
-        
+
     def test_add_offspring(self):
         """add_offspring() method is callable. """
         self.rossumoya.add_offspring(Carnivore(), (4, 6))

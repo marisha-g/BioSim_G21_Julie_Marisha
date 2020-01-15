@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for classes in cell.py using pytest.
+Tests for classes in simulation.py using pytest.
 """
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'

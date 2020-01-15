@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
+Tests for classes in animal.py using pytest.
 """
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
