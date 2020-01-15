@@ -7,7 +7,6 @@ Tests for classes in cell.py using pytest.
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
-
 from biosim.simulation import BioSim
 from biosim.animal import Herbivore, Carnivore
 from biosim.cell import Savannah, Jungle
@@ -16,16 +15,17 @@ import pytest
 
 class TestBiosim:
     """Tests for class BioSim."""
+
     @pytest.fixture(autouse=True)
     def create_sim(self):
         self.biosim = BioSim()
         self.population = population = [
-        {
-            "loc": (10, 10),
-            "pop": [{"species": "Herbivore", "age": 5, "weight": 20}
-                    for _ in range(150)],
-        }
-    ]
+            {
+                "loc": (10, 10),
+                "pop": [{"species": "Herbivore", "age": 5, "weight": 20}
+                        for _ in range(150)],
+            }
+        ]
 
     def test_year_before_first_simulation(self):
         """Year property returns 0 before simulation. """
