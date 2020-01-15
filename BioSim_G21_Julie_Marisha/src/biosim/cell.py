@@ -107,7 +107,7 @@ class BaseCell:
     def remove_migrated_animal(self, gone_animals):
         """
         Removes animal that has migrated.
-        :param gone_animal: list of animals that has migrated
+        :param gone_animals: list of animals that has migrated
         :type: list
         """
         for gone_animal in gone_animals:
