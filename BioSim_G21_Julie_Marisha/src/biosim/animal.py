@@ -10,7 +10,7 @@ import numpy as np
 from scipy.special import expit
 
 
-class Animal:
+class BaseAnimal:
     """
     Superclass for animal in BioSim.
     """
@@ -296,7 +296,7 @@ class Animal:
         self._prob_death = value
 
 
-class Herbivore(Animal):
+class Herbivore(BaseAnimal):
     """
     Class instance of class Animal for the Herbivore species.
     """
@@ -389,7 +389,7 @@ class Herbivore(Animal):
         super().__init__(age, weight)
 
 
-class Carnivore(Animal):
+class Carnivore(BaseAnimal):
     """
     Class instance of class Animal for the Carnivore species.
     """

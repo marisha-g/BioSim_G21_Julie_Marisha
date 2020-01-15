@@ -6,7 +6,7 @@
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
-from biosim.animal import Animal, Herbivore, Carnivore
+from biosim.animal import BaseAnimal, Herbivore, Carnivore
 import pytest
 
 
@@ -15,7 +15,7 @@ class TestAnimal:
     def test_value_error_for_negative_values(self):
         """Negative values raises ValueError."""
         with pytest.raises(ValueError):
-            Animal.set_parameters(
+            BaseAnimal.set_parameters(
                 -8.0, -1.5, -0.9,  -0.05, -40.0, -0.2, -10.0, -0.1,
                 -0.25, -1.0, -0.2, -3.5, -1.2, -0.4, -10.0
             )
