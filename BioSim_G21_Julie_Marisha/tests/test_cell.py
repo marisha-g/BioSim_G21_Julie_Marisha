@@ -65,7 +65,7 @@ class TestCell:
         assert num_animals_2 == 150
 
     def test_herbivores_eat(self):
-        """Herbivores eat the fodder in the cell, and gain weight."""
+        """Herbivore eat the fodder in the cell, and gain weight."""
         self.cell.fodder_in_cell = 300
         herbivore = Herbivore()
         herbivore.set_parameters()
@@ -77,7 +77,24 @@ class TestCell:
         assert weight1 < herbivore.weight
 
     def test_carnivores_eat(self):
-        pass
+        pop = [{'species': 'Herbivore',
+                'age': 0,
+                'weight': 10}
+               for _ in range(40)]
+        self.cell.add_population(pop)
+
+        Carnivore.set_parameters()
+        Herbivore.set_parameters()
+
+        carnivore = Carnivore()
+        carnivore.fitness = 1
+        carnivore.F = 100
+
+        self.cell.animals.append(carnivore)
+        ini_weight = carnivore.weight
+        self.cell.carnivores_eat()
+        assert ini_weight < carnivore.weight
+        assert self.cell.total_herbivores < 40
 
     def test_remove_dead_animal(self):
         """remove_dead_animal method is callable and removes
