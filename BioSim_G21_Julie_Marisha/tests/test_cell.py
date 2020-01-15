@@ -7,7 +7,7 @@ Tests for classes in cell.py using pytest.
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
-from biosim.cell import Cell, Savannah, Jungle, Desert, Mountain, Ocean
+from biosim.cell import BaseCell, Savannah, Jungle, Desert, Mountain, Ocean
 from biosim.animal import Herbivore, Carnivore
 import pytest
 
@@ -16,11 +16,11 @@ class TestCell:
     """Tests for Cell class."""
     @pytest.fixture(autouse=True)
     def create_cell(self):
-        self.cell = Cell()
+        self.cell = BaseCell()
 
     def test_constructor(self):
         """Default constructor is callable."""
-        assert isinstance(self.cell, Cell)
+        assert isinstance(self.cell, BaseCell)
 
     def test_default_parameters(self):
         """Default parameters are set correctly."""

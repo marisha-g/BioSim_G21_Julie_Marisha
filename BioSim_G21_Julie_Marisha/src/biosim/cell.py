@@ -11,7 +11,7 @@ from biosim.animal import Carnivore, Herbivore
 import numpy as np
 
 
-class Cell:
+class BaseCell:
     """
     Superclass for cell in BioSim.
     """
@@ -240,7 +240,7 @@ class Cell:
         return len([animal for animal in self.animals if isinstance(animal, Carnivore)])
 
 
-class Savannah(Cell):
+class Savannah(BaseCell):
     """
     Class instance of class Cell for the cell type Savannah.
     """
@@ -277,7 +277,7 @@ class Savannah(Cell):
         )
 
 
-class Jungle(Cell):
+class Jungle(BaseCell):
     """
     Class instance of class Cell for the cell type Jungle.
     """
@@ -298,7 +298,7 @@ class Jungle(Cell):
         super().__init__()
 
 
-class Desert(Cell):
+class Desert(BaseCell):
     """
     Class instance of class Cell for the cell type Desert.
     """
@@ -319,7 +319,7 @@ class Desert(Cell):
         self.fodder_in_cell = 0
 
 
-class Mountain(Cell):
+class Mountain(BaseCell):
     """
     Class instance of class Cell for the cell types Mountain.
     """
@@ -361,7 +361,7 @@ class Mountain(Cell):
         return 0
 
 
-class Ocean(Cell):
+class Ocean(BaseCell):
     """
     Class instance of class Cell for the cell type Ocean.
     """
