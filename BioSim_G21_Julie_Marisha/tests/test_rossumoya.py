@@ -44,6 +44,20 @@ class TestMigrationProbabilityCalculator:
         """probability() method returns a tuple and a list."""
         assert isinstance(self.calculator.probability(), (tuple, list))
 
+    def test_propbability_return_coordinates(self):
+        """probability method returns correct coordinates for
+        neighbouring cell of (2, 2)."""
+        coordinates, probability = self.calculator.probability()
+        assert coordinates == [(2, 1), (2, 3), (1, 2), (3, 2)]
+
+    def test_probability_return_probabilities(self):
+        coordinates, probabilities = self.calculator.probability()
+        sum_probabilities = sum(probabilities)
+        print(probabilities)
+        assert sum_probabilities == 1
+        assert probabilities[2] == 0.0
+
+
 
 class TestRossumoya:
     """Tests for class Rossumoya."""
