@@ -278,8 +278,7 @@ class Rossumoya:
                         new_loc = self.choose_cell(loc, type(animal).__name__)
                         self.island_map[new_loc].animals.append(animal)
                         migrating_animals.append(animal)
-                    for gone_animal in migrating_animals:
-                        cell.remove_migrated_animal(gone_animal)
+                    cell.remove_migrated_animals(migrating_animals)
 
     def choose_cell(self, loc, species):
         """
