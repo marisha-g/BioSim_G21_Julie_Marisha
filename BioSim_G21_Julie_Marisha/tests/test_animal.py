@@ -36,6 +36,7 @@ class TestAnimal:
         """Check if ValueError is raised for negative inputs. """
         with pytest.raises(ValueError):
             Herbivore(age=-4, weight=-5)
+        with pytest.raises(ValueError):
             Carnivore(age=-60, weight=-2.2)
 
     def test_aging(self):
@@ -188,6 +189,7 @@ class TestCarnivore:
         with pytest.raises(ValueError):
             a = Carnivore()
             a.set_parameters(DeltaPhiMax=0)
+        with pytest.raises(ValueError):
             a.set_parameters(DeltaPhiMax=-2)
 
     def test_value_error_for_mu(self):

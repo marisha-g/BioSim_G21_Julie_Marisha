@@ -65,10 +65,10 @@ class TestRossumoya:
         with pytest.raises(ValueError):
             island_map_string = "OOOO\nOAO\nOOOO"
             self.rossumoya.check_map_input(island_map_string)
-
+        with pytest.raises(ValueError):
             island_map_string = "OOOO\nOKJO\nOOOO"
             self.rossumoya.check_map_input(island_map_string)
-
+        with pytest.raises(ValueError):
             island_map_string = "OOOJ\nOJSO\nOOOO"
             self.rossumoya.check_map_input(island_map_string)
 

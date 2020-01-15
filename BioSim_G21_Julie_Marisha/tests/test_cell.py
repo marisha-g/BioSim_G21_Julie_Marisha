@@ -149,6 +149,7 @@ class TestSavannah:
         """Negative parameters raises ValueError."""
         with pytest.raises(ValueError):
             Savannah.set_parameters(f_max=-100)
+        with pytest.raises(ValueError):
             Savannah.set_parameters(alpha=-0.3)
 
 
