@@ -35,7 +35,6 @@ class Animal:
             *args,
             **kwargs
     ):
-        # spør om type for args og kwargs
         """
         Set default parameters for class Animal.
         :param w_birth: birth weight
