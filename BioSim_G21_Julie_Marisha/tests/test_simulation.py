@@ -77,6 +77,16 @@ class TestBiosim:
         assert Savannah.alpha == 0.4
         assert Jungle.f_max == 500
 
-    def test_add_population(self):
+    def test_add_population_callable(self):
         """ add_population method can be called."""
         self.biosim.add_population(self.population)
+
+    def test_single_simulation_callable(self):
+        """single_simulation can be called."""
+        self.biosim.single_simulation()
+
+    def test_single_simulation(self):
+        """ single_simulation simulates one year."""
+        self.biosim.single_simulation()
+        assert self.biosim.year == 1
+
