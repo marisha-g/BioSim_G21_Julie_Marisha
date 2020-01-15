@@ -67,6 +67,17 @@ class TestRossumoya:
         """add_population can be called."""
         self.rossumoya.add_population(self.rossumoya.default_ini_herbs)
 
+    def test_value_error_for_add_population(self):
+        """ValueError is raised when animal is put in invalid cell."""
+        population = [
+            {
+                'loc': (1, 9),
+                'pop': [{"species": "Carnivore", "age": 2, "weight": 20}]
+            }
+        ]
+        with pytest.raises(ValueError):
+            self.rossumoya.add_population(population)
+
     def test_value_error_check_map_input(self):
         """Test that ValueError is raised for check_map_input"""
         with pytest.raises(ValueError):
