@@ -244,7 +244,7 @@ class BaseAnimal:
         :param value: new value
         :type: float
         """
-        self.fitness = value
+        self._fitness = value
 
     @property
     def prob_migration(self):
