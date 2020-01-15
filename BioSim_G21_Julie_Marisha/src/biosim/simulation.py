@@ -4,7 +4,7 @@
 """
 
 from biosim.animal import Herbivore, Carnivore
-from biosim.cell import Savannah, Jungle, Desert, MountainAndOcean
+from biosim.cell import Savannah, Jungle, Desert, Mountain, Ocean
 from biosim.rossumoya import Rossumoya
 import pandas as pd
 
