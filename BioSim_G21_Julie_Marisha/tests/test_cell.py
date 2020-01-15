@@ -96,8 +96,14 @@ class TestCell:
         assert ini_weight < carnivore.weight
         assert self.cell.total_herbivores < 40
 
+    def test_remove_dead_animal_callable(self):
+        """remove_dead_animal method is callable."""
+        animal = Carnivore()
+        self.cell.animals.append(animal)
+        self.cell.remove_dead_animals(animal)
+
     def test_remove_dead_animal(self):
-        """remove_dead_animal method is callable and removes
+        """remove_dead_animal method removes
          the dead animal from the cell."""
         animal = Carnivore()
         self.cell.animals.append(animal)
