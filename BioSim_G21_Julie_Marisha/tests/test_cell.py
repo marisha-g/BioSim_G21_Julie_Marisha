@@ -17,6 +17,8 @@ class TestCell:
     @pytest.fixture(autouse=True)
     def create_cell(self):
         self.cell = BaseCell()
+        self.carnivore = Carnivore()
+        self.herbivore = Herbivore()
 
     def test_constructor(self):
         """Default constructor is callable."""
@@ -67,14 +69,12 @@ class TestCell:
     def test_herbivores_eat(self):
         """Herbivore eat the fodder in the cell, and gain weight."""
         self.cell.fodder_in_cell = 300
-        herbivore = Herbivore()
-        herbivore.set_parameters()
-        herbivore.F = 300
-        weight1 = herbivore.weight
-        self.cell.animals.append(herbivore)
+        self.herbivore.set_parameters(F=300)
+        weight1 = self.herbivore.weight
+        self.cell.animals.append(self.herbivore)
         self.cell.herbivores_eat()
         assert self.cell.fodder_in_cell == 0
-        assert weight1 < herbivore.weight
+        assert weight1 < self.herbivore.weight
 
     def test_carnivores_eat(self):
         pop = [{'species': 'Herbivore',
@@ -86,28 +86,25 @@ class TestCell:
         Carnivore.set_parameters()
         Herbivore.set_parameters()
 
-        carnivore = Carnivore()
-        carnivore.fitness = 1
-        carnivore.F = 100
+        self.carnivore.fitness = 1
+        self.carnivore.F = 100
 
-        self.cell.animals.append(carnivore)
-        ini_weight = carnivore.weight
+        self.cell.animals.append(self.carnivore)
+        ini_weight = self.carnivore.weight
         self.cell.carnivores_eat()
-        assert ini_weight < carnivore.weight
+        assert ini_weight < self.carnivore.weight
         assert self.cell.total_herbivores < 40
 
-    def test_remove_dead_animal_callable(self):
+    def test_remove_dead_animals_callable(self):
         """remove_dead_animal method is callable."""
-        animal = Carnivore()
-        self.cell.animals.append(animal)
-        self.cell.remove_dead_animals(animal)
+        self.cell.animals.append(self.carnivore)
+        self.cell.remove_dead_animals([self.carnivore])
 
-    def test_remove_dead_animal(self):
+    def test_remove_dead_animals(self):
         """remove_dead_animal method removes
          the dead animal from the cell."""
-        animal = Carnivore()
-        self.cell.animals.append(animal)
-        self.cell.remove_dead_animals(animal)
+        self.cell.animals.append(self.carnivore)
+        self.cell.remove_dead_animals([self.carnivore])
         assert self.cell.total_carnivores == 0
 
     def test_list_of_sorted_herbivores(self):
