@@ -3,13 +3,14 @@
 """
 """
 
+__author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
+__email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
+
+import pandas as pd
+
 from biosim.animal import Herbivore, Carnivore
 from biosim.cell import Savannah, Jungle, Desert, Mountain, Ocean
 from biosim.rossumoya import Rossumoya
-import pandas as pd
-
-__author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
-__email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
 
 class BioSim:

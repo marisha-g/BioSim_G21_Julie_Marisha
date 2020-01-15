@@ -7,10 +7,11 @@ Tests for classes in simulation.py using pytest.
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
+import pytest
+
 from biosim.simulation import BioSim
 from biosim.animal import Herbivore, Carnivore
 from biosim.cell import Savannah, Jungle
-import pytest
 
 
 class TestBiosim:
