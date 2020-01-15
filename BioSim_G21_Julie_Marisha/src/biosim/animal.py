@@ -502,16 +502,13 @@ class Carnivore(BaseAnimal):
         :type: int
         """
         if self.fitness <= fitness_prey:
-            self._prob_carnivore_kill = 0
-            return self._prob_carnivore_kill
+            return 0
         elif 0 < self.fitness - fitness_prey < self.DeltaPhiMax:
             p = (self.fitness - fitness_prey) / self.DeltaPhiMax
             choice = np.random.choice(2, p=[1 - p, p])
-            self._prob_carnivore_kill = choice
-            return self._prob_carnivore_kill
+            return choice
         else:
-            self._prob_carnivore_kill = 1
-            return self._prob_carnivore_kill
+            return 1
 
     # @prob_carnivore_kill.setter
     # def prob_carnivore_kill(self, value):
