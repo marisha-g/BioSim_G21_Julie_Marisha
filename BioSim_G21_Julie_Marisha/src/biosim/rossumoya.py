@@ -215,7 +215,10 @@ class Rossumoya:
             location = cell_dict['loc']
             pop_dict = cell_dict['pop']
             cell = self.island_map[location]
-            cell.add_population(pop_dict)
+            if cell.animal_can_enter:
+                cell.add_population(pop_dict)
+            else:
+                raise ValueError('Cant place animal in Mountain or Ocean')
 
     def procreation(self):
         """
