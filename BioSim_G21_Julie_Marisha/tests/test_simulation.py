@@ -91,3 +91,12 @@ class TestBiosim:
         self.biosim.single_simulation()
         assert self.biosim.year == 1
 
+    def test_update_visualization(self):
+        pass
+
+    def test_save_file(self):
+        pass
+
+    def test_make_movie(self):
+        pass
+
