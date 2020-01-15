@@ -7,10 +7,11 @@ Tests for classes in rossumoya.py using pytest.
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
+import pytest
+
 from biosim.rossumoya import Rossumoya
 from biosim.rossumoya import MigrationProbabilityCalculator
 from biosim.animal import Herbivore, Carnivore
-import pytest
 
 
 class TestMigrationProbabilityCalculator:
@@ -59,9 +60,17 @@ class TestRossumoya:
         """Checks if the island_map is a dictionary."""
         assert isinstance(self.rossumoya.island_map, dict)
 
-    def test_geography_coordinates_method(self):
-        """make_geography_coordinates can be called."""
-        self.rossumoya.make_geography_coordinates(self.rossumoya.default_map)
+    def test_value_error_check_map_input(self):
+        """Test that ValueError is raised for check_map_input"""
+        with pytest.raises(ValueError):
+            island_map_string = "OOOO\nOAO\nOOOO"
+            self.rossumoya.check_map_input(island_map_string)
+
+            island_map_string = "OOOO\nOKJO\nOOOO"
+            self.rossumoya.check_map_input(island_map_string)
+
+            island_map_string = "OOOJ\nOJSO\nOOOO"
+            self.rossumoya.check_map_input(island_map_string)
 
     def test_add_population_method(self):
         """add_population can be called."""
@@ -78,18 +87,6 @@ class TestRossumoya:
         with pytest.raises(ValueError):
             self.rossumoya.add_population(population)
 
-    def test_value_error_check_map_input(self):
-        """Test that ValueError is raised for check_map_input"""
-        with pytest.raises(ValueError):
-            island_map_string = "OOOO\nOAO\nOOOO"
-            self.rossumoya.check_map_input(island_map_string)
-
-            island_map_string = "OOOO\nOKJO\nOOOO"
-            self.rossumoya.check_map_input(island_map_string)
-
-            island_map_string = "OOOJ\nOJSO\nOOOO"
-            self.rossumoya.check_map_input(island_map_string)
-
     def test_procreation(self):
         """procreation() method is callable. """
         self.rossumoya.add_offspring(Herbivore(), (2, 2))
@@ -98,6 +95,10 @@ class TestRossumoya:
     def test_add_offspring(self):
         """add_offspring() method is callable. """
         self.rossumoya.add_offspring(Carnivore(), (4, 6))
+
+    def test_geography_coordinates_method(self):
+        """make_geography_coordinates can be called."""
+        self.rossumoya.make_geography_coordinates(self.rossumoya.default_map)
 
     def test_choose_cell(self):
         """choose_cell() method is callable. """
@@ -108,7 +109,7 @@ class TestRossumoya:
     def test_death_callable(self):
         """death() method is callable. """
         self.rossumoya.death()
-
+    
     def test_make_geography_coordinates(self):
         """make_geography_coordinates() method returns a dictionary. """
         island_map = "OOO\nOJO\nOOO"
