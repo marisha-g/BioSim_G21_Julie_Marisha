@@ -7,7 +7,7 @@ Tests for classes in cell.py using pytest.
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
-from biosim.cell import Cell, Savannah, Jungle, Desert, MountainAndOcean
+from biosim.cell import Cell, Savannah, Jungle, Desert, Mountain, Ocean
 from biosim.animal import Herbivore, Carnivore
 import pytest
 
@@ -164,18 +164,35 @@ class TestDesert:
         assert self.d.animal_can_enter is True
 
 
-class TestMountainAndOcean:
-    """ Tests for MountainAndOcean class."""
+class TestMountain:
+    """ Tests for Mountain class."""
     @pytest.fixture(autouse=True)
     def create_cell(self):
-        self.mo = MountainAndOcean()
+        self.m = Mountain()
 
     def test_constructor(self):
         """Default constructor is callable. """
-        assert isinstance(self.mo, MountainAndOcean)
+        assert isinstance(self.m, Mountain)
 
     def test_parameters_mountain_and_ocean(self):
-        """Test that parameters for subclass MountainAndOcean are correct."""
-        assert self.mo.fodder_in_cell == 0
-        assert self.mo.f_max == 0
-        assert self.mo.animal_can_enter is False
+        """Test that parameters for subclass Mountain are correct."""
+        assert self.m.fodder_in_cell == 0
+        assert self.m.f_max == 0
+        assert self.m.animal_can_enter is False
+
+
+class TestOcean:
+    """ Tests for Ocean class."""
+    @pytest.fixture(autouse=True)
+    def create_cell(self):
+        self.o = Ocean()
+
+    def test_constructor(self):
+        """Default constructor is callable. """
+        assert isinstance(self.o, Ocean)
+
+    def test_parameters_mountain_and_ocean(self):
+        """Test that parameters for subclass Ocean are correct."""
+        assert self.o.fodder_in_cell == 0
+        assert self.o.f_max == 0
+        assert self.o.animal_can_enter is False
