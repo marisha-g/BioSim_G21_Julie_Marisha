@@ -319,22 +319,22 @@ class Desert(Cell):
         self.fodder_in_cell = 0
 
 
-class MountainAndOcean(Cell):
+class Mountain(Cell):
     """
-    Class instance of class Cell for the cell types Mountain and Ocean.
+    Class instance of class Cell for the cell types Mountain.
     """
     @classmethod
     def set_parameters(cls, f_max=0):
         """
-        Set default parameters for class instance MountainAndOcean.
-        :param f_max: maximum fodder available in cell type Mountain and Ocean
+        Set default parameters for class instance Mountain.
+        :param f_max: maximum fodder available in cell type Mountain
         :type: float
         """
-        super(MountainAndOcean, cls).set_parameters(f_max)
+        super(Mountain, cls).set_parameters(f_max)
 
     def __init__(self):
         """
-        Constructor that initiate class instance MountainAndOcean.
+        Constructor that initiate class instance Mountain.
         """
         super().__init__()
         self.fodder_in_cell = 0
@@ -344,7 +344,7 @@ class MountainAndOcean(Cell):
     def propensity_migration_herb(self):
         """
         Sets the propensity for a Herbivore to migrate to zero,
-        because Mountain and Ocean cells are impassable.
+        because Mountain cells are impassable.
         :return: 0
         :type: int
         """
@@ -354,7 +354,49 @@ class MountainAndOcean(Cell):
     def propensity_migration_carn(self):
         """
         Sets the propensity for a Carnivore to migrate to zero,
-        because Mountain and Ocean cells are impassable.
+        because Mountain cells are impassable.
+        :return: 0
+        :type: int
+        """
+        return 0
+
+
+class Ocean(Cell):
+    """
+    Class instance of class Cell for the cell type Ocean.
+    """
+    @classmethod
+    def set_parameters(cls, f_max=0):
+        """
+        Set default parameters for class instance Ocean.
+        :param f_max: maximum fodder available in cell type Ocean
+        :type: float
+        """
+        super(Ocean, cls).set_parameters(f_max)
+
+    def __init__(self):
+        """
+        Constructor that initiate class instance Ocean.
+        """
+        super().__init__()
+        self.fodder_in_cell = 0
+        self.animal_can_enter = False
+
+    @property
+    def propensity_migration_herb(self):
+        """
+        Sets the propensity for a Herbivore to migrate to zero,
+        because Ocean cells are impassable.
+        :return: 0
+        :type: int
+        """
+        return 0
+
+    @property
+    def propensity_migration_carn(self):
+        """
+        Sets the propensity for a Carnivore to migrate to zero,
+        because Ocean cells are impassable.
         :return: 0
         :type: int
         """
