@@ -281,7 +281,7 @@ class BaseAnimal:
             self._prob_death = 0
         else:
             p = self.omega * (1 - self.fitness)
-            self._prob_death = np.random.choice(2, p=[p, 1 - p])
+            self._prob_death = np.random.choice(2, p=[1 - p, p])
 
         return self._prob_death
 
