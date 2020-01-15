@@ -82,8 +82,9 @@ class BaseCell:
         if self.fodder_in_cell != 0:
             for herbivore in self.list_of_sorted_herbivores:
                 if self.fodder_in_cell >= herbivore.F:
-                    self.fodder_in_cell -= herbivore.F
-                    herbivore.weight_gain(herbivore.F)
+                    food = Herbivore.F
+                    self.fodder_in_cell -= food
+                    herbivore.weight_gain(food)
                 else:
                     herbivore.weight_gain(self.fodder_in_cell)
                     self.fodder_in_cell = 0
@@ -94,13 +95,14 @@ class BaseCell:
         kill the Herbivore with lowest fitness first. The increase in weight
         of the Carnivore is proportional to the weight of the Herbivore killed.
         """
-        if self.total_herbivores != 0:
-            for carnivore in self.list_of_sorted_carnivores:
-                for herbivore in reversed(self.list_of_sorted_herbivores):
-                    if carnivore.prob_carnivore_kill(herbivore.fitness):
-                        weight_prey = herbivore.weight
-                        self.animals.remove(herbivore)
-                        carnivore.weight_gain(weight_prey)
+        for carnivore in self.list_of_sorted_carnivores:
+            killed_herbivores = []
+            for herbivore in reversed(self.list_of_sorted_herbivores):
+                if carnivore.prob_carnivore_kill(herbivore.fitness):
+                    killed_herbivores.append(herbivore)
+                    weight_prey = herbivore.weight
+                    carnivore.weight_gain(weight_prey)
+            self.remove_dead_animals(killed_herbivores)
 
     def remove_migrated_animal(self, gone_animal):
         """
@@ -110,13 +112,14 @@ class BaseCell:
         """
         self.animals.remove(gone_animal)
 
-    def remove_dead_animal(self, dead_animal):
+    def remove_dead_animals(self, dead_animals):
         """
         Removes animal that has died.
-        :param dead_animal: list of animals that has died
+        :param dead_animals: list of animals that has died
         :type: list
         """
-        self.animals.remove(dead_animal)
+        for dead_animal in dead_animals:
+            self.animals.remove(dead_animal)
 
     @property
     def list_of_sorted_herbivores(self):
