@@ -104,7 +104,7 @@ class BaseCell:
                     carnivore.weight_gain(weight_prey)
             self.remove_dead_animals(killed_herbivores)
 
-    def remove_migrated_animal(self, gone_animals):
+    def remove_migrated_animals(self, gone_animals):
         """
         Removes animal that has migrated.
         :param gone_animals: list of animals that has migrated
