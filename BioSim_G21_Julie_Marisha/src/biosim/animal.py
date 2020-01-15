@@ -7,7 +7,7 @@ __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
 import numpy as np
-from scipy.special import expit
+import scipy.special
 
 
 class BaseAnimal:
@@ -229,8 +229,8 @@ class BaseAnimal:
         :type: float
         """
         if self.weight > 0:
-            age_sigma = expit(-self.phi_age * (self.age - self.a_half))
-            weight_sigma = expit(self.phi_weight * (self.weight - self.w_half))
+            age_sigma = scipy.special.expit(-self.phi_age * (self.age - self.a_half))
+            weight_sigma = scipy.special.expit(self.phi_weight * (self.weight - self.w_half))
             self._fitness = age_sigma * weight_sigma
         else:
             self._fitness = 0
