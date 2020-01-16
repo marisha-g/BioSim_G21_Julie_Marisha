@@ -162,6 +162,32 @@ class BioSim:
         """
         self.rossumoya.add_population(population)
 
+    def _make_map_with_rgb_colours(self):
+        colour_map = []
+        map_list = self.rossumoya.island_map_string.split('\n')
+        print(map_list)
+
+        for x, cell_row in enumerate(map_list):
+            colour_map.append([])
+            for cell_code in cell_row:
+                if cell_code == 'S':
+                    colour_map[x].append((200, 200, 50))
+
+                if cell_code == 'J':
+                    colour_map[x].append((40, 150, 30))
+
+                if cell_code == 'O':
+                    colour_map[x].append((0, 130, 300))
+
+                if cell_code == 'D':
+                    colour_map[x].append((220, 180, 140))
+
+                if cell_code == 'M':
+                    colour_map[x].append((210, 200, 220))
+        print(colour_map[0][0])
+        return colour_map
+
+
     @property
     def year(self):
         """Last year simulated."""
