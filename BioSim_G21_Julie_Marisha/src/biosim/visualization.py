@@ -40,7 +40,7 @@ class BioVis:
 
         if img_fmt is None:
             img_fmt = _DEFAULT_IMAGE_FORMAT
-        
+
         self.sim = BioSim(island_map=island_map,
                           ini_pop=ini_pop,
                           seed=seed,
@@ -48,3 +48,5 @@ class BioVis:
                           cmax_animals=cmax_animals,
                           img_base=img_base,
                           img_fmt=img_fmt)
+
+

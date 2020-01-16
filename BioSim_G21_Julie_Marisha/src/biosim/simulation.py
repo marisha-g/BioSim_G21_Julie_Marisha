@@ -7,9 +7,11 @@ __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
 import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
 
 from biosim.animal import Herbivore, Carnivore
-from biosim.cell import Savannah, Jungle, Desert, Mountain, Ocean
+from biosim.cell import Savannah, Jungle
 from biosim.rossumoya import Rossumoya
 
 
@@ -96,15 +98,15 @@ class BioSim:
             img_years = vis_years
 
         self._final_year = self._year + num_years
-        self._setup_graphics()
+        self._setup_visualization()
 
         while self.year < self._final_year:
 
             if self.year % vis_years == 0:
-                self._update_graphics()
+                self._update_visualization()
 
             if self.year % img_years == 0:
-                self._save_graphics()
+                self._save_file()
 
             self.rossumoya.single_year()
             self.year += 1
@@ -165,9 +167,49 @@ class BioSim:
 
         return data_frame
 
-    def update_visualization(self):
+    def _update_visualization(self):
         pass
 
+    def _save_file(self):
+        pass
+
+    def _setup_visualization(self):
+        """Creates subplots."""
+
+        # create new figure window
+        if self._fig is None:
+            self._fig = plt.figure()
+
+        # Add left subplot for images created with imshow().
+        # We cannot create the actual ImageAxis object before we know
+        # the size of the image, so we delay its creation.
+        if self._map_ax is None:
+            self._map_ax = self._fig.add_subplot(1, 2, 1)
+            self._img_axis = None
+
+        # Add right subplot for line graph of mean.
+        if self._mean_ax is None:
+            self._mean_ax = self._fig.add_subplot(1, 2, 2)
+            self._mean_ax.set_ylim(0, 0.02)
+
+        # needs updating on subsequent calls to simulate()
+        self._mean_ax.set_xlim(0, self._final_year + 1)
+
+        if self._mean_line is None:
+            mean_plot = self._mean_ax.plot(np.arange(0, self._final_year),
+                                           np.full(self._final_year, np.nan))
+            self._mean_line = mean_plot[0]
+        else:
+            xdata, ydata = self._mean_line.get_data()
+            xnew = np.arange(xdata[-1] + 1, self._final_year)
+            if len(xnew) > 0:
+                ynew = np.full(xnew.shape, np.nan)
+                self._mean_line.set_data(np.hstack((xdata, xnew)),
+                                         np.hstack((ydata, ynew)))
+
+    def _make_movie(self):
+        """Create MPEG4 movie from visualization images saved."""
+        pass
 
 
 if __name__ == '__main__':
