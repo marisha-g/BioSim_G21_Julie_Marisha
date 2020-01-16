@@ -12,12 +12,16 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+import subprocess
 
 
 from biosim.animal import Herbivore, Carnivore
 from biosim.cell import Savannah, Jungle
 from biosim.rossumoya import Rossumoya
 
+# update these variables to point to your ffmpeg and convert binaries
+_FFMPEG_BINARY = 'ffmpeg'
+_CONVERT_BINARY = 'magick'
 
 # update this to the directory and file-name beginning
 # for the graphics files
@@ -263,6 +267,17 @@ class BioSim:
                 ynew = np.full(xnew.shape, np.nan)
                 self._mean_line.set_data(np.hstack((xdata, xnew)),
                                          np.hstack((ydata, ynew)))
+
+    def make_movie(self, movie_fmt=_DEFAULT_MOVIE_FORMAT):
+        """
+        Creates MPEG4 movie from visualization images saved.
+
+        .. :note:
+            Requires ffmpeg
+
+        The movie is stored as img_base + movie_fmt
+        Author: Hans Ekkehard Plesser
+        """
 
         if self._img_base is None:
             raise RuntimeError("No filename defined.")
