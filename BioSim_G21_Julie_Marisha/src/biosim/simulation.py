@@ -9,10 +9,21 @@ __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import os
+
 
 from biosim.animal import Herbivore, Carnivore
 from biosim.cell import Savannah, Jungle
 from biosim.rossumoya import Rossumoya
+
+
+# update this to the directory and file-name beginning
+# for the graphics files
+_DEFAULT_GRAPHICS_DIR = os.path.join('..', 'figs')
+_DEFAULT_IMAGE_BASE = 'bio'
+_DEFAULT_IMAGE_FORMAT = "png"
+_DEFAULT_MOVIE_FORMAT = 'mp4'
+
 
 
 class BioSim:
@@ -56,6 +67,13 @@ class BioSim:
         self.seed = seed
         self._year = 0
         self._final_year = None
+
+        if img_base is None:
+            img_base = _DEFAULT_IMAGE_BASE
+
+        if img_fmt is None:
+            img_fmt = _DEFAULT_IMAGE_FORMAT
+
 
     @staticmethod
     def set_animal_parameters(species, params):
@@ -171,10 +189,20 @@ class BioSim:
         pass
 
     def _save_file(self):
-        pass
+        """Saves graphics to file if file name given."""
+
+        if self._img_base is None:
+            return
+
+        plt.savefig('{base}_{num:05d}.{type}'.format(base=self._img_base,
+                                                     num=self._img_ctr,
+                                                     type=self._img_fmt))
+        self._img_ctr += 1
 
     def _setup_visualization(self):
-        """Creates subplots."""
+        """Creates subplots.
+        Author: Hans Ekkehard Plesser
+        """
 
         # create new figure window
         if self._fig is None:
