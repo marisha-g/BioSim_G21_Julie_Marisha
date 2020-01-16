@@ -79,6 +79,18 @@ class TestAnimal:
         assert herb_weight_1 > self.herbivore.weight
         assert carn_weight_1 > self.carnivore.weight
 
+    def test_weight_loss_birth(self):
+        """Animal loses right amount of weight after giving birth. """
+        self.herbivore.weight = 20
+        self.carnivore.weight = 40
+
+        self.herbivore.weight_loss_birth(5)
+        self.carnivore.weight_loss_birth(10)
+
+        assert self.herbivore.weight == 14.0
+        assert self.carnivore.weight == 29.0
+
+
     def test_prob_procreation(self):
         """Probability for procreation is 0 when weight is 0."""
         self.herbivore.weight = 0
