@@ -30,6 +30,13 @@ class TestAnimal:
                 -0.25, -1.0, -0.2, -3.5, -1.2, -0.4, -10.0
             )
 
+    def test_value_error_for_age_and_weight(self):
+        """Check if ValueError is raised for negative inputs. """
+        with pytest.raises(ValueError):
+            Herbivore(age=-4, weight=-5)
+        with pytest.raises(ValueError):
+            Carnivore(age=-60, weight=-2.2)
+
     def test_draw_birth_weight(self):
         """ Test that birth_weight method returns positive number."""
         assert self.herbivore.draw_birth_weight() >= 0
@@ -38,13 +45,6 @@ class TestAnimal:
     def test_reset_migration(self):
         """Test that reset migration sets has_migrated attribute to False."""
         assert self.base_animal.has_migrated is False
-
-    def test_value_error_for_age_and_weight(self):
-        """Check if ValueError is raised for negative inputs. """
-        with pytest.raises(ValueError):
-            Herbivore(age=-4, weight=-5)
-        with pytest.raises(ValueError):
-            Carnivore(age=-60, weight=-2.2)
 
     def test_aging(self):
         """Test if aging method increments an animal's age by 1."""
@@ -106,15 +106,30 @@ class TestAnimal:
         self.base_animal.age = 2
         assert self.base_animal.fitness == pytest.approx(0.49975)
 
+    def test_fitness_setter(self):
+        """Property fitness() sets the given value."""
+        self.base_animal.fitness = 5
+        assert self.base_animal._fitness == 5
+
     def test_prob_migration_callable(self):
         """Property prob_migration is callable. """
         self.herbivore.prob_migration
         self.carnivore.prob_migration
 
+    def test_prob_migration_setter(self):
+        """Property prob_migration() sets the given value."""
+        self.base_animal.prob_migration = 0.6
+        self.base_animal._prob_migration == 0.6
+
     def test_prob_death_is_callable(self):
         """Property prob_death is callable."""
         self.herbivore.prob_death
         self.carnivore.prob_death
+
+    def test_prob_death_setter(self):
+        """Property prob_death() sets the given value."""
+        self.base_animal.prob_death = 0.8
+        self.base_animal._prob_death == 0.8
 
 
 class TestHerbivore:
