@@ -70,17 +70,17 @@ class BioSim:
         self.rossumoya = Rossumoya(island_map, ini_pop)
         self._year = 0
         self._final_year = None
-        self._img_counter = 0
+        self._image_counter = 0
 
         if img_base is None:
             img_base = _DEFAULT_IMAGE_BASE
-        self._img_base = img_base
+        self._image_base = img_base
 
         if img_fmt is None:
             img_fmt = _DEFAULT_IMAGE_FORMAT
-        self._img_fmt = img_fmt
+        self._image_format = img_fmt
 
-        self._img_counter = 0
+        self._image_counter = 0
 
         if ymax_animals is None:
             ymax_animals = 1000
@@ -90,9 +90,14 @@ class BioSim:
         # the following will be initialized by _setup_graphics
         self._fig = None
         self._map_ax = None
-        self._img_axis = None
-        self._mean_ax = None
-        self._mean_line = None
+        self._map_axis = None
+        self._map_code_ax = None
+        self._map_code_axis = None
+        self._graph_ax = None
+        self._graph_axis = None
+        self._heat_map_ax = None
+        self._heat_map_axis = None
+
 
     @staticmethod
     def set_animal_parameters(species, params):
@@ -201,21 +206,21 @@ class BioSim:
 
         return data_frame
 
-    def _update_map(self, sys_map):
+    def _update_heat_map(self, sys_map):
         """ Update the 2D-view of the map.
         Author: Hans Ekkehard Plesser
         """
-        if self._img_axis is not None:
-            self._img_axis.set_data(sys_map)
+        if self._heat_map_axis is not None:
+            self._heat_map_axis.set_data(sys_map)
         else:
-            self._img_axis = self._map_ax.imshow(sys_map,
-                                                 interpolation='nearest',
-                                                 vmin=0, vmax=1)
-            plt.colorbar(self._img_axis, ax=self._map_ax,
+            self._heat_map_axis = self._map_ax.imshow(sys_map,
+                                                      interpolation='nearest',
+                                                      vmin=0, vmax=1)
+            plt.colorbar(self._heat_map_axis, ax=self._map_ax,
                          orientation='horizontal')
 
     def _update_graphics(self):
-        self._update_map()
+        self._update_heat_map()
         self._update_graph()
         plt.pause(1e-6)
 
@@ -230,13 +235,13 @@ class BioSim:
         Author: Hans Ekkehard Plesser
         """
 
-        if self._img_base is None:
+        if self._image_base is None:
             return
 
-        plt.savefig('{base}_{num:05d}.{type}'.format(base=self._img_base,
-                                                     num=self._img_counter,
-                                                     type=self._img_fmt))
-        self._img_counter += 1
+        plt.savefig('{base}_{num:05d}.{type}'.format(base=self._image_base,
+                                                     num=self._image_counter,
+                                                     type=self._image_format))
+        self._image_counter += 1
 
     def _setup_graphics(self):
         """Creates subplots.
@@ -252,27 +257,27 @@ class BioSim:
         # the size of the image, so we delay its creation.
         if self._map_ax is None:
             self._map_ax = self._fig.add_subplot(1, 2, 1)
-            self._img_axis = None
+            self._heat_map_axis = None
 
         # Add right subplot for line graph of mean.
-        if self._mean_ax is None:
-            self._mean_ax = self._fig.add_subplot(1, 2, 2)
-            self._mean_ax.set_ylim(0, self._ymax)
+        if self._graph_ax is None:
+            self._graph_ax = self._fig.add_subplot(1, 2, 2)
+            self._graph_ax.set_ylim(0, self._ymax)
 
         # needs updating on subsequent calls to simulate()
-        self._mean_ax.set_xlim(0, self._final_year + 1)
+        self._graph_ax.set_xlim(0, self._final_year + 1)
 
-        if self._mean_line is None:
-            mean_plot = self._mean_ax.plot(np.arange(0, self._final_year),
-                                           np.full(self._final_year, np.nan))
-            self._mean_line = mean_plot[0]
+        if self._graph_axis is None:
+            mean_plot = self._graph_ax.plot(np.arange(0, self._final_year),
+                                            np.full(self._final_year, np.nan))
+            self._graph_axis = mean_plot[0]
         else:
-            xdata, ydata = self._mean_line.get_data()
+            xdata, ydata = self._graph_axis.get_data()
             xnew = np.arange(xdata[-1] + 1, self._final_year)
             if len(xnew) > 0:
                 ynew = np.full(xnew.shape, np.nan)
-                self._mean_line.set_data(np.hstack((xdata, xnew)),
-                                         np.hstack((ydata, ynew)))
+                self._graph_axis.set_data(np.hstack((xdata, xnew)),
+                                          np.hstack((ydata, ynew)))
 
     def make_movie(self, movie_fmt=_DEFAULT_MOVIE_FORMAT):
         """
@@ -285,7 +290,7 @@ class BioSim:
         Author: Hans Ekkehard Plesser
         """
 
-        if self._img_base is None:
+        if self._image_base is None:
             raise RuntimeError("No filename defined.")
 
         if movie_fmt == 'mp4':
@@ -293,12 +298,12 @@ class BioSim:
                 # Parameters chosen according to http://trac.ffmpeg.org/wiki/Encode/H.264,
                 # section "Compatibility"
                 subprocess.check_call([_FFMPEG_BINARY,
-                                       '-i', '{}_%05d.png'.format(self._img_base),
+                                       '-i', '{}_%05d.png'.format(self._image_base),
                                        '-y',
                                        '-profile:v', 'baseline',
                                        '-level', '3.0',
                                        '-pix_fmt', 'yuv420p',
-                                       '{}.{}'.format(self._img_base,
+                                       '{}.{}'.format(self._image_base,
                                                       movie_fmt)])
             except subprocess.CalledProcessError as err:
                 raise RuntimeError('ERROR: ffmpeg failed with: {}'.format(err))
@@ -307,8 +312,8 @@ class BioSim:
                 subprocess.check_call([_CONVERT_BINARY,
                                        '-delay', '1',
                                        '-loop', '0',
-                                       '{}_*.png'.format(self._img_base),
-                                       '{}.{}'.format(self._img_base,
+                                       '{}_*.png'.format(self._image_base),
+                                       '{}.{}'.format(self._image_base,
                                                       movie_fmt)])
             except subprocess.CalledProcessError as err:
                 raise RuntimeError('ERROR: convert failed with: {}'.format(err))
