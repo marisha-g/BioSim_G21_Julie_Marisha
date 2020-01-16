@@ -131,6 +131,10 @@ class TestRossumoya:
         """death() method is callable. """
         self.rossumoya.death()
 
+    def test_single_year_callable(self):
+        """single_year() method is callable. """
+        self.rossumoya.single_year()
+
     def test_map_axis(self):
         axis = self.rossumoya.map_axis()
         assert axis == (20, 12)
