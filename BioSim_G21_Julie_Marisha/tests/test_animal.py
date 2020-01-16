@@ -203,14 +203,14 @@ class TestCarnivore:
             Carnivore().set_parameters(mu=2)
 
     def test_prob_carnivore_kill(self):
-        """ """
-        fitness_prey = 20
-        self.carnivore.fitness = 15
+        """prob_carnivore_kill() method returns correct outputs. """
+        fitness_prey = 1
+        self.carnivore.fitness = 0.5
         assert self.carnivore.prob_carnivore_kill(fitness_prey) == 0
 
-        fitness_prey = 10
+        fitness_prey = 0.4
         assert self.carnivore.prob_carnivore_kill(fitness_prey) is 0 or 1
 
-        #fitness_prey = 5
-        #self.carnivore.fitness = 200
-        #assert self.carnivore.prob_carnivore_kill(fitness_prey) == 1
+        self.carnivore.DeltaPhiMax = 0.5
+        fitness_prey = 0.1
+        assert self.carnivore.prob_carnivore_kill(fitness_prey) == 1
