@@ -128,6 +128,8 @@ class TestCell:
         assert weight1 < self.herbivore.weight
 
     def test_carnivores_eat(self):
+        """Carnivore eat Herbivore inn cell when appetite and fitness is
+        high, and total number of Herbivores decreases. """
         pop = [{'species': 'Herbivore',
                 'age': 0,
                 'weight': 10}
@@ -182,6 +184,7 @@ class TestSavannah:
     @pytest.fixture(autouse=True)
     def create_cell(self):
         self.s = Savannah()
+        Savannah.set_parameters()
 
     def test_constructor(self):
         """Default constructor is callable. """
@@ -199,6 +202,12 @@ class TestSavannah:
             Savannah.set_parameters(f_max=-100)
         with pytest.raises(ValueError):
             Savannah.set_parameters(alpha=-0.3)
+
+    def test_regrow_fodder_savannah(self):
+        """Formula for regrow fodder in Savannah is correct."""
+        self.s.fodder_in_cell = 20
+        self.s.regrow_fodder()
+        assert self.s.fodder_in_cell == 104
 
 
 class TestJungle:
@@ -261,6 +270,15 @@ class TestMountain:
         assert self.m.f_max == 0
         assert self.m.animal_can_enter is False
 
+    def test_propensity_migration_herb(self):
+        """Propensity for Herbivores to migrate to Mountain cell is
+        equal to 0. """
+        assert self.m.propensity_migration_herb == 0
+
+    def test_propensity_migration_carn(self):
+        """Propensity for Carnivores to migrate to Mountain cell is
+        equal to 0. """
+        assert self.m.propensity_migration_carn == 0
 
 class TestOcean:
     """ Tests for Ocean class."""
@@ -277,3 +295,13 @@ class TestOcean:
         assert self.o.fodder_in_cell == 0
         assert self.o.f_max == 0
         assert self.o.animal_can_enter is False
+
+    def test_propensity_migration_herb(self):
+        """Propensity for Herbivores to migrate to Ocean cell is
+        equal to 0. """
+        assert self.o.propensity_migration_herb == 0
+
+    def test_propensity_migration_carn(self):
+        """Propensity for Carnivores to migrate to Ocean cell is
+        equal to 0. """
+        assert self.o.propensity_migration_carn == 0
