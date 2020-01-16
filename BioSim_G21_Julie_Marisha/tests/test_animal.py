@@ -36,8 +36,8 @@ class TestAnimal:
         assert self.carnivore.draw_birth_weight() >= 0
 
     def test_reset_migration(self):
-        """Test that reset migration is False."""
-        assert self.base_animal.reset_migration() is False
+        """Test that reset migration sets has_migrated attribute to False."""
+        assert self.base_animal.has_migrated is False
 
     def test_value_error_for_age_and_weight(self):
         """Check if ValueError is raised for negative inputs. """
