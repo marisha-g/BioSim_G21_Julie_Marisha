@@ -145,11 +145,14 @@ class Rossumoya:
         :type: list
         """
         if island_map is None:
-            island_map = Rossumoya.default_map
-            self.island_map = self.make_geography_coordinates(island_map)
+            self.island_map_string = Rossumoya.default_map
+            self.island_map = self.make_geography_coordinates(
+                Rossumoya.default_map
+            )
 
         else:
             if self.check_map_input(island_map):
+                self.island_map_string = island_map
                 self.island_map = self.make_geography_coordinates(island_map)
 
         if ini_pop is None:
