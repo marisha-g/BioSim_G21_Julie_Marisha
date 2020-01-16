@@ -7,8 +7,9 @@
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
-from biosim.animal import Carnivore, Herbivore
 import numpy as np
+
+from biosim.animal import Carnivore, Herbivore
 
 
 class BaseCell:
@@ -46,21 +47,12 @@ class BaseCell:
         self.set_parameters()
         self.fodder_first_year(self.f_max)
 
-    def fodder_first_year(self, f_max):
-        """
-        Sets max fodder in Savannah and Jungle cells.
-        :param f_max: maximum fodder available in a cell type
-        :type: float
-        """
-        self.fodder_in_cell = f_max
-
-    def regrow_fodder(self):
-        """
-        Grow back initial fodder amount.
-        """
-        self.fodder_in_cell = self.f_max
-
     def add_population(self, pop_list):
+        """
+        Add new animals in cell.
+        :param pop_list: list of dictionaries indicating population.
+        :type: list
+        """
         for pop_dict in pop_list:
             species = pop_dict['species']
             age = pop_dict['age']
@@ -74,79 +66,30 @@ class BaseCell:
                     Carnivore(age, weight)
                 )
 
-    def herbivores_eat(self):
+    @property
+    def total_population(self):
         """
-        Herbivore with the highest fitness eat first. The Herbivore's weight
-        increases with the amount of fodder it has eaten.
+        Returns the total amount of animals on Rossumøya.
+        :return: length of the Animal list
+        :type: int
         """
-        if self.fodder_in_cell != 0:
-            for herbivore in self.list_of_sorted_herbivores:
-                if self.fodder_in_cell >= herbivore.F:
-                    food = Herbivore.F
-                    self.fodder_in_cell -= food
-                    herbivore.weight_gain(food)
-                else:
-                    herbivore.weight_gain(self.fodder_in_cell)
-                    self.fodder_in_cell = 0
-
-    def carnivores_eat(self):
-        """
-        Carnivore with the highest fitness eat first. The Carnivore tries to
-        kill the Herbivore with lowest fitness first. The increase in weight
-        of the Carnivore is proportional to the weight of the Herbivore killed.
-        """
-        for carnivore in self.list_of_sorted_carnivores:
-            killed_herbivores = []
-            for herbivore in reversed(self.list_of_sorted_herbivores):
-                if carnivore.prob_carnivore_kill(herbivore.fitness):
-                    killed_herbivores.append(herbivore)
-                    weight_prey = herbivore.weight
-                    carnivore.weight_gain(weight_prey)
-            self.remove_dead_animals(killed_herbivores)
-
-    def remove_migrated_animals(self, gone_animals):
-        """
-        Removes animal that has migrated.
-        :param gone_animals: list of animals that has migrated
-        :type: list
-        """
-        for gone_animal in gone_animals:
-            self.animals.remove(gone_animal)
-
-    def remove_dead_animals(self, dead_animals):
-        """
-        Removes animal that has died.
-        :param dead_animals: list of animals that has died
-        :type: list
-        """
-        for dead_animal in dead_animals:
-            self.animals.remove(dead_animal)
+        return len(self.animals)
 
     @property
-    def list_of_sorted_herbivores(self):
+    def total_herbivores(self):
         """
-        List of sorted Herbivores. Herbivore with highest fitness is first.
-        :return: sorted_herbivores
-        :type: list
+        :returns: the total amount of Herbivores on Rossumøya.
+        :type: int
         """
-        list_of_herbivores = [animal for animal in self.animals
-                              if isinstance(animal, Herbivore)]
-        sorted_herbivores = sorted(list_of_herbivores,
-                                   key=lambda x: x.fitness)
-        return sorted_herbivores
+        return len([animal for animal in self.animals if isinstance(animal, Herbivore)])
 
     @property
-    def list_of_sorted_carnivores(self):
+    def total_carnivores(self):
         """
-        List of sorted Carnivores. Carnivore with highest fitness is first.
-        :return: sorted_carnivores
-        :type: list
+        :returns: the total amount of Carnivores on Rossumøya.
+        :type: int
         """
-        list_of_carnivores = [animal for animal in self.animals
-                              if isinstance(animal, Carnivore)]
-        sorted_carnivores = sorted(list_of_carnivores,
-                                   key=lambda x: x.fitness)
-        return sorted_carnivores
+        return len([animal for animal in self.animals if isinstance(animal, Carnivore)])
 
     @property
     def fodder_in_cell(self):
@@ -198,6 +141,76 @@ class BaseCell:
 
         return rel_abundance_of_fodder
 
+    def fodder_first_year(self, f_max):
+        """
+        Sets max fodder in Savannah and Jungle cells.
+        :param f_max: maximum fodder available in a cell type
+        :type: float
+        """
+        self.fodder_in_cell = f_max
+
+    def regrow_fodder(self):
+        """
+        Grow back initial fodder amount.
+        """
+        self.fodder_in_cell = self.f_max
+
+    @property
+    def list_of_sorted_herbivores(self):
+        """
+        List of sorted Herbivores. Herbivore with highest fitness is first.
+        :return: sorted_herbivores
+        :type: list
+        """
+        list_of_herbivores = [animal for animal in self.animals
+                              if isinstance(animal, Herbivore)]
+        sorted_herbivores = sorted(list_of_herbivores,
+                                   key=lambda x: x.fitness)
+        return sorted_herbivores
+
+    @property
+    def list_of_sorted_carnivores(self):
+        """
+        List of sorted Carnivores. Carnivore with highest fitness is first.
+        :return: sorted_carnivores
+        :type: list
+        """
+        list_of_carnivores = [animal for animal in self.animals
+                              if isinstance(animal, Carnivore)]
+        sorted_carnivores = sorted(list_of_carnivores,
+                                   key=lambda x: x.fitness)
+        return sorted_carnivores
+
+    def herbivores_eat(self):
+        """
+        Herbivore with the highest fitness eat first. The Herbivore's weight
+        increases with the amount of fodder it has eaten.
+        """
+        if self.fodder_in_cell != 0:
+            for herbivore in self.list_of_sorted_herbivores:
+                if self.fodder_in_cell >= herbivore.F:
+                    food = Herbivore.F
+                    self.fodder_in_cell -= food
+                    herbivore.weight_gain(food)
+                else:
+                    herbivore.weight_gain(self.fodder_in_cell)
+                    self.fodder_in_cell = 0
+
+    def carnivores_eat(self):
+        """
+        Carnivore with the highest fitness eat first. The Carnivore tries to
+        kill the Herbivore with lowest fitness first. The increase in weight
+        of the Carnivore is proportional to the weight of the Herbivore killed.
+        """
+        for carnivore in self.list_of_sorted_carnivores:
+            killed_herbivores = []
+            for herbivore in reversed(self.list_of_sorted_herbivores):
+                if carnivore.prob_carnivore_kill(herbivore.fitness):
+                    killed_herbivores.append(herbivore)
+                    weight_prey = herbivore.weight
+                    carnivore.weight_gain(weight_prey)
+            self.remove_dead_animals(killed_herbivores)
+
     @property
     def propensity_migration_herb(self):
         """
@@ -218,30 +231,23 @@ class BaseCell:
         """
         return np.exp(Carnivore.lambda_ * self.abundance_of_fodder_carnivores)
 
-    @property
-    def total_population(self):
+    def remove_migrated_animals(self, gone_animals):
         """
-        Returns the total amount of animals on Rossumøya.
-        :return: length of the Animal list
-        :type: int
+        Removes animal that has migrated.
+        :param gone_animals: list of animals that has migrated
+        :type: list
         """
-        return len(self.animals)
+        for gone_animal in gone_animals:
+            self.animals.remove(gone_animal)
 
-    @property
-    def total_herbivores(self):
+    def remove_dead_animals(self, dead_animals):
         """
-        :returns: the total amount of Herbivores on Rossumøya.
-        :type: int
+        Removes animal that has died.
+        :param dead_animals: list of animals that has died
+        :type: list
         """
-        return len([animal for animal in self.animals if isinstance(animal, Herbivore)])
-
-    @property
-    def total_carnivores(self):
-        """
-        :returns: the total amount of Carnivores on Rossumøya.
-        :type: int
-        """
-        return len([animal for animal in self.animals if isinstance(animal, Carnivore)])
+        for dead_animal in dead_animals:
+            self.animals.remove(dead_animal)
 
 
 class Savannah(BaseCell):
