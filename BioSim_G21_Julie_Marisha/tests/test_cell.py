@@ -44,7 +44,7 @@ class TestCell:
         assert num_animals_2 == 150
 
     def test_total_population(self):
-        """ """
+        """Correct number of new population appended is returned. """
         self.cell.animals = []
         pop_list = [
             {'species': 'Herbivore', 'age': 5, 'weight': 10},
@@ -53,6 +53,20 @@ class TestCell:
         ]
         self.cell.add_population(pop_list)
         assert self.cell.total_population == 3
+
+    def test_total_herbivores_and_carnivores(self):
+        """Correct number of total Herbivores and total Carnivores on
+        Rossumøya is returned."""
+        self.cell.animals = []
+        pop_list = [
+            {'species': 'Herbivore', 'age': 5, 'weight': 10},
+            {'species': 'Carnivore', 'age': 4, 'weight': 20},
+            {'species': 'Herbivore', 'age': 7, 'weight': 80}
+        ]
+        self.cell.add_population(pop_list)
+
+        assert self.cell.total_herbivores == 2
+        assert self.cell.total_carnivores == 1
 
     def test_fodder_in_cell_callable(self):
         """Property fodder_in_cell can be called."""
