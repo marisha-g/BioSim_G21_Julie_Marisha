@@ -205,6 +205,23 @@ class Rossumoya:
                 raise ValueError("Non-ocean boundary.")
         return True
 
+    @staticmethod
+    def make_geography_coordinates(input_map):
+        """
+        Makes a dictionary with coordinates as keys and Cell subclass
+        instances (Savannah, Jungle, Desert, MountainAndOcean) as values,
+        initiated with default parameters.
+        :return: geography_map
+        :type: dict
+        """
+        list_island_map = input_map.split('\n')
+        geography_map = {}
+        for i_index, line in enumerate(list_island_map):
+            for j_index, cell in enumerate(line):
+                cell_instance = Rossumoya.cell_code[cell]
+                geography_map[(i_index, j_index)] = cell_instance()
+        return geography_map
+
     def add_population(self, population):
         """
         Add population to the island.
@@ -264,22 +281,6 @@ class Rossumoya:
         self.add_population(offspring)
         animal.weight_loss_birth(weight)
 
-    def migration(self):
-        """
-        Moves animal from current cell to one of the possible
-        neighbouring cells, if prob_migrate returns 1.
-        """
-        for loc, cell in self.island_map.items():
-            if cell.animal_can_enter:
-                for animal in cell.animals:
-                    migrating_animals = []
-
-                    if animal.prob_migration and not animal.has_migrated:
-                        new_loc = self.choose_cell(loc, type(animal).__name__)
-                        self.island_map[new_loc].animals.append(animal)
-                        migrating_animals.append(animal)
-                    cell.remove_migrated_animals(migrating_animals)
-
     def choose_cell(self, loc, species):
         """
         Calculate propensities and returns
@@ -298,6 +299,22 @@ class Rossumoya:
         choice = np.random.choice(4, p=probabilities)
         chosen_cell = locations[choice]
         return chosen_cell
+
+    def migration(self):
+        """
+        Moves animal from current cell to one of the possible
+        neighbouring cells, if prob_migrate returns 1.
+        """
+        for loc, cell in self.island_map.items():
+            if cell.animal_can_enter:
+                for animal in cell.animals:
+                    migrating_animals = []
+
+                    if animal.prob_migration and not animal.has_migrated:
+                        new_loc = self.choose_cell(loc, type(animal).__name__)
+                        self.island_map[new_loc].animals.append(animal)
+                        migrating_animals.append(animal)
+                    cell.remove_migrated_animals(migrating_animals)
 
     def death(self):
         """
@@ -352,20 +369,4 @@ class Rossumoya:
         return axis
 
 
-    @staticmethod
-    def make_geography_coordinates(input_map):
-        """
-        Makes a dictionary with coordinates as keys and Cell subclass
-        instances (Savannah, Jungle, Desert, MountainAndOcean) as values,
-        initiated with default parameters.
-        :return: geography_map
-        :type: dict
-        """
-        list_island_map = input_map.split('\n')
-        geography_map = {}
-        for i_index, line in enumerate(list_island_map):
-            for j_index, cell in enumerate(line):
-                cell_instance = Rossumoya.cell_code[cell]
-                geography_map[(i_index, j_index)] = cell_instance()
-        return geography_map
 

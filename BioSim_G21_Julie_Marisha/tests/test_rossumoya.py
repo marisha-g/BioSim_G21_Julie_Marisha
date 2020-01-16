@@ -89,6 +89,17 @@ class TestRossumoya:
             island_map_string = "OOOJ\nOJSO\nOOOO"
             self.rossumoya.check_map_input(island_map_string)
 
+    def test_geography_coordinates_method(self):
+        """make_geography_coordinates can be called."""
+        self.rossumoya.make_geography_coordinates(self.rossumoya.default_map)
+
+    def test_make_geography_coordinates(self):
+        """make_geography_coordinates() method returns a dictionary. """
+        island_map = "OOO\nOJO\nOOO"
+        assert isinstance(
+            self.rossumoya.make_geography_coordinates(island_map), dict
+        )
+
     def test_add_population_method(self):
         """add_population can be called."""
         self.rossumoya.add_population(self.rossumoya.default_ini_herbs)
@@ -113,19 +124,15 @@ class TestRossumoya:
         """add_offspring() method is callable."""
         self.rossumoya.add_offspring(Carnivore(), (4, 6))
 
-    def test_geography_coordinates_method(self):
-        """make_geography_coordinates can be called."""
-        self.rossumoya.make_geography_coordinates(self.rossumoya.default_map)
-
-    def test_migration_callable(self):
-        """Migration method is callable"""
-        self.rossumoya.migration()
-
     def test_choose_cell(self):
         """choose_cell() method is callable."""
         assert isinstance(
             self.rossumoya.choose_cell((5, 7), "Herbivore"), tuple
                           )
+
+    def test_migration_callable(self):
+        """Migration method is callable"""
+        self.rossumoya.migration()
 
     def test_death_callable(self):
         """death() method is callable. """
@@ -138,10 +145,3 @@ class TestRossumoya:
     def test_map_axis(self):
         axis = self.rossumoya.map_axis()
         assert axis == (20, 12)
-    
-    def test_make_geography_coordinates(self):
-        """make_geography_coordinates() method returns a dictionary. """
-        island_map = "OOO\nOJO\nOOO"
-        assert isinstance(
-            self.rossumoya.make_geography_coordinates(island_map), dict
-        )
