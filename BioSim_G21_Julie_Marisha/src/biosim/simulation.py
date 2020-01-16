@@ -80,6 +80,10 @@ class BioSim:
             img_fmt = _DEFAULT_IMAGE_FORMAT
         self._img_fmt = img_fmt
 
+        self._img_counter = 0
+
+        if ymax_animals is None:
+            ymax_animals = 1000
         self._ymax = ymax_animals
         self._cmax = cmax_animals
 
@@ -143,7 +147,7 @@ class BioSim:
                 self._save_file()
 
             self.rossumoya.single_year()
-            self.year += 1
+            self._year += 1
 
     def add_population(self, population):
         """
@@ -157,10 +161,6 @@ class BioSim:
     def year(self):
         """Last year simulated."""
         return self._year
-
-    @year.setter
-    def year(self, value):
-        self._year = value
 
     @property
     def num_animals(self):
@@ -214,14 +214,16 @@ class BioSim:
             plt.colorbar(self._img_axis, ax=self._map_ax,
                          orientation='horizontal')
 
-    def _update_graph(self):
-        pass
-
-
     def _update_graphics(self):
         self._update_map()
         self._update_graph()
         plt.pause(1e-6)
+
+    def _update_graph(self):
+        pass
+
+    def _setup_graphics(self):
+
 
     def _save_file(self):
         """Saves graphics to file if file name given.
