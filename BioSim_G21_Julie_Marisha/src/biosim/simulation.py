@@ -66,6 +66,7 @@ class BioSim:
         where img_no are consecutive image numbers starting from 0.
         img_base should contain a path and beginning of a file name.
         """
+        np.random.seed(seed)
         self.rossumoya = Rossumoya(island_map, ini_pop)
         self._year = 0
         self._final_year = None
@@ -79,7 +80,8 @@ class BioSim:
             img_fmt = _DEFAULT_IMAGE_FORMAT
         self._img_fmt = img_fmt
 
-        np.random.seed(seed)
+        self._ymax = ymax_animals
+        self._cmax = cmax_animals
 
         # the following will be initialized by _setup_graphics
         self._fig = None
@@ -129,13 +131,13 @@ class BioSim:
         if img_years is None:
             img_years = vis_years
 
-        self._final_year = self._year + num_years
-        self._setup_visualization()
+        self._final_year = self.year + num_years
+        self._setup_graphics()
 
         while self.year < self._final_year:
 
             if self.year % vis_years == 0:
-                self._update_visualization()
+                self._update_graphics()
 
             if self.year % img_years == 0:
                 self._save_file()
@@ -215,9 +217,11 @@ class BioSim:
     def _update_graph(self):
         pass
 
-    def _update_visualization(self):
+
+    def _update_graphics(self):
         self._update_map()
         self._update_graph()
+        plt.pause(1e-6)
 
     def _save_file(self):
         """Saves graphics to file if file name given.
@@ -232,7 +236,7 @@ class BioSim:
                                                      type=self._img_fmt))
         self._img_counter += 1
 
-    def _setup_visualization(self):
+    def _setup_graphics(self):
         """Creates subplots.
         Author: Hans Ekkehard Plesser
         """
@@ -251,7 +255,7 @@ class BioSim:
         # Add right subplot for line graph of mean.
         if self._mean_ax is None:
             self._mean_ax = self._fig.add_subplot(1, 2, 2)
-            self._mean_ax.set_ylim(0, 0.02)
+            self._mean_ax.set_ylim(0, self._ymax)
 
         # needs updating on subsequent calls to simulate()
         self._mean_ax.set_xlim(0, self._final_year + 1)
