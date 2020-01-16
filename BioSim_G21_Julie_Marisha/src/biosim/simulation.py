@@ -53,6 +53,7 @@ class BioSim:
             seed = 1
         self.seed = seed
         self._year = 0
+        self._final_year = None
 
     @staticmethod
     def set_animal_parameters(species, params):
@@ -80,39 +81,6 @@ class BioSim:
         if landscape == "J":
             Jungle.set_parameters(**params)
 
-    def single_simulation(self):
-        """
-        Run one single simulation.
-        """
-        # Fodder regrows
-        for cell in self.rossumoya.island_map.values():
-            cell.regrow_fodder()
-
-        # Herbivores eat, then carnivores prey on herbivores
-        for cell in self.rossumoya.island_map.values():
-            cell.herbivores_eat()
-            cell.carnivores_eat()
-
-        # Animals mate
-        self.rossumoya.procreation()
-
-        # Animals migrate
-        self.rossumoya.migration()
-        Herbivore.reset_migration()
-        Carnivore.reset_migration()
-
-        # Animals age and loose weight
-        for cell in self.rossumoya.island_map.values():
-            for animal in cell.animals:
-                animal.aging()
-                animal.weight_loss()
-
-        # Animals die
-        self.rossumoya.death()
-
-        # Simulation year increments by one
-        self.year += 1
-
     def simulate(self, num_years, vis_years=1, img_years=None):
         """
         Run simulation while visualizing the result.
@@ -124,12 +92,22 @@ class BioSim:
         Image files will be numbered consecutively.
         """
 
-        for year in range(num_years):
-            self.single_simulation()
-        #   if self.year % vis_years == 0:
-        #      self.update_visualization()
-        # if self.year % img_years == 0:
-        #    self.save_file()
+        if img_years is None:
+            img_years = vis_years
+
+        self._final_year = self._year + num_years
+        self._setup_graphics()
+
+        while self.year < self._final_year:
+
+            if self.year % vis_years == 0:
+                self._update_graphics()
+
+            if self.year % img_years == 0:
+                self._save_graphics()
+
+            self.rossumoya.single_year()
+            self.year += 1
 
     def add_population(self, population):
         """
@@ -190,12 +168,6 @@ class BioSim:
     def update_visualization(self):
         pass
 
-    def save_file(self):
-        pass
-
-    def make_movie(self):
-        """Create MPEG4 movie from visualization images saved."""
-        pass
 
 
 if __name__ == '__main__':

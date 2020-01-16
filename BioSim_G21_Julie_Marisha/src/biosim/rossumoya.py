@@ -310,6 +310,36 @@ class Rossumoya:
                     dead_animals.append(animal)
             cell.remove_dead_animals(dead_animals)
 
+    def single_year(self):
+        """
+        Run one single simulation.
+        """
+        # Fodder regrows
+        for cell in self.island_map.values():
+            cell.regrow_fodder()
+
+        # Herbivores eat, then carnivores prey on herbivores
+        for cell in self.island_map.values():
+            cell.herbivores_eat()
+            cell.carnivores_eat()
+
+        # Animals mate
+        self.procreation()
+
+        # Animals migrate
+        self.migration()
+        Herbivore.reset_migration()
+        Carnivore.reset_migration()
+
+        # Animals age and loose weight
+        for cell in self.island_map.values():
+            for animal in cell.animals:
+                animal.aging()
+                animal.weight_loss()
+
+        # Animals die
+        self.death()
+
     @staticmethod
     def make_geography_coordinates(input_map):
         """
