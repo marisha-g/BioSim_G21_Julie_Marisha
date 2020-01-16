@@ -7,9 +7,10 @@ Tests for classes in cell.py using pytest.
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
+import pytest
+
 from biosim.cell import BaseCell, Savannah, Jungle, Desert, Mountain, Ocean
 from biosim.animal import Herbivore, Carnivore
-import pytest
 
 
 class TestCell:
@@ -32,6 +33,30 @@ class TestCell:
         assert self.cell.animal_can_enter is True
         assert self.cell.animals == []
 
+    def test_add_population(self):
+        """Test that population is added."""
+        pop_list = [{"species": "Herbivore", "age": 5, "weight": 20} for _ in range(150)]
+        num_animals_1 = len(self.cell.animals)
+        self.cell.add_population(pop_list)
+        num_animals_2 = len(self.cell.animals)
+        assert num_animals_2 > num_animals_1
+        assert num_animals_1 == 0
+        assert num_animals_2 == 150
+
+    def test_abundance_of_fodder_herbivores(self):
+        """Abundance of fodder is equal to 0 when there is no fodder in cell."""
+        self.cell.fodder_in_cell = 0
+        assert self.cell.abundance_of_fodder_herbivores == 0
+
+    def test_abundance_of_fodder_carnivores(self):
+        """Abundance of fodder is equal to 0 when there is no Herbivore
+        in cell. """
+        assert self.cell.abundance_of_fodder_carnivores == 0
+
+    def test_fodder_in_cell_callable(self):
+        """Property fodder_in_cell can be called."""
+        self.cell.fodder_in_cell
+
     def test_fodder_first_year(self):
         """ Tests that fodder_first_year method is callable and
          changes fodder_in_cell attribute."""
@@ -45,26 +70,6 @@ class TestCell:
         self.cell.f_max = 10
         self.cell.regrow_fodder()
         assert self.cell.fodder_in_cell == 10
-
-    def test_abundance_of_fodder_herbivores(self):
-        """Abundance of fodder is equal to 0 when there is no fodder in cell."""
-        self.cell.fodder_in_cell = 0
-        assert self.cell.abundance_of_fodder_herbivores == 0
-
-    def test_abundance_of_fodder_carnivores(self):
-        """Abundance of fodder is equal to 0 when there is no Herbivore
-        in cell. """
-        assert self.cell.abundance_of_fodder_carnivores == 0
-
-    def test_add_population(self):
-        """Test that population is added."""
-        pop_list = [{"species": "Herbivore", "age": 5, "weight": 20} for _ in range(150)]
-        num_animals_1 = len(self.cell.animals)
-        self.cell.add_population(pop_list)
-        num_animals_2 = len(self.cell.animals)
-        assert num_animals_2 > num_animals_1
-        assert num_animals_1 == 0
-        assert num_animals_2 == 150
 
     def test_herbivores_eat(self):
         """Herbivore eat the fodder in the cell, and gain weight."""
