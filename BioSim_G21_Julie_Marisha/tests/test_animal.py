@@ -36,8 +36,8 @@ class TestAnimal:
         assert self.carnivore.draw_birth_weight() >= 0
 
     def test_reset_migration(self):
-        """Test that reset migration is False."""
-        assert self.base_animal.reset_migration() is False
+        """Test that reset migration sets has_migrated attribute to False."""
+        assert self.base_animal.has_migrated is False
 
     def test_value_error_for_age_and_weight(self):
         """Check if ValueError is raised for negative inputs. """
@@ -79,6 +79,17 @@ class TestAnimal:
         assert herb_weight_1 > self.herbivore.weight
         assert carn_weight_1 > self.carnivore.weight
 
+    def test_weight_loss_birth(self):
+        """Animal loses right amount of weight after giving birth. """
+        self.herbivore.weight = 20
+        self.carnivore.weight = 40
+
+        self.herbivore.weight_loss_birth(5)
+        self.carnivore.weight_loss_birth(10)
+
+        assert self.herbivore.weight == 14.0
+        assert self.carnivore.weight == 29.0
+
     def test_prob_procreation(self):
         """Probability for procreation is 0 when weight is 0."""
         self.herbivore.weight = 0
@@ -94,6 +105,11 @@ class TestAnimal:
         self.base_animal.weight = 10
         self.base_animal.age = 2
         assert self.base_animal.fitness == pytest.approx(0.49975)
+
+    def test_prob_migration_callable(self):
+        """Property prob_migration is callable. """
+        self.herbivore.prob_migration
+        self.carnivore.prob_migration
 
     def test_prob_death_is_callable(self):
         """Property prob_death is callable."""

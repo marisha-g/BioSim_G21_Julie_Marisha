@@ -176,6 +176,7 @@ class BaseAnimal:
         self._fitness = None
         self._prob_migration = None
         self._prob_death = None
+        self.has_migrated = False
 
     def aging(self):
         """
