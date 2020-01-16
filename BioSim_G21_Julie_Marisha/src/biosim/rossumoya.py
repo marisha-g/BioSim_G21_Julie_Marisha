@@ -347,7 +347,9 @@ class Rossumoya:
         """
         coordinates = self.island_map.keys()
         list_coordinates = list(coordinates)
-        return list_coordinates[-1]
+        y, x = list_coordinates[-1]
+        axis = (x, y)
+        return axis
 
 
     @staticmethod

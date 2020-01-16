@@ -51,12 +51,15 @@ class TestMigrationProbabilityCalculator:
         assert coordinates == [(2, 1), (2, 3), (1, 2), (3, 2)]
 
     def test_probability_return_probabilities(self):
+        """probability method returns correct probabilities for three
+         identical Savannah cells and one Ocean cell as neighbouring cells."""
         coordinates, probabilities = self.calculator.probability()
         sum_probabilities = sum(probabilities)
-        print(probabilities)
         assert sum_probabilities == 1
+        assert probabilities[0] == pytest.approx(0.333, rel=1e-2)
+        assert probabilities[1] == pytest.approx(0.333, rel=1e-2)
         assert probabilities[2] == 0.0
-
+        assert probabilities[3] == pytest.approx(0.333, rel=1e-2)
 
 
 class TestRossumoya:
@@ -123,6 +126,10 @@ class TestRossumoya:
     def test_death_callable(self):
         """death() method is callable. """
         self.rossumoya.death()
+
+    def test_map_axis(self):
+        axis = self.rossumoya.map_axis()
+        assert axis == (20, 12)
     
     def test_make_geography_coordinates(self):
         """make_geography_coordinates() method returns a dictionary. """
