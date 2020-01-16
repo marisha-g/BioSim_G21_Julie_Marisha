@@ -158,10 +158,6 @@ class BioSim:
         """Last year simulated."""
         return self._year
 
-    @year.setter
-    def year(self, value):
-        self._year = value
-
     @property
     def num_animals(self):
         """Total number of animals on island."""
