@@ -156,7 +156,7 @@ class TestCell:
         self.cell.animals.append(self.herbivore)
         self.cell.remove_migrated_animals([self.herbivore])
 
-    def test_migrated_dead_animals(self):
+    def test_remove_migrated_animals(self):
         """remove_migrated_animals method removes
          the migrated animal from the cell."""
         self.cell.animals.append(self.herbivore)
