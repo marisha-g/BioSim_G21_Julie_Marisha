@@ -340,6 +340,16 @@ class Rossumoya:
         # Animals die
         self.death()
 
+    def map_axis(self):
+        """ Find size of the island_map.
+        :return: lower right corner coordinates (max values for row and column)
+        :type: tuple
+        """
+        coordinates = self.island_map.keys()
+        list_coordinates = list(coordinates)
+        return list_coordinates[-1]
+
+
     @staticmethod
     def make_geography_coordinates(input_map):
         """
@@ -356,3 +366,4 @@ class Rossumoya:
                 cell_instance = Rossumoya.cell_code[cell]
                 geography_map[(i_index, j_index)] = cell_instance()
         return geography_map
+
