@@ -86,11 +86,6 @@ class TestBiosim:
         """single_simulation can be called."""
         self.biosim.single_simulation()
 
-    def test_single_simulation(self):
-        """ single_simulation simulates one year."""
-        self.biosim.single_simulation()
-        assert self.biosim.year == 1
-
     def test_update_visualization(self):
         pass
 

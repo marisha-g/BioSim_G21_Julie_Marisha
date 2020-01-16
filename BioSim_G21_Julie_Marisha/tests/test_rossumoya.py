@@ -142,6 +142,10 @@ class TestRossumoya:
         """single_year() method is callable. """
         self.rossumoya.single_year()
 
+    def test_single_simulation_callable(self):
+        """single_simulation can be called."""
+        self.biosim.single_simulation()
+
     def test_map_axis(self):
         axis = self.rossumoya.map_axis()
         assert axis == (20, 12)
