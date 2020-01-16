@@ -105,20 +105,24 @@ class TestRossumoya:
             self.rossumoya.add_population(population)
 
     def test_procreation(self):
-        """procreation() method is callable. """
+        """procreation() method is callable."""
         self.rossumoya.add_offspring(Herbivore(), (2, 2))
         self.rossumoya.procreation()
 
     def test_add_offspring(self):
-        """add_offspring() method is callable. """
+        """add_offspring() method is callable."""
         self.rossumoya.add_offspring(Carnivore(), (4, 6))
 
     def test_geography_coordinates_method(self):
         """make_geography_coordinates can be called."""
         self.rossumoya.make_geography_coordinates(self.rossumoya.default_map)
 
+    def test_migration_callable(self):
+        """Migration method is callable"""
+        self.rossumoya.migration()
+
     def test_choose_cell(self):
-        """choose_cell() method is callable. """
+        """choose_cell() method is callable."""
         assert isinstance(
             self.rossumoya.choose_cell((5, 7), "Herbivore"), tuple
                           )
