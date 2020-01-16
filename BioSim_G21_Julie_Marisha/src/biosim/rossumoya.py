@@ -84,9 +84,9 @@ class MigrationProbabilityCalculator:
 
         scaled_probabilities = []
         sum_probabilities = sum(probabilities)
-        for probaility in probabilities:
+        for probability in probabilities:
             scaled_probabilities.append(
-                probaility / sum_probabilities
+                probability / sum_probabilities
             )
 
         return self.locations, scaled_probabilities
