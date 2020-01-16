@@ -106,6 +106,7 @@ class TestHerbivore:
     @pytest.fixture(autouse=True)
     def create_herbivore(self):
         self.herbivore = Herbivore()
+        Herbivore.set_parameters()
 
     def test_constructor_default(self):
         """Default constructor callable."""
@@ -117,7 +118,6 @@ class TestHerbivore:
         assert self.herbivore.weight == 10
         assert self.herbivore._fitness is None
 
-        self.herbivore.set_parameters()
         assert self.herbivore.w_birth == 8.0
         assert self.herbivore.sigma_birth == 1.5
         assert self.herbivore.beta == 0.9
@@ -145,6 +145,7 @@ class TestCarnivore:
     @pytest.fixture(autouse=True)
     def create_carnivore(self):
         self.carnivore = Carnivore()
+        Carnivore.set_parameters()
 
     def test_constructor_default(self):
         """Default constructor callable."""
@@ -152,38 +153,35 @@ class TestCarnivore:
 
     def test_default_parameters(self):
         """Tests if default parameters are given."""
-        a = Carnivore()
-        assert a.age == 0
-        assert a.weight == 10
+        self.carnivore = Carnivore()
+        assert self.carnivore.age == 0
+        assert self.carnivore.weight == 10
 
-        a.set_parameters()
-        assert a.w_birth == 6.0
-        assert a.sigma_birth == 1.0
-        assert a.beta == 0.75
-        assert a.eta == 0.125
-        assert a.a_half == 60.0
-        assert a.phi_age == 0.4
-        assert a.w_half == 4.0
-        assert a.phi_weight == 0.4
-        assert a.mu == 0.4
-        assert a.lambda_ == 1.0
-        assert a.gamma == 0.8
-        assert a.zeta == 3.5
-        assert a.xi == 1.1
-        assert a.omega == 0.9
-        assert a.F == 50.0
-        assert a.DeltaPhiMax == 10.0
+        assert self.carnivore.w_birth == 6.0
+        assert self.carnivore.sigma_birth == 1.0
+        assert self.carnivore.beta == 0.75
+        assert self.carnivore.eta == 0.125
+        assert self.carnivore.a_half == 60.0
+        assert self.carnivore.phi_age == 0.4
+        assert self.carnivore.w_half == 4.0
+        assert self.carnivore.phi_weight == 0.4
+        assert self.carnivore.mu == 0.4
+        assert self.carnivore.lambda_ == 1.0
+        assert self.carnivore.gamma == 0.8
+        assert self.carnivore.zeta == 3.5
+        assert self.carnivore.xi == 1.1
+        assert self.carnivore.omega == 0.9
+        assert self.carnivore.F == 50.0
+        assert self.carnivore.DeltaPhiMax == 10.0
 
     def test_delta_phi_max_value_error(self):
         """Test that delta phi max must be strictly positive."""
         with pytest.raises(ValueError):
-            a = Carnivore()
-            a.set_parameters(DeltaPhiMax=0)
+            Carnivore().set_parameters(DeltaPhiMax=0)
         with pytest.raises(ValueError):
-            a.set_parameters(DeltaPhiMax=-2)
+            Carnivore().set_parameters(DeltaPhiMax=-2)
 
     def test_value_error_for_mu(self):
         """Test that mu can not be greater than 1."""
         with pytest.raises(ValueError):
-            a = Carnivore()
-            a.set_parameters(mu=2)
+            Carnivore().set_parameters(mu=2)
