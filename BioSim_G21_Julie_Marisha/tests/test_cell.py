@@ -82,6 +82,12 @@ class TestCell:
         in cell. """
         assert self.cell.abundance_of_fodder_carnivores == 0
 
+    def test_abundance_of_fodder_carnivores2(self):
+        """ """
+        self.cell.animals = [Herbivore(age=4, weight=20), Carnivore(age=7, weight=40)]
+        assert self.cell.abundance_of_fodder_carnivores == 500
+
+
     def test_fodder_first_year(self):
         """ Tests that fodder_first_year method is callable and
          changes fodder_in_cell attribute."""
