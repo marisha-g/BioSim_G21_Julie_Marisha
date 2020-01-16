@@ -90,7 +90,6 @@ class TestAnimal:
         assert self.herbivore.weight == 14.0
         assert self.carnivore.weight == 29.0
 
-
     def test_prob_procreation(self):
         """Probability for procreation is 0 when weight is 0."""
         self.herbivore.weight = 0
@@ -106,6 +105,11 @@ class TestAnimal:
         self.base_animal.weight = 10
         self.base_animal.age = 2
         assert self.base_animal.fitness == pytest.approx(0.49975)
+
+    def test_prob_migration_callable(self):
+        """Property prob_migration is callable. """
+        self.herbivore.prob_migration
+        self.carnivore.prob_migration
 
     def test_prob_death_is_callable(self):
         """Property prob_death is callable."""
