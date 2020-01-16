@@ -184,9 +184,7 @@ class BioSim:
 
                 if cell_code == 'M':
                     colour_map[x].append((210, 200, 220))
-        print(colour_map[0][0])
         return colour_map
-
 
     @property
     def year(self):
@@ -254,8 +252,48 @@ class BioSim:
         pass
 
     def _setup_graphics(self):
+        """Creates subplots."""
+        # create new figure window
+        if self._fig is None:
+            self._fig = plt.figure(constrained_layout=True)
+            gs = self._fig.add_gridspec(2, 4)
 
+        # Add subplot for map
+        if self._map_ax is None:
+            self._map_ax = self._fig.add_subplot(gs[1, :])
 
+        if self._map_axis is None:
+            map = self._make_map_with_rgb_colours()
+            self._map_axis = self._map_ax.imshow(map)
+        """
+        # Add subplot for map codes
+        if self._map_code_ax is None:
+           self._map_code_ax = self._fig.add_subplot(gs[0, 4:6])
+
+        # Add subplot for graph
+        if self._graph_ax is None:
+            self._graph_ax = self._fig.add_subplot(gs[0, 6:])
+            self._graph_ax.set_ylim(0, self._ymax)
+            self._graph_ax.set_xlim(0, self._final_year + 1)
+
+        # Add subplot for heat map
+        if self._heat_map_ax is None:
+            self._heat_map_ax = self._fig.add_subplot(2, 3, 1)
+            self._heat_map_axis = None
+
+        # Initiate graph
+        if self._graph_axis is None:
+            graph_plot = self._graph_ax.plot(np.arange(0, self._final_year),
+                                             np.full(self._final_year, np.nan))
+            self._graph_axis_ = graph_plot[0]
+        else:
+            xdata, ydata = self._graph_axis.get_data()
+            xnew = np.arange(xdata[-1] + 1, self._final_year)
+            if len(xnew) > 0:
+                ynew = np.full(xnew.shape, np.nan)
+                self._graph_axis.set_data(np.hstack((xdata, xnew)),
+                                          np.hstack((ydata, ynew)))
+        """
     def _save_file(self):
         """Saves graphics to file if file name given.
         Author: Hans Ekkehard Plesser
@@ -269,41 +307,6 @@ class BioSim:
                                                      type=self._image_format))
         self._image_counter += 1
 
-    def _setup_graphics(self):
-        """Creates subplots.
-        Author: Hans Ekkehard Plesser
-        """
-
-        # create new figure window
-        if self._fig is None:
-            self._fig = plt.figure()
-
-        # Add left subplot for images created with imshow().
-        # We cannot create the actual ImageAxis object before we know
-        # the size of the image, so we delay its creation.
-        if self._map_ax is None:
-            self._map_ax = self._fig.add_subplot(1, 2, 1)
-            self._heat_map_axis = None
-
-        # Add right subplot for line graph of mean.
-        if self._graph_ax is None:
-            self._graph_ax = self._fig.add_subplot(1, 2, 2)
-            self._graph_ax.set_ylim(0, self._ymax)
-
-        # needs updating on subsequent calls to simulate()
-        self._graph_ax.set_xlim(0, self._final_year + 1)
-
-        if self._graph_axis is None:
-            mean_plot = self._graph_ax.plot(np.arange(0, self._final_year),
-                                            np.full(self._final_year, np.nan))
-            self._graph_axis = mean_plot[0]
-        else:
-            xdata, ydata = self._graph_axis.get_data()
-            xnew = np.arange(xdata[-1] + 1, self._final_year)
-            if len(xnew) > 0:
-                ynew = np.full(xnew.shape, np.nan)
-                self._graph_axis.set_data(np.hstack((xdata, xnew)),
-                                          np.hstack((ydata, ynew)))
 
     def make_movie(self, movie_fmt=_DEFAULT_MOVIE_FORMAT):
         """
@@ -346,11 +349,8 @@ class BioSim:
         else:
             raise ValueError('Unknown movie format: ' + movie_fmt)
 
-
 if __name__ == '__main__':
     sim1 = BioSim()
-    sim1.simulate(num_years=100)
-    print(sim1.year)
-    print(sim1.animal_distribution)
-    print(sim1.num_animals_per_species)
-    print(sim1.num_animals)
+    sim1._final_year = 2
+    sim1._setup_graphics()
+    plt.show()
