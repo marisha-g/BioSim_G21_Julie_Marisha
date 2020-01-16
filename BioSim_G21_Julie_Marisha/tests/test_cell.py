@@ -43,6 +43,21 @@ class TestCell:
         assert num_animals_1 == 0
         assert num_animals_2 == 150
 
+    def test_total_population(self):
+        """ """
+        self.cell.animals = []
+        pop_list = [
+            {'species': 'Herbivore', 'age': 5, 'weight': 10},
+            {'species': 'Carnivore', 'age': 4, 'weight': 20},
+            {'species': 'Herbivore', 'age': 7, 'weight': 80}
+        ]
+        self.cell.add_population(pop_list)
+        assert self.cell.total_population == 3
+
+    def test_fodder_in_cell_callable(self):
+        """Property fodder_in_cell can be called."""
+        self.cell.fodder_in_cell
+
     def test_abundance_of_fodder_herbivores(self):
         """Abundance of fodder is equal to 0 when there is no fodder in cell."""
         self.cell.fodder_in_cell = 0
@@ -52,10 +67,6 @@ class TestCell:
         """Abundance of fodder is equal to 0 when there is no Herbivore
         in cell. """
         assert self.cell.abundance_of_fodder_carnivores == 0
-
-    def test_fodder_in_cell_callable(self):
-        """Property fodder_in_cell can be called."""
-        self.cell.fodder_in_cell
 
     def test_fodder_first_year(self):
         """ Tests that fodder_first_year method is callable and
@@ -70,6 +81,26 @@ class TestCell:
         self.cell.f_max = 10
         self.cell.regrow_fodder()
         assert self.cell.fodder_in_cell == 10
+
+    def test_list_of_sorted_herbivores(self):
+        """list_of_sorted_herbivores property is callable and sorts the
+        herbivores in descending order by fitness.
+        """
+        pop_list = [{"species": "Herbivore", "age": 5, "weight": 20} for _ in range(150)]
+        self.cell.add_population(pop_list)
+        sorted_list = self.cell.list_of_sorted_herbivores
+        assert all(sorted_list[i].fitness >= sorted_list[i+1].fitness for
+                   i in range(len(sorted_list)-1))
+
+    def test_list_of_sorted_carnivores(self):
+        """list_of_sorted_carnivores property is callable and sorts the
+        carnivores in descending order by fitness.
+        """
+        pop_list = [{"species": "Carnivore", "age": 5, "weight": 20} for _ in range(150)]
+        self.cell.add_population(pop_list)
+        sorted_list = self.cell.list_of_sorted_carnivores
+        assert all(sorted_list[i].fitness >= sorted_list[i+1].fitness for
+                   i in range(len(sorted_list)-1))
 
     def test_herbivores_eat(self):
         """Herbivore eat the fodder in the cell, and gain weight."""
@@ -109,26 +140,6 @@ class TestCell:
         self.cell.animals.append(self.carnivore)
         self.cell.remove_dead_animals([self.carnivore])
         assert self.cell.total_carnivores == 0
-
-    def test_list_of_sorted_herbivores(self):
-        """list_of_sorted_herbivores property is callable and sorts the
-        herbivores in descending order by fitness.
-        """
-        pop_list = [{"species": "Herbivore", "age": 5, "weight": 20} for _ in range(150)]
-        self.cell.add_population(pop_list)
-        sorted_list = self.cell.list_of_sorted_herbivores
-        assert all(sorted_list[i].fitness >= sorted_list[i+1].fitness for
-                   i in range(len(sorted_list)-1))
-
-    def test_list_of_sorted_carnivores(self):
-        """list_of_sorted_carnivores property is callable and sorts the
-        carnivores in descending order by fitness.
-        """
-        pop_list = [{"species": "Carnivore", "age": 5, "weight": 20} for _ in range(150)]
-        self.cell.add_population(pop_list)
-        sorted_list = self.cell.list_of_sorted_carnivores
-        assert all(sorted_list[i].fitness >= sorted_list[i+1].fitness for
-                   i in range(len(sorted_list)-1))
 
 
 class TestSavannah:
