@@ -201,3 +201,16 @@ class TestCarnivore:
         """Test that mu can not be greater than 1."""
         with pytest.raises(ValueError):
             Carnivore().set_parameters(mu=2)
+
+    def test_prob_carnivore_kill(self):
+        """ """
+        fitness_prey = 20
+        self.carnivore.fitness = 15
+        assert self.carnivore.prob_carnivore_kill(fitness_prey) == 0
+
+        fitness_prey = 10
+        assert self.carnivore.prob_carnivore_kill(fitness_prey) is 0 or 1
+
+        #fitness_prey = 5
+        #self.carnivore.fitness = 200
+        #assert self.carnivore.prob_carnivore_kill(fitness_prey) == 1
