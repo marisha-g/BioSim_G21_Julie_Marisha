@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 """
+creds to Hans Ekkehard Plesser for visualization
+
 """
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
@@ -25,14 +27,13 @@ _DEFAULT_IMAGE_FORMAT = "png"
 _DEFAULT_MOVIE_FORMAT = 'mp4'
 
 
-
 class BioSim:
 
     def __init__(
             self,
             island_map=None,
             ini_pop=None,
-            seed=None,
+            seed=1,
             ymax_animals=None,
             cmax_animals=None,
             img_base=None,
@@ -62,18 +63,26 @@ class BioSim:
         img_base should contain a path and beginning of a file name.
         """
         self.rossumoya = Rossumoya(island_map, ini_pop)
-        if seed is None:
-            seed = 1
-        self.seed = seed
         self._year = 0
         self._final_year = None
+        self._img_counter = 0
 
         if img_base is None:
             img_base = _DEFAULT_IMAGE_BASE
+        self._img_base = img_base
 
         if img_fmt is None:
             img_fmt = _DEFAULT_IMAGE_FORMAT
+        self._img_fmt = img_fmt
 
+        np.random.seed(seed)
+
+        # the following will be initialized by _setup_graphics
+        self._fig = None
+        self._map_ax = None
+        self._img_axis = None
+        self._mean_ax = None
+        self._mean_line = None
 
     @staticmethod
     def set_animal_parameters(species, params):
@@ -110,6 +119,7 @@ class BioSim:
         :param img_years: years between visualizations saved to files (default: vis_years)
 
         Image files will be numbered consecutively.
+        Author: Hans Ekkehard Plesser
         """
 
         if img_years is None:
@@ -185,19 +195,38 @@ class BioSim:
 
         return data_frame
 
-    def _update_visualization(self):
+    def _update_map(self, sys_map):
+        """ Update the 2D-view of the map.
+        Author: Hans Ekkehard Plesser
+        """
+        if self._img_axis is not None:
+            self._img_axis.set_data(sys_map)
+        else:
+            self._img_axis = self._map_ax.imshow(sys_map,
+                                                 interpolation='nearest',
+                                                 vmin=0, vmax=1)
+            plt.colorbar(self._img_axis, ax=self._map_ax,
+                         orientation='horizontal')
+
+    def _update_graph(self):
         pass
 
+    def _update_visualization(self):
+        self._update_map()
+        self._update_graph()
+
     def _save_file(self):
-        """Saves graphics to file if file name given."""
+        """Saves graphics to file if file name given.
+        Author: Hans Ekkehard Plesser
+        """
 
         if self._img_base is None:
             return
 
         plt.savefig('{base}_{num:05d}.{type}'.format(base=self._img_base,
-                                                     num=self._img_ctr,
+                                                     num=self._img_counter,
                                                      type=self._img_fmt))
-        self._img_ctr += 1
+        self._img_counter += 1
 
     def _setup_visualization(self):
         """Creates subplots.
