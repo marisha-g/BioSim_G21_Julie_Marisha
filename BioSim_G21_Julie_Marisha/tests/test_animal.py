@@ -59,51 +59,33 @@ class TestAnimal:
 
     def test_weight_gain(self):
         """Weight increases when weight gain method is called. """
-        herb = Herbivore()
-        carn = Carnivore()
+        herb_weight_1 = self.herbivore.weight
+        carn_weight_1 = self.carnivore.weight
 
-        Herbivore.set_parameters()
-        Carnivore.set_parameters()
+        self.herbivore.weight_gain(5)
+        self.carnivore.weight_gain(5)
 
-        herb_weight_1 = herb.weight
-        carn_weight_1 = carn.weight
-
-        herb.weight_gain(5)
-        carn.weight_gain(5)
-
-        assert herb_weight_1 < herb.weight
-        assert carn_weight_1 < carn.weight
+        assert herb_weight_1 < self.herbivore.weight
+        assert carn_weight_1 < self.carnivore.weight
 
     def test_weight_loss(self):
         """Weight decreases when weight loss method is called."""
-        herb = Herbivore()
-        carn = Carnivore()
+        herb_weight_1 = self.herbivore.weight
+        carn_weight_1 = self.carnivore.weight
 
-        Herbivore.set_parameters()
-        Carnivore.set_parameters()
+        self.herbivore.weight_loss()
+        self.carnivore.weight_loss()
 
-        herb_weight_1 = herb.weight
-        carn_weight_1 = carn.weight
-
-        herb.weight_loss()
-        carn.weight_loss()
-
-        assert herb_weight_1 > herb.weight
-        assert carn_weight_1 > carn.weight
+        assert herb_weight_1 > self.herbivore.weight
+        assert carn_weight_1 > self.carnivore.weight
 
     def test_prob_procreation(self):
         """Probability for procreation is 0 when weight is 0."""
-        herb = Herbivore()
-        carn = Carnivore()
+        self.herbivore.weight = 0
+        self.carnivore.weight = 0
 
-        Herbivore.set_parameters()
-        Carnivore.set_parameters()
-
-        herb.weight = 0
-        carn.weight = 0
-
-        assert herb.prob_procreation(10) == 0
-        assert carn.prob_procreation(13) == 0
+        assert self.herbivore.prob_procreation(10) == 0
+        assert self.carnivore.prob_procreation(13) == 0
 
     def test_fitness(self):
         """Tests if the formula for evaluating fitness works."""
@@ -115,11 +97,8 @@ class TestAnimal:
 
     def test_prob_death_is_callable(self):
         """Property prob_death is callable."""
-        Herbivore.set_parameters()
-        Carnivore.set_parameters()
-
-        Herbivore.prob_death
-        Carnivore.prob_death
+        self.herbivore.prob_death
+        self.carnivore.prob_death
 
 
 class TestHerbivore:
