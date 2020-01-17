@@ -72,7 +72,7 @@ class MigrationProbabilityCalculator:
             self._propensity_carn.append(cell.propensity_migration_carn)
         return self._propensity_carn
 
-    @propensity_carns.setter
+    @propensity_carn.setter
     def propensity_carn(self, value):
         self._propensity_carn = value
 
