@@ -184,17 +184,18 @@ class BioSim:
 
     def _make_population_heat_map(self):
         data_frame = self.animal_distribution
-        pop_list = self._nested_list
-        rows = len(self.animal_distribution['Row'])
-        cols = len(self.animal_distribution['Col'])
-
         data_frame.set_index(["Row", "Col"], inplace=True)
-        """herbs = self.animal_distribution.loc[(x, y)].Herbivore
-        carns = self.animal_distribution.loc[(x, y)].Carnivore
-        for x in range(rows):
-            for y in range(cols):
-                pop_list[x][y] = 
-        """
+
+        pop_list = self._nested_list
+
+        for x, list_  in enumerate(pop_list):
+            for y, _ in enumerate(list_):
+                tot_pop = (
+                    data_frame.loc[(x, y)].Herbivore +
+                    data_frame.loc[(x, y)].Carnivore
+                )
+                pop_list[x][y] = tot_pop
+        return pop_list
 
     def _make_nested_list_from_map(self):
         self._nested_list = []
@@ -260,9 +261,7 @@ class BioSim:
             self._heat_map_axis.set_data(data_map)
         else:
             self._heat_map_axis = self._heat_map_ax.imshow(data_map,
-                                                           interpolation='nearest',
-                                                           cmap='hot',
-                                                           vmin=0, vmax=1)
+                                                           interpolation='nearest')
             plt.colorbar(self._heat_map_axis, ax=self._heat_map_ax,
                          orientation='vertical')
 
