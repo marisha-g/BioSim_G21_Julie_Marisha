@@ -14,6 +14,8 @@ from biosim.cell import Savannah, Jungle, Desert, Mountain, Ocean
 
 
 class MigrationProbabilityCalculator:
+    """Class used to calculate probabilities for migration."""
+
     def __init__(self, loc, island_map, species):
         """
         Constructor that initiate MigrationProbabilityCalculator.
@@ -111,9 +113,8 @@ class MigrationProbabilityCalculator:
 
 
 class Rossumoya:
-    """
-    Island class in simulation BioSim.
-    """
+    """Island class in simulation BioSim."""
+
     default_ini_herbs = [
         {
             "loc": (10, 10),

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
+
 """
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
@@ -11,9 +12,8 @@ import scipy.special
 
 
 class BaseAnimal:
-    """
-    Superclass for animal in BioSim.
-    """
+    """Superclass for animal in BioSim."""
+
     @classmethod
     def set_parameters(
             cls,
@@ -301,9 +301,7 @@ class BaseAnimal:
 
 
 class Herbivore(BaseAnimal):
-    """
-    Class instance of class Animal for the Herbivore species.
-    """
+    """Class instance of class Animal for the Herbivore species."""
 
     @classmethod
     def set_parameters(
@@ -394,9 +392,7 @@ class Herbivore(BaseAnimal):
 
 
 class Carnivore(BaseAnimal):
-    """
-    Class instance of class Animal for the Carnivore species.
-    """
+    """Class instance of class Animal for the Carnivore species."""
 
     @classmethod
     def set_parameters(
@@ -513,13 +509,3 @@ class Carnivore(BaseAnimal):
             return choice
         else:
             return 1
-
-    # @prob_carnivore_kill.setter
-    # def prob_carnivore_kill(self, value):
-    #        """
-    #       Set the choice for probability for a Carnivore to kill a Herbivore.
-    #      Setting the choice to a new value will reconfigure the animal
-    #     automatically.
-    #   :type: float
-    #  """
-    # self._prob_carnivore_kill = value

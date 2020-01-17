@@ -13,9 +13,7 @@ from biosim.animal import Carnivore, Herbivore
 
 
 class BaseCell:
-    """
-    Superclass for cell in BioSim.
-    """
+    """Superclass for cell in BioSim."""
 
     @classmethod
     def set_parameters(cls, f_max=None):
@@ -251,9 +249,7 @@ class BaseCell:
 
 
 class Savannah(BaseCell):
-    """
-    Class instance of class Cell for the cell type Savannah.
-    """
+    """Class instance of class Cell for the cell type Savannah."""
 
     @classmethod
     def set_parameters(cls, f_max=300.0, alpha=0.3):
@@ -288,9 +284,7 @@ class Savannah(BaseCell):
 
 
 class Jungle(BaseCell):
-    """
-    Class instance of class Cell for the cell type Jungle.
-    """
+    """Class instance of class Cell for the cell type Jungle."""
 
     @classmethod
     def set_parameters(cls, f_max=800.0):
@@ -309,9 +303,8 @@ class Jungle(BaseCell):
 
 
 class Desert(BaseCell):
-    """
-    Class instance of class Cell for the cell type Desert.
-    """
+    """Class instance of class Cell for the cell type Desert."""
+
     @classmethod
     def set_parameters(cls, f_max=None):
         """
@@ -330,9 +323,8 @@ class Desert(BaseCell):
 
 
 class Mountain(BaseCell):
-    """
-    Class instance of class Cell for the cell types Mountain.
-    """
+    """Class instance of class Cell for the cell types Mountain."""
+
     @classmethod
     def set_parameters(cls, f_max=0):
         """
@@ -372,9 +364,8 @@ class Mountain(BaseCell):
 
 
 class Ocean(BaseCell):
-    """
-    Class instance of class Cell for the cell type Ocean.
-    """
+    """Class instance of class Cell for the cell type Ocean."""
+
     @classmethod
     def set_parameters(cls, f_max=0):
         """
