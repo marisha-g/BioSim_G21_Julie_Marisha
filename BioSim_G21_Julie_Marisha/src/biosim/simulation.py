@@ -14,7 +14,6 @@ import numpy as np
 import os
 import subprocess
 
-
 from biosim.animal import Herbivore, Carnivore
 from biosim.cell import Savannah, Jungle
 from biosim.rossumoya import Rossumoya
@@ -94,10 +93,10 @@ class BioSim:
         self._map_code_ax = None
         self._map_code_axis = None
         self._graph_ax = None
-        self._graph_axis = None
+        self._herb_line = None
+        self._carn_line = None
         self._heat_map_ax = None
         self._heat_map_axis = None
-
 
     @staticmethod
     def set_animal_parameters(species, params):
@@ -144,14 +143,13 @@ class BioSim:
         self._setup_graphics()
 
         while self.year < self._final_year:
-
+            self.rossumoya.single_year()
             if self.year % vis_years == 0:
                 self._update_graphics()
 
-            if self.year % img_years == 0:
-                self._save_file()
+            # if self.year % img_years == 0:
+            #   self._save_file()
 
-            self.rossumoya.single_year()
             self._year += 1
 
     def add_population(self, population):
@@ -165,7 +163,6 @@ class BioSim:
     def _make_map_with_rgb_colours(self):
         colour_map = []
         map_list = self.rossumoya.island_map_string.split('\n')
-        print(map_list)
 
         for x, cell_row in enumerate(map_list):
             colour_map.append([])
@@ -244,12 +241,25 @@ class BioSim:
                          orientation='horizontal')
 
     def _update_graphics(self):
-        self._update_heat_map()
+        """Updates graph and heat map in figure window."""
+        # self._update_heat_map()
         self._update_graph()
         plt.pause(1e-6)
 
     def _update_graph(self):
-        pass
+        """Updates population graph."""
+        data_dict = self.num_animals_per_species
+        total_carns = data_dict['Carnivore']
+        total_herbs = data_dict['Herbivore']
+
+        herb_data = self._herb_line.get_ydata()
+        herb_data[self._year] = total_herbs
+
+        carn_data = self._carn_line.get_ydata()
+        carn_data[self._year] = total_carns
+
+        self._carn_line.set_ydata(carn_data)
+        self._herb_line.set_ydata(herb_data)
 
     def _setup_graphics(self):
         """Creates subplots."""
@@ -257,19 +267,22 @@ class BioSim:
         # create new figure window
         if self._fig is None:
             self._fig = plt.figure(constrained_layout=True)
-            gs = self._fig.add_gridspec(2, 12)
+            gs = self._fig.add_gridspec(4, 12)
 
         # Add subplot for map
         if self._map_ax is None:
-            self._map_ax = self._fig.add_subplot(gs[0, :5])
+            self._map_ax = self._fig.add_subplot(gs[:2, :4])
 
         if self._map_axis is None:
             map_ = self._make_map_with_rgb_colours()
             self._map_axis = self._map_ax.imshow(map_)
+            self._map_ax.get_xaxis().set_visible(False)
+            self._map_ax.get_yaxis().set_visible(False)
+
 
         # Add subplot for map codes
         if self._map_code_ax is None:
-            self._map_code_ax = self._fig.add_subplot(gs[0, 5:6])
+            self._map_code_ax = self._fig.add_subplot(gs[:2, 5:7])
             cell_codes_bar = [[(200, 200, 50)],
                               [(40, 150, 30)],
                               [(220, 180, 140)],
@@ -279,31 +292,38 @@ class BioSim:
             self._map_code_axis = self._map_code_ax.imshow(cell_codes_bar)
             codes = ['', 'Savannah', 'Jungle', 'Desert', 'Mountain', 'Ocean']
             self._map_code_ax.set_yticklabels(codes)
-        """        
+            self._map_code_ax.get_xaxis().set_visible(False)
+
         # Add subplot for graph
         if self._graph_ax is None:
-            self._graph_ax = self._fig.add_subplot(gs[0, 6:])
-            self._graph_ax.set_ylim(0, self._ymax)
+            self._graph_ax = self._fig.add_subplot(gs[:2, 7:])
+            self._graph_ax.set_ylim(0, 100)
             self._graph_ax.set_xlim(0, self._final_year + 1)
+
+        # Initiate graph
+        if self._herb_line is None:
+            herb_graph = self._graph_ax.plot(
+                np.arange(0, self._final_year),
+                np.full(self._final_year, np.nan))
+            self._herb_line = herb_graph[0]
+
+        if self._carn_line is None:
+            carn_plot = self._graph_ax.plot(
+                np.arange(0, self._final_year),
+                np.full(self._final_year, np.nan))
+            self._carn_line = carn_plot[0]
+
+        else:
+            x_data, y_data = self._graph_axis.get_data()
+            x_new = np.arange(x_data[-1] + 1, self._final_year)
+            if len(x_new) > 0:
+                y_new = np.full(x_new.shape, np.nan)
+                self._graph_axis.set_data(np.hstack((x_data, x_new)),
+                                          np.hstack((y_data, y_new)))
 
         # Add subplot for heat map
         if self._heat_map_ax is None:
-            self._heat_map_ax = self._fig.add_subplot(2, 3, 1)
-            self._heat_map_axis = None
-
-        # Initiate graph
-        if self._graph_axis is None:
-            graph_plot = self._graph_ax.plot(np.arange(0, self._final_year),
-                                             np.full(self._final_year, np.nan))
-            self._graph_axis_ = graph_plot[0]
-        else:
-            xdata, ydata = self._graph_axis.get_data()
-            xnew = np.arange(xdata[-1] + 1, self._final_year)
-            if len(xnew) > 0:
-                ynew = np.full(xnew.shape, np.nan)
-                self._graph_axis.set_data(np.hstack((xdata, xnew)),
-                                          np.hstack((ydata, ynew)))
-        """
+            self._heat_map_ax = self._fig.add_subplot(gs[2:, :7])
 
     def _save_file(self):
         """Saves graphics to file if file name given.
@@ -362,6 +382,5 @@ class BioSim:
 
 if __name__ == '__main__':
     sim1 = BioSim()
-    sim1._final_year = 2
-    sim1._setup_graphics()
+    sim1.simulate(num_years=20, vis_years=1, img_years=5)
     plt.show()
