@@ -9,7 +9,7 @@ class Random:
 
     def draw_random(self, p):
         p = [1-p, p]
-        random_num = numpy.random.choice(2, p)
+        random_num = numpy.random.choice(2, p=p)
         return random_num
 
     """ Alternativ:

@@ -222,7 +222,7 @@ class BaseAnimal:
             return 0
         else:
             p = min(1, self.gamma * self.fitness * (n - 1))
-            choice = Random.draw_random(p)
+            choice = Random().draw_random(p=p)
             return choice
 
     @property
@@ -261,7 +261,7 @@ class BaseAnimal:
         :type: int
         """
         p = self.mu * self.fitness
-        self._prob_migration = Random.draw_random(p)
+        self._prob_migration = Random().draw_random(p=p)
         self.has_migrated = True
         return self._prob_migration
 
@@ -286,7 +286,7 @@ class BaseAnimal:
             self._prob_death = 0
         else:
             p = self.omega * (1 - self.fitness)
-            self._prob_death = Random.draw_random(p)
+            self._prob_death = Random().draw_random(p=p)
 
         return self._prob_death
 
@@ -506,7 +506,7 @@ class Carnivore(BaseAnimal):
             return 0
         elif 0 < self.fitness - fitness_prey < self.DeltaPhiMax:
             p = (self.fitness - fitness_prey) / self.DeltaPhiMax
-            choice = Random.draw_random(p)
+            choice = Random().draw_random(p=p)
             return choice
         else:
             return 1
