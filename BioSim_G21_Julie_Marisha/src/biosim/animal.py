@@ -1,7 +1,29 @@
 # -*- coding: utf-8 -*-
 
-"""
+"""Spreadsheet Column Printer
 
+This script implements
+allows the user to print to the console all columns in the
+spreadsheet. It is assumed that the first row of the spreadsheet is the
+location of the columns.
+
+This tool accepts comma separated value files (.csv) as well as excel
+(.xls, .xlsx) files.
+
+This script requires that `pandas` be installed within the Python
+environment you are running this script in.
+
+This file can also be imported as a module and contains the following
+classes:
+
+    * BaseAnimal - Superclass and the basic characteristics that all of the
+    species in Rossumøya has in common.
+
+    * Herbivore(BaseAnimal) - Subclass of BaseAnimal and characteristics for
+    the Herbivore species.
+
+    * Carnivore(BaseAnimal) - Subclass of BaseAnimal and characteristics for
+    the Carnivore species.
 """
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
@@ -506,7 +528,6 @@ class Carnivore(BaseAnimal):
         if 0 < self.fitness - fitness_prey < self.DeltaPhiMax:
             p = (self.fitness - fitness_prey) / self.DeltaPhiMax
             choice = np.random.binomial(1, p)
-            print(choice)
             return choice
 
         return 1
