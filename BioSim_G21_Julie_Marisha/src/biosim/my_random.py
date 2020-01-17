@@ -11,3 +11,7 @@ class Random:
         p = [1-p, p]
         random_num = numpy.random.choice(2, p)
         return random_num
+
+    """ Alternativ:
+        random_num = numpy.binomial(1, p)
+    """

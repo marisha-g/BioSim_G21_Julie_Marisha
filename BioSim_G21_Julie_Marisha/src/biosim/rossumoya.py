@@ -318,7 +318,7 @@ class Rossumoya:
             loc, self.island_map, species
         ).probabilities
 
-        choice = numpy.random.choice(3, p=probabilities)
+        choice = np.random.choice(3, p=probabilities)
         chosen_cell = locations[choice]
         return chosen_cell
 

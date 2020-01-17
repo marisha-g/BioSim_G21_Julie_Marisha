@@ -9,7 +9,7 @@ __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
 import numpy as np
 import scipy.special
-from biosim import Random
+from biosim.my_random import Random
 
 
 class BaseAnimal:
