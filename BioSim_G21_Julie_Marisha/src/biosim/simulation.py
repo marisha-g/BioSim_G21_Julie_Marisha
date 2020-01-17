@@ -140,14 +140,14 @@ class BioSim:
             img_years = vis_years
 
         self._final_year = self.year + num_years
-        # self._setup_graphics()
+        self._setup_graphics()
 
         while self.year < self._final_year:
-            # if self.year % vis_years == 0:
-                # self._update_graphics()
+            if self.year % vis_years == 0:
+                self._update_graphics()
 
-            # if self.year % img_years == 0:
-            #   self._save_file()
+            #if self.year % img_years == 0:
+            #  self._save_file()
             self.rossumoya.single_year()
             self._year += 1
 
@@ -226,10 +226,12 @@ class BioSim:
 
         return data_frame
 
-    def _update_heat_map(self, sys_map):
+    def _update_heat_map(self):
         """ Update the 2D-view of the map.
         Author: Hans Ekkehard Plesser
         """
+        sys_map = self.animal_distribution
+
         if self._heat_map_axis is not None:
             self._heat_map_axis.set_data(sys_map)
         else:
@@ -241,10 +243,9 @@ class BioSim:
 
     def _update_graphics(self):
         """Updates graph and heat map in figure window."""
-        pass
-        # self._update_heat_map()
-        #self._update_graph()
-        #plt.pause(1e-6)
+        self._update_heat_map()
+        self._update_graph()
+        plt.pause(1e-6)
 
     def _update_graph(self):
         """Updates population graph."""
@@ -383,4 +384,5 @@ class BioSim:
 if __name__ == '__main__':
     sim1 = BioSim()
     sim1.simulate(num_years=10, vis_years=1, img_years=5)
+    plt.show
 
