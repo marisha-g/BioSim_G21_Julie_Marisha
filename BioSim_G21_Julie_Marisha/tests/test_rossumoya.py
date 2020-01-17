@@ -45,7 +45,7 @@ class TestMigrationProbabilityCalculator:
         assert self.calculator_herb._propensity_herb == 4
 
     def test_propensity_carn(self):
-        """propensity_carns() method returns a list."""
+        """Property propensity_carn returns a list."""
         assert isinstance(self.calculator_carn.propensity_carn, list)
 
     def test_propensity_carn_setter(self):
@@ -54,7 +54,7 @@ class TestMigrationProbabilityCalculator:
         assert self.calculator_carn._propensity_carn == 8
 
     def test_probabilities(self):
-        """Property probabilities() returns a tuple and a list."""
+        """Property probabilities returns a tuple and a list."""
         assert isinstance(self.calculator_herb.probabilities, (tuple, list))
         assert isinstance(self.calculator_carn.probabilities, (tuple, list))
 
@@ -67,7 +67,7 @@ class TestMigrationProbabilityCalculator:
         assert self.calculator_carn._probabilities == 1
 
     def test_probabilities_return_coordinates(self):
-        """Property probabilities() returns correct coordinates for
+        """Property probabilities returns correct coordinates for
         neighbouring cell of (2, 2)."""
         coordinates, probabilities = self.calculator_herb.probabilities
         assert coordinates == [(2, 1), (2, 3), (1, 2), (3, 2)]
@@ -76,7 +76,7 @@ class TestMigrationProbabilityCalculator:
         assert coordinates == [(2, 1), (2, 3), (1, 2), (3, 2)]
 
     def test_probabilities_return_probabilities(self):
-        """Property probabilities() returns correct probabilities for three
+        """Property probabilities returns correct probabilities for three
          identical Savannah cells and one Ocean cell as neighbouring cells."""
         coordinates, probabilities = self.calculator_herb.probabilities
         sum_probabilities = sum(probabilities)
