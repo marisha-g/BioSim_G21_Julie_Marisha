@@ -9,6 +9,7 @@ __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
 import numpy as np
 import scipy.special
+from biosim import Random
 
 
 class BaseAnimal:
@@ -221,7 +222,7 @@ class BaseAnimal:
             return 0
         else:
             p = min(1, self.gamma * self.fitness * (n - 1))
-            choice = np.random.choice(2, p=[p, 1 - p])
+            choice = Random.draw_random(p=[p, 1 - p])
             return choice
 
     @property
@@ -260,7 +261,7 @@ class BaseAnimal:
         :type: int
         """
         p = self.mu * self.fitness
-        self._prob_migration = np.random.choice(2, p=[p, 1 - p])
+        self._prob_migration = Random.draw_random(p=[p, 1 - p])
         self.has_migrated = True
         return self._prob_migration
 
@@ -285,7 +286,7 @@ class BaseAnimal:
             self._prob_death = 0
         else:
             p = self.omega * (1 - self.fitness)
-            self._prob_death = np.random.choice(2, p=[1 - p, p])
+            self._prob_death = Random.draw_random(p=[1 - p, p])
 
         return self._prob_death
 
@@ -505,7 +506,7 @@ class Carnivore(BaseAnimal):
             return 0
         elif 0 < self.fitness - fitness_prey < self.DeltaPhiMax:
             p = (self.fitness - fitness_prey) / self.DeltaPhiMax
-            choice = np.random.choice(2, p=[1 - p, p])
+            choice = Random.draw_random(p=[1 - p, p])
             return choice
         else:
             return 1
