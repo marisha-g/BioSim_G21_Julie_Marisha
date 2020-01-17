@@ -34,41 +34,41 @@ class TestMigrationProbabilityCalculator:
 
     def test_propensity_herb(self):
         """propensity_herb() method returns a list."""
-        assert isinstance(self.calculator.propensity_herb(), list)
+        assert isinstance(self.calculator.propensity_herb, list)
 
     def test_propensity_herb_setter(self):
         """Propensity for Herbivore can be set."""
         self.calculator.propensity_herb = 4
         assert self.calculator._propensity_herb == 4
 
-    def test_propensity_carns(self):
+    def test_propensity_carn(self):
         """propensity_carns() method returns a list."""
-        assert isinstance(self.calculator.propensity_carns(), list)
+        assert isinstance(self.calculator.propensity_carn, list)
 
     def test_propensity_carn_setter(self):
         """Propensity for Carnivore can be set."""
         self.calculator.propensity_carn = 8
         assert self.calculator._propensity_carn == 8
 
-    def test_probability(self):
-        """probability() method returns a tuple and a list."""
-        assert isinstance(self.calculator.probability(), (tuple, list))
+    def test_probabilities(self):
+        """Property probabilities() returns a tuple and a list."""
+        assert isinstance(self.calculator.probabilities, (tuple, list))
 
     def test_probabilities_setter(self):
         """Probabilities can be set."""
         self.calculator.probabilities = 0.2
         assert self.calculator._probabilities == 0.2
 
-    def test_probability_return_coordinates(self):
-        """probability method returns correct coordinates for
+    def test_probabilities_return_coordinates(self):
+        """Property probabilities() returns correct coordinates for
         neighbouring cell of (2, 2)."""
-        coordinates, probability = self.calculator.probability()
+        coordinates, probabilities = self.calculator.probabilities
         assert coordinates == [(2, 1), (2, 3), (1, 2), (3, 2)]
 
-    def test_probability_return_probabilities(self):
-        """probability method returns correct probabilities for three
+    def test_probabilities_return_probabilities(self):
+        """Property probabilities() returns correct probabilities for three
          identical Savannah cells and one Ocean cell as neighbouring cells."""
-        coordinates, probabilities = self.calculator.probability()
+        coordinates, probabilities = self.calculator.probabilities
         sum_probabilities = sum(probabilities)
         assert sum_probabilities == 1
         assert probabilities[0] == pytest.approx(0.333, rel=1e-2)
