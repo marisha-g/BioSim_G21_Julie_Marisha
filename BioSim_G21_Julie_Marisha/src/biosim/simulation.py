@@ -87,6 +87,7 @@ class BioSim:
         self._cmax = cmax_animals
 
         # the following will be initialized by _setup_graphics
+        self._nested_list = None
         self._fig = None
         self._map_ax = None
         self._map_axis = None
@@ -146,7 +147,7 @@ class BioSim:
             if self.year % vis_years == 0:
                 self._update_graphics()
 
-            #if self.year % img_years == 0:
+            # if self.year % img_years == 0:
             #  self._save_file()
             self.rossumoya.single_year()
             self._year += 1
@@ -160,27 +161,50 @@ class BioSim:
         self.rossumoya.add_population(population)
 
     def _make_map_with_rgb_colours(self):
-        colour_map = []
+        colour_map = self._make_nested_list_from_map()
         map_list = self.rossumoya.island_map_string.split('\n')
 
         for x, cell_row in enumerate(map_list):
-            colour_map.append([])
-            for cell_code in cell_row:
+            for y, cell_code in enumerate(cell_row):
                 if cell_code == 'S':
-                    colour_map[x].append((200, 200, 50))
+                    colour_map[x][y] = (200, 200, 50)
 
                 if cell_code == 'J':
-                    colour_map[x].append((40, 150, 30))
+                    colour_map[x][y] = (40, 150, 30)
 
                 if cell_code == 'O':
-                    colour_map[x].append((0, 130, 300))
+                    colour_map[x][y] = (0, 130, 300)
 
                 if cell_code == 'D':
-                    colour_map[x].append((220, 180, 140))
+                    colour_map[x][y] = (220, 180, 140)
 
                 if cell_code == 'M':
-                    colour_map[x].append((210, 200, 220))
+                    colour_map[x][y] = (210, 200, 220)
         return colour_map
+
+    def _make_population_heat_map(self):
+        data_frame = self.animal_distribution
+        pop_list = self._nested_list
+        rows = len(self.animal_distribution['Row'])
+        cols = len(self.animal_distribution['Col'])
+
+        data_frame.set_index(["Row", "Col"], inplace=True)
+        """herbs = self.animal_distribution.loc[(x, y)].Herbivore
+        carns = self.animal_distribution.loc[(x, y)].Carnivore
+        for x in range(rows):
+            for y in range(cols):
+                pop_list[x][y] = 
+        """
+
+    def _make_nested_list_from_map(self):
+        self._nested_list = []
+        map_list = self.rossumoya.island_map_string.split('\n')
+
+        for x, cell_row in enumerate(map_list):
+            self._nested_list.append([])
+            for cell_code in cell_row:
+                self._nested_list[x].append(None)
+        return self._nested_list
 
     @property
     def year(self):
@@ -230,16 +254,17 @@ class BioSim:
         """ Update the 2D-view of the map.
         Author: Hans Ekkehard Plesser
         """
-        sys_map = self.animal_distribution
+        data_map = self._make_population_heat_map()
 
         if self._heat_map_axis is not None:
-            self._heat_map_axis.set_data(sys_map)
+            self._heat_map_axis.set_data(data_map)
         else:
-            self._heat_map_axis = self._map_ax.imshow(sys_map,
-                                                      interpolation='nearest',
-                                                      vmin=0, vmax=1)
-            plt.colorbar(self._heat_map_axis, ax=self._map_ax,
-                         orientation='horizontal')
+            self._heat_map_axis = self._heat_map_ax.imshow(data_map,
+                                                           interpolation='nearest',
+                                                           cmap='hot',
+                                                           vmin=0, vmax=1)
+            plt.colorbar(self._heat_map_axis, ax=self._heat_map_ax,
+                         orientation='vertical')
 
     def _update_graphics(self):
         """Updates graph and heat map in figure window."""
@@ -264,6 +289,7 @@ class BioSim:
 
     def _setup_graphics(self):
         """Creates subplots."""
+        self._nested_list = self._make_nested_list_from_map()
 
         # create new figure window
         if self._fig is None:
@@ -279,7 +305,6 @@ class BioSim:
             self._map_axis = self._map_ax.imshow(map_)
             self._map_ax.get_xaxis().set_visible(False)
             self._map_ax.get_yaxis().set_visible(False)
-
 
         # Add subplot for map codes
         if self._map_code_ax is None:
@@ -384,5 +409,4 @@ class BioSim:
 if __name__ == '__main__':
     sim1 = BioSim()
     sim1.simulate(num_years=10, vis_years=1, img_years=5)
-    plt.show
-
+    plt.show()
