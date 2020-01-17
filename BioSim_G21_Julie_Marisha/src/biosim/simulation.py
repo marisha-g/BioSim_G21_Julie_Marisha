@@ -253,23 +253,33 @@ class BioSim:
 
     def _setup_graphics(self):
         """Creates subplots."""
+
         # create new figure window
         if self._fig is None:
             self._fig = plt.figure(constrained_layout=True)
-            gs = self._fig.add_gridspec(2, 4)
+            gs = self._fig.add_gridspec(2, 12)
 
         # Add subplot for map
         if self._map_ax is None:
-            self._map_ax = self._fig.add_subplot(gs[1, :])
+            self._map_ax = self._fig.add_subplot(gs[0, :5])
 
         if self._map_axis is None:
-            map = self._make_map_with_rgb_colours()
-            self._map_axis = self._map_ax.imshow(map)
-        """
+            map_ = self._make_map_with_rgb_colours()
+            self._map_axis = self._map_ax.imshow(map_)
+
         # Add subplot for map codes
         if self._map_code_ax is None:
-           self._map_code_ax = self._fig.add_subplot(gs[0, 4:6])
+            self._map_code_ax = self._fig.add_subplot(gs[0, 5:6])
+            cell_codes_bar = [[(200, 200, 50)],
+                              [(40, 150, 30)],
+                              [(220, 180, 140)],
+                              [(210, 200, 220)],
+                              [(0, 130, 300)]]
 
+            self._map_code_axis = self._map_code_ax.imshow(cell_codes_bar)
+            codes = ['', 'Savannah', 'Jungle', 'Desert', 'Mountain', 'Ocean']
+            self._map_code_ax.set_yticklabels(codes)
+        """        
         # Add subplot for graph
         if self._graph_ax is None:
             self._graph_ax = self._fig.add_subplot(gs[0, 6:])
@@ -294,6 +304,7 @@ class BioSim:
                 self._graph_axis.set_data(np.hstack((xdata, xnew)),
                                           np.hstack((ydata, ynew)))
         """
+
     def _save_file(self):
         """Saves graphics to file if file name given.
         Author: Hans Ekkehard Plesser
@@ -306,7 +317,6 @@ class BioSim:
                                                      num=self._image_counter,
                                                      type=self._image_format))
         self._image_counter += 1
-
 
     def make_movie(self, movie_fmt=_DEFAULT_MOVIE_FORMAT):
         """
@@ -348,6 +358,7 @@ class BioSim:
                 raise RuntimeError('ERROR: convert failed with: {}'.format(err))
         else:
             raise ValueError('Unknown movie format: ' + movie_fmt)
+
 
 if __name__ == '__main__':
     sim1 = BioSim()
