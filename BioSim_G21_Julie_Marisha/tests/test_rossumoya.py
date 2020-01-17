@@ -120,6 +120,15 @@ class TestRossumoya:
         with pytest.raises(ValueError):
             island_map_string = "OOOJ\nOJSO\nOOOO"
             self.rossumoya.check_map_input(island_map_string)
+        with pytest.raises(ValueError):
+            island_map_string = "OOO0\nOJSO\nOOOS"
+            self.rossumoya.check_map_input(island_map_string)
+        with pytest.raises(ValueError):
+            island_map_string = "OOOJ\nMJSO\nOOOO"
+            self.rossumoya.check_map_input(island_map_string)
+        with pytest.raises(ValueError):
+            island_map_string = "OOOJ\nOJSS\nOOOO"
+            self.rossumoya.check_map_input(island_map_string)
 
     def test_geography_coordinates_method(self):
         """make_geography_coordinates can be called."""
