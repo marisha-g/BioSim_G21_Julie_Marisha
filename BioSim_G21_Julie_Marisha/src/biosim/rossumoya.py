@@ -36,7 +36,11 @@ class MigrationProbabilityCalculator:
         self.locations = locations
         self.island_map = island_map
         self.species = species
+        self._propensity_herb = None
+        self._propensity_carn = None
+        self._probabilities = None
 
+    @property
     def propensity_herb(self):
         """
         Calculate the propensities of the four cells for Herbivores.
@@ -44,26 +48,36 @@ class MigrationProbabilityCalculator:
                  corresponding propensities.
         :type: list
         """
-        propensities = []
+        self._propensity_herb = []
         for cell in self.locations:
             cell = self.island_map[cell]
-            propensities.append(cell.propensity_migration_herb)
-        return propensities
+            self._propensity_herb.append(cell.propensity_migration_herb)
+        return self._propensity_herb
 
-    def propensity_carns(self):
+    @propensity_herb.setter
+    def propensity_herb(self, value):
+        self._propensity_herb = value
+
+    @property
+    def propensity_carn(self):
         """
         Calculate the propensities of the four cells for Carnivores.
         :return: propensities: List with the four neighbouring cells
                  corresponding propensities.
         :type: list
         """
-        propensities = []
+        self._propensity_carn = []
         for cell in self.locations:
             cell = self.island_map[cell]
-            propensities.append(cell.propensity_migration_carn)
-        return propensities
+            self._propensity_carn.append(cell.propensity_migration_carn)
+        return self._propensity_carn
 
-    def probability(self):
+    @propensity_carns.setter
+    def propensity_carn(self, value):
+        self._propensity_carn = value
+
+    @property
+    def probabilities(self):
         """
         Calculates probability for an animal to move from one cell to
         another using the propensities.
@@ -72,24 +86,28 @@ class MigrationProbabilityCalculator:
         :type: tuple, list
         """
         if self.species == 'Herbivore':
-            propensities = self.propensity_herb()
+            propensities = self.propensity_herb
         if self.species == 'Carnivore':
-            propensities = self.propensity_carns()
+            propensities = self.propensity_carns
 
-        probabilities = []
+        unscaled_probabilities = []
         sum_propensities = sum(propensities)
         for prop in propensities:
             p = prop / sum_propensities * prop
-            probabilities.append(p)
+            unscaled_probabilities.append(p)
 
-        scaled_probabilities = []
-        sum_probabilities = sum(probabilities)
-        for probability in probabilities:
-            scaled_probabilities.append(
-                probability / sum_probabilities
+        self._probabilities = []
+        sum_unscaled_probabilities = sum(unscaled_probabilities)
+        for probability in unscaled_probabilities:
+            self._probabilities.append(
+                probability / sum_unscaled_probabilities
             )
 
-        return self.locations, scaled_probabilities
+        return self.locations, self._probabilities
+
+    @probabilities.setter
+    def probabilities(self, value):
+        self._probabilities = value
 
 
 class Rossumoya:
