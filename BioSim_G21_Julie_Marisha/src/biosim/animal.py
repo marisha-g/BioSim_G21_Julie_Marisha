@@ -151,6 +151,9 @@ class BaseAnimal:
 
     @classmethod
     def reset_migration(cls):
+        """
+        All animals in the beginning of a year has not migrated.
+        """
         cls.has_migrated = False
 
     def __init__(self, age=None, weight=None):
