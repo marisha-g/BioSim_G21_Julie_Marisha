@@ -161,7 +161,7 @@ class TestRossumoya:
         self.rossumoya.add_offspring(Herbivore(), (2, 2))
         self.rossumoya.procreation()
 
-    def test_add_offspring(self):
+    def test_add_offspring_callable(self):
         """add_offspring() method is callable."""
         self.rossumoya.add_offspring(Carnivore(), (4, 6))
 
