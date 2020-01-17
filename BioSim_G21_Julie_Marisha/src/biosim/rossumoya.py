@@ -11,7 +11,6 @@ import numpy as np
 
 from biosim.animal import Herbivore, Carnivore
 from biosim.cell import Savannah, Jungle, Desert, Mountain, Ocean
-from biosim.random import Random
 
 
 class MigrationProbabilityCalculator:
@@ -319,7 +318,7 @@ class Rossumoya:
             loc, self.island_map, species
         ).probabilities
 
-        choice = Random.draw_random(p=probabilities)
+        choice = numpy.random.choice(3, p=probabilities)
         chosen_cell = locations[choice]
         return chosen_cell
 

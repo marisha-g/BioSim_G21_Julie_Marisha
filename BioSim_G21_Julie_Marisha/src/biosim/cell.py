@@ -10,7 +10,6 @@ __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 import numpy as np
 
 from biosim.animal import Carnivore, Herbivore
-from biosim import Random
 
 
 
