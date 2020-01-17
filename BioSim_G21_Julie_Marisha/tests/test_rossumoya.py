@@ -36,13 +36,28 @@ class TestMigrationProbabilityCalculator:
         """propensity_herb() method returns a list."""
         assert isinstance(self.calculator.propensity_herb(), list)
 
+    def test_propensity_herb_setter(self):
+        """Propensity for Herbivore can be set."""
+        self.calculator.propensity_herb = 4
+        assert self.calculator._propensity_herb == 4
+
     def test_propensity_carns(self):
         """propensity_carns() method returns a list."""
         assert isinstance(self.calculator.propensity_carns(), list)
 
+    def test_propensity_carn_setter(self):
+        """Propensity for Carnivore can be set."""
+        self.calculator.propensity_carn = 8
+        assert self.calculator._propensity_carn == 8
+
     def test_probability(self):
         """probability() method returns a tuple and a list."""
         assert isinstance(self.calculator.probability(), (tuple, list))
+
+    def test_probabilities_setter(self):
+        """Probabilities can be set."""
+        self.calculator.probabilities = 0.2
+        assert self.calculator._probabilities == 0.2
 
     def test_probability_return_coordinates(self):
         """probability method returns correct coordinates for
