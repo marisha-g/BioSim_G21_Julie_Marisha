@@ -23,52 +23,62 @@ class TestMigrationProbabilityCalculator:
         self.map = Rossumoya.make_geography_coordinates(Rossumoya.default_map)
         Herbivore.set_parameters()
         Carnivore.set_parameters()
-        self.species = "Herbivore"
-        self.calculator = MigrationProbabilityCalculator(
-            self.loc, self.map, self.species
+        self.calculator_herb = MigrationProbabilityCalculator(
+            self.loc, self.map, "Herbivore"
+        )
+        self.calculator_carn = MigrationProbabilityCalculator(
+            self.loc, self.map, "Carnivore"
         )
 
     def test_constructor_callable(self):
         """MigrationProbabilityCalculator is callable. """
-        assert isinstance(self.calculator, MigrationProbabilityCalculator)
+        assert isinstance(self.calculator_herb, MigrationProbabilityCalculator)
+        assert isinstance(self.calculator_carn, MigrationProbabilityCalculator)
 
     def test_propensity_herb(self):
         """propensity_herb() method returns a list."""
-        assert isinstance(self.calculator.propensity_herb, list)
+        assert isinstance(self.calculator_herb.propensity_herb, list)
 
     def test_propensity_herb_setter(self):
         """Propensity for Herbivore can be set."""
-        self.calculator.propensity_herb = 4
-        assert self.calculator._propensity_herb == 4
+        self.calculator_herb.propensity_herb = 4
+        assert self.calculator_herb._propensity_herb == 4
 
     def test_propensity_carn(self):
-        """propensity_carns() method returns a list."""
-        assert isinstance(self.calculator.propensity_carn, list)
+        """Property propensity_carn returns a list."""
+        assert isinstance(self.calculator_carn.propensity_carn, list)
 
     def test_propensity_carn_setter(self):
         """Propensity for Carnivore can be set."""
-        self.calculator.propensity_carn = 8
-        assert self.calculator._propensity_carn == 8
+        self.calculator_carn.propensity_carn = 8
+        assert self.calculator_carn._propensity_carn == 8
 
     def test_probabilities(self):
-        """Property probabilities() returns a tuple and a list."""
-        assert isinstance(self.calculator.probabilities, (tuple, list))
+        """Property probabilities returns a tuple and a list."""
+        assert isinstance(self.calculator_herb.probabilities, (tuple, list))
+        assert isinstance(self.calculator_carn.probabilities, (tuple, list))
 
     def test_probabilities_setter(self):
         """Probabilities can be set."""
-        self.calculator.probabilities = 0.2
-        assert self.calculator._probabilities == 0.2
+        self.calculator_herb.probabilities = 0.2
+        assert self.calculator_herb._probabilities == 0.2
+
+        self.calculator_carn.probabilities = 1
+        assert self.calculator_carn._probabilities == 1
 
     def test_probabilities_return_coordinates(self):
-        """Property probabilities() returns correct coordinates for
+        """Property probabilities returns correct coordinates for
         neighbouring cell of (2, 2)."""
-        coordinates, probabilities = self.calculator.probabilities
+        coordinates, probabilities = self.calculator_herb.probabilities
+        assert coordinates == [(2, 1), (2, 3), (1, 2), (3, 2)]
+
+        coordinates, probabilities = self.calculator_carn.probabilities
         assert coordinates == [(2, 1), (2, 3), (1, 2), (3, 2)]
 
     def test_probabilities_return_probabilities(self):
-        """Property probabilities() returns correct probabilities for three
+        """Property probabilities returns correct probabilities for three
          identical Savannah cells and one Ocean cell as neighbouring cells."""
-        coordinates, probabilities = self.calculator.probabilities
+        coordinates, probabilities = self.calculator_herb.probabilities
         sum_probabilities = sum(probabilities)
         assert sum_probabilities == 1
         assert probabilities[0] == pytest.approx(0.333, rel=1e-2)
@@ -76,6 +86,13 @@ class TestMigrationProbabilityCalculator:
         assert probabilities[2] == 0.0
         assert probabilities[3] == pytest.approx(0.333, rel=1e-2)
 
+        coordinates, probabilities = self.calculator_carn.probabilities
+        sum_probabilities = sum(probabilities)
+        assert sum_probabilities == 1
+        assert probabilities[0] == pytest.approx(0.333, rel=1e-2)
+        assert probabilities[1] == pytest.approx(0.333, rel=1e-2)
+        assert probabilities[2] == 0.0
+        assert probabilities[3] == pytest.approx(0.333, rel=1e-2)
 
 class TestRossumoya:
     """Tests for class Rossumoya."""
@@ -102,6 +119,15 @@ class TestRossumoya:
             self.rossumoya.check_map_input(island_map_string)
         with pytest.raises(ValueError):
             island_map_string = "OOOJ\nOJSO\nOOOO"
+            self.rossumoya.check_map_input(island_map_string)
+        with pytest.raises(ValueError):
+            island_map_string = "OOO0\nOJSO\nOOOS"
+            self.rossumoya.check_map_input(island_map_string)
+        with pytest.raises(ValueError):
+            island_map_string = "OOOJ\nMJSO\nOOOO"
+            self.rossumoya.check_map_input(island_map_string)
+        with pytest.raises(ValueError):
+            island_map_string = "OOOJ\nOJSS\nOOOO"
             self.rossumoya.check_map_input(island_map_string)
 
     def test_geography_coordinates_method(self):
@@ -135,7 +161,7 @@ class TestRossumoya:
         self.rossumoya.add_offspring(Herbivore(), (2, 2))
         self.rossumoya.procreation()
 
-    def test_add_offspring(self):
+    def test_add_offspring_callable(self):
         """add_offspring() method is callable."""
         self.rossumoya.add_offspring(Carnivore(), (4, 6))
 
@@ -156,10 +182,6 @@ class TestRossumoya:
     def test_single_year_callable(self):
         """single_year() method is callable. """
         self.rossumoya.single_year()
-
-    def test_single_simulation_callable(self):
-        """single_simulation can be called."""
-        self.biosim.single_simulation()
 
     def test_map_axis(self):
         axis = self.rossumoya.map_axis()

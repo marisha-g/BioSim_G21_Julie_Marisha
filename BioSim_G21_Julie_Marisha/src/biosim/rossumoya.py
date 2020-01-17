@@ -88,7 +88,7 @@ class MigrationProbabilityCalculator:
         if self.species == 'Herbivore':
             propensities = self.propensity_herb
         if self.species == 'Carnivore':
-            propensities = self.propensity_carns
+            propensities = self.propensity_carn
 
         unscaled_probabilities = []
         sum_propensities = sum(propensities)
@@ -315,7 +315,7 @@ class Rossumoya:
         """
         locations, probabilities = MigrationProbabilityCalculator(
             loc, self.island_map, species
-        ).probability()
+        ).probabilities
 
         choice = np.random.choice(4, p=probabilities)
         chosen_cell = locations[choice]

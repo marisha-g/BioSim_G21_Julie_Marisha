@@ -42,9 +42,13 @@ class TestAnimal:
     def test_value_error_for_age_and_weight(self):
         """Check if ValueError is raised for negative inputs. """
         with pytest.raises(ValueError):
-            Herbivore(age=-4, weight=-5)
+            Herbivore(age=-4)
         with pytest.raises(ValueError):
-            Carnivore(age=-60, weight=-2.2)
+            Herbivore(weight=-6)
+        with pytest.raises(ValueError):
+            Carnivore(age=-60)
+        with pytest.raises(ValueError):
+            Carnivore(weight=-2.2)
 
     def test_aging(self):
         """Test if aging method increments an animal's age by 1."""
@@ -125,6 +129,12 @@ class TestAnimal:
         """Property prob_death is callable."""
         self.herbivore.prob_death
         self.carnivore.prob_death
+
+    def test_prob_death(self):
+        """Probability for an animal to die is equal to 0 when fitness is
+        equal to 0."""
+        self.base_animal.weight = 0
+        assert self.base_animal.prob_death == 0
 
     def test_prob_death_setter(self):
         """Property prob_death() sets the given value."""
