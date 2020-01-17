@@ -1,6 +1,38 @@
 # -*- coding: utf-8 -*-
 
-"""
+"""Spreadsheet Column Printer
+
+This script implements
+allows the user to print to the console all columns in the
+spreadsheet. It is assumed that the first row of the spreadsheet is the
+location of the columns.
+
+This tool accepts comma separated value files (.csv) as well as excel
+(.xls, .xlsx) files.
+
+This script requires that `pandas` be installed within the Python
+environment you are running this script in.
+
+This file can also be imported as a module and contains the following
+classes:
+
+    * BaseCell - Superclass and the basic characteristics that all of the cell
+    types in Rossumøya has in common.
+
+    * Savannah(BaseCell) - Subclass of BaseCell and characteristics for
+    the cell type Savannah.
+
+    * Jungle(BaseCell) - Subclass of BaseCell and characteristics for
+    the cell type Jungle.
+
+    * Desert(BaseCell) - Subclass of BaseCell and characteristics for
+    the cell type Desert.
+
+    * Mountain(BaseCell) - Subclass of BaseCell and characteristics for
+    the cell type Mountain.
+
+    * Ocean(BaseCell) - Subclass of BaseCell and characteristics for
+    the cell type Ocean.
 
 """
 
