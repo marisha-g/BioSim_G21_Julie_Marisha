@@ -188,11 +188,11 @@ class BioSim:
 
         pop_list = self._nested_list
 
-        for x, list_  in enumerate(pop_list):
+        for x, list_ in enumerate(pop_list):
             for y, _ in enumerate(list_):
                 tot_pop = (
-                    data_frame.loc[(x, y)].Herbivore +
-                    data_frame.loc[(x, y)].Carnivore
+                        data_frame.loc[(x, y)].Herbivore +
+                        data_frame.loc[(x, y)].Carnivore
                 )
                 pop_list[x][y] = tot_pop
         return pop_list
@@ -209,7 +209,7 @@ class BioSim:
         x, y = map_size()
         for x in range(x):
             self._nested_list.append([])
-            for y in range(y):
+            for _ in range(y):
                 self._nested_list[x].append(None)
         return self._nested_list
 
