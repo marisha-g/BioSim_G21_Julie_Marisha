@@ -277,7 +277,8 @@ class Rossumoya:
             if cell.animal_can_enter:
                 cell.add_population(pop_dict)
             else:
-                raise ValueError('Cant place animal in Mountain or Ocean')
+                raise ValueError(f'Cant place animal in {type(cell).__name__}'
+                                 f' at coordinates: {location}')
 
     def procreation(self):
         """
