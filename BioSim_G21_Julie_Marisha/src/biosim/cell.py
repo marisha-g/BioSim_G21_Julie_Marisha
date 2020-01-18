@@ -187,38 +187,47 @@ class BaseCell:
         self.fodder_in_cell = self.f_max
 
     @property
-    def list_of_sorted_herbivores(self):
+    def list_of_sorted_herbivores_by_fitness(self):
         """
-        List of sorted Herbivores. Herbivore with highest fitness is first.
-        :return: sorted_herbivores
+        Sorts all Herbivores by fitness in descending order if there
+        are more than one Herbivore in the cell.
+        :return: sorted_herbivores or list_of_herbivores
         :type: list
         """
         list_of_herbivores = [animal for animal in self.animals
                               if isinstance(animal, Herbivore)]
-        sorted_herbivores = sorted(list_of_herbivores,
-                                   key=lambda x: x.fitness)
-        return sorted_herbivores
+        if len(list_of_herbivores) > 1:
+            sorted_herbivores = sorted(list_of_herbivores,
+                                       key=lambda x: x.fitness)
+            return sorted_herbivores
+        else:
+            return list_of_herbivores
+
 
     @property
-    def list_of_sorted_carnivores(self):
+    def list_of_sorted_carnivores_by_fitness(self):
         """
-        List of sorted Carnivores. Carnivore with highest fitness is first.
-        :return: sorted_carnivores
+        Sorts all Carnivores by fitness in descending order if there
+        are more than one Carnivore in the cell.
+        :return: sorted_carnivores or list of carnivores
         :type: list
         """
         list_of_carnivores = [animal for animal in self.animals
                               if isinstance(animal, Carnivore)]
-        sorted_carnivores = sorted(list_of_carnivores,
-                                   key=lambda x: x.fitness)
-        return sorted_carnivores
+        if len(list_of_carnivores) > 1:
+            sorted_carnivores = sorted(list_of_carnivores,
+                                       key=lambda x: x.fitness)
+            return sorted_carnivores
+        else:
+            return list_of_carnivores
 
     def herbivores_eat(self):
         """
         Herbivore with the highest fitness eat first. The Herbivore's weight
-        increases with the amount of fodder it has eaten.
+        increases proportional to the amount of fodder it has eaten.
         """
         if self.fodder_in_cell != 0:
-            for herbivore in self.list_of_sorted_herbivores:
+            for herbivore in self.list_of_sorted_herbivores_by_fitness:
                 if self.fodder_in_cell >= herbivore.F:
                     food = Herbivore.F
                     self.fodder_in_cell -= food
@@ -233,9 +242,9 @@ class BaseCell:
         kill the Herbivore with lowest fitness first. The increase in weight
         of the Carnivore is proportional to the weight of the Herbivore killed.
         """
-        for carnivore in self.list_of_sorted_carnivores:
+        for carnivore in self.list_of_sorted_carnivores_by_fitness:
             killed_herbivores = []
-            for herbivore in reversed(self.list_of_sorted_herbivores):
+            for herbivore in reversed(self.list_of_sorted_herbivores_by_fitness):
                 if carnivore.prob_carnivore_kill(herbivore.fitness):
                     killed_herbivores.append(herbivore)
                     weight_prey = herbivore.weight
