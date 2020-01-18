@@ -242,7 +242,7 @@ class BaseAnimal:
     def prob_procreation(self, n):
         """
         Animals can mate if there are at least two animals of the same species
-        in a cell. Probability to give birth is given by the attribute p.
+        in a cell. Probability to give birth is given by the variable p.
         :param n: number of animals of the same species in a cell
         :return: choice
         :type: int
@@ -450,7 +450,7 @@ class Carnivore(BaseAnimal):
             xi=1.1,
             omega=0.9,
             F=50.0,
-            DeltaPhiMax=0.8,
+            DeltaPhiMax=None,
             *args,
             **kwargs
     ):
@@ -513,7 +513,7 @@ class Carnivore(BaseAnimal):
             F
         )
         if DeltaPhiMax is None:
-            DeltaPhiMax = 0.8
+            DeltaPhiMax = 7.0
 
         if DeltaPhiMax <= 0:
             raise ValueError('delta_phi_max must be strictly positive.')
