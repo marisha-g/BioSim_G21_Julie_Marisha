@@ -84,6 +84,9 @@ class BioSim:
         if ymax_animals is None:
             ymax_animals = 1000
         self._ymax = ymax_animals
+
+        if cmax_animals is None:
+            cmax_animals = 1000
         self._cmax = cmax_animals
 
         # the following will be initialized by _setup_graphics
@@ -96,8 +99,10 @@ class BioSim:
         self._graph_ax = None
         self._herb_line = None
         self._carn_line = None
-        self._heat_map_ax = None
-        self._heat_map_axis = None
+        self._heat_map_carn_ax = None
+        self._heat_map_carn_axis = None
+        self._heat_map_herb_ax = None
+        self._heat_map_herb_axis = None
 
     @staticmethod
     def set_animal_parameters(species, params):
@@ -150,6 +155,7 @@ class BioSim:
             self.rossumoya.single_year()
             self._update_graphics()
             self._year += 1
+        self._update_graphics()
 
     def add_population(self, population):
         """
@@ -160,7 +166,7 @@ class BioSim:
         self.rossumoya.add_population(population)
 
     def _make_map_with_rgb_colours(self):
-        colour_map = self._make_nested_list_from_map()
+        colour_map = self.nested_coordinates_list
         map_list = self.rossumoya.island_map_string.split('\n')
 
         for x, cell_row in enumerate(map_list):
@@ -181,22 +187,32 @@ class BioSim:
                     colour_map[x][y] = (210, 200, 220)
         return colour_map
 
-    def _make_population_heat_map(self):
+    def _make_population_heat_maps(self):
         data_frame = self.animal_distribution
         data_frame.set_index(["Row", "Col"], inplace=True)
 
-        pop_list = self._nested_list
+        carn_pop_list = self.nested_coordinates_list
 
-        for x, list_ in enumerate(pop_list):
+        for x, list_ in enumerate(carn_pop_list):
             for y, _ in enumerate(list_):
-                tot_pop = (
-                        data_frame.loc[(x, y)].Herbivore +
+                carn_pop = (
                         data_frame.loc[(x, y)].Carnivore
                 )
-                pop_list[x][y] = tot_pop
-        return pop_list
+                carn_pop_list[x][y] = carn_pop
 
-    def _make_nested_list_from_map(self):
+        herb_pop_list = self.nested_coordinates_list
+
+        for x, list_ in enumerate(herb_pop_list):
+            for y, _ in enumerate(list_):
+                herb_pop = (
+                    data_frame.loc[(x, y)].Herbivore
+                )
+                herb_pop_list[x][y] = herb_pop
+
+        return carn_pop_list, herb_pop_list
+
+    @property
+    def nested_coordinates_list(self):
         """
         Make a nested list with None as values, with indexing corresponding
         to the coordinates of the island map.
@@ -260,24 +276,41 @@ class BioSim:
         """ Update the 2D-view of the map.
         Author: Hans Ekkehard Plesser
         """
-        data_map = self._make_population_heat_map()
+        data_map = self._make_population_heat_maps()
+        data_map_carn, data_map_herb = data_map
 
-        if self._heat_map_axis is not None:
-            self._heat_map_axis.set_data(data_map)
-        else:
-            self._heat_map_axis = self._heat_map_ax.imshow(
-                data_map,
-                interpolation='nearest'
+        if self._heat_map_carn_axis is None:
+            self._heat_map_carn_axis = self._heat_map_carn_ax.imshow(
+                data_map_carn,
+                interpolation='nearest',
+                vmin=0,
+                vmax=self._cmax
             )
-            plt.colorbar(self._heat_map_axis, ax=self._heat_map_ax,
+            plt.colorbar(self._heat_map_carn_axis,
+                         ax=self._heat_map_carn_ax,
                          orientation='vertical')
+        else:
+            self._heat_map_carn_axis.set_data(data_map_carn)
+
+        if self._heat_map_herb_axis is None:
+            self._heat_map_herb_axis = self._heat_map_herb_ax.imshow(
+                data_map_herb,
+                interpolation='nearest',
+                vmin=0,
+                vmax=self._cmax
+            )
+            plt.colorbar(self._heat_map_herb_axis,
+                         ax=self._heat_map_herb_ax,
+                         orientation='vertical')
+        else:
+            self._heat_map_herb_axis.set_data(data_map_herb)
 
     def _update_graphics(self):
         """Updates graph and heat map in figure window."""
         self._fig.suptitle(f'Year: {self.year}', fontsize=20)
         self._update_heat_map()
         self._update_graph()
-        plt.pause(2)
+        plt.pause(0.01)
 
     def _update_graph(self):
         """Updates population graph."""
@@ -296,16 +329,16 @@ class BioSim:
 
     def _setup_graphics(self):
         """Creates subplots."""
-        self._nested_list = self._make_nested_list_from_map()
+        self._nested_list = self.nested_coordinates_list
 
         # create new figure window
         if self._fig is None:
             self._fig = plt.figure(constrained_layout=True)
-            gs = self._fig.add_gridspec(4, 12)
+            gs = self._fig.add_gridspec(8, 12)
 
         # Add subplot for map
         if self._map_ax is None:
-            self._map_ax = self._fig.add_subplot(gs[:2, :4])
+            self._map_ax = self._fig.add_subplot(gs[:4, :6])
 
         if self._map_axis is None:
             map_ = self._make_map_with_rgb_colours()
@@ -315,7 +348,7 @@ class BioSim:
 
         # Add subplot for map codes
         if self._map_code_ax is None:
-            self._map_code_ax = self._fig.add_subplot(gs[:2, 5:7])
+            self._map_code_ax = self._fig.add_subplot(gs[:4, 6:7])
             cell_codes_bar = [[(200, 200, 50)],
                               [(40, 150, 30)],
                               [(220, 180, 140)],
@@ -329,15 +362,15 @@ class BioSim:
 
         # Add subplot for graph
         if self._graph_ax is None:
-            self._graph_ax = self._fig.add_subplot(gs[:2, 7:])
+            self._graph_ax = self._fig.add_subplot(gs[:4, 7:])
             self._graph_ax.set_ylim(0, self._ymax)
             self._graph_ax.set_xlim(0, self._final_year + 1)
 
         # Initiate total Herbivores graph
         if self._herb_line is None:
             herb_graph = self._graph_ax.plot(
-                np.arange(0, self._final_year),
-                np.full(self._final_year, np.nan))
+                np.arange(0, self._final_year + 1),
+                np.full(self._final_year + 1, np.nan))
             self._herb_line = herb_graph[0]
         else:
             x_data, y_data = self._herb_line.get_data()
@@ -350,8 +383,8 @@ class BioSim:
         # Initiate total Carnivores graph
         if self._carn_line is None:
             carn_plot = self._graph_ax.plot(
-                np.arange(0, self._final_year),
-                np.full(self._final_year, np.nan))
+                np.arange(0, self._final_year + 1),
+                np.full(self._final_year + 1, np.nan))
             self._carn_line = carn_plot[0]
         else:
             x_data, y_data = self._carn_line.get_data()
@@ -366,9 +399,20 @@ class BioSim:
                               ('Herbivores', 'Carnivores'),
                               loc='upper left')
 
-        # Add subplot for heat map
-        if self._heat_map_ax is None:
-            self._heat_map_ax = self._fig.add_subplot(gs[2:, :7])
+        # Add subplots for heat map
+        if self._heat_map_carn_ax is None:
+            self._heat_map_carn_ax = self._fig.add_subplot(gs[4:, :6])
+            self._heat_map_carn_ax.get_xaxis().set_visible(False)
+            self._heat_map_carn_ax.get_yaxis().set_visible(False)
+
+        if self._heat_map_herb_ax is None:
+            self._heat_map_herb_ax = self._fig.add_subplot(gs[4:, 6:])
+            self._heat_map_herb_ax.get_xaxis().set_visible(False)
+            self._heat_map_herb_ax.get_yaxis().set_visible(False)
+
+        # Add title for heat maps
+        self._heat_map_carn_ax.set_title('Carnivores locations')
+        self._heat_map_herb_ax.set_title('Herbivores locations')
 
     def _save_file(self):
         """Saves graphics to file if file name given.
