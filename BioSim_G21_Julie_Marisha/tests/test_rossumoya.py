@@ -94,6 +94,7 @@ class TestMigrationProbabilityCalculator:
         assert probabilities[2] == 0.0
         assert probabilities[3] == pytest.approx(0.333, rel=1e-2)
 
+
 class TestRossumoya:
     """Tests for class Rossumoya."""
 
@@ -101,16 +102,17 @@ class TestRossumoya:
     def create_rossumoya(self):
         self.rossumoya = Rossumoya()
 
-    def test_constructor_default(self):
+    def test_constructor_callable(self):
         """Default constructor callable."""
         assert isinstance(self.rossumoya, Rossumoya)
 
-    def test_island_map(self):
+    def test_island_map_default(self):
         """Checks if the island_map is a dictionary."""
         assert isinstance(self.rossumoya.island_map, dict)
 
     def test_value_error_check_map_input(self):
-        """Test that ValueError is raised for check_map_input"""
+        """Test that ValueError is raised by check_map_input when the
+        map is not an island with valid landscape types."""
         with pytest.raises(ValueError):
             island_map_string = "OOOO\nOAO\nOOOO"
             self.rossumoya.check_map_input(island_map_string)
@@ -121,13 +123,13 @@ class TestRossumoya:
             island_map_string = "OOOJ\nOJSO\nOOOO"
             self.rossumoya.check_map_input(island_map_string)
         with pytest.raises(ValueError):
-            island_map_string = "OOO0\nOJSO\nOOOS"
+            island_map_string = "OOOO\nOJSO\nOOSO"
             self.rossumoya.check_map_input(island_map_string)
         with pytest.raises(ValueError):
             island_map_string = "OOOJ\nMJSO\nOOOO"
             self.rossumoya.check_map_input(island_map_string)
         with pytest.raises(ValueError):
-            island_map_string = "OOOJ\nOJSS\nOOOO"
+            island_map_string = "OOOO\nOJSS\nOOOO"
             self.rossumoya.check_map_input(island_map_string)
 
     def test_geography_coordinates_method(self):
@@ -156,20 +158,15 @@ class TestRossumoya:
         with pytest.raises(ValueError):
             self.rossumoya.add_population(population)
 
-    def test_procreation(self):
+    def test_procreation_callable(self):
         """procreation() method is callable."""
-        self.rossumoya.add_offspring(Herbivore(), (2, 2))
         self.rossumoya.procreation()
 
-    def test_add_offspring_callable(self):
-        """add_offspring() method is callable."""
-        self.rossumoya.add_offspring(Carnivore(), (4, 6))
-
-    def test_choose_cell(self):
+    def test_choose_cell_callable(self):
         """choose_cell() method is callable."""
         assert isinstance(
             self.rossumoya.choose_cell((5, 7), "Herbivore"), tuple
-                          )
+        )
 
     def test_migration_callable(self):
         """Migration method is callable"""
@@ -185,4 +182,4 @@ class TestRossumoya:
 
     def test_map_size(self):
         size = self.rossumoya.map_size()
-        assert size == (20, 12)
+        assert size == (13, 21)
