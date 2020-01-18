@@ -107,7 +107,7 @@ class TestCell:
         """
         pop_list = [{"species": "Herbivore", "age": 5, "weight": 20} for _ in range(150)]
         self.cell.add_population(pop_list)
-        sorted_list = self.cell.list_of_sorted_herbivores
+        sorted_list = self.cell.list_of_sorted_herbivores_by_fitness
         assert all(sorted_list[i].fitness >= sorted_list[i+1].fitness for
                    i in range(len(sorted_list)-1))
 
@@ -117,7 +117,7 @@ class TestCell:
         """
         pop_list = [{"species": "Carnivore", "age": 5, "weight": 20} for _ in range(150)]
         self.cell.add_population(pop_list)
-        sorted_list = self.cell.list_of_sorted_carnivores
+        sorted_list = self.cell.list_of_sorted_carnivores_by_fitness
         assert all(sorted_list[i].fitness >= sorted_list[i+1].fitness for
                    i in range(len(sorted_list)-1))
 
