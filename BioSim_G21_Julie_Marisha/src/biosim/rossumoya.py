@@ -366,9 +366,10 @@ class Rossumoya:
 
         # Animals age and loose weight
         for cell in self.island_map.values():
-            for animal in cell.animals:
-                animal.aging()
-                animal.weight_loss()
+            cell.animals_age_and_lose_weight()
+
+        Herbivore.reset_fitness_calculation()
+        Carnivore.reset_fitness_calculation()
 
         # Animals die
         self.death()
@@ -383,6 +384,3 @@ class Rossumoya:
         x, y = list_coordinates[-1]
         size = (x+1, y+1)
         return size
-
-
-

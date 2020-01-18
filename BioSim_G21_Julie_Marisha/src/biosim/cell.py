@@ -147,8 +147,8 @@ class BaseCell:
         :type: float
         """
         rel_abundance_of_fodder = self.fodder_in_cell / ((
-                self.total_herbivores + 1
-        ) * Herbivore.F)
+                                                                 self.total_herbivores + 1
+                                                         ) * Herbivore.F)
 
         return rel_abundance_of_fodder
 
@@ -165,8 +165,8 @@ class BaseCell:
                 weight_of_herbs += animal.weight
 
         rel_abundance_of_fodder = weight_of_herbs / ((
-                self.total_carnivores + 1
-        ) * Carnivore.F)
+                                                             self.total_carnivores + 1
+                                                     ) * Carnivore.F)
 
         return rel_abundance_of_fodder
 
@@ -184,6 +184,11 @@ class BaseCell:
         """
         self.fodder_in_cell = self.f_max
 
+    def animals_age_and_lose_weight(self):
+        for animal in self.animals:
+            animal.aging()
+            animal.weight_loss()
+
     @property
     def list_of_sorted_herbivores_by_fitness(self):
         """
@@ -200,7 +205,6 @@ class BaseCell:
             return sorted_herbivores
         else:
             return list_of_herbivores
-
 
     @property
     def list_of_sorted_carnivores_by_fitness(self):
@@ -241,14 +245,19 @@ class BaseCell:
         of the Carnivore is proportional to the weight of the Herbivore killed.
         """
         for carnivore in self.list_of_sorted_carnivores_by_fitness:
+            food_eaten = 0
             killed_herbivores = []
             for herbivore in list(
                     reversed(self.list_of_sorted_herbivores_by_fitness)
             ):
+                if food_eaten >= carnivore.F:
+                    break
                 if carnivore.prob_carnivore_kill(herbivore.fitness):
                     killed_herbivores.append(herbivore)
                     weight_prey = herbivore.weight
+                    food_eaten += weight_prey
                     carnivore.weight_gain(weight_prey)
+            print(len(killed_herbivores), 'Herbivores was killed')
             self.remove_animals(killed_herbivores)
 
     def procreation(self):
