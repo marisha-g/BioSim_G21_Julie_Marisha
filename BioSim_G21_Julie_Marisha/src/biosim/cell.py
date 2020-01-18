@@ -39,10 +39,8 @@ classes:
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
-import numpy as np
-
 from biosim.animal import Carnivore, Herbivore
-
+import math
 
 
 class BaseCell:
@@ -306,7 +304,7 @@ class BaseCell:
         :return: formula for calculating propensity
         :type: float
         """
-        return np.exp(Herbivore.lambda_ * self.abundance_of_fodder_herbivores)
+        return math.exp(Herbivore.lambda_ * self.abundance_of_fodder_herbivores)
 
     @property
     def propensity_migration_carn(self):
@@ -316,7 +314,7 @@ class BaseCell:
         :return: formula for calculating propensity
         :type: float
         """
-        return np.exp(Carnivore.lambda_ * self.abundance_of_fodder_carnivores)
+        return math.exp(Carnivore.lambda_ * self.abundance_of_fodder_carnivores)
 
     def remove_animals(self, gone_animals):
         """
