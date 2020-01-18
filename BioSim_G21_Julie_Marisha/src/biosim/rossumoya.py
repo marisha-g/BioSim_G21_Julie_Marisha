@@ -68,8 +68,8 @@ class MigrationProbabilityCalculator:
         :type: list
         """
         self._propensity_herb = []
-        for cell in self.locations:
-            cell = self.island_map[cell]
+        for coordinates in self.locations:
+            cell = self.island_map[coordinates]
             self._propensity_herb.append(cell.propensity_migration_herb)
         return self._propensity_herb
 
@@ -112,8 +112,11 @@ class MigrationProbabilityCalculator:
         unscaled_probabilities = []
         sum_propensities = sum(propensities)
         for prop in propensities:
-            p = prop / sum_propensities * prop
-            unscaled_probabilities.append(p)
+            if prop == 0:
+                unscaled_probabilities.append(0)
+            else:
+                p = prop / (sum_propensities * prop)
+                unscaled_probabilities.append(p)
 
         self._probabilities = []
         sum_unscaled_probabilities = sum(unscaled_probabilities)
@@ -121,7 +124,6 @@ class MigrationProbabilityCalculator:
             self._probabilities.append(
                 probability / sum_unscaled_probabilities
             )
-
         return self.locations, self._probabilities
 
     @probabilities.setter
@@ -302,7 +304,7 @@ class Rossumoya:
             loc, self.island_map, species
         ).probabilities
 
-        choice = np.random.choice(3, p=probabilities)
+        choice = np.random.choice(4, p=probabilities)
         chosen_cell = locations[choice]
         return chosen_cell
 
@@ -313,7 +315,8 @@ class Rossumoya:
         for loc, cell in self.island_map.items():
             if cell.total_population > 0:
                 migrating_animals = cell.find_migrating_animals()
-                self._migrate(migrating_animals, loc)
+                if len(migrating_animals) > 0:
+                    self._migrate(migrating_animals, loc)
 
     def _migrate(self, migrating_animals, old_loc):
         """

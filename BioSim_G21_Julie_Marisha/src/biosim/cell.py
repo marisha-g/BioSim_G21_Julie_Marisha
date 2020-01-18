@@ -294,6 +294,7 @@ class BaseCell:
         for animal in self.animals:
             if animal.prob_migration and not animal.has_migrated:
                 migrating_animals.append(animal)
+                animal.has_migrated = True
         return migrating_animals
 
     @property

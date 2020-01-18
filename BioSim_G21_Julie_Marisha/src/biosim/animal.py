@@ -283,7 +283,6 @@ class BaseAnimal:
         """
         p = self.mu * self.fitness
         self._prob_migration = np.random.binomial(1, p)
-        self.has_migrated = True
         return self._prob_migration
 
     @prob_migration.setter
