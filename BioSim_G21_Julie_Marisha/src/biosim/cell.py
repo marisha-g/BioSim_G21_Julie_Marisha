@@ -253,6 +253,38 @@ class BaseCell:
                     carnivore.weight_gain(weight_prey)
             self.remove_animals(killed_herbivores)
 
+    def procreation(self):
+        for animal in self.animals:
+            species = type(animal).__name__
+
+            if species == 'Herbivore':
+                animal_gives_birth = animal.prob_procreation(
+                    self.total_herbivores
+                )
+            if species == 'Carnivore':
+                animal_gives_birth = animal.prob_procreation(
+                    self.total_carnivores
+                )
+            if animal_gives_birth:
+                self.add_offspring(animal)
+
+    def add_offspring(self, animal):
+        """
+        Adds offspring to the cell, and decrease weight of the
+        mother.
+        :param animal: Mother who gives birth
+        :type: type
+        """
+        weight = animal.draw_birth_weight()
+        offspring = [
+            {'species': type(animal).__name__,
+             'age': 0,
+             'weight': weight}
+        ]
+
+        self.add_population(offspring)
+        animal.weight_loss_birth(weight)
+
     @property
     def propensity_migration_herb(self):
         """

@@ -283,42 +283,9 @@ class Rossumoya:
         age zero and weight drawn from draw_birth_weight is added to the same
         cell.
         """
-        for loc, cell in self.island_map.items():
-            if cell.animal_can_enter:
-                for animal in cell.animals:
-                    species = type(animal).__name__
-
-                    if species == 'Herbivore':
-                        animal_gives_birth = animal.prob_procreation(
-                            cell.total_herbivores
-                        )
-                    if species == 'Carnivore':
-                        animal_gives_birth = animal.prob_procreation(
-                            cell.total_carnivores
-                        )
-
-                    if animal_gives_birth:
-                        self.add_offspring(animal, loc)
-
-    def add_offspring(self, animal, loc):
-        """
-        Adds offspring to population in the location, and decrease weight of the
-        mother.
-        :param animal: Mother who gives birth
-        :type: type
-        :param loc: Location coordinates
-        :type: tuple
-        """
-        weight = animal.draw_birth_weight()
-        offspring = [{'loc': loc,
-                      'pop': [{
-                          'species': type(animal).__name__,
-                          'age': 0,
-                          'weight': weight}]
-                      }]
-
-        self.add_population(offspring)
-        animal.weight_loss_birth(weight)
+        for cell in self.island_map.values():
+            if cell.total_herbivores > 1 or cell.total_carnivores > 1:
+                cell.procreation()
 
     def choose_cell(self, loc, species):
         """
