@@ -244,7 +244,9 @@ class BaseCell:
         """
         for carnivore in self.list_of_sorted_carnivores_by_fitness:
             killed_herbivores = []
-            for herbivore in reversed(self.list_of_sorted_herbivores_by_fitness):
+            for herbivore in list(
+                    reversed(self.list_of_sorted_herbivores_by_fitness)
+            ):
                 if carnivore.prob_carnivore_kill(herbivore.fitness):
                     killed_herbivores.append(herbivore)
                     weight_prey = herbivore.weight
