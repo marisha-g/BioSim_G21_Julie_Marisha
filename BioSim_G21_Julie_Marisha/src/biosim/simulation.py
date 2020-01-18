@@ -24,8 +24,8 @@ _CONVERT_BINARY = 'magick'
 
 # update this to the directory and file-name beginning
 # for the graphics files
-_DEFAULT_GRAPHICS_DIR = os.path.join('..', 'figs')
-_DEFAULT_IMAGE_BASE = 'bio'
+_DEFAULT_GRAPHICS_DIR = os.path.join('.', 'figs')
+_DEFAULT_IMAGE_NAME = 'bio'
 _DEFAULT_IMAGE_FORMAT = "png"
 _DEFAULT_MOVIE_FORMAT = 'mp4'
 
@@ -39,8 +39,9 @@ class BioSim:
             seed=1,
             ymax_animals=None,
             cmax_animals=None,
+            img_dir=None,
             img_base=None,
-            img_fmt="png",
+            img_fmt=None,
     ):
         """
         :param island_map: Multi-line string specifying island geography
@@ -48,7 +49,7 @@ class BioSim:
         :param seed: Integer used as random number seed
         :param ymax_animals: Number specifying y-axis limit for graph showing animal numbers
         :param cmax_animals: Dict specifying color-code limits for animal densities
-        :param img_base: String with beginning of file name for figures, including path
+        :param img_name: String with beginning of file name for figures, including path
         :param img_fmt: String with file type for figures, e.g. 'png'
 
         If ymax_animals is None, the y-axis limit should be adjusted automatically.
@@ -72,8 +73,13 @@ class BioSim:
         self._image_counter = 0
 
         if img_base is None:
-            img_base = _DEFAULT_IMAGE_BASE
+            img_base = _DEFAULT_IMAGE_NAME
         self._image_base = img_base
+
+        if img_dir is not None:
+            self._img_base = os.path.join(img_dir, img_base)
+        else:
+            self._img_base = None
 
         if img_fmt is None:
             img_fmt = _DEFAULT_IMAGE_FORMAT
@@ -145,15 +151,16 @@ class BioSim:
         if img_years is None:
             img_years = vis_years
 
-        self._final_year = self.year + num_years
+        self._final_year = self._year + num_years
         self._setup_graphics()
 
-        while self.year < self._final_year:
-            # if self.year % vis_years == 0:
-            # if self.year % img_years == 0:
-            #  self._save_file()
+        while self._year < self._final_year:
+            if self._year % vis_years == 0:
+                self._update_graphics()
+
+            """ if self.year % img_years == 0:
+                self._save_file()"""
             self.rossumoya.single_year()
-            self._update_graphics()
             self._year += 1
         self._update_graphics()
 
@@ -196,7 +203,7 @@ class BioSim:
         for x, list_ in enumerate(carn_pop_list):
             for y, _ in enumerate(list_):
                 carn_pop = (
-                        data_frame.loc[(x, y)].Carnivore
+                    data_frame.loc[(x, y)].Carnivore
                 )
                 carn_pop_list[x][y] = carn_pop
 
@@ -333,12 +340,13 @@ class BioSim:
 
         # create new figure window
         if self._fig is None:
-            self._fig = plt.figure(constrained_layout=True)
-            gs = self._fig.add_gridspec(8, 12)
+            self._fig = plt.figure(constrained_layout=True, figsize=(8, 6))
+            gs = self._fig.add_gridspec(4, 12)
 
         # Add subplot for map
         if self._map_ax is None:
-            self._map_ax = self._fig.add_subplot(gs[:4, :6])
+            self._map_ax = self._fig.add_subplot(gs[:2, 0:5])
+            self._map_ax.set_title('Rossumøya')
 
         if self._map_axis is None:
             map_ = self._make_map_with_rgb_colours()
@@ -348,7 +356,7 @@ class BioSim:
 
         # Add subplot for map codes
         if self._map_code_ax is None:
-            self._map_code_ax = self._fig.add_subplot(gs[:4, 6:7])
+            self._map_code_ax = self._fig.add_subplot(gs[:2, 5:6])
             cell_codes_bar = [[(200, 200, 50)],
                               [(40, 150, 30)],
                               [(220, 180, 140)],
@@ -362,7 +370,10 @@ class BioSim:
 
         # Add subplot for graph
         if self._graph_ax is None:
-            self._graph_ax = self._fig.add_subplot(gs[:4, 7:])
+            self._graph_ax = self._fig.add_subplot(gs[:2, 7:])
+            self._graph_ax.set_ylim(0, self._ymax)
+            self._graph_ax.set_xlim(0, self._final_year + 1)
+        else:
             self._graph_ax.set_ylim(0, self._ymax)
             self._graph_ax.set_xlim(0, self._final_year + 1)
 
@@ -374,7 +385,7 @@ class BioSim:
             self._herb_line = herb_graph[0]
         else:
             x_data, y_data = self._herb_line.get_data()
-            x_new = np.arange(x_data[-1] + 1, self._final_year)
+            x_new = np.arange(x_data[-1] + 1, self._final_year+1)
             if len(x_new) > 0:
                 y_new = np.full(x_new.shape, np.nan)
                 self._herb_line.set_data(np.hstack((x_data, x_new)),
@@ -388,7 +399,7 @@ class BioSim:
             self._carn_line = carn_plot[0]
         else:
             x_data, y_data = self._carn_line.get_data()
-            x_new = np.arange(x_data[-1] + 1, self._final_year)
+            x_new = np.arange(x_data[-1] + 1, self._final_year+1)
             if len(x_new) > 0:
                 y_new = np.full(x_new.shape, np.nan)
                 self._carn_line.set_data(np.hstack((x_data, x_new)),
@@ -401,12 +412,12 @@ class BioSim:
 
         # Add subplots for heat map
         if self._heat_map_carn_ax is None:
-            self._heat_map_carn_ax = self._fig.add_subplot(gs[4:, :6])
+            self._heat_map_carn_ax = self._fig.add_subplot(gs[2:, :6])
             self._heat_map_carn_ax.get_xaxis().set_visible(False)
             self._heat_map_carn_ax.get_yaxis().set_visible(False)
 
         if self._heat_map_herb_ax is None:
-            self._heat_map_herb_ax = self._fig.add_subplot(gs[4:, 6:])
+            self._heat_map_herb_ax = self._fig.add_subplot(gs[2:, 6:])
             self._heat_map_herb_ax.get_xaxis().set_visible(False)
             self._heat_map_herb_ax.get_yaxis().set_visible(False)
 
