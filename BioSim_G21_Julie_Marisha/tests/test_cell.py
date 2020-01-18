@@ -150,6 +150,13 @@ class TestCell:
         assert ini_weight < self.carnivore.weight
         assert self.cell.total_herbivores < 40
 
+    def test_procreation_callable(self):
+        self.cell.procreation()
+
+    def test_add_offspring_callable(self):
+        """add_offspring() method is callable."""
+        self.cell.add_offspring(Carnivore())
+
     def test_propensity_migration_herb(self):
         """Property propensity_migration_herb() can be called."""
         self.cell.propensity_migration_herb
