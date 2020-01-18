@@ -183,6 +183,6 @@ class TestRossumoya:
         """single_year() method is callable. """
         self.rossumoya.single_year()
 
-    def test_map_axis(self):
-        axis = self.rossumoya.map_axis()
-        assert axis == (20, 12)
+    def test_map_size(self):
+        size = self.rossumoya.map_size()
+        assert size == (20, 12)
