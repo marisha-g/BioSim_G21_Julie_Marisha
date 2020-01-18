@@ -151,22 +151,32 @@ class TestCell:
         assert self.cell.total_herbivores < 40
 
     def test_procreation_callable(self):
+        """procreation method is callable."""
         self.cell.procreation()
 
     def test_add_offspring_callable(self):
         """add_offspring() method is callable."""
         self.cell.add_offspring(Carnivore())
 
-    def test_propensity_migration_herb(self):
-        """Property propensity_migration_herb() can be called."""
+    def test_find_migrating_animals_callable(self):
+        """find_migrating_animals method is callable."""
+        self.cell.find_migrating_animals()
+
+    def test_find_migrating_animals_return_list(self):
+        """find_migrating_animals method returns list"""
+        migrating_animals = self.cell.find_migrating_animals()
+        assert isinstance(migrating_animals, list)
+
+    def test_propensity_migration_herb_callable(self):
+        """Property propensity_migration_herb() is callable."""
         self.cell.propensity_migration_herb
 
-    def test_propensity_migration_carn(self):
-        """Property propensity_migration_carn() can be called."""
+    def test_propensity_migration_carn_callable(self):
+        """Property propensity_migration_carn() is callable."""
         self.cell.propensity_migration_carn
 
     def test_remove_animals_callable(self):
-        """remove_animals method is callable. """
+        """remove_animals method is callable."""
         self.cell.animals.append(self.herbivore)
         self.cell.remove_animals([self.herbivore])
 
