@@ -178,6 +178,10 @@ class BaseAnimal:
         """
         cls.has_migrated = False
 
+    @classmethod
+    def reset_fitness_calculation(cls):
+        cls.fitness_has_been_calculated = False
+
     def __init__(self, age=None, weight=None):
         """
         Constructor that initiate class Animal.
@@ -196,9 +200,10 @@ class BaseAnimal:
             weight = 10
         if weight < 0:
             raise ValueError("Weight can not have negative value")
-
         self.weight = weight
+
         self._fitness = None
+        self.fitness_has_been_calculated = False
         self._prob_migration = None
         self._prob_death = None
         self.has_migrated = False
@@ -216,12 +221,14 @@ class BaseAnimal:
         weight increases.
         """
         self.weight += self.beta * food
+        self.fitness_has_been_calculated = False
 
     def weight_loss(self):
         """
         Every year, the weight of the animal decreases.
         """
         self.weight -= self.eta * self.weight
+        self.fitness_has_been_calculated = False
 
     def weight_loss_birth(self, weight_offspring):
         """
@@ -230,6 +237,7 @@ class BaseAnimal:
         :type: float
         """
         self.weight -= self.xi * weight_offspring
+        self.fitness_has_been_calculated = False
 
     def prob_procreation(self, n):
         """
@@ -254,12 +262,21 @@ class BaseAnimal:
         :return: self._fitness: calculated fitness
         :type: float
         """
+        if self.fitness_has_been_calculated:
+            return self._fitness
+
         if self.weight > 0:
-            age_sigma = scipy.special.expit(-self.phi_age * (self.age - self.a_half))
-            weight_sigma = scipy.special.expit(self.phi_weight * (self.weight - self.w_half))
+            age_sigma = scipy.special.expit(
+                -self.phi_age * (self.age - self.a_half)
+            )
+            weight_sigma = scipy.special.expit(
+                self.phi_weight * (self.weight - self.w_half)
+            )
             self._fitness = age_sigma * weight_sigma
         else:
             self._fitness = 0
+
+        self.fitness_has_been_calculated = True
         return self._fitness
 
     @fitness.setter
@@ -433,7 +450,7 @@ class Carnivore(BaseAnimal):
             xi=1.1,
             omega=0.9,
             F=50.0,
-            DeltaPhiMax=10.0,
+            DeltaPhiMax=0.8,
             *args,
             **kwargs
     ):
@@ -496,7 +513,7 @@ class Carnivore(BaseAnimal):
             F
         )
         if DeltaPhiMax is None:
-            DeltaPhiMax = 10.0
+            DeltaPhiMax = 0.8
 
         if DeltaPhiMax <= 0:
             raise ValueError('delta_phi_max must be strictly positive.')
@@ -518,15 +535,16 @@ class Carnivore(BaseAnimal):
         Probability for a Carnivore to kill a Herbivore.
         :param fitness_prey: the fitness of the prey (Herbivore)
         :type: float
-        :return: self._prob_carnivore_kill: chooses if the Carnivore will
-                 kill or not.
+        :return: 0 or 1
         :type: int
         """
         if self.fitness <= fitness_prey:
+            print('Carnivores fitness too low:', 0)
             return 0
         if 0 < self.fitness - fitness_prey < self.DeltaPhiMax:
             p = (self.fitness - fitness_prey) / self.DeltaPhiMax
-            choice = np.random.binomial(1, p)
+            choice = np.random.binomial(1, p=p)
+            print('probability = ', p, 'resulted in ', choice)
             return choice
-
+        print('difference > DeltaPhiMax: ', 1)
         return 1
