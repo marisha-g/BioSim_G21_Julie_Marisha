@@ -187,6 +187,17 @@ class TestCell:
         self.cell.remove_animals([self.herbivore])
         assert self.cell.total_herbivores == 0
 
+    def test_add_animals_callable(self):
+        """add_animals method is callable."""
+        self.cell.add_animals([self.herbivore])
+
+    def test_add_animals(self):
+        """add_animals adds animals to the animals list."""
+        num_animals_1 = len(self.cell.animals)
+        self.cell.add_animals([self.herbivore])
+        num_animals_2 = len(self.cell.animals)
+        assert num_animals_1 < num_animals_2
+
 
 class TestSavannah:
     """ Tests for Savannah class."""
