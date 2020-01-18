@@ -144,12 +144,11 @@ class BioSim:
         self._setup_graphics()
 
         while self.year < self._final_year:
-            if self.year % vis_years == 0:
-                self._update_graphics()
-
+            # if self.year % vis_years == 0:
             # if self.year % img_years == 0:
             #  self._save_file()
             self.rossumoya.single_year()
+            self._update_graphics()
             self._year += 1
 
     def add_population(self, population):
@@ -266,16 +265,19 @@ class BioSim:
         if self._heat_map_axis is not None:
             self._heat_map_axis.set_data(data_map)
         else:
-            self._heat_map_axis = self._heat_map_ax.imshow(data_map,
-                                                           interpolation='nearest')
+            self._heat_map_axis = self._heat_map_ax.imshow(
+                data_map,
+                interpolation='nearest'
+            )
             plt.colorbar(self._heat_map_axis, ax=self._heat_map_ax,
                          orientation='vertical')
 
     def _update_graphics(self):
         """Updates graph and heat map in figure window."""
+        self._fig.suptitle(f'Year: {self.year}', fontsize=20)
         self._update_heat_map()
         self._update_graph()
-        plt.pause(1e-6)
+        plt.pause(2)
 
     def _update_graph(self):
         """Updates population graph."""
@@ -358,6 +360,11 @@ class BioSim:
                 y_new = np.full(x_new.shape, np.nan)
                 self._carn_line.set_data(np.hstack((x_data, x_new)),
                                          np.hstack((y_data, y_new)))
+
+        # Add legend to graph
+        self._graph_ax.legend((self._herb_line, self._carn_line),
+                              ('Herbivores', 'Carnivores'),
+                              loc='upper left')
 
         # Add subplot for heat map
         if self._heat_map_ax is None:
