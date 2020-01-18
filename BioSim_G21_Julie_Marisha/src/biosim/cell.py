@@ -285,6 +285,19 @@ class BaseCell:
         self.add_population(offspring)
         animal.weight_loss_birth(weight)
 
+    def find_migrating_animals(self):
+        """
+        Makes a list of the animals who wants to migrate out
+        of the cell.
+        :return: migrating_animals
+        :type: list
+        """
+        migrating_animals = []
+        for animal in self.animals:
+            if animal.prob_migration and not animal.has_migrated:
+                migrating_animals.append(animal)
+        return migrating_animals
+
     @property
     def propensity_migration_herb(self):
         """
@@ -313,6 +326,10 @@ class BaseCell:
         """
         for gone_animal in gone_animals:
             self.animals.remove(gone_animal)
+
+    def add_animals(self, new_animals):
+        for new_animal in new_animals:
+            self.animals.append(new_animal)
 
 
 class Savannah(BaseCell):

@@ -308,19 +308,24 @@ class Rossumoya:
 
     def migration(self):
         """
-        Moves animal from current cell to one of the possible
-        neighbouring cells, if prob_migrate returns 1.
+        Finds witch animals wants to migrate, and calls _migrate method.
         """
         for loc, cell in self.island_map.items():
-            if cell.animal_can_enter:
-                for animal in cell.animals:
-                    migrating_animals = []
+            if cell.total_population > 0:
+                migrating_animals = cell.find_migrating_animals()
+                self._migrate(migrating_animals, loc)
 
-                    if animal.prob_migration and not animal.has_migrated:
-                        new_loc = self.choose_cell(loc, type(animal).__name__)
-                        self.island_map[new_loc].animals.append(animal)
-                        migrating_animals.append(animal)
-                    cell.remove_animals(migrating_animals)
+    def _migrate(self, migrating_animals, old_loc):
+        """
+        Chooses new locations for each migrating animal,
+        and moves them there. Then removes all the animals
+        from the old location.
+        """
+        for animal in migrating_animals:
+            new_loc = self.choose_cell(old_loc, type(animal).__name__)
+            self.island_map[new_loc].add_animals([animal])
+
+        self.island_map[old_loc].remove_animals(migrating_animals)
 
     def death(self):
         """
