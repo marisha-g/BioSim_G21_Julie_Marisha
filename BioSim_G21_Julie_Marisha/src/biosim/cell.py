@@ -257,7 +257,6 @@ class BaseCell:
                     weight_prey = herbivore.weight
                     food_eaten += weight_prey
                     carnivore.weight_gain(weight_prey)
-            print(len(killed_herbivores), 'Herbivores was killed')
             self.remove_animals(killed_herbivores)
 
     def procreation(self):
@@ -344,7 +343,7 @@ class Savannah(BaseCell):
     """Class instance of class Cell for the cell type Savannah."""
 
     @classmethod
-    def set_parameters(cls, f_max=300.0, alpha=0.3):
+    def set_parameters(cls, f_max=None, alpha=None):
         """
         Set default parameters for class instance Savannah.
         :param f_max: maximum fodder available in cell type Savannah
@@ -352,6 +351,9 @@ class Savannah(BaseCell):
         :param alpha: constant
         :type: float
         """
+        if f_max is None:
+            f_max = 300.0
+
         super(Savannah, cls).set_parameters(f_max)
         if alpha is None:
             alpha = 0.3
