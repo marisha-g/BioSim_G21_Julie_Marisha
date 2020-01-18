@@ -335,6 +335,7 @@ class BaseCell:
             self.animals.remove(gone_animal)
 
     def add_animals(self, new_animals):
+        """Adds animals to animals list."""
         for new_animal in new_animals:
             self.animals.append(new_animal)
 
