@@ -205,12 +205,12 @@ class BioSim:
         :type: list
         """
         self._nested_list = []
-        map_size = self.rossumoya.map_size
-        x, y = map_size()
-        for x in range(x):
+        map_size = self.rossumoya.map_size()
+        x, y = map_size
+        for x_index in range(x):
             self._nested_list.append([])
             for _ in range(y):
-                self._nested_list[x].append(None)
+                self._nested_list[x_index].append(None)
         return self._nested_list
 
     @property
@@ -328,7 +328,7 @@ class BioSim:
         # Add subplot for graph
         if self._graph_ax is None:
             self._graph_ax = self._fig.add_subplot(gs[:2, 7:])
-            self._graph_ax.set_ylim(0, 100)
+            self._graph_ax.set_ylim(0, self._ymax)
             self._graph_ax.set_xlim(0, self._final_year + 1)
 
         # Initiate total Herbivores graph

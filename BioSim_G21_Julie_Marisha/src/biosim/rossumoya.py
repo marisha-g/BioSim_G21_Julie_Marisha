@@ -380,7 +380,7 @@ class Rossumoya:
         """
         coordinates = self.island_map.keys()
         list_coordinates = list(coordinates)
-        y, x = list_coordinates[-1]
+        x, y = list_coordinates[-1]
         size = (x+1, y+1)
         return size
 
