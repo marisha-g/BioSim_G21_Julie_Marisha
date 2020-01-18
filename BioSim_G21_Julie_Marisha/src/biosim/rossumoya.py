@@ -398,7 +398,7 @@ class Rossumoya:
         # Animals die
         self.death()
 
-    def map_axis(self):
+    def map_size(self):
         """ Find size of the island_map.
         :return: lower right corner coordinates (max values for row and column)
         :type: tuple
@@ -406,8 +406,8 @@ class Rossumoya:
         coordinates = self.island_map.keys()
         list_coordinates = list(coordinates)
         y, x = list_coordinates[-1]
-        axis = (x, y)
-        return axis
+        size = (x+1, y+1)
+        return size
 
 
 

@@ -198,12 +198,18 @@ class BioSim:
         return pop_list
 
     def _make_nested_list_from_map(self):
+        """
+        Make a nested list with None as values, with indexing corresponding
+        to the coordinates of the island map.
+        :return: self._nested_list
+        :type: list
+        """
         self._nested_list = []
-        map_list = self.rossumoya.island_map_string.split('\n')
-
-        for x, cell_row in enumerate(map_list):
+        map_size = self.rossumoya.map_size
+        x, y = map_size()
+        for x in range(x):
             self._nested_list.append([])
-            for cell_code in cell_row:
+            for y in range(y):
                 self._nested_list[x].append(None)
         return self._nested_list
 
