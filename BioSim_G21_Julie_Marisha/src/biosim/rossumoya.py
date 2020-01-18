@@ -376,8 +376,10 @@ class Rossumoya:
 
         # Herbivores eat, then carnivores prey on herbivores
         for cell in self.island_map.values():
-            cell.herbivores_eat()
-            cell.carnivores_eat()
+            if cell.total_herbivores > 0:
+                cell.herbivores_eat()
+            if cell.total_carnivores > 0:
+                cell.carnivores_eat()
 
         # Animals mate
         self.procreation()
