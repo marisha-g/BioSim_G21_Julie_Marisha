@@ -539,12 +539,9 @@ class Carnivore(BaseAnimal):
         :type: int
         """
         if self.fitness <= fitness_prey:
-            print('Carnivores fitness too low:', 0)
             return 0
         if 0 < self.fitness - fitness_prey < self.DeltaPhiMax:
             p = (self.fitness - fitness_prey) / self.DeltaPhiMax
             choice = np.random.binomial(1, p=p)
-            print('probability = ', p, 'resulted in ', choice)
             return choice
-        print('difference > DeltaPhiMax: ', 1)
         return 1
