@@ -331,26 +331,33 @@ class BioSim:
             self._graph_ax.set_ylim(0, 100)
             self._graph_ax.set_xlim(0, self._final_year + 1)
 
-        # Initiate graph
+        # Initiate total Herbivores graph
         if self._herb_line is None:
             herb_graph = self._graph_ax.plot(
                 np.arange(0, self._final_year),
                 np.full(self._final_year, np.nan))
             self._herb_line = herb_graph[0]
+        else:
+            x_data, y_data = self._herb_line.get_data()
+            x_new = np.arange(x_data[-1] + 1, self._final_year)
+            if len(x_new) > 0:
+                y_new = np.full(x_new.shape, np.nan)
+                self._herb_line.set_data(np.hstack((x_data, x_new)),
+                                         np.hstack((y_data, y_new)))
 
+        # Initiate total Carnivores graph
         if self._carn_line is None:
             carn_plot = self._graph_ax.plot(
                 np.arange(0, self._final_year),
                 np.full(self._final_year, np.nan))
             self._carn_line = carn_plot[0]
-
         else:
-            x_data, y_data = self._graph_axis.get_data()
+            x_data, y_data = self._carn_line.get_data()
             x_new = np.arange(x_data[-1] + 1, self._final_year)
             if len(x_new) > 0:
                 y_new = np.full(x_new.shape, np.nan)
-                self._graph_axis.set_data(np.hstack((x_data, x_new)),
-                                          np.hstack((y_data, y_new)))
+                self._carn_line.set_data(np.hstack((x_data, x_new)),
+                                         np.hstack((y_data, y_new)))
 
         # Add subplot for heat map
         if self._heat_map_ax is None:
