@@ -251,7 +251,7 @@ class BaseCell:
                     killed_herbivores.append(herbivore)
                     weight_prey = herbivore.weight
                     carnivore.weight_gain(weight_prey)
-            self.remove_dead_animals(killed_herbivores)
+            self.remove_animals(killed_herbivores)
 
     @property
     def propensity_migration_herb(self):
@@ -273,7 +273,7 @@ class BaseCell:
         """
         return np.exp(Carnivore.lambda_ * self.abundance_of_fodder_carnivores)
 
-    def remove_migrated_animals(self, gone_animals):
+    def remove_animals(self, gone_animals):
         """
         Removes animal that has migrated.
         :param gone_animals: list of animals that has migrated
@@ -281,15 +281,6 @@ class BaseCell:
         """
         for gone_animal in gone_animals:
             self.animals.remove(gone_animal)
-
-    def remove_dead_animals(self, dead_animals):
-        """
-        Removes animal that has died.
-        :param dead_animals: list of animals that has died
-        :type: list
-        """
-        for dead_animal in dead_animals:
-            self.animals.remove(dead_animal)
 
 
 class Savannah(BaseCell):

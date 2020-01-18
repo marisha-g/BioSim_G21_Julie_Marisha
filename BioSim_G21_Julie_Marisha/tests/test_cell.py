@@ -158,29 +158,17 @@ class TestCell:
         """Property propensity_migration_carn() can be called."""
         self.cell.propensity_migration_carn
 
-    def test_remove_migrated_animals_callable(self):
-        """remove_migrated_animals method is callable. """
+    def test_remove_animals_callable(self):
+        """remove_animals method is callable. """
         self.cell.animals.append(self.herbivore)
-        self.cell.remove_migrated_animals([self.herbivore])
+        self.cell.remove_animals([self.herbivore])
 
-    def test_remove_migrated_animals(self):
-        """remove_migrated_animals method removes
-         the migrated animal from the cell."""
+    def test_remove_animals(self):
+        """remove_animals method removes
+         the gone animal from the cell."""
         self.cell.animals.append(self.herbivore)
-        self.cell.remove_migrated_animals([self.herbivore])
+        self.cell.remove_animals([self.herbivore])
         assert self.cell.total_herbivores == 0
-
-    def test_remove_dead_animals_callable(self):
-        """remove_dead_animal method is callable."""
-        self.cell.animals.append(self.carnivore)
-        self.cell.remove_dead_animals([self.carnivore])
-
-    def test_remove_dead_animals(self):
-        """remove_dead_animal method removes
-         the dead animal from the cell."""
-        self.cell.animals.append(self.carnivore)
-        self.cell.remove_dead_animals([self.carnivore])
-        assert self.cell.total_carnivores == 0
 
 
 class TestSavannah:

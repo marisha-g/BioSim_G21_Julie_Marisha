@@ -353,7 +353,7 @@ class Rossumoya:
                         new_loc = self.choose_cell(loc, type(animal).__name__)
                         self.island_map[new_loc].animals.append(animal)
                         migrating_animals.append(animal)
-                    cell.remove_migrated_animals(migrating_animals)
+                    cell.remove_animals(migrating_animals)
 
     def death(self):
         """
@@ -364,7 +364,7 @@ class Rossumoya:
             for animal in cell.animals:
                 if animal.prob_death:
                     dead_animals.append(animal)
-            cell.remove_dead_animals(dead_animals)
+            cell.remove_animals(dead_animals)
 
     def single_year(self):
         """
