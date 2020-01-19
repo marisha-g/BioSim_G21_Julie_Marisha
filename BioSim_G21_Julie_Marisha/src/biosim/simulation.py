@@ -24,10 +24,11 @@ _CONVERT_BINARY = 'magick'
 
 # update this to the directory and file-name beginning
 # for the graphics files
-_DEFAULT_GRAPHICS_DIR = os.path.join('.', 'figs')
+_DEFAULT_GRAPHICS_DIR = os.path.join('..', 'figs')
 _DEFAULT_IMAGE_NAME = 'bio'
 _DEFAULT_IMAGE_FORMAT = "png"
 _DEFAULT_MOVIE_FORMAT = 'mp4'
+DEFAULT_IMAGE_BASE = os.path.join(_DEFAULT_GRAPHICS_DIR, _DEFAULT_IMAGE_NAME)
 
 
 class BioSim:
@@ -39,24 +40,26 @@ class BioSim:
             seed=1,
             ymax_animals=None,
             cmax_animals=None,
-            img_dir=None,
             img_base=None,
             img_fmt=None,
     ):
         """
         :param island_map: Multi-line string specifying island geography
+        :type island_map: str
         :param ini_pop: List of dictionaries specifying initial population
-        :param seed: Integer used as random number seed
-        :param ymax_animals: Number specifying y-axis limit for graph showing animal numbers
-        :param cmax_animals: Dict specifying color-code limits for animal densities
-        :param img_base: String with beginning of file name for figures, including path
-        :param img_fmt: String with file type for figures, e.g. 'png'
-
-        If ymax_animals is None, the y-axis limit should be adjusted automatically.
-
-        If cmax_animals is None, sensible, fixed default values should be used.
-        cmax_animals is a dict mapping species names to numbers, e.g.,
-           {'Herbivore': 50, 'Carnivore': 20}
+        :type ini_pop: list
+        :param seed: Random number seed
+        :type seed: int
+        :param ymax_animals: y-axis limit for graph showing animal numbers
+        :type ymax_animals: int
+        :param cmax_animals: Color-code limits for animal densities,
+                             e.g. {'Herbivore': 100, 'Carnivore': 50}
+        :type cmax_animals: dict
+        :param img_base: Beginning of file name for figures,
+                         including path
+        :type img_base: str
+        :param img_fmt: File type for figures, e.g. 'png'
+        :type img_fmt: str
 
         If img_base is None, no figures are written to file.
         Filenames are formed as
@@ -72,14 +75,8 @@ class BioSim:
         self._final_year = None
         self._image_counter = 0
 
-        if img_base is None:
-            img_base = _DEFAULT_IMAGE_NAME
-        self._image_base = img_base
-
-        if img_dir is not None:
-            self._img_base = os.path.join(img_dir, img_base)
-        else:
-            self._img_base = None
+        if img_base is not None:
+            self._image_base = img_base
 
         if img_fmt is None:
             img_fmt = _DEFAULT_IMAGE_FORMAT
@@ -166,10 +163,10 @@ class BioSim:
 
             if self._year % vis_years == 0:
                 self._update_graphics()
-                """
-                if self_year % img_years == 0:
+
+            if self._year % img_years == 0:
                 self._save_file()
-                """
+
             self.rossumoya.single_year()
             self._year += 1
         self._update_graphics()
