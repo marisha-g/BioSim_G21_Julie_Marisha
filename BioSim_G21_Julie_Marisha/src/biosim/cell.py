@@ -1,16 +1,13 @@
 # -*- coding: utf-8 -*-
 
-"""Spreadsheet Column Printer
+"""Geography for Rossumøya
 
-This script implements
-allows the user to print to the console all columns in the
-spreadsheet. It is assumed that the first row of the spreadsheet is the
-location of the columns.
+Rossumøya is divided into squares (or cells), where each square is of one of
+the following five types: ocean, jungle, savannah, desert and mountain.
+The superclass and subclasses in this script carries all the information about
+these different landscape cells.
 
-This tool accepts comma separated value files (.csv) as well as excel
-(.xls, .xlsx) files.
-
-This script requires that `pandas` be installed within the Python
+This script requires that `math` is installed within the Python
 environment you are running this script in.
 
 This file can also be imported as a module and contains the following
