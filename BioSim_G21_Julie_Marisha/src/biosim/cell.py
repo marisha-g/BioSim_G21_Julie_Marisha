@@ -147,9 +147,8 @@ class BaseCell:
         :return: rel_abundance_of_fodder
         :type: float
         """
-        rel_abundance_of_fodder = self.fodder_in_cell / ((
-                                                                 self.total_herbivores + 1
-                                                         ) * Herbivore.F)
+        rel_abundance_of_fodder = self.fodder_in_cell /
+                                  ((self.total_herbivores + 1) * Herbivore.F)
 
         return rel_abundance_of_fodder
 
@@ -161,13 +160,11 @@ class BaseCell:
         :type: float
         """
         weight_of_herbs = 0
-        for animal in self.animals:
-            if type(animal).__name__ == 'Herbivore':
-                weight_of_herbs += animal.weight
+        animal for animal in self.animals if isinstance(animal, Herbivore):
+            weight_of_herbs += animal.weight
 
-        rel_abundance_of_fodder = weight_of_herbs / ((
-                                                             self.total_carnivores + 1
-                                                     ) * Carnivore.F)
+        rel_abundance_of_fodder = weight_of_herbs /
+                                  ((self.total_carnivores + 1) * Carnivore.F)
 
         return rel_abundance_of_fodder
 
