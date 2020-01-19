@@ -122,8 +122,10 @@ class MigrationProbabilityCalculator:
         return self._probabilities
 
     @probabilities.setter
-    def probabilities(self, value):
-        self._probabilities = value
+    def probabilities(self, prob_list):
+        if sum(prob_list) != 1:
+            raise ValueError('Probabilities must sum up to 1')
+        self._probabilities = prob_list
 
 
 class Rossumoya:
