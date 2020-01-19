@@ -267,7 +267,7 @@ class BaseAnimal:
 
         if self.weight > 0:
             age_sigma = scipy.special.expit(
-                -self.phi_age * (self.age - self.a_half)
+                - self.phi_age * (self.age - self.a_half)
             )
             weight_sigma = scipy.special.expit(
                 self.phi_weight * (self.weight - self.w_half)

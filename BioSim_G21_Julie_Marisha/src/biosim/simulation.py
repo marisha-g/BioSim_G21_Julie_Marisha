@@ -508,6 +508,7 @@ class BioSim:
 
 
 if __name__ == '__main__':
-    sim1 = BioSim()
-    sim1.simulate(num_years=10, vis_years=1, img_years=5)
+    sim1 = BioSim(ymax_animals=200, cmax_animals={'Herbivore': 20,
+                                                  'Carnivore': 20})
+    sim1.simulate(num_years=20, vis_years=1, img_years=5)
     plt.show()
