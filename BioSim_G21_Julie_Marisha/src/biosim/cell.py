@@ -160,8 +160,7 @@ class BaseCell:
         :type: float
         """
         weight_of_herbs = 0
-        animal for animal in self.animals if isinstance(animal, Herbivore):
-            weight_of_herbs += animal.weight
+        [animal.weight += weight_of_herbs for animal in self.animals if isinstance(animal, Herbivore)]
 
         rel_abundance_of_fodder = weight_of_herbs /
                                   ((self.total_carnivores + 1) * Carnivore.F)
