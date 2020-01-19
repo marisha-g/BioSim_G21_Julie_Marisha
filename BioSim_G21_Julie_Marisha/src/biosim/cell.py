@@ -147,8 +147,9 @@ class BaseCell:
         :return: rel_abundance_of_fodder
         :type: float
         """
-        rel_abundance_of_fodder = self.fodder_in_cell /
-                                  ((self.total_herbivores + 1) * Herbivore.F)
+        rel_abundance_of_fodder = self.fodder_in_cell / (
+                (self.total_herbivores + 1) * Herbivore.F
+        )
 
         return rel_abundance_of_fodder
 
@@ -159,11 +160,15 @@ class BaseCell:
         :return: rel_abundance_of_fodder
         :type: float
         """
-        weight_of_herbs = 0
-        [animal.weight += weight_of_herbs for animal in self.animals if isinstance(animal, Herbivore)]
+        list_weights = [
+            animal.weight for animal in self.animals if
+            isinstance(animal, Herbivore)
+        ]
+        weight_of_herbs = sum(list_weights)
 
-        rel_abundance_of_fodder = weight_of_herbs /
-                                  ((self.total_carnivores + 1) * Carnivore.F)
+        rel_abundance_of_fodder = weight_of_herbs / (
+                (self.total_carnivores + 1) * Carnivore.F
+        )
 
         return rel_abundance_of_fodder
 
@@ -198,7 +203,8 @@ class BaseCell:
                               if isinstance(animal, Herbivore)]
         if len(list_of_herbivores) > 1:
             sorted_herbivores = sorted(list_of_herbivores,
-                                       key=lambda x: x.fitness)
+                                       key=lambda x: x.fitness,
+                                       reverse=True)
             return sorted_herbivores
         else:
             return list_of_herbivores
@@ -215,7 +221,8 @@ class BaseCell:
                               if isinstance(animal, Carnivore)]
         if len(list_of_carnivores) > 1:
             sorted_carnivores = sorted(list_of_carnivores,
-                                       key=lambda x: x.fitness)
+                                       key=lambda x: x.fitness,
+                                       reverse=True)
             return sorted_carnivores
         else:
             return list_of_carnivores
