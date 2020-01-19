@@ -3,7 +3,7 @@
 import textwrap
 import matplotlib.pyplot as plt
 
-from BioSim_G21_Julie_Marisha.simulation import BioSim
+from biosim.simulation import BioSim
 
 """
 Compatibility check for BioSim simulations.
