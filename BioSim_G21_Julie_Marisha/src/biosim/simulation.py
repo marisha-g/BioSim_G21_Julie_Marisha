@@ -366,7 +366,7 @@ class BioSim:
 
         # Add subplot for map codes
         if self._map_code_ax is None:
-            self._map_code_ax = self._fig.add_subplot(gs[:2, 5:6])
+            self._map_code_ax = self._fig.add_subplot(gs[:2, 5:7])
             cell_codes_bar = [[(200, 200, 50)],
                               [(40, 150, 30)],
                               [(220, 180, 140)],
@@ -425,15 +425,13 @@ class BioSim:
             self._heat_map_carn_ax = self._fig.add_subplot(gs[2:, :6])
             self._heat_map_carn_ax.get_xaxis().set_visible(False)
             self._heat_map_carn_ax.get_yaxis().set_visible(False)
+            self._heat_map_carn_ax.set_title('Carnivores locations')
 
         if self._heat_map_herb_ax is None:
             self._heat_map_herb_ax = self._fig.add_subplot(gs[2:, 6:])
             self._heat_map_herb_ax.get_xaxis().set_visible(False)
             self._heat_map_herb_ax.get_yaxis().set_visible(False)
-
-        # Add title for heat maps
-        self._heat_map_carn_ax.set_title('Carnivores locations')
-        self._heat_map_herb_ax.set_title('Herbivores locations')
+            self._heat_map_herb_ax.set_title('Herbivores locations')
 
     def _save_file(self):
         """Saves graphics to file if file name given.
