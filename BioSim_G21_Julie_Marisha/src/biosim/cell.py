@@ -1,37 +1,41 @@
 # -*- coding: utf-8 -*-
 
-"""Geography for Rossumøya
+"""
+:mod: `biosim.cell` provides the user the information that is stored in the
+       different landscape cells in Rossumøya.
 
 Rossumøya is divided into squares (or cells), where each square is of one of
 the following five types: ocean, jungle, savannah, desert and mountain.
-The superclass and subclasses in this script carries all the information about
-these different landscape cells.
+The superclass and subclasses in this script carries all the information that
+are stores in these different landscape cells.
 
-This script requires that `math` is installed within the Python
-environment you are running this script in.
-
-This file can also be imported as a module and contains the following
+This file can be imported as a module and contains the following
 classes:
 
-    * BaseCell - Superclass and the basic characteristics that all of the cell
-    types in Rossumøya has in common.
+    *   BaseCell - Superclass and the basic characteristics that all of the cell
+        types in Rossumøya has in common.
 
-    * Savannah(BaseCell) - Subclass of BaseCell and characteristics for
-    the cell type Savannah.
+    *   Savannah(BaseCell) - Subclass of BaseCell and characteristics for
+        the cell type Savannah.
 
-    * Jungle(BaseCell) - Subclass of BaseCell and characteristics for
-    the cell type Jungle.
+    *   Jungle(BaseCell) - Subclass of BaseCell and characteristics for
+        the cell type Jungle.
 
-    * Desert(BaseCell) - Subclass of BaseCell and characteristics for
-    the cell type Desert.
+    *   Desert(BaseCell) - Subclass of BaseCell and characteristics for
+        the cell type Desert.
 
-    * Mountain(BaseCell) - Subclass of BaseCell and characteristics for
-    the cell type Mountain.
+    *   Mountain(BaseCell) - Subclass of BaseCell and characteristics for
+        the cell type Mountain.
 
-    * Ocean(BaseCell) - Subclass of BaseCell and characteristics for
-    the cell type Ocean.
+    *   Ocean(BaseCell) - Subclass of BaseCell and characteristics for
+        the cell type Ocean.
+
+.. note::
+    *   This script requires that `math` is installed within the Python
+        environment you are running this script in.
 
 """
+
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
