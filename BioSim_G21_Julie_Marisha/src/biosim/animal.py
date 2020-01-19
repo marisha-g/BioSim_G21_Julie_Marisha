@@ -1,25 +1,29 @@
 # -*- coding: utf-8 -*-
 
-"""Fauna for Rossumøya
+"""
+:mod: `biosim.animal provides the user`information about the fauna on
+       ossumøya.
+
 
 The different species on Rossumøya have certain characteristics in common, 
-but also som differences. This script has all the characteristics for the
+but also some differences. This script has all the characteristics for the
 Herbivores and Carnivores stored in superclasses and subclasses.
 
-This script requires that `numpy` and `scipy.special` are installed within the
-Python environment you are running this script in.
-
-This file can also be imported as a module and contains the following
+This file can be imported as a module and contains the following
 classes:
 
-    * BaseAnimal - Superclass and the basic characteristics that all of the
-    species in Rossumøya has in common.
+    *   BaseAnimal - Superclass and the basic characteristics that all of the
+        species in Rossumøya has in common.
 
-    * Herbivore(BaseAnimal) - Subclass of BaseAnimal and characteristics for
-    the Herbivore species.
+    *   Herbivore(BaseAnimal) - Subclass of BaseAnimal and characteristics for
+        the Herbivore species.
 
-    * Carnivore(BaseAnimal) - Subclass of BaseAnimal and characteristics for
-    the Carnivore species.
+    *   Carnivore(BaseAnimal) - Subclass of BaseAnimal and characteristics for
+        the Carnivore species.
+
+.. note::
+    *   This script requires that `numpy` and `scipy.special` are installed
+        within the Python environment you are running this script in.
 """
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
