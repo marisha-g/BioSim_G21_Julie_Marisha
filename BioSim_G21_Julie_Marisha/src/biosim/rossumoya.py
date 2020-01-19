@@ -48,7 +48,7 @@ class MigrationProbabilityCalculator:
 
         locations = [cell_left, cell_right, cell_up, cell_down]
 
-        self._locations = locations
+        self.locations = locations
         self._island_map = island_map
         self._species = species
         self._propensity_herb = None
@@ -64,7 +64,7 @@ class MigrationProbabilityCalculator:
         :type: list
         """
         self._propensity_herb = []
-        for coordinates in self._locations:
+        for coordinates in self.locations:
             cell = self._island_map[coordinates]
             self._propensity_herb.append(cell.propensity_migration_herb)
         return self._propensity_herb
@@ -82,7 +82,7 @@ class MigrationProbabilityCalculator:
         :type: list
         """
         self._propensity_carn = []
-        for cell in self._locations:
+        for cell in self.locations:
             cell = self._island_map[cell]
             self._propensity_carn.append(cell.propensity_migration_carn)
         return self._propensity_carn
@@ -120,7 +120,7 @@ class MigrationProbabilityCalculator:
             self._probabilities.append(
                 probability / sum_unscaled_probabilities
             )
-        return self._locations, self._probabilities
+        return self._probabilities
 
     @probabilities.setter
     def probabilities(self, value):
@@ -297,9 +297,11 @@ class Rossumoya:
         :return: choice: Chosen cell coordinates to migrate to.
         :type: tuple
         """
-        locations, probabilities = MigrationProbabilityCalculator(
+        calculator = MigrationProbabilityCalculator(
             loc, self.island_map, species
-        ).probabilities
+        )
+        probabilities = calculator.probabilities
+        locations = calculator.locations
 
         choice = np.random.choice(4, p=probabilities)
         chosen_cell = locations[choice]

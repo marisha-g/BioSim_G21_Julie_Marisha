@@ -311,6 +311,13 @@ class BaseCell:
                 animal.has_migrated = True
         return migrating_animals
 
+    def reset_migration(self):
+        """
+        Sets has_migrated to False for all animals in the cell.
+        """
+        for animal in self.animals:
+            animal.has_migrated = False
+
     @property
     def propensity_migration_herb(self):
         """
