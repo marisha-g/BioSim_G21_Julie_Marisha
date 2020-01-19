@@ -49,7 +49,7 @@ class BioSim:
         :param seed: Integer used as random number seed
         :param ymax_animals: Number specifying y-axis limit for graph showing animal numbers
         :param cmax_animals: Dict specifying color-code limits for animal densities
-        :param img_name: String with beginning of file name for figures, including path
+        :param img_base: String with beginning of file name for figures, including path
         :param img_fmt: String with file type for figures, e.g. 'png'
 
         If ymax_animals is None, the y-axis limit should be adjusted automatically.
@@ -92,8 +92,14 @@ class BioSim:
         self._ymax = ymax_animals
 
         if cmax_animals is None:
-            cmax_animals = 1000
-        self._cmax = cmax_animals
+            cmax_herbs = 200
+            cmax_carns = 50
+        else:
+            cmax_herbs = cmax_animals['Herbivore']
+            cmax_carns = cmax_animals['Carnivore']
+
+        self._cmax_herbs = cmax_herbs
+        self._cmax_carns = cmax_carns
 
         # the following will be initialized by _setup_graphics
         self._nested_list = None
@@ -142,9 +148,11 @@ class BioSim:
 
         :param num_years: number of years to simulate
         :param vis_years: years between visualization updates
-        :param img_years: years between visualizations saved to files (default: vis_years)
+        :param img_years: years between visualizations saved to files
+         (default: vis_years)
 
-        Image files will be numbered consecutively.
+        .. note:: Image files will be numbered consecutively.
+
         Author: Hans Ekkehard Plesser
         """
 
@@ -155,11 +163,13 @@ class BioSim:
         self._setup_graphics()
 
         while self._year < self._final_year:
+
             if self._year % vis_years == 0:
                 self._update_graphics()
-
-            """ if self.year % img_years == 0:
-                self._save_file()"""
+                """
+                if self_year % img_years == 0:
+                self._save_file()
+                """
             self.rossumoya.single_year()
             self._year += 1
         self._update_graphics()
@@ -291,7 +301,7 @@ class BioSim:
                 data_map_carn,
                 interpolation='nearest',
                 vmin=0,
-                vmax=self._cmax
+                vmax=self._cmax_carns
             )
             plt.colorbar(self._heat_map_carn_axis,
                          ax=self._heat_map_carn_ax,
@@ -304,7 +314,7 @@ class BioSim:
                 data_map_herb,
                 interpolation='nearest',
                 vmin=0,
-                vmax=self._cmax
+                vmax=self._cmax_herbs
             )
             plt.colorbar(self._heat_map_herb_axis,
                          ax=self._heat_map_herb_ax,
