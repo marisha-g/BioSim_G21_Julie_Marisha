@@ -1,23 +1,19 @@
 # -*- coding: utf-8 -*-
 
-"""Spreadsheet Column Printer
+"""
+:mod: `biosim.rossumoya provides the user the annual cycle on Rossumøya.
 
-This script allows the user to print to the console all columns in the
-spreadsheet. It is assumed that the first row of the spreadsheet is the
-location of the columns.
+This file can also be imported as a module and contains the following classes:
 
-This tool accepts comma separated value files (.csv) as well as excel
-(.xls, .xlsx) files.
+    *   MigrationProbabilityCalculator - calculates the probabilites for an
+        animal to migrate.
+    *   Rossumoya - class where the user creates the island map and initial
+        population. This is also where the different methods for the annual
+        cycle are run.
 
-This script requires that `pandas` be installed within the Python
-environment you are running this script in.
-
-This file can also be imported as a module and contains the following
-classes:
-
-    * MigrationProbabilityCalculator - calculates the probabilites for an
-                                       animal to migrate.
-    * Rossumoya - island in BioSim
+.. note::
+    *   This script requires that `textwrap` and `numpy` are installed within
+        the Python environment you are running this script in.
 """
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
