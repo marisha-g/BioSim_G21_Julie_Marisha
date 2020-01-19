@@ -256,7 +256,7 @@ class BioSim:
         :type: list
         """
         self._nested_list = []
-        map_size = self.rossumoya.map_size()
+        map_size = self.rossumoya.map_size
         x, y = map_size
         for x_index in range(x):
             self._nested_list.append([])
