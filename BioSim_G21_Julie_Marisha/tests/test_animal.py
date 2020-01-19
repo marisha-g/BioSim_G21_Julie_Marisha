@@ -213,7 +213,7 @@ class TestCarnivore:
         assert self.carnivore.xi == 1.1
         assert self.carnivore.omega == 0.9
         assert self.carnivore.F == 50.0
-        assert self.carnivore.DeltaPhiMax == 10.0
+        assert self.carnivore.DeltaPhiMax == 7.0
 
     def test_delta_phi_max_value_error(self):
         """Test that delta phi max must be strictly positive."""

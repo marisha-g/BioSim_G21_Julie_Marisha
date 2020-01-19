@@ -82,10 +82,6 @@ class TestBiosim:
         """ add_population method can be called."""
         self.biosim.add_population(self.population)
 
-    def test_single_simulation_callable(self):
-        """single_simulation can be called."""
-        self.biosim.single_simulation()
-
     def test_update_visualization(self):
         pass
 

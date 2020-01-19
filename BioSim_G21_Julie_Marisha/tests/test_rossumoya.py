@@ -69,16 +69,16 @@ class TestMigrationProbabilityCalculator:
     def test_probabilities_return_coordinates(self):
         """Property probabilities returns correct coordinates for
         neighbouring cell of (2, 2)."""
-        coordinates, probabilities = self.calculator_herb.probabilities
+        coordinates = self.calculator_herb.locations
         assert coordinates == [(2, 1), (2, 3), (1, 2), (3, 2)]
 
-        coordinates, probabilities = self.calculator_carn.probabilities
+        coordinates = self.calculator_carn.locations
         assert coordinates == [(2, 1), (2, 3), (1, 2), (3, 2)]
 
     def test_probabilities_return_probabilities(self):
         """Property probabilities returns correct probabilities for three
          identical Savannah cells and one Ocean cell as neighbouring cells."""
-        coordinates, probabilities = self.calculator_herb.probabilities
+        probabilities = self.calculator_herb.probabilities
         sum_probabilities = sum(probabilities)
         assert sum_probabilities == 1
         assert probabilities[0] == pytest.approx(0.333, rel=1e-2)
@@ -86,7 +86,7 @@ class TestMigrationProbabilityCalculator:
         assert probabilities[2] == 0.0
         assert probabilities[3] == pytest.approx(0.333, rel=1e-2)
 
-        coordinates, probabilities = self.calculator_carn.probabilities
+        probabilities = self.calculator_carn.probabilities
         sum_probabilities = sum(probabilities)
         assert sum_probabilities == 1
         assert probabilities[0] == pytest.approx(0.333, rel=1e-2)
