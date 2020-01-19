@@ -22,6 +22,7 @@ class TestBiosim:
 
     @pytest.fixture(autouse=True)
     def create_sim(self):
+        """Setup for tests."""
         self.biosim = BioSim()
         self.population = [
             {
@@ -64,7 +65,7 @@ class TestBiosim:
         self.biosim.set_animal_parameters('Herbivore', params)
 
     def test_set_animal_parameters(self):
-        """set_animal_parameters method changes parameters of animal class
+        """set_animal_parameters method changes parameters of animal classes
         correctly."""
         params1 = {'gamma': 0.5}
         params2 = {'xi': 0.4}
@@ -74,6 +75,8 @@ class TestBiosim:
         assert Carnivore.xi == 0.4
 
     def test_set_landscape_parameters(self):
+        """ set_landscape_parameters sets parameters of landscape classes
+        correctly."""
         params1 = {'alpha': 0.4}
         params2 = {'f_max': 500}
         self.biosim.set_landscape_parameters('S', params1)
