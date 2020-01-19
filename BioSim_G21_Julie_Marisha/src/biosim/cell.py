@@ -264,16 +264,18 @@ class BaseCell:
             self.remove_animals(killed_herbivores)
 
     def procreation(self):
+        total_herbs_at_start_of_breeding_season = self.total_herbivores
+        total_carns_at_start_of_breeding_season = self.total_carnivores
         for animal in self.animals:
             species = type(animal).__name__
 
             if species == 'Herbivore':
                 animal_gives_birth = animal.prob_procreation(
-                    self.total_herbivores
+                    total_herbs_at_start_of_breeding_season
                 )
             if species == 'Carnivore':
                 animal_gives_birth = animal.prob_procreation(
-                    self.total_carnivores
+                    total_carns_at_start_of_breeding_season
                 )
             if animal_gives_birth:
                 self.add_offspring(animal)
