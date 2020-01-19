@@ -2,8 +2,9 @@
 
 """Fauna for Rossumøya
 
-This script has all the characteristics for the different animal species on
-Rossumøya.
+The different species on Rossumøya have certain characteristics in common, 
+but also som differences. This script has all the characteristics for the
+Herbivores and Carnivores stored in superclasses and subclasses.
 
 This script requires that `numpy` and `scipy.special` are installed within the
 Python environment you are running this script in.
