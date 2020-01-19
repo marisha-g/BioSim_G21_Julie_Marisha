@@ -214,10 +214,10 @@ class BioSim:
                     colour_map[x][y] = (40, 150, 30)
 
                 if cell_code == 'O':
-                    colour_map[x][y] = (0, 130, 300)
+                    colour_map[x][y] = (51, 102, 153)
 
                 if cell_code == 'D':
-                    colour_map[x][y] = (220, 180, 140)
+                    colour_map[x][y] = (175, 104, 22)
 
                 if cell_code == 'M':
                     colour_map[x][y] = (210, 200, 220)
@@ -387,9 +387,9 @@ class BioSim:
             self._map_code_ax = self._fig.add_subplot(gs[:2, 5:7])
             cell_codes_bar = [[(200, 200, 50)],
                               [(40, 150, 30)],
-                              [(220, 180, 140)],
+                              [(175, 104, 22)],
                               [(210, 200, 220)],
-                              [(0, 130, 300)]]
+                              [(51, 102, 153)]]
 
             self._map_code_axis = self._map_code_ax.imshow(cell_codes_bar)
             codes = ['', 'Savannah', 'Jungle', 'Desert', 'Mountain', 'Ocean']
