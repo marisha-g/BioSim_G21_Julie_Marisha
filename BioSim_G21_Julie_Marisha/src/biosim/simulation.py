@@ -1,7 +1,27 @@
 # -*- coding: utf-8 -*-
 
 """
-creds to Hans Ekkehard Plesser for visualization
+:mod: `biosim.simulation` provides the user the interface to the package.
+
+The simulation will run for a given number of years. The user will also be 
+able to visualize the simulation results while the simulation is in progress. 
+The visualization is given in one graphics window with the following elements:
+
+    *   Geography of the island is shown with color codes for the different 
+        landscape types. 
+    *   Line graph that shows the total number of animals in the island by 
+        species.
+    *   Population map with color bars that shows how many animals per species 
+        there are in each cell. 
+
+This file can be imported as a module and contains the following
+class:
+
+    *   BioSim - 
+
+.. note::
+    *   This script requires that `math` is installed within the Python
+        environment you are running this script in.
 
 """
 
