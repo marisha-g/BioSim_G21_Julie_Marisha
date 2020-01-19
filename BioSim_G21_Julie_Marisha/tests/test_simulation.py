@@ -8,11 +8,12 @@ __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
 import os
+import textwrap
 
 import pytest
 import matplotlib.pyplot as plt
 
-from biosim.simulation import BioSim
+from biosim.simulation import BioSim, MigrationProbabilityCalculator
 from biosim.animal import Herbivore, Carnivore
 from biosim.cell import Savannah, Jungle
 
@@ -87,6 +88,23 @@ class TestBiosim:
     def test_add_population_callable(self):
         """ add_population method can be called."""
         self.biosim.add_population(self.population)
+
+    def test_migration(self):
+        """Test that animals migrate away from current cell when probability
+        to migrate is set to 1."""
+        island_map = """OOOOO\nOOJOO\nOJSJO\nOOJOO\nOOOOO"""
+        ini_pop = [{
+            "loc": (2, 2),
+            "pop": [{"species": "Herbivore", "age": 5, "weight": 20}
+                    for _ in range(150)],
+        }]
+        sim1 = BioSim(island_map=island_map, ini_pop=ini_pop)
+        MigrationProbabilityCalculator.probabilities = [0.5, 0.5, 0, 0]
+        Herbivore.prob_migration = 1
+        Carnivore.prob_migration = 1
+        sim1.simulate(num_years=1, vis_years=1)
+        cell = sim1.rossumoya.island_map[(2, 2)]
+        assert cell.total_population == 0
 
     def test_simulate_callable(self):
         """ simulate method can be called."""
