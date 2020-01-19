@@ -54,17 +54,25 @@ class TestMigrationProbabilityCalculator:
         assert self.calculator_carn._propensity_carn == 8
 
     def test_probabilities(self):
-        """Property probabilities returns a tuple and a list."""
-        assert isinstance(self.calculator_herb.probabilities, (tuple, list))
-        assert isinstance(self.calculator_carn.probabilities, (tuple, list))
+        """Property probabilities returns a list."""
+        assert isinstance(self.calculator_herb.probabilities, list)
+        assert isinstance(self.calculator_carn.probabilities, list)
 
     def test_probabilities_setter(self):
         """Probabilities can be set."""
-        self.calculator_herb.probabilities = 0.2
-        assert self.calculator_herb._probabilities == 0.2
+        self.calculator_herb.probabilities = [1, 0, 0, 0]
+        assert self.calculator_herb._probabilities == [1, 0, 0, 0]
 
-        self.calculator_carn.probabilities = 1
-        assert self.calculator_carn._probabilities == 1
+        self.calculator_carn.probabilities = [1, 0, 0, 0]
+        assert self.calculator_carn._probabilities == [1, 0, 0, 0]
+
+    def test_probabilities_setter_raises_error(self):
+        """ The probabilities.setter raises ValueError when the probabilities
+        dont sum up to 1."""
+        with pytest.raises(ValueError):
+            self.calculator_carn.probabilities = [1, 1, 0, 0]
+        with pytest.raises(ValueError):
+            self.calculator_herb.probabilities = [1, 1, 0, 0]
 
     def test_probabilities_return_coordinates(self):
         """Property probabilities returns correct coordinates for
@@ -76,23 +84,23 @@ class TestMigrationProbabilityCalculator:
         assert coordinates == [(2, 1), (2, 3), (1, 2), (3, 2)]
 
     def test_probabilities_return_probabilities(self):
-        """Property probabilities returns correct probabilities for three
-         identical Savannah cells and one Ocean cell as neighbouring cells."""
+        """Property probabilities returns correct probabilities for four
+         identical Savannah cells as neighbouring cells."""
         probabilities = self.calculator_herb.probabilities
         sum_probabilities = sum(probabilities)
         assert sum_probabilities == 1
-        assert probabilities[0] == pytest.approx(0.333, rel=1e-2)
-        assert probabilities[1] == pytest.approx(0.333, rel=1e-2)
-        assert probabilities[2] == 0.0
-        assert probabilities[3] == pytest.approx(0.333, rel=1e-2)
+        assert probabilities[0] == 0.25
+        assert probabilities[1] == 0.25
+        assert probabilities[2] == 0.25
+        assert probabilities[3] == 0.25
 
         probabilities = self.calculator_carn.probabilities
         sum_probabilities = sum(probabilities)
         assert sum_probabilities == 1
-        assert probabilities[0] == pytest.approx(0.333, rel=1e-2)
-        assert probabilities[1] == pytest.approx(0.333, rel=1e-2)
-        assert probabilities[2] == 0.0
-        assert probabilities[3] == pytest.approx(0.333, rel=1e-2)
+        assert probabilities[0] == 0.25
+        assert probabilities[1] == 0.25
+        assert probabilities[2] == 0.25
+        assert probabilities[3] == 0.25
 
 
 class TestRossumoya:
@@ -156,7 +164,7 @@ class TestRossumoya:
         """ValueError is raised when animal is put in invalid cell."""
         population = [
             {
-                'loc': (1, 9),
+                'loc': (0, 0),
                 'pop': [{"species": "Carnivore", "age": 2, "weight": 20}]
             }
         ]
@@ -186,5 +194,5 @@ class TestRossumoya:
         self.rossumoya.single_year()
 
     def test_map_size(self):
-        size = self.rossumoya.map_size()
-        assert size == (13, 21)
+        size = self.rossumoya.map_size
+        assert size == (22, 21)
