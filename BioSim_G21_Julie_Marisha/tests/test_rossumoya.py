@@ -132,6 +132,11 @@ class TestRossumoya:
             island_map_string = "OOOO\nOJSS\nOOOO"
             self.rossumoya.check_map_input(island_map_string)
 
+    def test_check_map_input_return(self):
+        """ check_map_input returns True when map is correct."""
+        island_map_string = "OOO\nOJO\nOOO"
+        assert self.rossumoya.check_map_input(island_map_string) is True
+
     def test_geography_coordinates_method(self):
         """make_geography_coordinates can be called."""
         self.rossumoya.make_geography_coordinates(self.rossumoya.default_map)

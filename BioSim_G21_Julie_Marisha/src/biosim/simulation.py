@@ -310,7 +310,6 @@ class BioSim:
 
     def _update_heat_map(self):
         """ Update the 2D-view of the map.
-        Author: Hans Ekkehard Plesser
         """
         data_map = self._make_population_heat_maps()
         data_map_carn, data_map_herb = data_map

@@ -108,6 +108,13 @@ class TestBiosim:
         self.biosim.simulate(num_years=1)
         self.biosim._save_file()
 
+    def test_make_movie_returns_error(self):
+        """ make_movie method raises RuntimeError when no
+         img_base is given."""
+        with pytest.raises(RuntimeError):
+            self.biosim._image_base = None
+            self.biosim.make_movie()
+
     def test_make_movie_callable(self):
         """ make_movie method can be called."""
         image_dir = os.path.join('..', 'figs')
