@@ -356,9 +356,9 @@ class Rossumoya:
         self.procreation()
 
         # Animals migrate
+        for cell in self.island_map.values():
+            cell.reset_migration()
         self.migration()
-        Herbivore.reset_migration()
-        Carnivore.reset_migration()
 
         # Animals age and loose weight
         for cell in self.island_map.values():

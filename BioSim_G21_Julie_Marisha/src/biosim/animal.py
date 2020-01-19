@@ -172,13 +172,6 @@ class BaseAnimal:
         return cls.birth_weight
 
     @classmethod
-    def reset_migration(cls):
-        """
-        All animals in the beginning of a year has not migrated.
-        """
-        cls.has_migrated = False
-
-    @classmethod
     def reset_fitness_calculation(cls):
         cls.fitness_has_been_calculated = False
 
