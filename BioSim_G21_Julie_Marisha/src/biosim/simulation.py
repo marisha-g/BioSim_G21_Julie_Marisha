@@ -97,6 +97,8 @@ class BioSim:
 
         if img_base is not None:
             self._image_base = img_base
+        else:
+            self._image_base = None
 
         if img_fmt is None:
             img_fmt = _DEFAULT_IMAGE_FORMAT
@@ -110,7 +112,7 @@ class BioSim:
 
         if cmax_animals is None:
             cmax_herbs = 200
-            cmax_carns = 50
+            cmax_carns = 200
         else:
             cmax_herbs = cmax_animals['Herbivore']
             cmax_carns = cmax_animals['Carnivore']

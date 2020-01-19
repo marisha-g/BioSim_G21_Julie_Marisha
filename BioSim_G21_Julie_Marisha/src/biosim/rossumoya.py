@@ -48,9 +48,9 @@ class MigrationProbabilityCalculator:
 
         locations = [cell_left, cell_right, cell_up, cell_down]
 
-        self.locations = locations
-        self.island_map = island_map
-        self.species = species
+        self._locations = locations
+        self._island_map = island_map
+        self._species = species
         self._propensity_herb = None
         self._propensity_carn = None
         self._probabilities = None
@@ -64,8 +64,8 @@ class MigrationProbabilityCalculator:
         :type: list
         """
         self._propensity_herb = []
-        for coordinates in self.locations:
-            cell = self.island_map[coordinates]
+        for coordinates in self._locations:
+            cell = self._island_map[coordinates]
             self._propensity_herb.append(cell.propensity_migration_herb)
         return self._propensity_herb
 
@@ -82,8 +82,8 @@ class MigrationProbabilityCalculator:
         :type: list
         """
         self._propensity_carn = []
-        for cell in self.locations:
-            cell = self.island_map[cell]
+        for cell in self._locations:
+            cell = self._island_map[cell]
             self._propensity_carn.append(cell.propensity_migration_carn)
         return self._propensity_carn
 
@@ -100,9 +100,9 @@ class MigrationProbabilityCalculator:
                  probabilities to move from that location.
         :type: tuple, list
         """
-        if self.species == 'Herbivore':
+        if self._species == 'Herbivore':
             propensities = self.propensity_herb
-        if self.species == 'Carnivore':
+        if self._species == 'Carnivore':
             propensities = self.propensity_carn
 
         unscaled_probabilities = []
@@ -120,7 +120,7 @@ class MigrationProbabilityCalculator:
             self._probabilities.append(
                 probability / sum_unscaled_probabilities
             )
-        return self.locations, self._probabilities
+        return self._locations, self._probabilities
 
     @probabilities.setter
     def probabilities(self, value):
@@ -324,8 +324,7 @@ class Rossumoya:
         for animal in migrating_animals:
             new_loc = self.choose_cell(old_loc, type(animal).__name__)
             self.island_map[new_loc].add_animals([animal])
-
-        self.island_map[old_loc].remove_animals(migrating_animals)
+            self.island_map[old_loc].remove_animals([animal])
 
     def death(self):
         """
