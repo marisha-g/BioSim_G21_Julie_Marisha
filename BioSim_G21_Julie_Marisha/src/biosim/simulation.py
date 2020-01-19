@@ -413,7 +413,7 @@ class BioSim:
             self._herb_line = herb_graph[0]
         else:
             x_data, y_data = self._herb_line.get_data()
-            x_new = np.arange(x_data[-1] + 1, self._final_year+1)
+            x_new = np.arange(x_data[-1] + 1, self._final_year + 1)
             if len(x_new) > 0:
                 y_new = np.full(x_new.shape, np.nan)
                 self._herb_line.set_data(np.hstack((x_data, x_new)),
@@ -427,7 +427,7 @@ class BioSim:
             self._carn_line = carn_plot[0]
         else:
             x_data, y_data = self._carn_line.get_data()
-            x_new = np.arange(x_data[-1] + 1, self._final_year+1)
+            x_new = np.arange(x_data[-1] + 1, self._final_year + 1)
             if len(x_new) > 0:
                 y_new = np.full(x_new.shape, np.nan)
                 self._carn_line.set_data(np.hstack((x_data, x_new)),
