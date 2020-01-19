@@ -36,7 +36,7 @@ import subprocess
 
 from biosim.animal import Herbivore, Carnivore
 from biosim.cell import Savannah, Jungle
-from biosim.rossumoya import Rossumoya
+from biosim.rossumoya import Rossumoya, MigrationProbabilityCalculator
 
 # update these variables to point to your ffmpeg and convert binaries
 _FFMPEG_BINARY = 'ffmpeg'
@@ -346,7 +346,7 @@ class BioSim:
         self._fig.suptitle(f'Year: {self.year}', fontsize=20)
         self._update_heat_map()
         self._update_graph()
-        plt.pause(0.01)
+        plt.pause(0.001)
 
     def _update_graph(self):
         """Updates population graph."""
@@ -510,5 +510,6 @@ class BioSim:
 if __name__ == '__main__':
     sim1 = BioSim(ymax_animals=200, cmax_animals={'Herbivore': 20,
                                                   'Carnivore': 20})
+    MigrationProbabilityCalculator.probabilities = [0.5, 0.5, 0, 0]
     sim1.simulate(num_years=20, vis_years=1, img_years=5)
     plt.show()

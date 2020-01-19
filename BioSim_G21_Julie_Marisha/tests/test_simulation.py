@@ -7,7 +7,10 @@ Tests for classes in simulation.py using pytest.
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
+import os
+
 import pytest
+import matplotlib.pyplot as plt
 
 from biosim.simulation import BioSim
 from biosim.animal import Herbivore, Carnivore
@@ -20,7 +23,7 @@ class TestBiosim:
     @pytest.fixture(autouse=True)
     def create_sim(self):
         self.biosim = BioSim()
-        self.population = population = [
+        self.population = [
             {
                 "loc": (10, 10),
                 "pop": [{"species": "Herbivore", "age": 5, "weight": 20}
@@ -82,12 +85,30 @@ class TestBiosim:
         """ add_population method can be called."""
         self.biosim.add_population(self.population)
 
-    def test_update_visualization(self):
-        pass
+    def test_simulate_callable(self):
+        """ simulate method can be called."""
+        self.biosim.simulate(num_years=1, vis_years=10)
 
-    def test_save_file(self):
-        pass
+    def test_setup_graphics_callable(self):
+        """_setup_graphics method can be called."""
+        self.biosim._final_year = 1
+        self.biosim._setup_graphics()
 
-    def test_make_movie(self):
-        pass
+    def test_update_graphics_callable(self):
+        """ _update_graphics method can be called."""
+        self.biosim._final_year = 1
+        self.biosim._setup_graphics()
+        self.biosim._update_graphics()
 
+    def test_save_file_callable(self):
+        """ Test _save_file method can be called."""
+        self.biosim.simulate(num_years=1)
+        self.biosim._save_file()
+
+    def test_make_movie_callable(self):
+        """ make_movie method can be called."""
+        image_dir = os.path.join('..', 'figs')
+        image_base = os.path.join(image_dir, 'bio')
+        self.biosim._image_base = image_base
+        self.biosim.simulate(num_years=3, vis_years=1)
+        self.biosim.make_movie()
