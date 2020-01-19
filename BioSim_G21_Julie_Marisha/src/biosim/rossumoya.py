@@ -131,14 +131,14 @@ class Rossumoya:
 
     default_ini_herbs = [
         {
-            "loc": (10, 10),
+            "loc": (10, 13),
             "pop": [{"species": "Herbivore", "age": 5, "weight": 20}
                     for _ in range(150)],
         }
     ]
     default_ini_carns = [
         {
-            "loc": (10, 10),
+            "loc": (10, 13),
             "pop": [
                 {"species": "Carnivore", "age": 5, "weight": 20}
                 for _ in range(40)
@@ -147,17 +147,26 @@ class Rossumoya:
     ]
     default_map = """\
                           OOOOOOOOOOOOOOOOOOOOO
+                          OSSSSSJJJJMMJJJJJJJOO
+                          OSSSSSJJJJMMJJJJJJJOO
+                          OSSSSSJJJJMMJJJJJJJOO
+                          OOSSJJJJJJJMMJJJJJJJO
+                          OOSSJJJJJJJMMJJJJJJJO
                           OOOOOOOOSMMMMJJJJJJJO
                           OSSSSSJJJJMMJJJJJJJOO
                           OSSSSSSSSSMMJJJJJJOOO
-                          OSSSSSJJJJJJJJJJJJOOO
-                          OSSSSSJJJDDJJJSJJJOOO
-                          OSSJJJJJDDDJJJSSSSOOO
-                          OOSSSSJJJDDJJJSOOOOOO
-                          OSSSJJJJJDDJJJJJJJOOO
-                          OSSSSJJJJDDJJJJOOOOOO
-                          OOSSSSJJJJJJJJOOOOOOO
+                          OSSSSSDDDDDJJJJJJJOOO
+                          OSSSSSDDDDDJJJJJJJOOO
+                          OSSSSSDDDDDJJJJJJJOOO
+                          OSSSSSDDDDDMMJJJJJOOO
+                          OSSSSDDDDDDJJJJOOOOOO
+                          OOSSSSDDDDDDJOOOOOOOO
+                          OOSSSSDDDDDJJJOOOOOOO
+                          OSSSSSDDDDDJJJJJJJOOO
+                          OSSSSDDDDDDJJJJOOOOOO
+                          OOSSSSDDDDDJJJOOOOOOO
                           OOOSSSSJJJJJJJOOOOOOO
+                          OOOSSSSSSOOOOOOOOOOOO
                           OOOOOOOOOOOOOOOOOOOOO"""
 
     default_map = textwrap.dedent(default_map)
