@@ -1,17 +1,12 @@
 # -*- coding: utf-8 -*-
 
-"""Spreadsheet Column Printer
+"""Fauna for Rossumøya
 
-This script implements
-allows the user to print to the console all columns in the
-spreadsheet. It is assumed that the first row of the spreadsheet is the
-location of the columns.
+This script has all the characteristics for the different animal species on
+Rossumøya.
 
-This tool accepts comma separated value files (.csv) as well as excel
-(.xls, .xlsx) files.
-
-This script requires that `pandas` be installed within the Python
-environment you are running this script in.
+This script requires that `numpy` and `scipy.special` are installed within the
+Python environment you are running this script in.
 
 This file can also be imported as a module and contains the following
 classes:
