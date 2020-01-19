@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
 
 """
-This is a small demo script running a ranvis simulation and generating a movie.
+This is a small demo script running a BioSim simulation and generating a movie.
 """
 
-__author__ = "Hans E Plesser / NMBU"
+__author__ = ""
 
-from randvis.simulation import DVSim
+import os
 
-sim = DVSim((10, 15), 0.1, 12345, '../data')
-sim.simulate(100, 1, 5)
+from biosim.simulation import BioSim
+DEFAULT_GRAPHICS_DIR = os.path.join('..', 'figs')
+DEFAULT_IMAGE_NAME = 'bio'
+img_base = os.path.join(DEFAULT_GRAPHICS_DIR, DEFAULT_IMAGE_NAME)
+
+sim = BioSim(img_base=img_base)
+sim.simulate(10, 1, 5)
 sim.make_movie('mp4')
-sim.make_movie('gif')
