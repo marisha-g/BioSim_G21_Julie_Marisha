@@ -220,14 +220,14 @@ class BaseAnimal:
         When an animal eats an amount 'food' of fodder, its
         weight increases.
         """
-        self.weight += self.beta * food
+        self.weight += (self.beta * food)
         self.fitness_has_been_calculated = False
 
     def weight_loss(self):
         """
         Every year, the weight of the animal decreases.
         """
-        self.weight -= self.eta * self.weight
+        self.weight -= (self.eta * self.weight)
         self.fitness_has_been_calculated = False
 
     def weight_loss_birth(self, weight_offspring):
@@ -236,7 +236,7 @@ class BaseAnimal:
         :param weight_offspring: weight of the offspring
         :type: float
         """
-        self.weight -= self.xi * weight_offspring
+        self.weight -= (self.xi * weight_offspring)
         self.fitness_has_been_calculated = False
 
     def prob_procreation(self, n):
