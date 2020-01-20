@@ -105,12 +105,12 @@ class BioSim:
         self._image_counter = 0
 
         if ymax_animals is None:
-            ymax_animals = 1000
+            ymax_animals = 15000
         self._ymax = ymax_animals
 
         if cmax_animals is None:
-            cmax_herbs = 200
-            cmax_carns = 200
+            cmax_herbs = 150
+            cmax_carns = 150
         else:
             cmax_herbs = cmax_animals['Herbivore']
             cmax_carns = cmax_animals['Carnivore']
@@ -507,8 +507,6 @@ class BioSim:
 
         movie_fmt = 'mp4'
         try:
-            # Parameters chosen according to http://trac.ffmpeg.org/wiki/Encode/H.264,
-            # section "Compatibility"
             subprocess.check_call(f'{FFMPEG} -y -r 2 -i '
                                   f'{self._image_base}%05d.{self._image_format}'
                                   f' -c:v libx264 -vf fps=25 -pix_fmt '

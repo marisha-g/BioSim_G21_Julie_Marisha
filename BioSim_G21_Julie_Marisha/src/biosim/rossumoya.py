@@ -311,7 +311,7 @@ class Rossumoya:
         locations = calculator.locations
 
         choice = random.choices(
-            population=locations, weights=probabilities, k=1
+            locations, weights=probabilities
         )
         return choice[0]
 
@@ -336,6 +336,12 @@ class Rossumoya:
             self.island_map[new_loc].add_animals([animal])
             self.island_map[old_loc].remove_animals([animal])
 
+        # reset propensity calculation
+        self.island_map[old_loc].propensity_migration_carn_has_been_calculated = False
+        self.island_map[old_loc].propensity_migration_herb_has_been_calculated = False
+        self.island_map[new_loc].propensity_migration_herb_has_been_calculated = False
+        self.island_map[new_loc].propensity_migration_carn_has_been_calculated = False
+
     def death(self):
         """
         Animals are removed if prob_death returns 1.
@@ -351,28 +357,27 @@ class Rossumoya:
         """
         Run one single simulation.
         """
+
         # Fodder regrows
         for cell in self.island_map.values():
             cell.regrow_fodder()
-
-        # reset propensity calculation
-        Savannah.reset_propensity_migration_carn_has_been_calculated()
-        Jungle.reset_propensity_migration_carn_has_been_calculated()
-        Desert.reset_propensity_migration_carn_has_been_calculated()
 
         # Herbivores eat, then carnivores prey on herbivores
         for cell in self.island_map.values():
             if cell.total_herbivores > 0:
                 cell.herbivores_eat()
-                cell.carnivores_eat()
+                if cell.total_carnivores > 0:
+                    cell.carnivores_eat()
 
         # Animals mate
         self.procreation()
 
         # Animals migrate
+        self.migration()
+
+        # reset migration
         for cell in self.island_map.values():
             cell.reset_migration()
-        self.migration()
 
         # Animals age and loose weight
         for cell in self.island_map.values():

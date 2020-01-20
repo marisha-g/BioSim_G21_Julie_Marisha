@@ -60,11 +60,11 @@ class BaseCell:
             raise ValueError('f_max must be a positive number')
         cls.f_max = f_max
 
-    @classmethod
+    """@classmethod
     def reset_propensity_migration_carn_has_been_calculated(cls):
         cls.propensity_migration_herb_has_been_calculated = False
         cls.propensity_migration_carn_has_been_calculated = False
-
+    """
 
     def __init__(self, animals=None):
         """
@@ -74,6 +74,9 @@ class BaseCell:
         """
         self._fodder_in_cell = None
         self.animal_can_enter = True
+        self._propensity_migration_carn = None
+        self._propensity_migration_herb = None
+
         self.propensity_migration_carn_has_been_calculated = False
         self.propensity_migration_herb_has_been_calculated = False
 
@@ -118,10 +121,12 @@ class BaseCell:
         :returns: the total amount of Herbivores on Rossumøya.
         :type: int
         """
-        total_herbivores = sum(type(a).__name__ == 'Herbivore' for a in self.animals)
+        total_herbivores = 0
+        for animal in self.animals:
+            if type(animal).__name__ == 'Herbivore':
+                total_herbivores += 1
 
         return total_herbivores
-
 
     @property
     def total_carnivores(self):
@@ -129,16 +134,12 @@ class BaseCell:
         :returns: the total amount of Carnivores on Rossumøya.
         :type: int
         """
-        """total_carnivores = 0
+        total_carnivores = 0
         for animal in self.animals:
             if type(animal).__name__ == 'Carnivore':
                 total_carnivores += 1
 
-        return total_carnivores"""
-        return len([
-            animal for animal in self.animals if isinstance(animal, Carnivore)
-        ])
-
+        return total_carnivores
 
     @property
     def fodder_in_cell(self):
@@ -207,6 +208,7 @@ class BaseCell:
         Grow back initial fodder amount.
         """
         self.fodder_in_cell = self.f_max
+        self.propensity_migration_herb_has_been_calculated = False
 
     def animals_age_and_lose_weight(self):
         for animal in self.animals:
@@ -278,7 +280,7 @@ class BaseCell:
         """
         Carnivore with the highest fitness eat first. The Carnivore tries to
         kill the Herbivore with lowest fitness first. The increase in weight
-        of the Carnivore is proportional to the weight of the Herbivore killed.
+        of the Carnivore is proportional to the amount of food eaten.
         """
         for carnivore in self.list_of_sorted_carnivores_by_fitness:
             food_eaten = 0
@@ -286,15 +288,15 @@ class BaseCell:
             for herbivore in list(
                     reversed(self.list_of_sorted_herbivores_by_fitness)
             ):
-                while food_eaten < carnivore.F:
+                if food_eaten < carnivore.F:
                     if carnivore.prob_carnivore_kill(herbivore.fitness):
                         killed_herbivores.append(herbivore)
                         weight_prey = herbivore.weight
-                        if weight_prey > carnivore.F:
-                            food_eaten += carnivore.F
+                        if food_eaten + weight_prey > carnivore.F:
+                            food_eaten = carnivore.F
                         else:
                             food_eaten += weight_prey
-                        carnivore.weight_gain(food_eaten)
+            carnivore.weight_gain(food_eaten)
             self.remove_animals(killed_herbivores)
 
     def herb_procreation(self):
@@ -371,7 +373,7 @@ class BaseCell:
             return self._propensity_migration_herb
         else:
             self._propensity_migration_herb = math.exp(
-            Herbivore.lambda_ * self.abundance_of_fodder_herbivores
+                Herbivore.lambda_ * self.abundance_of_fodder_herbivores
             )
             self.propensity_migration_herb_has_been_calculated = True
             return self._propensity_migration_herb
@@ -388,9 +390,9 @@ class BaseCell:
             return self._propensity_migration_carn
         else:
             self._propensity_migration_carn = math.exp(
-                Herbivore.lambda_ * self.abundance_of_fodder_herbivores
+                Carnivore.lambda_ * self.abundance_of_fodder_carnivores
             )
-            self.propensity_migration_carn_has_been_calculated = False
+            self.propensity_migration_carn_has_been_calculated = True
 
             return self._propensity_migration_carn
 
@@ -442,7 +444,7 @@ class Savannah(BaseCell):
         """
         Calculates regrowth of fodder in cell type Savannah.
         """
-        self.fodder_in_cell = self.fodder_in_cell + self.alpha * (
+        self._fodder_in_cell = self.fodder_in_cell + self.alpha * (
                 self.f_max - self.fodder_in_cell
         )
 
