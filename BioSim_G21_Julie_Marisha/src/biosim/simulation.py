@@ -119,6 +119,7 @@ class BioSim:
         self._cmax_carns = cmax_carns
 
         # the following will be initialized by _setup_graphics
+        self.vis_years = None
         self._nested_list = None
         self._fig = None
         self._map_ax = None
@@ -174,6 +175,8 @@ class BioSim:
 
         if img_years is None:
             img_years = vis_years
+
+        self.vis_years = vis_years
 
         self._final_year = self._year + num_years
         self._setup_graphics()
@@ -353,12 +356,38 @@ class BioSim:
 
         herb_data = self._herb_line.get_ydata()
         herb_data[self._year] = total_herbs
+        if self.vis_years != 1:
+            herb_data = self._interpolate_gaps(herb_data)
 
         carn_data = self._carn_line.get_ydata()
         carn_data[self._year] = total_carns
+        if self.vis_years != 1:
+            carn_data = self._interpolate_gaps(carn_data)
 
         self._carn_line.set_ydata(carn_data)
         self._herb_line.set_ydata(herb_data)
+
+    def _interpolate_gaps(self, values):
+        """
+        Fill gaps using linear interpolation, optionally only fill gaps up to a
+        size of `limit`.
+
+        Code originates from:
+        https://stackoverflow.com/questions/36455083/working-with-nan-values-in-matplotlib
+        """
+        limit = self.vis_years
+        values = np.asarray(values)
+        i = np.arange(values.size)
+        valid = np.isfinite(values)
+        filled = np.interp(i, i[valid], values[valid])
+
+        if limit is not None:
+            invalid = ~valid
+            for n in range(1, limit + 1):
+                invalid[:-n] &= invalid[n:]
+            filled[invalid] = np.nan
+
+        return filled
 
     def _setup_graphics(self):
         """Creates subplots."""
@@ -491,23 +520,6 @@ class BioSim:
 
 
 if __name__ == '__main__':
-    """island_map = "OOOOOOO\nOOOMOOO\nOJJJJOO\nOJJSJJO\nOOMJJOO\nOOOJJOO\nOOOOOOO"
-    ini_pop = [
-        {
-            "loc": (2, 2),
-            "pop": [{"species": "Herbivore", "age": 5, "weight": 20}
-                    for _ in range(100)],
-        },
-        {
-            "loc": (2, 3),
-            "pop": [
-                {"species": "Carnivore", "age": 5, "weight": 20}
-                for _ in range(40)
-            ],
-        }
-    ]
-    sim1 = BioSim(ini_pop=ini_pop, island_map=island_map, ymax_animals=700, cmax_animals={'Herbivore': 100,
-                                                                                          'Carnivore': 100})"""
-    sim1 = BioSim(img_base=DEFAULT_IMAGE_BASE)
-    sim1.simulate(num_years=10, vis_years=1, img_years=5)
+    sim1 = BioSim()
+    sim1.simulate(num_years=30, vis_years=2, img_years=5)
     plt.show()
