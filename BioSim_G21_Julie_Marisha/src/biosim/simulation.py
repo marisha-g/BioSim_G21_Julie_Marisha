@@ -39,7 +39,7 @@ from biosim.cell import Savannah, Jungle
 from biosim.rossumoya import Rossumoya, MigrationProbabilityCalculator
 
 # update these variables to point to your ffmpeg and convert binaries
-_FFMPEG_BINARY = 'ffmpeg'
+_FFMPEG_BINARY = r'C:\Users\be15069901\Documents\NMBU Data 2019-2020\INF200\biosim_project\BioSim_G21_Julie_Marisha\BioSim_G21_Julie_Marisha\ffmpeg\bin\ffmpeg.exe'
 _CONVERT_BINARY = 'magick'
 
 # update this to the directory and file-name beginning
@@ -48,7 +48,7 @@ _DEFAULT_GRAPHICS_DIR = os.path.join('..', 'figs')
 _DEFAULT_IMAGE_NAME = 'bio'
 _DEFAULT_IMAGE_FORMAT = "png"
 _DEFAULT_MOVIE_FORMAT = 'mp4'
-DEFAULT_IMAGE_BASE = os.path.join(_DEFAULT_GRAPHICS_DIR, _DEFAULT_IMAGE_NAME)
+DEFAULT_IMAGE_BASE = r'C:\Users\be15069901\Documents\NMBU Data 2019-2020\INF200\biosim_project\BioSim_G21_Julie_Marisha\BioSim_G21_Julie_Marisha\src\figs\bio'
 
 
 class BioSim:
@@ -82,11 +82,6 @@ class BioSim:
         :type img_fmt: str
 
         If img_base is None, no figures are written to file.
-        Filenames are formed as
-
-            '{}_{:05d}.{}'.format(img_base, img_no, img_fmt)
-
-        where img_no are consecutive image numbers starting from 0.
         img_base should contain a path and beginning of a file name.
         """
         np.random.seed(seed)
@@ -202,6 +197,7 @@ class BioSim:
         self.rossumoya.add_population(population)
 
     def _make_map_with_rgb_colours(self):
+        """ Makes map from nested_coordinates_list with rgb colour codes for visualization."""
         colour_map = self.nested_coordinates_list
         map_list = self.rossumoya.island_map_string.split('\n')
 
@@ -345,7 +341,7 @@ class BioSim:
         self._fig.suptitle(f'Year: {self.year}', fontsize=20)
         self._update_heat_map()
         self._update_graph()
-        plt.pause(0.001)
+        plt.pause(1e-2)
 
     def _update_graph(self):
         """Updates population graph."""
@@ -478,37 +474,38 @@ class BioSim:
         if self._image_base is None:
             raise RuntimeError("No filename defined.")
 
-        if movie_fmt == 'mp4':
-            try:
-                # Parameters chosen according to http://trac.ffmpeg.org/wiki/Encode/H.264,
-                # section "Compatibility"
-                subprocess.check_call([_FFMPEG_BINARY,
-                                       '-i', '{}_%05d.png'.format(self._image_base),
-                                       '-y',
-                                       '-profile:v', 'baseline',
-                                       '-level', '3.0',
-                                       '-pix_fmt', 'yuv420p',
-                                       '{}.{}'.format(self._image_base,
-                                                      movie_fmt)])
-            except subprocess.CalledProcessError as err:
-                raise RuntimeError('ERROR: ffmpeg failed with: {}'.format(err))
-        elif movie_fmt == 'gif':
-            try:
-                subprocess.check_call([_CONVERT_BINARY,
-                                       '-delay', '1',
-                                       '-loop', '0',
-                                       '{}_*.png'.format(self._image_base),
-                                       '{}.{}'.format(self._image_base,
-                                                      movie_fmt)])
-            except subprocess.CalledProcessError as err:
-                raise RuntimeError('ERROR: convert failed with: {}'.format(err))
-        else:
-            raise ValueError('Unknown movie format: ' + movie_fmt)
+        movie_fmt == 'mp4'
+        try:
+            # Parameters chosen according to http://trac.ffmpeg.org/wiki/Encode/H.264,
+            # section "Compatibility"
+            subprocess.check_call(f'{_FFMPEG_BINARY} -y -r 2 -i '
+                                  f'{self._image_base}%05d.{self._image_format}'
+                                  f' -c:v libx264 -vf fps=25 -pix_fmt '
+                                  f'yuv420p '
+                                  f'{self._image_base}.{movie_fmt}')
+
+        except subprocess.CalledProcessError as err:
+            raise RuntimeError('ERROR: ffmpeg failed with: {}'.format(err))
 
 
 if __name__ == '__main__':
-    sim1 = BioSim(ymax_animals=200, cmax_animals={'Herbivore': 20,
-                                                  'Carnivore': 20})
-    MigrationProbabilityCalculator.probabilities = [0.5, 0.5, 0, 0]
-    sim1.simulate(num_years=20, vis_years=1, img_years=5)
+    """island_map = "OOOOOOO\nOOOMOOO\nOJJJJOO\nOJJSJJO\nOOMJJOO\nOOOJJOO\nOOOOOOO"
+    ini_pop = [
+        {
+            "loc": (2, 2),
+            "pop": [{"species": "Herbivore", "age": 5, "weight": 20}
+                    for _ in range(100)],
+        },
+        {
+            "loc": (2, 3),
+            "pop": [
+                {"species": "Carnivore", "age": 5, "weight": 20}
+                for _ in range(40)
+            ],
+        }
+    ]
+    sim1 = BioSim(ini_pop=ini_pop, island_map=island_map, ymax_animals=700, cmax_animals={'Herbivore': 100,
+                                                                                          'Carnivore': 100})"""
+    sim1 = BioSim(img_base=DEFAULT_IMAGE_BASE)
+    sim1.simulate(num_years=10, vis_years=1, img_years=5)
     plt.show()
