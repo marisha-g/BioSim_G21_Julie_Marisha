@@ -34,9 +34,9 @@ import numpy as np
 import os
 import subprocess
 
-from biosim.animal import Herbivore, Carnivore
-from biosim.cell import Savannah, Jungle
-from biosim.rossumoya import Rossumoya, MigrationProbabilityCalculator
+from src.biosim.animal import Herbivore, Carnivore
+from src.biosim.cell import Savannah, Jungle
+from src.biosim.rossumoya import Rossumoya, MigrationProbabilityCalculator
 
 # update these variables to point to your ffmpeg and convert binaries
 FFMPEG = r'C:\Users\be15069901\Documents\NMBU Data 2019-2020\INF200\biosim_project\BioSim_G21_Julie_Marisha\BioSim_G21_Julie_Marisha\ffmpeg\bin\ffmpeg.exe'

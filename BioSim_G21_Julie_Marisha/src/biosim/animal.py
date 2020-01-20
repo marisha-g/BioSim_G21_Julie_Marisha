@@ -29,8 +29,9 @@ classes:
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
-import numpy as np
-import scipy.special
+import random
+from numba import jit
+import math
 
 
 class BaseAnimal:
@@ -168,7 +169,7 @@ class BaseAnimal:
         """
         cls.birth_weight = 0
         while cls.birth_weight <= 0:
-            cls.birth_weight = np.random.normal(cls.w_birth, cls.sigma_birth)
+            cls.birth_weight = random.gauss(cls.w_birth, cls.sigma_birth)
         return cls.birth_weight
 
     def __init__(self, age=None, weight=None):
@@ -241,7 +242,7 @@ class BaseAnimal:
             return 0
         else:
             p = min(1, self.gamma * self.fitness * (n - 1))
-            choice = np.random.binomial(1, p)
+            choice = custom_binomial(p)
             return choice
 
     @property
@@ -256,12 +257,12 @@ class BaseAnimal:
             return self._fitness
 
         if self.weight > 0:
-            age_sigma = scipy.special.expit(
-                - self.phi_age * (self.age - self.a_half)
-            )
-            weight_sigma = scipy.special.expit(
-                self.phi_weight * (self.weight - self.w_half)
-            )
+            age_sigma = 1 / (1 + math.exp(
+                 self.phi_age * (self.age - self.a_half)
+            ))
+            weight_sigma = 1 / (1 + math.exp(
+                - self.phi_weight * (self.weight - self.w_half)
+            ))
             self._fitness = age_sigma * weight_sigma
             self.fitness_has_been_calculated = True
         else:
@@ -290,7 +291,7 @@ class BaseAnimal:
         :type: int
         """
         p = self.mu * self.fitness
-        self._prob_migration = np.random.binomial(1, p)
+        self._prob_migration = custom_binomial(p)
         return self._prob_migration
 
     @prob_migration.setter
@@ -314,7 +315,7 @@ class BaseAnimal:
             self._prob_death = 0
         else:
             p = self.omega * (1 - self.fitness)
-            self._prob_death = np.random.binomial(1, p)
+            self._prob_death = custom_binomial(p)
 
         return self._prob_death
 
@@ -533,6 +534,18 @@ class Carnivore(BaseAnimal):
             return 0
         if 0 < self.fitness - fitness_prey < self.DeltaPhiMax:
             p = (self.fitness - fitness_prey) / self.DeltaPhiMax
-            choice = np.random.binomial(1, p=p)
+            choice = custom_binomial(p)
             return choice
         return 1
+
+
+@jit
+def custom_binomial(p):
+    """ Function for drawing random numbers similar to
+     numpy.random.binomial(n=1, p=p), but faster."""
+    x = random.uniform(0, 1)
+    if x < p:
+        return 1
+    else:
+        return 0
+

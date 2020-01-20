@@ -39,7 +39,7 @@ classes:
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
-from biosim.animal import Carnivore, Herbivore
+from src.biosim.animal import Carnivore, Herbivore
 import math
 
 
@@ -60,6 +60,12 @@ class BaseCell:
             raise ValueError('f_max must be a positive number')
         cls.f_max = f_max
 
+    @classmethod
+    def reset_propensity_migration_carn_has_been_calculated(cls):
+        cls.propensity_migration_herb_has_been_calculated = False
+        cls.propensity_migration_carn_has_been_calculated = False
+
+
     def __init__(self, animals=None):
         """
         Constructor that initiate class Cell.
@@ -68,6 +74,8 @@ class BaseCell:
         """
         self._fodder_in_cell = None
         self.animal_can_enter = True
+        self.propensity_migration_carn_has_been_calculated = False
+        self.propensity_migration_herb_has_been_calculated = False
 
         if animals is None:
             animals = []
@@ -110,9 +118,10 @@ class BaseCell:
         :returns: the total amount of Herbivores on Rossumøya.
         :type: int
         """
-        return len([
-            animal for animal in self.animals if isinstance(animal, Herbivore)
-        ])
+        total_herbivores = sum(type(a).__name__ == 'Herbivore' for a in self.animals)
+
+        return total_herbivores
+
 
     @property
     def total_carnivores(self):
@@ -120,9 +129,16 @@ class BaseCell:
         :returns: the total amount of Carnivores on Rossumøya.
         :type: int
         """
+        """total_carnivores = 0
+        for animal in self.animals:
+            if type(animal).__name__ == 'Carnivore':
+                total_carnivores += 1
+
+        return total_carnivores"""
         return len([
             animal for animal in self.animals if isinstance(animal, Carnivore)
         ])
+
 
     @property
     def fodder_in_cell(self):
@@ -163,11 +179,14 @@ class BaseCell:
         :return: rel_abundance_of_fodder
         :type: float
         """
-        list_weights = [
+        """list_weights = [
             animal.weight for animal in self.animals if
             isinstance(animal, Herbivore)
-        ]
-        weight_of_herbs = sum(list_weights)
+        ]"""
+        weight_of_herbs = 0
+        for animal in self.animals:
+            if type(animal).__name__ == 'Herbivore':
+                weight_of_herbs += animal.weight
 
         rel_abundance_of_fodder = weight_of_herbs / (
                 (self.total_carnivores + 1) * Carnivore.F
@@ -202,8 +221,13 @@ class BaseCell:
         :return: sorted_herbivores or list_of_herbivores
         :type: list
         """
-        list_of_herbivores = [animal for animal in self.animals
-                              if isinstance(animal, Herbivore)]
+        """list_of_herbivores = [animal for animal in self.animals
+                              if isinstance(animal, Herbivore)]"""
+        list_of_herbivores = []
+        for animal in self.animals:
+            if type(animal).__name__ == 'Herbivore':
+                list_of_herbivores.append(animal)
+
         if len(list_of_herbivores) > 1:
             sorted_herbivores = sorted(list_of_herbivores,
                                        key=lambda x: x.fitness,
@@ -220,8 +244,13 @@ class BaseCell:
         :return: sorted_carnivores or list of carnivores
         :type: list
         """
-        list_of_carnivores = [animal for animal in self.animals
-                              if isinstance(animal, Carnivore)]
+        """list_of_carnivores = [animal for animal in self.animals
+                              if isinstance(animal, Carnivore)]"""
+        list_of_carnivores = []
+        for animal in self.animals:
+            if type(animal).__name__ == 'Carnivore':
+                list_of_carnivores.append(animal)
+
         if len(list_of_carnivores) > 1:
             sorted_carnivores = sorted(list_of_carnivores,
                                        key=lambda x: x.fitness,
@@ -266,9 +295,8 @@ class BaseCell:
                     carnivore.weight_gain(weight_prey)
             self.remove_animals(killed_herbivores)
 
-    def procreation(self):
+    def herb_procreation(self):
         total_herbs_at_start_of_breeding_season = self.total_herbivores
-        total_carns_at_start_of_breeding_season = self.total_carnivores
         for animal in self.animals:
             species = type(animal).__name__
 
@@ -276,12 +304,20 @@ class BaseCell:
                 animal_gives_birth = animal.prob_procreation(
                     total_herbs_at_start_of_breeding_season
                 )
+                if animal_gives_birth:
+                    self.add_offspring(animal)
+
+    def carn_procreation(self):
+        total_carns_at_start_of_breeding_season = self.total_carnivores
+        for animal in self.animals:
+            species = type(animal).__name__
+
             if species == 'Carnivore':
                 animal_gives_birth = animal.prob_procreation(
                     total_carns_at_start_of_breeding_season
                 )
-            if animal_gives_birth:
-                self.add_offspring(animal)
+                if animal_gives_birth:
+                    self.add_offspring(animal)
 
     def add_offspring(self, animal):
         """
@@ -329,9 +365,14 @@ class BaseCell:
         :return: formula for calculating propensity
         :type: float
         """
-        return math.exp(
+        if self.propensity_migration_herb_has_been_calculated:
+            return self._propensity_migration_herb
+        else:
+            self._propensity_migration_herb = math.exp(
             Herbivore.lambda_ * self.abundance_of_fodder_herbivores
-        )
+            )
+            self.propensity_migration_herb_has_been_calculated = True
+            return self._propensity_migration_herb
 
     @property
     def propensity_migration_carn(self):
@@ -341,9 +382,15 @@ class BaseCell:
         :return: formula for calculating propensity
         :type: float
         """
-        return math.exp(
-            Carnivore.lambda_ * self.abundance_of_fodder_carnivores
-        )
+        if self.propensity_migration_carn_has_been_calculated:
+            return self._propensity_migration_carn
+        else:
+            self._propensity_migration_carn = math.exp(
+                Herbivore.lambda_ * self.abundance_of_fodder_herbivores
+            )
+            self.propensity_migration_carn_has_been_calculated = False
+
+            return self._propensity_migration_carn
 
     def remove_animals(self, gone_animals):
         """

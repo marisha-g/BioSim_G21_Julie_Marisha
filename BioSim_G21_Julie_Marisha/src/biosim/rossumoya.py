@@ -20,10 +20,10 @@ __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
 import textwrap
-import numpy as np
+import numpy
 
-from biosim.animal import Herbivore, Carnivore
-from biosim.cell import Savannah, Jungle, Desert, Mountain, Ocean
+from src.biosim.animal import Herbivore, Carnivore
+from src.biosim.cell import Savannah, Jungle, Desert, Mountain, Ocean
 
 
 class MigrationProbabilityCalculator:
@@ -288,8 +288,10 @@ class Rossumoya:
         cell.
         """
         for cell in self.island_map.values():
-            if cell.total_herbivores > 1 or cell.total_carnivores > 1:
-                cell.procreation()
+            if cell.total_herbivores > 1:
+                cell.herb_procreation()
+            if cell.total_carnivores > 1:
+                cell.carn_procreation()
 
     def choose_cell(self, loc, species):
         """
@@ -308,7 +310,7 @@ class Rossumoya:
         probabilities = calculator.probabilities
         locations = calculator.locations
 
-        choice = np.random.choice(4, p=probabilities)
+        choice = numpy.random.choice(4, p=probabilities)
         chosen_cell = locations[choice]
         return chosen_cell
 
@@ -351,6 +353,11 @@ class Rossumoya:
         # Fodder regrows
         for cell in self.island_map.values():
             cell.regrow_fodder()
+
+        # reset propensity calculation
+        Savannah.reset_propensity_migration_carn_has_been_calculated()
+        Jungle.reset_propensity_migration_carn_has_been_calculated()
+        Desert.reset_propensity_migration_carn_has_been_calculated()
 
         # Herbivores eat, then carnivores prey on herbivores
         for cell in self.island_map.values():
