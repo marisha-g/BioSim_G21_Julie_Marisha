@@ -171,10 +171,6 @@ class BaseAnimal:
             cls.birth_weight = np.random.normal(cls.w_birth, cls.sigma_birth)
         return cls.birth_weight
 
-    @classmethod
-    def reset_fitness_calculation(cls):
-        cls.fitness_has_been_calculated = False
-
     def __init__(self, age=None, weight=None):
         """
         Constructor that initiate class Animal.
@@ -207,6 +203,7 @@ class BaseAnimal:
         each year that passes.
         """
         self.age += 1
+        self.fitness_has_been_calculated = False
 
     def weight_gain(self, food):
         """
@@ -266,10 +263,11 @@ class BaseAnimal:
                 self.phi_weight * (self.weight - self.w_half)
             )
             self._fitness = age_sigma * weight_sigma
+            self.fitness_has_been_calculated = True
         else:
             self._fitness = 0
+            self.fitness_has_been_calculated = True
 
-        self.fitness_has_been_calculated = True
         return self._fitness
 
     @fitness.setter
