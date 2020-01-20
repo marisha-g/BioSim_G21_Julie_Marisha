@@ -104,21 +104,16 @@ class MigrationProbabilityCalculator:
         if self._species == 'Carnivore':
             propensities = self.propensity_carn
 
-        unscaled_probabilities = []
-        sum_propensities = sum(propensities)
-        for prop in propensities:
-            if prop == 0:
-                unscaled_probabilities.append(0)
-            else:
-                p = prop / (sum_propensities * prop)
-                unscaled_probabilities.append(p)
-
         self._probabilities = []
-        sum_unscaled_probabilities = sum(unscaled_probabilities)
-        for probability in unscaled_probabilities:
-            self._probabilities.append(
-                probability / sum_unscaled_probabilities
-            )
+        sum_propensities = sum(propensities)
+
+        for prop in propensities:
+            p = prop / sum_propensities
+            self._probabilities.append(p)
+
+        if sum(self.probabilities) != 1:
+            raise ValueError('probabilities dont sum up to one')
+
         return self._probabilities
 
     @probabilities.setter
@@ -377,9 +372,6 @@ class Rossumoya:
         # Animals age and loose weight
         for cell in self.island_map.values():
             cell.animals_age_and_lose_weight()
-
-        Herbivore.reset_fitness_calculation()
-        Carnivore.reset_fitness_calculation()
 
         # Animals die
         self.death()
