@@ -111,9 +111,6 @@ class MigrationProbabilityCalculator:
             p = prop / sum_propensities
             self._probabilities.append(p)
 
-        if sum(self.probabilities) != 1:
-            raise ValueError('probabilities dont sum up to one')
-
         return self._probabilities
 
     @probabilities.setter
