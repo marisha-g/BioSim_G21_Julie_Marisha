@@ -20,7 +20,7 @@ autoclass_content = 'both'
 
 # -- Project information -----------------------------------------------------
 
-project = 'biosim_G21'
+project = 'BioSim'
 copyright = '2020, Julie Forrisdal & Marisha Gnanaseelan'
 author = 'Julie Forrisdal & Marisha Gnanaseelan'
 
@@ -108,7 +108,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'biosim_G21doc'
+htmlhelp_basename = 'biosim_G21'
 
 
 # -- Options for LaTeX output ------------------------------------------------
