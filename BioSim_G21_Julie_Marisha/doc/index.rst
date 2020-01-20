@@ -33,3 +33,6 @@ population map for the number of animals per cell and simulation year.
    examples
    maths
    references
+
+References
+----------
