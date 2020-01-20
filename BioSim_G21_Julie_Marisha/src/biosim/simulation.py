@@ -170,7 +170,6 @@ class BioSim:
 
         .. note:: Image files will be numbered consecutively.
 
-        Author: Hans Ekkehard Plesser
         """
 
         if img_years is None:
@@ -184,8 +183,8 @@ class BioSim:
             if self._year % vis_years == 0:
                 self._update_graphics()
 
-            if self._year % img_years == 0:
-                self._save_file()
+            """if self._year % img_years == 0:
+                self._save_file()"""
 
             self.rossumoya.single_year()
             self._year += 1
@@ -342,8 +341,8 @@ class BioSim:
     def _update_graphics(self):
         """Updates graph and heat map in figure window."""
         self._fig.suptitle(f'Year: {self.year}', fontsize=20)
-        self._update_heat_map()
         self._update_graph()
+        self._update_heat_map()
         plt.pause(1e-2)
 
     def _update_graph(self):
