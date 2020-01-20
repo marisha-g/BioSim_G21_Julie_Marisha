@@ -25,6 +25,13 @@ the island's geography, total number of animals per species as graph,
 population map for the number of animals per cell and simulation year.
 
 
+
+Mathematical background
+------------------------
+In order for us to be able to investigate the environment in Rossumøya,
+we had to use some mathematical formulas.
+
+
 Modules
 -----------
 
@@ -51,19 +58,18 @@ on the links below.
    modules/animal
 
 
-Mathematical background
-------------------------
-In order for us to be able to investigate the environment in Rossumøya,
-we had to use some mathematical formulas.
-
-
 Examples
 ------------
+
+*  :doc:`Population generator <examples/population_generator>`
 
 .. toctree::
    :maxdepth: 2
    :hidden:
    :caption: Examples
+
+   examples/population_generator
+
 
 
 
