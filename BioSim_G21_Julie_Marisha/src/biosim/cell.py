@@ -327,14 +327,14 @@ class BaseCell:
         :type: type
         """
         weight = animal.draw_birth_weight()
-        offspring = [
-            {'species': type(animal).__name__,
-             'age': 0,
-             'weight': weight}
-        ]
-
-        self.add_population(offspring)
-        animal.weight_loss_birth(weight)
+        if weight * animal.xi < animal.weight:
+            offspring = [
+                {'species': type(animal).__name__,
+                 'age': 0,
+                 'weight': weight}
+            ]
+            self.add_population(offspring)
+            animal.weight_loss_birth(weight)
 
     def find_migrating_animals(self):
         """
