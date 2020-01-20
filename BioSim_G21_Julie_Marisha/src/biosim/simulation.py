@@ -39,7 +39,7 @@ from biosim.cell import Savannah, Jungle
 from biosim.rossumoya import Rossumoya, MigrationProbabilityCalculator
 
 # update these variables to point to your ffmpeg and convert binaries
-_FFMPEG_BINARY = r'C:\Users\be15069901\Documents\NMBU Data 2019-2020\INF200\biosim_project\BioSim_G21_Julie_Marisha\BioSim_G21_Julie_Marisha\ffmpeg\bin\ffmpeg.exe'
+FFMPEG = r'C:\Users\be15069901\Documents\NMBU Data 2019-2020\INF200\biosim_project\BioSim_G21_Julie_Marisha\BioSim_G21_Julie_Marisha\ffmpeg\bin\ffmpeg.exe'
 _CONVERT_BINARY = 'magick'
 
 # update this to the directory and file-name beginning
@@ -474,11 +474,11 @@ class BioSim:
         if self._image_base is None:
             raise RuntimeError("No filename defined.")
 
-        movie_fmt == 'mp4'
+        movie_fmt = 'mp4'
         try:
             # Parameters chosen according to http://trac.ffmpeg.org/wiki/Encode/H.264,
             # section "Compatibility"
-            subprocess.check_call(f'{_FFMPEG_BINARY} -y -r 2 -i '
+            subprocess.check_call(f'{FFMPEG} -y -r 2 -i '
                                   f'{self._image_base}%05d.{self._image_format}'
                                   f' -c:v libx264 -vf fps=25 -pix_fmt '
                                   f'yuv420p '
