@@ -20,7 +20,7 @@ __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
 import textwrap
-import numpy
+import random
 
 from src.biosim.animal import Herbivore, Carnivore
 from src.biosim.cell import Savannah, Jungle, Desert, Mountain, Ocean
@@ -310,9 +310,10 @@ class Rossumoya:
         probabilities = calculator.probabilities
         locations = calculator.locations
 
-        choice = numpy.random.choice(4, p=probabilities)
-        chosen_cell = locations[choice]
-        return chosen_cell
+        choice = random.choices(
+            population=locations, weights=probabilities, k=1
+        )
+        return choice[0]
 
     def migration(self):
         """
