@@ -36,7 +36,6 @@ classes:
 
 """
 
-
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
@@ -111,7 +110,9 @@ class BaseCell:
         :returns: the total amount of Herbivores on Rossumøya.
         :type: int
         """
-        return len([animal for animal in self.animals if isinstance(animal, Herbivore)])
+        return len([
+            animal for animal in self.animals if isinstance(animal, Herbivore)
+        ])
 
     @property
     def total_carnivores(self):
@@ -119,7 +120,9 @@ class BaseCell:
         :returns: the total amount of Carnivores on Rossumøya.
         :type: int
         """
-        return len([animal for animal in self.animals if isinstance(animal, Carnivore)])
+        return len([
+            animal for animal in self.animals if isinstance(animal, Carnivore)
+        ])
 
     @property
     def fodder_in_cell(self):
@@ -326,7 +329,9 @@ class BaseCell:
         :return: formula for calculating propensity
         :type: float
         """
-        return math.exp(Herbivore.lambda_ * self.abundance_of_fodder_herbivores)
+        return math.exp(
+            Herbivore.lambda_ * self.abundance_of_fodder_herbivores
+        )
 
     @property
     def propensity_migration_carn(self):
@@ -336,7 +341,9 @@ class BaseCell:
         :return: formula for calculating propensity
         :type: float
         """
-        return math.exp(Carnivore.lambda_ * self.abundance_of_fodder_carnivores)
+        return math.exp(
+            Carnivore.lambda_ * self.abundance_of_fodder_carnivores
+        )
 
     def remove_animals(self, gone_animals):
         """

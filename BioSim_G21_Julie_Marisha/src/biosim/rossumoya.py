@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 """
 :mod: `biosim.rossumoya provides the user the annual cycle on Rossumøya.
 
