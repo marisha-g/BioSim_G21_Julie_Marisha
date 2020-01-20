@@ -286,13 +286,15 @@ class BaseCell:
             for herbivore in list(
                     reversed(self.list_of_sorted_herbivores_by_fitness)
             ):
-                if food_eaten >= carnivore.F:
-                    break
-                if carnivore.prob_carnivore_kill(herbivore.fitness):
-                    killed_herbivores.append(herbivore)
-                    weight_prey = herbivore.weight
-                    food_eaten += weight_prey
-                    carnivore.weight_gain(weight_prey)
+                while food_eaten < carnivore.F:
+                    if carnivore.prob_carnivore_kill(herbivore.fitness):
+                        killed_herbivores.append(herbivore)
+                        weight_prey = herbivore.weight
+                        if weight_prey > carnivore.F:
+                            food_eaten += carnivore.F
+                        else:
+                            food_eaten += weight_prey
+                        carnivore.weight_gain(food_eaten)
             self.remove_animals(killed_herbivores)
 
     def herb_procreation(self):
