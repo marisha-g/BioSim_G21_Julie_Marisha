@@ -52,6 +52,9 @@ DEFAULT_IMAGE_BASE = r'C:\Users\be15069901\Documents\NMBU Data 2019-2020\INF200\
 
 
 class BioSim:
+    """
+    Simulation
+    """
 
     def __init__(
             self,
