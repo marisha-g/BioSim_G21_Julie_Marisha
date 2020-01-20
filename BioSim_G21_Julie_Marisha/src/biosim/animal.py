@@ -312,7 +312,7 @@ class BaseAnimal:
         :type: int
         """
         if self.fitness == 0:
-            self._prob_death = 0
+            self._prob_death = 1
         else:
             p = self.omega * (1 - self.fitness)
             self._prob_death = custom_binomial(p)
