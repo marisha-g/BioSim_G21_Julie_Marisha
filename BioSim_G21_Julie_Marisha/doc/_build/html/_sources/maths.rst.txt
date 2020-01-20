@@ -1,5 +1,0 @@
-Maths
-==================
-
-In order for us to investigate the environment in Rossumøya, and to get the
-best results we had to use some math formulas.

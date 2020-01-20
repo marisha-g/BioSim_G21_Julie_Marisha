@@ -78,11 +78,19 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Modules</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../maths.html">Maths</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/simulation.html">Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/rossumoya.html">Rossumøya</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/cell.html">Cell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/animal.html">Animal</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/simulation.html">Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/rossumoya.html">Rossumøya</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/cell.html">Cell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/animal.html">Animal</a></li>
 </ul>
 
             
@@ -174,7 +182,7 @@
 <span class="kn">from</span> <span class="nn">biosim.cell</span> <span class="kn">import</span> <span class="n">Savannah</span><span class="p">,</span> <span class="n">Jungle</span><span class="p">,</span> <span class="n">Desert</span><span class="p">,</span> <span class="n">Mountain</span><span class="p">,</span> <span class="n">Ocean</span>
 
 
-<div class="viewcode-block" id="MigrationProbabilityCalculator"><a class="viewcode-back" href="../../modules.html#biosim.rossumoya.MigrationProbabilityCalculator">[docs]</a><span class="k">class</span> <span class="nc">MigrationProbabilityCalculator</span><span class="p">:</span>
+<div class="viewcode-block" id="MigrationProbabilityCalculator"><a class="viewcode-back" href="../../modules/rossumoya.html#biosim.rossumoya.MigrationProbabilityCalculator">[docs]</a><span class="k">class</span> <span class="nc">MigrationProbabilityCalculator</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Class used to calculate probabilities for migration.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loc</span><span class="p">,</span> <span class="n">island_map</span><span class="p">,</span> <span class="n">species</span><span class="p">):</span>
@@ -269,7 +277,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_probabilities</span> <span class="o">=</span> <span class="n">prob_list</span></div>
 
 
-<div class="viewcode-block" id="Rossumoya"><a class="viewcode-back" href="../../modules.html#biosim.rossumoya.Rossumoya">[docs]</a><span class="k">class</span> <span class="nc">Rossumoya</span><span class="p">:</span>
+<div class="viewcode-block" id="Rossumoya"><a class="viewcode-back" href="../../modules/rossumoya.html#biosim.rossumoya.Rossumoya">[docs]</a><span class="k">class</span> <span class="nc">Rossumoya</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Island class in simulation BioSim.&quot;&quot;&quot;</span>
 
     <span class="n">default_ini_herbs</span> <span class="o">=</span> <span class="p">[</span>
@@ -356,7 +364,7 @@
         <span class="n">Herbivore</span><span class="o">.</span><span class="n">set_parameters</span><span class="p">()</span>
         <span class="n">Carnivore</span><span class="o">.</span><span class="n">set_parameters</span><span class="p">()</span>
 
-<div class="viewcode-block" id="Rossumoya.check_map_input"><a class="viewcode-back" href="../../modules.html#biosim.rossumoya.Rossumoya.check_map_input">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Rossumoya.check_map_input"><a class="viewcode-back" href="../../modules/rossumoya.html#biosim.rossumoya.Rossumoya.check_map_input">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">check_map_input</span><span class="p">(</span><span class="n">island_map</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Raises ValueError if input map is not compatible and does not</span>
@@ -395,7 +403,7 @@
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Non-ocean boundary.&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="Rossumoya.make_geography_coordinates"><a class="viewcode-back" href="../../modules.html#biosim.rossumoya.Rossumoya.make_geography_coordinates">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Rossumoya.make_geography_coordinates"><a class="viewcode-back" href="../../modules/rossumoya.html#biosim.rossumoya.Rossumoya.make_geography_coordinates">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">make_geography_coordinates</span><span class="p">(</span><span class="n">input_map</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Makes a dictionary with coordinates as keys and Cell subclass</span>
@@ -412,7 +420,7 @@
                 <span class="n">geography_map</span><span class="p">[(</span><span class="n">i_index</span><span class="p">,</span> <span class="n">j_index</span><span class="p">)]</span> <span class="o">=</span> <span class="n">cell_instance</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">geography_map</span></div>
 
-<div class="viewcode-block" id="Rossumoya.add_population"><a class="viewcode-back" href="../../modules.html#biosim.rossumoya.Rossumoya.add_population">[docs]</a>    <span class="k">def</span> <span class="nf">add_population</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">):</span>
+<div class="viewcode-block" id="Rossumoya.add_population"><a class="viewcode-back" href="../../modules/rossumoya.html#biosim.rossumoya.Rossumoya.add_population">[docs]</a>    <span class="k">def</span> <span class="nf">add_population</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add population to the island.</span>
 <span class="sd">        :param population: List of dictionaries specifying</span>
@@ -429,7 +437,7 @@
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Cant place animal in {type(cell).__name__}&#39;</span>
                                  <span class="sa">f</span><span class="s1">&#39; at coordinates: </span><span class="si">{location}</span><span class="s1">&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Rossumoya.procreation"><a class="viewcode-back" href="../../modules.html#biosim.rossumoya.Rossumoya.procreation">[docs]</a>    <span class="k">def</span> <span class="nf">procreation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Rossumoya.procreation"><a class="viewcode-back" href="../../modules/rossumoya.html#biosim.rossumoya.Rossumoya.procreation">[docs]</a>    <span class="k">def</span> <span class="nf">procreation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If an animal gives birth, a new animal of the same species with</span>
 <span class="sd">        age zero and weight drawn from draw_birth_weight is added to the same</span>
@@ -439,7 +447,7 @@
             <span class="k">if</span> <span class="n">cell</span><span class="o">.</span><span class="n">total_herbivores</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">cell</span><span class="o">.</span><span class="n">total_carnivores</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="n">cell</span><span class="o">.</span><span class="n">procreation</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Rossumoya.choose_cell"><a class="viewcode-back" href="../../modules.html#biosim.rossumoya.Rossumoya.choose_cell">[docs]</a>    <span class="k">def</span> <span class="nf">choose_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loc</span><span class="p">,</span> <span class="n">species</span><span class="p">):</span>
+<div class="viewcode-block" id="Rossumoya.choose_cell"><a class="viewcode-back" href="../../modules/rossumoya.html#biosim.rossumoya.Rossumoya.choose_cell">[docs]</a>    <span class="k">def</span> <span class="nf">choose_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loc</span><span class="p">,</span> <span class="n">species</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate propensities and returns</span>
 <span class="sd">        coordinates of chosen cell to migrate to.</span>
@@ -460,7 +468,7 @@
         <span class="n">chosen_cell</span> <span class="o">=</span> <span class="n">locations</span><span class="p">[</span><span class="n">choice</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">chosen_cell</span></div>
 
-<div class="viewcode-block" id="Rossumoya.migration"><a class="viewcode-back" href="../../modules.html#biosim.rossumoya.Rossumoya.migration">[docs]</a>    <span class="k">def</span> <span class="nf">migration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Rossumoya.migration"><a class="viewcode-back" href="../../modules/rossumoya.html#biosim.rossumoya.Rossumoya.migration">[docs]</a>    <span class="k">def</span> <span class="nf">migration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Finds witch animals wants to migrate, and calls _migrate method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -481,7 +489,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">island_map</span><span class="p">[</span><span class="n">new_loc</span><span class="p">]</span><span class="o">.</span><span class="n">add_animals</span><span class="p">([</span><span class="n">animal</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">island_map</span><span class="p">[</span><span class="n">old_loc</span><span class="p">]</span><span class="o">.</span><span class="n">remove_animals</span><span class="p">([</span><span class="n">animal</span><span class="p">])</span>
 
-<div class="viewcode-block" id="Rossumoya.death"><a class="viewcode-back" href="../../modules.html#biosim.rossumoya.Rossumoya.death">[docs]</a>    <span class="k">def</span> <span class="nf">death</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Rossumoya.death"><a class="viewcode-back" href="../../modules/rossumoya.html#biosim.rossumoya.Rossumoya.death">[docs]</a>    <span class="k">def</span> <span class="nf">death</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Animals are removed if prob_death returns 1.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -492,7 +500,7 @@
                     <span class="n">dead_animals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">animal</span><span class="p">)</span>
             <span class="n">cell</span><span class="o">.</span><span class="n">remove_animals</span><span class="p">(</span><span class="n">dead_animals</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Rossumoya.single_year"><a class="viewcode-back" href="../../modules.html#biosim.rossumoya.Rossumoya.single_year">[docs]</a>    <span class="k">def</span> <span class="nf">single_year</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Rossumoya.single_year"><a class="viewcode-back" href="../../modules/rossumoya.html#biosim.rossumoya.Rossumoya.single_year">[docs]</a>    <span class="k">def</span> <span class="nf">single_year</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run one single simulation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

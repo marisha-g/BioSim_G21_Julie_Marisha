@@ -78,11 +78,19 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Modules</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../maths.html">Maths</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/simulation.html">Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/rossumoya.html">Rossumøya</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/cell.html">Cell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/animal.html">Animal</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/simulation.html">Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/rossumoya.html">Rossumøya</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/cell.html">Cell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/animal.html">Animal</a></li>
 </ul>
 
             
@@ -191,10 +199,10 @@
 <span class="kn">import</span> <span class="nn">math</span>
 
 
-<div class="viewcode-block" id="BaseCell"><a class="viewcode-back" href="../../modules.html#biosim.cell.BaseCell">[docs]</a><span class="k">class</span> <span class="nc">BaseCell</span><span class="p">:</span>
+<div class="viewcode-block" id="BaseCell"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.BaseCell">[docs]</a><span class="k">class</span> <span class="nc">BaseCell</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Superclass for cell in BioSim.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="BaseCell.set_parameters"><a class="viewcode-back" href="../../modules.html#biosim.cell.BaseCell.set_parameters">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="BaseCell.set_parameters"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.BaseCell.set_parameters">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">set_parameters</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">f_max</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set default parameters for class Cell.</span>
@@ -224,7 +232,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">set_parameters</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fodder_first_year</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">f_max</span><span class="p">)</span>
 
-<div class="viewcode-block" id="BaseCell.add_population"><a class="viewcode-back" href="../../modules.html#biosim.cell.BaseCell.add_population">[docs]</a>    <span class="k">def</span> <span class="nf">add_population</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pop_list</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseCell.add_population"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.BaseCell.add_population">[docs]</a>    <span class="k">def</span> <span class="nf">add_population</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pop_list</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add new animals in cell.</span>
 <span class="sd">        :param pop_list: list of dictionaries indicating population.</span>
@@ -323,7 +331,7 @@
 
         <span class="k">return</span> <span class="n">rel_abundance_of_fodder</span>
 
-<div class="viewcode-block" id="BaseCell.fodder_first_year"><a class="viewcode-back" href="../../modules.html#biosim.cell.BaseCell.fodder_first_year">[docs]</a>    <span class="k">def</span> <span class="nf">fodder_first_year</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f_max</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseCell.fodder_first_year"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.BaseCell.fodder_first_year">[docs]</a>    <span class="k">def</span> <span class="nf">fodder_first_year</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f_max</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets max fodder in Savannah and Jungle cells.</span>
 <span class="sd">        :param f_max: maximum fodder available in a cell type</span>
@@ -331,7 +339,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fodder_in_cell</span> <span class="o">=</span> <span class="n">f_max</span></div>
 
-<div class="viewcode-block" id="BaseCell.regrow_fodder"><a class="viewcode-back" href="../../modules.html#biosim.cell.BaseCell.regrow_fodder">[docs]</a>    <span class="k">def</span> <span class="nf">regrow_fodder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseCell.regrow_fodder"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.BaseCell.regrow_fodder">[docs]</a>    <span class="k">def</span> <span class="nf">regrow_fodder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Grow back initial fodder amount.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -378,7 +386,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">list_of_carnivores</span>
 
-<div class="viewcode-block" id="BaseCell.herbivores_eat"><a class="viewcode-back" href="../../modules.html#biosim.cell.BaseCell.herbivores_eat">[docs]</a>    <span class="k">def</span> <span class="nf">herbivores_eat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseCell.herbivores_eat"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.BaseCell.herbivores_eat">[docs]</a>    <span class="k">def</span> <span class="nf">herbivores_eat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Herbivore with the highest fitness eat first. The Herbivore&#39;s weight</span>
 <span class="sd">        increases proportional to the amount of fodder it has eaten.</span>
@@ -393,7 +401,7 @@
                     <span class="n">herbivore</span><span class="o">.</span><span class="n">weight_gain</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fodder_in_cell</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">fodder_in_cell</span> <span class="o">=</span> <span class="mi">0</span></div>
 
-<div class="viewcode-block" id="BaseCell.carnivores_eat"><a class="viewcode-back" href="../../modules.html#biosim.cell.BaseCell.carnivores_eat">[docs]</a>    <span class="k">def</span> <span class="nf">carnivores_eat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseCell.carnivores_eat"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.BaseCell.carnivores_eat">[docs]</a>    <span class="k">def</span> <span class="nf">carnivores_eat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Carnivore with the highest fitness eat first. The Carnivore tries to</span>
 <span class="sd">        kill the Herbivore with lowest fitness first. The increase in weight</span>
@@ -431,7 +439,7 @@
             <span class="k">if</span> <span class="n">animal_gives_birth</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">add_offspring</span><span class="p">(</span><span class="n">animal</span><span class="p">)</span>
 
-<div class="viewcode-block" id="BaseCell.add_offspring"><a class="viewcode-back" href="../../modules.html#biosim.cell.BaseCell.add_offspring">[docs]</a>    <span class="k">def</span> <span class="nf">add_offspring</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">animal</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseCell.add_offspring"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.BaseCell.add_offspring">[docs]</a>    <span class="k">def</span> <span class="nf">add_offspring</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">animal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds offspring to the cell, and decrease weight of the</span>
 <span class="sd">        mother.</span>
@@ -448,7 +456,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">add_population</span><span class="p">(</span><span class="n">offspring</span><span class="p">)</span>
         <span class="n">animal</span><span class="o">.</span><span class="n">weight_loss_birth</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="BaseCell.find_migrating_animals"><a class="viewcode-back" href="../../modules.html#biosim.cell.BaseCell.find_migrating_animals">[docs]</a>    <span class="k">def</span> <span class="nf">find_migrating_animals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseCell.find_migrating_animals"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.BaseCell.find_migrating_animals">[docs]</a>    <span class="k">def</span> <span class="nf">find_migrating_animals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Makes a list of the animals who wants to migrate out</span>
 <span class="sd">        of the cell.</span>
@@ -462,7 +470,7 @@
                 <span class="n">animal</span><span class="o">.</span><span class="n">has_migrated</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="n">migrating_animals</span></div>
 
-<div class="viewcode-block" id="BaseCell.reset_migration"><a class="viewcode-back" href="../../modules.html#biosim.cell.BaseCell.reset_migration">[docs]</a>    <span class="k">def</span> <span class="nf">reset_migration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseCell.reset_migration"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.BaseCell.reset_migration">[docs]</a>    <span class="k">def</span> <span class="nf">reset_migration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets has_migrated to False for all animals in the cell.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -493,7 +501,7 @@
             <span class="n">Carnivore</span><span class="o">.</span><span class="n">lambda_</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">abundance_of_fodder_carnivores</span>
         <span class="p">)</span>
 
-<div class="viewcode-block" id="BaseCell.remove_animals"><a class="viewcode-back" href="../../modules.html#biosim.cell.BaseCell.remove_animals">[docs]</a>    <span class="k">def</span> <span class="nf">remove_animals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gone_animals</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseCell.remove_animals"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.BaseCell.remove_animals">[docs]</a>    <span class="k">def</span> <span class="nf">remove_animals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gone_animals</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Removes animal that has migrated.</span>
 <span class="sd">        :param gone_animals: list of animals that has migrated</span>
@@ -502,16 +510,16 @@
         <span class="k">for</span> <span class="n">gone_animal</span> <span class="ow">in</span> <span class="n">gone_animals</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">animals</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">gone_animal</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="BaseCell.add_animals"><a class="viewcode-back" href="../../modules.html#biosim.cell.BaseCell.add_animals">[docs]</a>    <span class="k">def</span> <span class="nf">add_animals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_animals</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseCell.add_animals"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.BaseCell.add_animals">[docs]</a>    <span class="k">def</span> <span class="nf">add_animals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_animals</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Adds animals to animals list.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">new_animal</span> <span class="ow">in</span> <span class="n">new_animals</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">animals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_animal</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="Savannah"><a class="viewcode-back" href="../../modules.html#biosim.cell.Savannah">[docs]</a><span class="k">class</span> <span class="nc">Savannah</span><span class="p">(</span><span class="n">BaseCell</span><span class="p">):</span>
+<div class="viewcode-block" id="Savannah"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.Savannah">[docs]</a><span class="k">class</span> <span class="nc">Savannah</span><span class="p">(</span><span class="n">BaseCell</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class instance of class Cell for the cell type Savannah.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Savannah.set_parameters"><a class="viewcode-back" href="../../modules.html#biosim.cell.Savannah.set_parameters">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Savannah.set_parameters"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.Savannah.set_parameters">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">set_parameters</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">f_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set default parameters for class instance Savannah.</span>
@@ -537,7 +545,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
-<div class="viewcode-block" id="Savannah.regrow_fodder"><a class="viewcode-back" href="../../modules.html#biosim.cell.Savannah.regrow_fodder">[docs]</a>    <span class="k">def</span> <span class="nf">regrow_fodder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Savannah.regrow_fodder"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.Savannah.regrow_fodder">[docs]</a>    <span class="k">def</span> <span class="nf">regrow_fodder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates regrowth of fodder in cell type Savannah.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -546,10 +554,10 @@
         <span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="Jungle"><a class="viewcode-back" href="../../modules.html#biosim.cell.Jungle">[docs]</a><span class="k">class</span> <span class="nc">Jungle</span><span class="p">(</span><span class="n">BaseCell</span><span class="p">):</span>
+<div class="viewcode-block" id="Jungle"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.Jungle">[docs]</a><span class="k">class</span> <span class="nc">Jungle</span><span class="p">(</span><span class="n">BaseCell</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class instance of class Cell for the cell type Jungle.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Jungle.set_parameters"><a class="viewcode-back" href="../../modules.html#biosim.cell.Jungle.set_parameters">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Jungle.set_parameters"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.Jungle.set_parameters">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">set_parameters</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">f_max</span><span class="o">=</span><span class="mf">800.0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set default parameters for class instance Jungle.</span>
@@ -565,10 +573,10 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="Desert"><a class="viewcode-back" href="../../modules.html#biosim.cell.Desert">[docs]</a><span class="k">class</span> <span class="nc">Desert</span><span class="p">(</span><span class="n">BaseCell</span><span class="p">):</span>
+<div class="viewcode-block" id="Desert"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.Desert">[docs]</a><span class="k">class</span> <span class="nc">Desert</span><span class="p">(</span><span class="n">BaseCell</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class instance of class Cell for the cell type Desert.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Desert.set_parameters"><a class="viewcode-back" href="../../modules.html#biosim.cell.Desert.set_parameters">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Desert.set_parameters"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.Desert.set_parameters">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">set_parameters</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">f_max</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set default parameters for class instance Desert.</span>
@@ -585,10 +593,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">fodder_in_cell</span> <span class="o">=</span> <span class="mi">0</span></div>
 
 
-<div class="viewcode-block" id="Mountain"><a class="viewcode-back" href="../../modules.html#biosim.cell.Mountain">[docs]</a><span class="k">class</span> <span class="nc">Mountain</span><span class="p">(</span><span class="n">BaseCell</span><span class="p">):</span>
+<div class="viewcode-block" id="Mountain"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.Mountain">[docs]</a><span class="k">class</span> <span class="nc">Mountain</span><span class="p">(</span><span class="n">BaseCell</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class instance of class Cell for the cell types Mountain.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Mountain.set_parameters"><a class="viewcode-back" href="../../modules.html#biosim.cell.Mountain.set_parameters">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Mountain.set_parameters"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.Mountain.set_parameters">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">set_parameters</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">f_max</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set default parameters for class instance Mountain.</span>
@@ -626,10 +634,10 @@
         <span class="k">return</span> <span class="mi">0</span></div>
 
 
-<div class="viewcode-block" id="Ocean"><a class="viewcode-back" href="../../modules.html#biosim.cell.Ocean">[docs]</a><span class="k">class</span> <span class="nc">Ocean</span><span class="p">(</span><span class="n">BaseCell</span><span class="p">):</span>
+<div class="viewcode-block" id="Ocean"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.Ocean">[docs]</a><span class="k">class</span> <span class="nc">Ocean</span><span class="p">(</span><span class="n">BaseCell</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class instance of class Cell for the cell type Ocean.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Ocean.set_parameters"><a class="viewcode-back" href="../../modules.html#biosim.cell.Ocean.set_parameters">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Ocean.set_parameters"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.Ocean.set_parameters">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">set_parameters</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">f_max</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set default parameters for class instance Ocean.</span>

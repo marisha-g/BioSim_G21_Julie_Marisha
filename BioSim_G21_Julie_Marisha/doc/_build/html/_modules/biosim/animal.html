@@ -78,11 +78,19 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Modules</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../maths.html">Maths</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/simulation.html">Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/rossumoya.html">Rossumøya</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/cell.html">Cell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/animal.html">Animal</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/simulation.html">Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/rossumoya.html">Rossumøya</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/cell.html">Cell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/animal.html">Animal</a></li>
 </ul>
 
             
@@ -181,10 +189,10 @@
 <span class="kn">import</span> <span class="nn">scipy.special</span>
 
 
-<div class="viewcode-block" id="BaseAnimal"><a class="viewcode-back" href="../../modules.html#biosim.animal.BaseAnimal">[docs]</a><span class="k">class</span> <span class="nc">BaseAnimal</span><span class="p">:</span>
+<div class="viewcode-block" id="BaseAnimal"><a class="viewcode-back" href="../../modules/animal.html#biosim.animal.BaseAnimal">[docs]</a><span class="k">class</span> <span class="nc">BaseAnimal</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Superclass for animal in BioSim.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="BaseAnimal.set_parameters"><a class="viewcode-back" href="../../modules.html#biosim.animal.BaseAnimal.set_parameters">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="BaseAnimal.set_parameters"><a class="viewcode-back" href="../../modules/animal.html#biosim.animal.BaseAnimal.set_parameters">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">set_parameters</span><span class="p">(</span>
             <span class="bp">cls</span><span class="p">,</span>
             <span class="n">w_birth</span><span class="p">,</span>
@@ -306,7 +314,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;f can not be a negative value.&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="BaseAnimal.draw_birth_weight"><a class="viewcode-back" href="../../modules.html#biosim.animal.BaseAnimal.draw_birth_weight">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="BaseAnimal.draw_birth_weight"><a class="viewcode-back" href="../../modules/animal.html#biosim.animal.BaseAnimal.draw_birth_weight">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">draw_birth_weight</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Birth weight is drawn from a Gaussian distribution with mean and</span>
@@ -345,7 +353,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_prob_death</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">has_migrated</span> <span class="o">=</span> <span class="kc">False</span>
 
-<div class="viewcode-block" id="BaseAnimal.aging"><a class="viewcode-back" href="../../modules.html#biosim.animal.BaseAnimal.aging">[docs]</a>    <span class="k">def</span> <span class="nf">aging</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseAnimal.aging"><a class="viewcode-back" href="../../modules/animal.html#biosim.animal.BaseAnimal.aging">[docs]</a>    <span class="k">def</span> <span class="nf">aging</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        At birth, each animal has age a=0. Age increases by one year for</span>
 <span class="sd">        each year that passes.</span>
@@ -353,7 +361,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fitness_has_been_calculated</span> <span class="o">=</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="BaseAnimal.weight_gain"><a class="viewcode-back" href="../../modules.html#biosim.animal.BaseAnimal.weight_gain">[docs]</a>    <span class="k">def</span> <span class="nf">weight_gain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">food</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseAnimal.weight_gain"><a class="viewcode-back" href="../../modules/animal.html#biosim.animal.BaseAnimal.weight_gain">[docs]</a>    <span class="k">def</span> <span class="nf">weight_gain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">food</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        When an animal eats an amount &#39;food&#39; of fodder, its</span>
 <span class="sd">        weight increases.</span>
@@ -361,14 +369,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">beta</span> <span class="o">*</span> <span class="n">food</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fitness_has_been_calculated</span> <span class="o">=</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="BaseAnimal.weight_loss"><a class="viewcode-back" href="../../modules.html#biosim.animal.BaseAnimal.weight_loss">[docs]</a>    <span class="k">def</span> <span class="nf">weight_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseAnimal.weight_loss"><a class="viewcode-back" href="../../modules/animal.html#biosim.animal.BaseAnimal.weight_loss">[docs]</a>    <span class="k">def</span> <span class="nf">weight_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Every year, the weight of the animal decreases.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">-=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eta</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fitness_has_been_calculated</span> <span class="o">=</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="BaseAnimal.weight_loss_birth"><a class="viewcode-back" href="../../modules.html#biosim.animal.BaseAnimal.weight_loss_birth">[docs]</a>    <span class="k">def</span> <span class="nf">weight_loss_birth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weight_offspring</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseAnimal.weight_loss_birth"><a class="viewcode-back" href="../../modules/animal.html#biosim.animal.BaseAnimal.weight_loss_birth">[docs]</a>    <span class="k">def</span> <span class="nf">weight_loss_birth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weight_offspring</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates weight loss when an animal gives birth.</span>
 <span class="sd">        :param weight_offspring: weight of the offspring</span>
@@ -377,7 +385,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">-=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xi</span> <span class="o">*</span> <span class="n">weight_offspring</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fitness_has_been_calculated</span> <span class="o">=</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="BaseAnimal.prob_procreation"><a class="viewcode-back" href="../../modules.html#biosim.animal.BaseAnimal.prob_procreation">[docs]</a>    <span class="k">def</span> <span class="nf">prob_procreation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseAnimal.prob_procreation"><a class="viewcode-back" href="../../modules/animal.html#biosim.animal.BaseAnimal.prob_procreation">[docs]</a>    <span class="k">def</span> <span class="nf">prob_procreation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Animals can mate if there are at least two animals of the same species</span>
 <span class="sd">        in a cell. Probability to give birth is given by the variable p.</span>
@@ -477,10 +485,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_prob_death</span> <span class="o">=</span> <span class="n">value</span></div>
 
 
-<div class="viewcode-block" id="Herbivore"><a class="viewcode-back" href="../../modules.html#biosim.animal.Herbivore">[docs]</a><span class="k">class</span> <span class="nc">Herbivore</span><span class="p">(</span><span class="n">BaseAnimal</span><span class="p">):</span>
+<div class="viewcode-block" id="Herbivore"><a class="viewcode-back" href="../../modules/animal.html#biosim.animal.Herbivore">[docs]</a><span class="k">class</span> <span class="nc">Herbivore</span><span class="p">(</span><span class="n">BaseAnimal</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class instance of class Animal for the Herbivore species.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Herbivore.set_parameters"><a class="viewcode-back" href="../../modules.html#biosim.animal.Herbivore.set_parameters">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Herbivore.set_parameters"><a class="viewcode-back" href="../../modules/animal.html#biosim.animal.Herbivore.set_parameters">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">set_parameters</span><span class="p">(</span>
             <span class="bp">cls</span><span class="p">,</span>
             <span class="n">w_birth</span><span class="o">=</span><span class="mf">8.0</span><span class="p">,</span>
@@ -568,10 +576,10 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="Carnivore"><a class="viewcode-back" href="../../modules.html#biosim.animal.Carnivore">[docs]</a><span class="k">class</span> <span class="nc">Carnivore</span><span class="p">(</span><span class="n">BaseAnimal</span><span class="p">):</span>
+<div class="viewcode-block" id="Carnivore"><a class="viewcode-back" href="../../modules/animal.html#biosim.animal.Carnivore">[docs]</a><span class="k">class</span> <span class="nc">Carnivore</span><span class="p">(</span><span class="n">BaseAnimal</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class instance of class Animal for the Carnivore species.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Carnivore.set_parameters"><a class="viewcode-back" href="../../modules.html#biosim.animal.Carnivore.set_parameters">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Carnivore.set_parameters"><a class="viewcode-back" href="../../modules/animal.html#biosim.animal.Carnivore.set_parameters">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">set_parameters</span><span class="p">(</span>
             <span class="bp">cls</span><span class="p">,</span>
             <span class="n">w_birth</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span>
@@ -669,7 +677,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_prob_carnivore_kill</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Carnivore.prob_carnivore_kill"><a class="viewcode-back" href="../../modules.html#biosim.animal.Carnivore.prob_carnivore_kill">[docs]</a>    <span class="k">def</span> <span class="nf">prob_carnivore_kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fitness_prey</span><span class="p">):</span>
+<div class="viewcode-block" id="Carnivore.prob_carnivore_kill"><a class="viewcode-back" href="../../modules/animal.html#biosim.animal.Carnivore.prob_carnivore_kill">[docs]</a>    <span class="k">def</span> <span class="nf">prob_carnivore_kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fitness_prey</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Probability for a Carnivore to kill a Herbivore.</span>
 <span class="sd">        :param fitness_prey: the fitness of the prey (Herbivore)</span>

@@ -1,0 +1,530 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Cell &mdash; BioSim 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> BioSim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Cell</a></li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BioSim</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Cell</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/modules/cell.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-biosim.cell">
+<span id="cell"></span><h1>Cell<a class="headerlink" href="#module-biosim.cell" title="Permalink to this headline">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">mod</dt>
+<dd class="field-odd"><p><cite>biosim.cell</cite> provides the user the information that is stored in the
+different landscape cells in Rossumøya.</p>
+</dd>
+</dl>
+<p>Rossumøya is divided into squares (or cells), where each square is of one of
+the following five types: ocean, jungle, savannah, desert and mountain.
+The superclass and subclasses in this script carries all the information that
+are stores in these different landscape cells.</p>
+<p>This file can be imported as a module and contains the following
+classes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>BaseCell - Superclass and the basic characteristics that all of the cell
+types in Rossumøya has in common.</p></li>
+<li><p>Savannah(BaseCell) - Subclass of BaseCell and characteristics for
+the cell type Savannah.</p></li>
+<li><p>Jungle(BaseCell) - Subclass of BaseCell and characteristics for
+the cell type Jungle.</p></li>
+<li><p>Desert(BaseCell) - Subclass of BaseCell and characteristics for
+the cell type Desert.</p></li>
+<li><p>Mountain(BaseCell) - Subclass of BaseCell and characteristics for
+the cell type Mountain.</p></li>
+<li><p>Ocean(BaseCell) - Subclass of BaseCell and characteristics for
+the cell type Ocean.</p></li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>This script requires that <cite>math</cite> is installed within the Python
+environment you are running this script in.</p></li>
+</ul>
+</div>
+<dl class="class">
+<dt id="biosim.cell.BaseCell">
+<em class="property">class </em><code class="sig-prename descclassname">biosim.cell.</code><code class="sig-name descname">BaseCell</code><span class="sig-paren">(</span><em class="sig-param">animals=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/cell.html#BaseCell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.BaseCell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Superclass for cell in BioSim.</p>
+<p>Constructor that initiate class Cell.
+:param animals: list of all the animals in a cell
+:type: list</p>
+<dl class="method">
+<dt id="biosim.cell.BaseCell.abundance_of_fodder_carnivores">
+<em class="property">property </em><code class="sig-name descname">abundance_of_fodder_carnivores</code><a class="headerlink" href="#biosim.cell.BaseCell.abundance_of_fodder_carnivores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the relative abundance of fodder for Carnivores.
+:return: rel_abundance_of_fodder
+:type: float</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.BaseCell.abundance_of_fodder_herbivores">
+<em class="property">property </em><code class="sig-name descname">abundance_of_fodder_herbivores</code><a class="headerlink" href="#biosim.cell.BaseCell.abundance_of_fodder_herbivores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the relative abundance of fodder for Herbivores.
+:return: rel_abundance_of_fodder
+:type: float</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.BaseCell.add_animals">
+<code class="sig-name descname">add_animals</code><span class="sig-paren">(</span><em class="sig-param">new_animals</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/cell.html#BaseCell.add_animals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.BaseCell.add_animals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds animals to animals list.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.BaseCell.add_offspring">
+<code class="sig-name descname">add_offspring</code><span class="sig-paren">(</span><em class="sig-param">animal</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/cell.html#BaseCell.add_offspring"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.BaseCell.add_offspring" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds offspring to the cell, and decrease weight of the
+mother.
+:param animal: Mother who gives birth
+:type: type</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.BaseCell.add_population">
+<code class="sig-name descname">add_population</code><span class="sig-paren">(</span><em class="sig-param">pop_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/cell.html#BaseCell.add_population"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.BaseCell.add_population" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add new animals in cell.
+:param pop_list: list of dictionaries indicating population.
+:type: list</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.BaseCell.carnivores_eat">
+<code class="sig-name descname">carnivores_eat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/cell.html#BaseCell.carnivores_eat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.BaseCell.carnivores_eat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Carnivore with the highest fitness eat first. The Carnivore tries to
+kill the Herbivore with lowest fitness first. The increase in weight
+of the Carnivore is proportional to the weight of the Herbivore killed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.BaseCell.find_migrating_animals">
+<code class="sig-name descname">find_migrating_animals</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/cell.html#BaseCell.find_migrating_animals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.BaseCell.find_migrating_animals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a list of the animals who wants to migrate out
+of the cell.
+:return: migrating_animals
+:type: list</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.BaseCell.fodder_first_year">
+<code class="sig-name descname">fodder_first_year</code><span class="sig-paren">(</span><em class="sig-param">f_max</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/cell.html#BaseCell.fodder_first_year"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.BaseCell.fodder_first_year" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets max fodder in Savannah and Jungle cells.
+:param f_max: maximum fodder available in a cell type
+:type: float</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.BaseCell.fodder_in_cell">
+<em class="property">property </em><code class="sig-name descname">fodder_in_cell</code><a class="headerlink" href="#biosim.cell.BaseCell.fodder_in_cell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fodder available in cell.
+:return: self._fodder_in_cell
+:type: float</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.BaseCell.herbivores_eat">
+<code class="sig-name descname">herbivores_eat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/cell.html#BaseCell.herbivores_eat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.BaseCell.herbivores_eat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Herbivore with the highest fitness eat first. The Herbivore’s weight
+increases proportional to the amount of fodder it has eaten.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.BaseCell.list_of_sorted_carnivores_by_fitness">
+<em class="property">property </em><code class="sig-name descname">list_of_sorted_carnivores_by_fitness</code><a class="headerlink" href="#biosim.cell.BaseCell.list_of_sorted_carnivores_by_fitness" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sorts all Carnivores by fitness in descending order if there
+are more than one Carnivore in the cell.
+:return: sorted_carnivores or list of carnivores
+:type: list</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.BaseCell.list_of_sorted_herbivores_by_fitness">
+<em class="property">property </em><code class="sig-name descname">list_of_sorted_herbivores_by_fitness</code><a class="headerlink" href="#biosim.cell.BaseCell.list_of_sorted_herbivores_by_fitness" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sorts all Herbivores by fitness in descending order if there
+are more than one Herbivore in the cell.
+:return: sorted_herbivores or list_of_herbivores
+:type: list</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.BaseCell.propensity_migration_carn">
+<em class="property">property </em><code class="sig-name descname">propensity_migration_carn</code><a class="headerlink" href="#biosim.cell.BaseCell.propensity_migration_carn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the propensity for a Carnivore to move from one cell
+to another.
+:return: formula for calculating propensity
+:type: float</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.BaseCell.propensity_migration_herb">
+<em class="property">property </em><code class="sig-name descname">propensity_migration_herb</code><a class="headerlink" href="#biosim.cell.BaseCell.propensity_migration_herb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the propensity for a Herbivore to move from one cell
+to another.
+:return: formula for calculating propensity
+:type: float</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.BaseCell.regrow_fodder">
+<code class="sig-name descname">regrow_fodder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/cell.html#BaseCell.regrow_fodder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.BaseCell.regrow_fodder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Grow back initial fodder amount.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.BaseCell.remove_animals">
+<code class="sig-name descname">remove_animals</code><span class="sig-paren">(</span><em class="sig-param">gone_animals</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/cell.html#BaseCell.remove_animals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.BaseCell.remove_animals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes animal that has migrated.
+:param gone_animals: list of animals that has migrated
+:type: list</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.BaseCell.reset_migration">
+<code class="sig-name descname">reset_migration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/cell.html#BaseCell.reset_migration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.BaseCell.reset_migration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets has_migrated to False for all animals in the cell.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.BaseCell.set_parameters">
+<em class="property">classmethod </em><code class="sig-name descname">set_parameters</code><span class="sig-paren">(</span><em class="sig-param">f_max=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/cell.html#BaseCell.set_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.BaseCell.set_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set default parameters for class Cell.
+:param f_max: maximum fodder available in a cell type
+:type: float</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.BaseCell.total_carnivores">
+<em class="property">property </em><code class="sig-name descname">total_carnivores</code><a class="headerlink" href="#biosim.cell.BaseCell.total_carnivores" title="Permalink to this definition">¶</a></dt>
+<dd><p>the total amount of Carnivores on Rossumøya.
+:type: int</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>returns</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.BaseCell.total_herbivores">
+<em class="property">property </em><code class="sig-name descname">total_herbivores</code><a class="headerlink" href="#biosim.cell.BaseCell.total_herbivores" title="Permalink to this definition">¶</a></dt>
+<dd><p>the total amount of Herbivores on Rossumøya.
+:type: int</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>returns</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.BaseCell.total_population">
+<em class="property">property </em><code class="sig-name descname">total_population</code><a class="headerlink" href="#biosim.cell.BaseCell.total_population" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the total amount of animals on Rossumøya.
+:return: length of the Animal list
+:type: int</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="biosim.cell.Desert">
+<em class="property">class </em><code class="sig-prename descclassname">biosim.cell.</code><code class="sig-name descname">Desert</code><a class="reference internal" href="../_modules/biosim/cell.html#Desert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Desert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class instance of class Cell for the cell type Desert.</p>
+<p>Constructor that initiate class instance Desert.</p>
+<dl class="method">
+<dt id="biosim.cell.Desert.set_parameters">
+<em class="property">classmethod </em><code class="sig-name descname">set_parameters</code><span class="sig-paren">(</span><em class="sig-param">f_max=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/cell.html#Desert.set_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Desert.set_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set default parameters for class instance Desert.
+:param f_max: maximum fodder available in cell type Desert
+:type: float</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="biosim.cell.Jungle">
+<em class="property">class </em><code class="sig-prename descclassname">biosim.cell.</code><code class="sig-name descname">Jungle</code><a class="reference internal" href="../_modules/biosim/cell.html#Jungle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Jungle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class instance of class Cell for the cell type Jungle.</p>
+<p>Constructor that initiate class instance Jungle.</p>
+<dl class="method">
+<dt id="biosim.cell.Jungle.set_parameters">
+<em class="property">classmethod </em><code class="sig-name descname">set_parameters</code><span class="sig-paren">(</span><em class="sig-param">f_max=800.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/cell.html#Jungle.set_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Jungle.set_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set default parameters for class instance Jungle.
+:param f_max: maximum fodder available in cell type Jungle
+:type: float</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="biosim.cell.Mountain">
+<em class="property">class </em><code class="sig-prename descclassname">biosim.cell.</code><code class="sig-name descname">Mountain</code><a class="reference internal" href="../_modules/biosim/cell.html#Mountain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Mountain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class instance of class Cell for the cell types Mountain.</p>
+<p>Constructor that initiate class instance Mountain.</p>
+<dl class="method">
+<dt id="biosim.cell.Mountain.propensity_migration_carn">
+<em class="property">property </em><code class="sig-name descname">propensity_migration_carn</code><a class="headerlink" href="#biosim.cell.Mountain.propensity_migration_carn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the propensity for a Carnivore to migrate to zero,
+because Mountain cells are impassable.
+:return: 0
+:type: int</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.Mountain.propensity_migration_herb">
+<em class="property">property </em><code class="sig-name descname">propensity_migration_herb</code><a class="headerlink" href="#biosim.cell.Mountain.propensity_migration_herb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the propensity for a Herbivore to migrate to zero,
+because Mountain cells are impassable.
+:return: 0
+:type: int</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.Mountain.set_parameters">
+<em class="property">classmethod </em><code class="sig-name descname">set_parameters</code><span class="sig-paren">(</span><em class="sig-param">f_max=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/cell.html#Mountain.set_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Mountain.set_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set default parameters for class instance Mountain.
+:param f_max: maximum fodder available in cell type Mountain
+:type: float</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="biosim.cell.Ocean">
+<em class="property">class </em><code class="sig-prename descclassname">biosim.cell.</code><code class="sig-name descname">Ocean</code><a class="reference internal" href="../_modules/biosim/cell.html#Ocean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Ocean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class instance of class Cell for the cell type Ocean.</p>
+<p>Constructor that initiate class instance Ocean.</p>
+<dl class="method">
+<dt id="biosim.cell.Ocean.propensity_migration_carn">
+<em class="property">property </em><code class="sig-name descname">propensity_migration_carn</code><a class="headerlink" href="#biosim.cell.Ocean.propensity_migration_carn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the propensity for a Carnivore to migrate to zero,
+because Ocean cells are impassable.
+:return: 0
+:type: int</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.Ocean.propensity_migration_herb">
+<em class="property">property </em><code class="sig-name descname">propensity_migration_herb</code><a class="headerlink" href="#biosim.cell.Ocean.propensity_migration_herb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the propensity for a Herbivore to migrate to zero,
+because Ocean cells are impassable.
+:return: 0
+:type: int</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.Ocean.set_parameters">
+<em class="property">classmethod </em><code class="sig-name descname">set_parameters</code><span class="sig-paren">(</span><em class="sig-param">f_max=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/cell.html#Ocean.set_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Ocean.set_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set default parameters for class instance Ocean.
+:param f_max: maximum fodder available in cell type Ocean
+:type: float</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="biosim.cell.Savannah">
+<em class="property">class </em><code class="sig-prename descclassname">biosim.cell.</code><code class="sig-name descname">Savannah</code><a class="reference internal" href="../_modules/biosim/cell.html#Savannah"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Savannah" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class instance of class Cell for the cell type Savannah.</p>
+<p>Constructor that initiate class instance Savannah.</p>
+<dl class="method">
+<dt id="biosim.cell.Savannah.regrow_fodder">
+<code class="sig-name descname">regrow_fodder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/cell.html#Savannah.regrow_fodder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Savannah.regrow_fodder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates regrowth of fodder in cell type Savannah.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.Savannah.set_parameters">
+<em class="property">classmethod </em><code class="sig-name descname">set_parameters</code><span class="sig-paren">(</span><em class="sig-param">f_max=None</em>, <em class="sig-param">alpha=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/cell.html#Savannah.set_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Savannah.set_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set default parameters for class instance Savannah.
+:param f_max: maximum fodder available in cell type Savannah
+:type: float
+:param alpha: constant
+:type: float</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Julie Forrisdal &amp; Marisha Gnanaseelan
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

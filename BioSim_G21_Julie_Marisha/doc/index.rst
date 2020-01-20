@@ -25,11 +25,46 @@ the island's geography, total number of animals per species as graph,
 population map for the number of animals per cell and simulation year.
 
 
+Modules
+-----------
+
+The modules and the source code for this project can be accessed by clicking
+on the links below.
+
+*  :doc:`The simulation module <modules/simulation>`
+
+*  :doc:`The Rossumøya module <modules/rossumoya>`
+
+*  :doc:`The cell module <modules/cell>`
+
+*  :doc:`The animal module <modules/animal>`
+
+
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :hidden:
+   :caption: Modules
 
-   modules
-   examples
-   maths
-   references
+   modules/simulation
+   modules/rossumoya
+   modules/cell
+   modules/animal
+
+
+Mathematical background
+------------------------
+In order for us to be able to investigate the environment in Rossumøya,
+we had to use some mathematical formulas.
+
+
+Examples
+------------
+
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: Examples
+
+
+
+
