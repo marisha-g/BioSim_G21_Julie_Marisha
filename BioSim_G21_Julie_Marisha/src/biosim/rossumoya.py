@@ -364,7 +364,6 @@ class Rossumoya:
         for cell in self.island_map.values():
             if cell.total_herbivores > 0:
                 cell.herbivores_eat()
-            if cell.total_carnivores > 0:
                 cell.carnivores_eat()
 
         # Animals mate
