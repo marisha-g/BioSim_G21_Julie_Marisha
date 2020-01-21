@@ -8,3 +8,10 @@ BioSim_G21_Julie_Marisha/.idea/
 BioSim_G21_Julie_Marisha/examples/check_sim.pdf
 
 *.mp4
+*.pickle
+
+*.doctree
+
+*.html
+
+*.js
