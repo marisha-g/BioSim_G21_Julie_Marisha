@@ -370,10 +370,7 @@ class BioSim:
     def _interpolate_gaps(self, values):
         """
         Fill gaps using linear interpolation, optionally only fill gaps up to a
-        size of `limit`.
-
-        Code originates from:
-        https://stackoverflow.com/questions/36455083/working-with-nan-values-in-matplotlib
+        size of `limit` [2]_.
         """
         limit = self.vis_years
         values = np.asarray(values)
