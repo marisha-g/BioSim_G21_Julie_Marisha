@@ -134,7 +134,7 @@ class TestAnimal:
         """Probability for an animal to die is equal to 0 when fitness is
         equal to 0."""
         self.base_animal.weight = 0
-        assert self.base_animal.prob_death == 0
+        assert self.base_animal.prob_death == 1
 
     def test_prob_death_setter(self):
         """Property prob_death() sets the given value."""

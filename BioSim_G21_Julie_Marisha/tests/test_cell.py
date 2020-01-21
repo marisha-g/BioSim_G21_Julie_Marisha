@@ -151,8 +151,9 @@ class TestCell:
         assert self.cell.total_herbivores < 40
 
     def test_procreation_callable(self):
-        """procreation method is callable."""
-        self.cell.procreation()
+        """procreation methods is callable."""
+        self.cell.herb_procreation()
+        self.cell.carn_procreation()
 
     def test_add_offspring_callable(self):
         """add_offspring() method is callable."""
