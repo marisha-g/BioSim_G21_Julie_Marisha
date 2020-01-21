@@ -511,12 +511,3 @@ class BioSim:
 
         except subprocess.CalledProcessError as err:
             raise RuntimeError('ERROR: ffmpeg failed with: {}'.format(err))
-
-
-if __name__ == '__main__':
-    sim1 = BioSim(img_base=DEFAULT_IMAGE_BASE, ymax_animals=500)
-
-    sim1.simulate(num_years=50, vis_years=1, img_years=1)
-    sim1.make_movie()
-
-
