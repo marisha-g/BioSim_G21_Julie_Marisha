@@ -2,7 +2,7 @@
 
 """
 :mod: `biosim.animal provides the user`information about the fauna on
-       ossumøya.
+       Rossumøya.
 
 
 The different species on Rossumøya have certain characteristics in common, 
@@ -35,7 +35,7 @@ import math
 
 
 class BaseAnimal:
-    """Superclass for animal in BioSim."""
+    """Superclass for animals in BioSim."""
 
     @classmethod
     def set_parameters(
@@ -61,41 +61,41 @@ class BaseAnimal:
         """
         Set default parameters for class Animal.
         :param w_birth: birth weight
-        :type: float
+        :type w_birth: float
         :param sigma_birth: constant
-        :type: float
+        :type sigma_birth: float
         :param beta: Constant used to calculate weight gain
-        :type: float
+        :type beta: float
         :param eta: Constant used to calculate weight loss
-        :type: float
+        :type eta: float
         :param a_half: constant
-        :type: float
+        :type a_half: float
         :param phi_age: constant
-        :type: float
+        :type phi_age: float
         :param w_half: constant
-        :type: float
+        :type w_half: float
         :param phi_weight: constant
-        :type: float
+        :type phi_weight: float
         :param mu: Constant used to calculate probability to move
-        :type: float
+        :type mu: float
         :param lambda_: constant
-        :type: float
+        :type lambda_: float
         :param gamma: Constant used to calculate the probability to give birth
                       to an offspring in a year
-        :type: float
+        :type gamma: float
         :param zeta: constant
-        :type: float
+        :type zeta: float
         :param xi: constant
-        :type: float
+        :type xi: float
         :param omega: Constant used to calculate the probability of an animal
                       dying
-        :type: float
+        :type omega: float
         :param F: Appetite of the species
-        :type: float
+        :type F: float
         :param args: Extra arguments
-        :type: *tuple
+        :type args: *tuple
         :param kwargs: Extra keyword arguments
-        :type: **dict
+        :type kwargs: **dict
         """
 
         if w_birth >= 0:
@@ -162,7 +162,7 @@ class BaseAnimal:
     @classmethod
     def draw_birth_weight(cls):
         """
-        Birth weight is drawn from a Gaussian distribution with mean and
+        Birth weight is drawn from a Gaussian distribution based on mean and
         standard deviation.
         :return: birth_weight
         :rtype: float
@@ -174,11 +174,11 @@ class BaseAnimal:
 
     def __init__(self, age=None, weight=None):
         """
-        Constructor that initiate class Animal.
+        Constructor that initiate :class: Animal.
         :param age: initial age
-        :type: float
+        :type age: float
         :param weight: initial weight
-        :type: float
+        :type weight: float
         """
         if age is None:
             age = 0
@@ -200,8 +200,7 @@ class BaseAnimal:
 
     def aging(self):
         """
-        At birth, each animal has age a=0. Age increases by one year for
-        each year that passes.
+        At birth, each animal has age 0. Age increments by one each year.
         """
         self.age += 1
         self.fitness_has_been_calculated = False
@@ -210,6 +209,8 @@ class BaseAnimal:
         """
         When an animal eats an amount 'food' of fodder, its
         weight increases.
+        :param food: Amount of food eaten.
+        :type food: int
         """
         self.weight += (self.beta * food)
         self.fitness_has_been_calculated = False
@@ -223,9 +224,9 @@ class BaseAnimal:
 
     def weight_loss_birth(self, weight_offspring):
         """
-        Calculates weight loss when an animal gives birth.
+        When an animal gives birth to an offspring, it loses weight.
         :param weight_offspring: weight of the offspring
-        :type: float
+        :type weight_offspring: float
         """
         self.weight -= (self.xi * weight_offspring)
         self.fitness_has_been_calculated = False
@@ -235,8 +236,9 @@ class BaseAnimal:
         Animals can mate if there are at least two animals of the same species
         in a cell. Probability to give birth is given by the variable p.
         :param n: number of animals of the same species in a cell
-        :return: choice
-        :type: int
+        :type n: int
+        :return choice: 0 or 1
+        :rtype choice: int
         """
         if self.weight < self.zeta * (self.w_birth + self.sigma_birth):
             return 0
@@ -251,7 +253,7 @@ class BaseAnimal:
         The overall condition of the animal is described by its fitness,
         which is calculated based on age and weight.
         :return: self._fitness: calculated fitness
-        :type: float
+        :rtype: float
         """
         if self.fitness_has_been_calculated:
             return self._fitness
@@ -271,8 +273,7 @@ class BaseAnimal:
     @fitness.setter
     def fitness(self, value):
         """
-        Set the current fitness. Setting the fitness to a new value
-        will reconfigure the animal automatically.
+        Sets the attribute self._fitness to a new value.
         :param value: new value
         :type: float
         """
@@ -281,10 +282,10 @@ class BaseAnimal:
     @property
     def prob_migration(self):
         """
-        Depends on fitness and availability of fodder in neighboring cells.
-        Cannot move to ocean or mountain cells. Probability for moving is given
-        by the attribute p.
-        :return: self._prob_migration: chooses if animal will migrate
+        Calculate the probability for an animal to migrate, based on fitness
+        and availability of fodder in neighboring cells. Probability for
+        moving is given by the attribute p.
+        :return: self._prob_migration: 0 or 1
         :type: int
         """
         p = self.mu * self.fitness
@@ -294,18 +295,17 @@ class BaseAnimal:
     @prob_migration.setter
     def prob_migration(self, value):
         """
-        Set the choice for probability to migrate. Setting the choice to a
-        new value will reconfigure the animal automatically.
+        Sets the probability for an animal to migrate to a new value.
         :param value: new value
-        :type: float
+        :type value: float
         """
         self._prob_migration = value
 
     @property
     def prob_death(self):
         """
-        An animal dies with probability given by the attribute p.
-        :return: self._prob_death: chooses if animal will die or not
+        An animal dies with probability p based on its fitness.
+        :return: self._prob_death: 0 or 1
         :type: int
         """
         if self.fitness == 0:
@@ -319,16 +319,16 @@ class BaseAnimal:
     @prob_death.setter
     def prob_death(self, value):
         """
-        Set the choice for probability to die. Setting the choice to a
-        new value will reconfigure the animal automatically.
+        Sets the probability for an animal to die.
         :param value: new value
-        :type: float
+        :type value: float
         """
         self._prob_death = value
 
 
 class Herbivore(BaseAnimal):
-    """Class instance of class Animal for the Herbivore species."""
+    """Class for the herbivore species in Biosim.
+    Subclass of :class: BaseAnimal."""
 
     @classmethod
     def set_parameters(
@@ -352,43 +352,42 @@ class Herbivore(BaseAnimal):
             **kwargs
     ):
         """
-        Set default parameters for class instance Herbivore.
+        Set default parameters for class instance of Herbivore.
         :param w_birth: birth weight
-        :type: float
+        :type w_birth: float
         :param sigma_birth: constant
-        :type: float
+        :type sigma_birth: float
         :param beta: Constant used to calculate weight gain
-        :type: float
+        :type beta: float
         :param eta: Constant used to calculate weight loss
-        :type: float
+        :type eta: float
         :param a_half: constant
-        :type: float
+        :type a_half: float
         :param phi_age: constant
-        :type: float
+        :type phi_age: float
         :param w_half: constant
-        :type: float
+        :type w_half: float
         :param phi_weight: constant
-        :type: float
+        :type phi_weight: float
         :param mu: Constant used to calculate probability to move
-        :type: float
+        :type mu: float
         :param lambda_: constant
-        :type: float
-        :param gamma: Constant used to calculate the probability to give birth
-                      to an offspring in a year
-        :type: float
+        :type lambda_: float
+        :param gamma: Constant used to calculate the probability to give birth.
+        :type gamma: float
         :param zeta: constant
-        :type: float
+        :type zeta: float
         :param xi: constant
-        :type: float
+        :type xi: float
         :param omega: Constant used to calculate the probability of an animal
                       dying
-        :type: float
+        :type omega: float
         :param F: Appetite of the species
-        :type: float
+        :type F: float
         :param args: Extra arguments
-        :type: *tuple
+        :type args: *tuple
         :param kwargs: Extra keyword arguments
-        :type: **dict
+        :type kwargs: **dict
         """
         super(Herbivore, cls).set_parameters(
             w_birth,
@@ -409,18 +408,18 @@ class Herbivore(BaseAnimal):
 
     def __init__(self, age=None, weight=None):
         """
-        Constructor that initiate class instance Herbivore.
+        Constructor that initiates class instances of Herbivore.
         :param age: initial age for Herbivore
-        :type: float
+        :type age: float
         :param weight: initial weight for Carnivore
-        :type: float
+        :type weight: float
         """
         super().__init__(age, weight)
 
 
 class Carnivore(BaseAnimal):
-    """Class instance of class Animal for the Carnivore species."""
-
+    """Class for the carnivore species in Biosim.
+    Subclass of :class: BaseAnimal."""
     @classmethod
     def set_parameters(
             cls,
@@ -446,43 +445,43 @@ class Carnivore(BaseAnimal):
         """
         Set default parameters for class instance Carnivore.
         :param w_birth: birth weight
-        :type: float
+        :type w_birth: float
         :param sigma_birth: constant
-        :type: float
+        :type sigma_birth: float
         :param beta: Constant used to calculate weight gain
-        :type: float
+        :type beta: float
         :param eta: Constant used to calculate weight loss
-        :type: float
+        :type eta: float
         :param a_half: constant
-        :type: float
+        :type a_half: float
         :param phi_age: constant
-        :type: float
+        :type phi_age: float
         :param w_half: constant
-        :type: float
+        :type w_half: float
         :param phi_weight: constant
-        :type: float
+        :type phi_weight: float
         :param mu: Constant used to calculate probability to move
-        :type: float
+        :type mu: float
         :param lambda_: constant
-        :type: float
+        :type lambda_: float
         :param gamma: Constant used to calculate the probability to give birth
                       to an offspring in a year
-        :type: float
+        :type gamma: float
         :param zeta: constant
-        :type: float
+        :type zeta: float
         :param xi: constant
-        :type: float
+        :type xi: float
         :param omega: Constant used to calculate the probability of an animal
                       dying
-        :type: float
+        :type omega: float
         :param F: Appetite of the species
-        :type: float
+        :type F: float
         :param DeltaPhiMax: constant
-        :type: float
+        :type DeltaPhiMax: float
         :param args: Extra arguments
-        :type: *tuple
+        :type args: *tuple
         :param kwargs: Extra keyword arguments
-        :type: **dict
+        :type kwargs: **dict
         """
         super(Carnivore, cls).set_parameters(
             w_birth,
@@ -502,7 +501,7 @@ class Carnivore(BaseAnimal):
             F
         )
         if DeltaPhiMax is None:
-            DeltaPhiMax = 7.0
+            DeltaPhiMax = 10.0
 
         if DeltaPhiMax <= 0:
             raise ValueError('delta_phi_max must be strictly positive.')
@@ -511,21 +510,22 @@ class Carnivore(BaseAnimal):
     def __init__(self, age=None, weight=None):
         """
         Constructor that initiate class instance Carnivore.
-        :param age: initial age for Herbivore species
-        :type: float
+        :param age: initial age for Carnivore species
+        :type age: float
         :param weight: initial weight for Carnivore species
-        :type: float
+        :type weight: float
         """
         super().__init__(age, weight)
         self._prob_carnivore_kill = None
 
     def prob_carnivore_kill(self, fitness_prey):
         """
-        Probability for a Carnivore to kill a Herbivore.
+        Calculates the probability for a Carnivore to kill a Herbivore,
+        and decides accordingly.
         :param fitness_prey: the fitness of the prey (Herbivore)
-        :type: float
-        :return: 0 or 1
-        :type: int
+        :type fitness_prey: float
+        :return choice: 0 or 1
+        :rtype: int
         """
         if self.fitness <= fitness_prey:
             return 0
@@ -538,20 +538,27 @@ class Carnivore(BaseAnimal):
 
 @jit
 def custom_binomial(p):
-    """ Function for drawing random numbers similar to
-     numpy.random.binomial(n=1, p=p), but faster."""
+    """Function for drawing random numbers similar to
+     numpy.random.binomial(n=1, p=p), but faster because
+     of numba.jit decorator.
+     :param p: probability
+     :type p: float
+     :return: 0 or 1
+     """
     x = random.uniform(0, 1)
     if x < p:
         return 1
     else:
         return 0
 
+
 @jit
 def fitness_calculator(
         phi_age, age, a_half, phi_weight, weight, w_half
 ):
     """
-    Calculator with numba.jit decorator for faster fitness calculation.
+    Calculates fitness based on age and weight.
+    numba.jit decorator for faster code execution.
     :param phi_age: constant
     :type phi_age: float
     :param age: The animals age
@@ -565,10 +572,9 @@ def fitness_calculator(
     :param w_half: constant
     :type w_half: float
     :return fitness: Calculated fitness
-    :type fitness: float
+    :rtype: float
     """
     age_sigma = 1 / (1 + math.exp(phi_age * (age - a_half)))
     weight_sigma = 1 / (1 + math.exp(- phi_weight * (weight - w_half)))
     fitness = age_sigma * weight_sigma
     return fitness
-
