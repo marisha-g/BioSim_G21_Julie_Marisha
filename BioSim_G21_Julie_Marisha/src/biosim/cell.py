@@ -153,7 +153,10 @@ class BaseCell:
     @property
     def abundance_of_fodder_herbivores(self):
         """
-        Calculates the relative abundance of fodder for Herbivores.
+        Calculates the relative abundance of fodder for Herbivores according
+        to the formula below.
+        .. math::
+            \epsilon_k = \frac{f_k}{(n_k + 1)F'}
         :return: rel_abundance_of_fodder
         :rtype: float
         """
