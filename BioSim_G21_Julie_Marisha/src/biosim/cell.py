@@ -362,14 +362,17 @@ class BaseCell:
     @property
     def propensity_migration_herb(self):
         r"""
-        Calculates the propensity for a Herbivore to move from one cell
-        to another according to the formula below:
+        Calculates the propensity for a Herbivore to move from
+        :math:`i \mbox { to } j \in C^{(i)}` according to the formula
+        given below.
+
         .. math::
             \pi_{i \rightarrow j} =
             \begin{cases}
-            0 & \mbox{ if j is Mountain or Ocean} \\
-            e^\lambda^\epsilon^_j & \mbox{ otherwise}
+            0 & \mbox { if j is Mountain or Ocean} \\
+           e^{\lambda \epsilon_j} & \mbox { otherwise }
             \end{cases} \quad
+
         :return: calculated propensity
         :rtype: float
         """
@@ -385,14 +388,15 @@ class BaseCell:
     @property
     def propensity_migration_carn(self):
         r"""
-        Calculates the propensity for a Carnivore to move from one cell to
-        another according to the formula below.
+        Calculates the propensity for a Carnivore to move from
+        :math:`i \mbox { to } j \in C^{(i)}` according to the formula
+        given below.
 
         .. math::
             \pi_{i \rightarrow j} =
             \begin{cases}
-            0 & \mbox{ if j is Mountain or Ocean} \\
-            e^\lambda^\epsilon^_j & \mbox{ otherwise}
+            0 & \mbox { if j is Mountain or Ocean} \\
+            e^{\lambda \epsilon_j} & \mbox { otherwise }
             \end{cases} \quad
 
         :return: calculated propensity
