@@ -108,7 +108,7 @@ class BaseCell:
     @property
     def total_herbivores(self):
         """
-        :returns: the total amount of Herbivores on Rossumøya.
+        :return: the total amount of Herbivores on Rossumøya.
         :rtype: int
         """
         total_herbivores = 0
@@ -121,7 +121,7 @@ class BaseCell:
     @property
     def total_carnivores(self):
         """
-        :returns: the total amount of Carnivores on Rossumøya.
+        :return: the total amount of Carnivores on Rossumøya.
         :rtype: int
         """
         total_carnivores = 0
@@ -152,11 +152,13 @@ class BaseCell:
 
     @property
     def abundance_of_fodder_herbivores(self):
-        """
+        r"""
         Calculates the relative abundance of fodder for Herbivores according
         to the formula below.
+
         .. math::
             \epsilon_k = \frac{f_k}{(n_k + 1)F'}
+
         :return: rel_abundance_of_fodder
         :rtype: float
         """
@@ -215,8 +217,6 @@ class BaseCell:
         :return: sorted_herbivores or list_of_herbivores
         :rtype: list
         """
-        """list_of_herbivores = [animal for animal in self.animals
-                              if isinstance(animal, Herbivore)]"""
         list_of_herbivores = []
         for animal in self.animals:
             if type(animal).__name__ == 'Herbivore':
@@ -238,8 +238,6 @@ class BaseCell:
         :return: sorted_carnivores or list of carnivores
         :rtype: list
         """
-        """list_of_carnivores = [animal for animal in self.animals
-                              if isinstance(animal, Carnivore)]"""
         list_of_carnivores = []
         for animal in self.animals:
             if type(animal).__name__ == 'Carnivore':
@@ -294,7 +292,7 @@ class BaseCell:
     def herb_procreation(self):
         """
         Herbivores at the start of the breeding season procreate if the
-        propability to procreate is equal to 1.
+        probability to procreate is equal to 1.
         """
         total_herbs_at_start_of_breeding_season = self.total_herbivores
         for animal in self.animals:
@@ -310,7 +308,7 @@ class BaseCell:
     def carn_procreation(self):
         """
         Carnivores at the start of the breeding season procreate if the
-        propability to procreate is equal to 1.
+        probability to procreate is equal to 1.
         """
         total_carns_at_start_of_breeding_season = self.total_carnivores
         for animal in self.animals:
@@ -363,16 +361,16 @@ class BaseCell:
 
     @property
     def propensity_migration_herb(self):
-        """
+        r"""
         Calculates the propensity for a Herbivore to move from one cell
         to another according to the formula below:
         .. math::
             \pi_{i \rightarrow j} =
             \begin{cases}
-                0 & \mbox{ if j is Mountain or Ocean} \\
-                e^\lambda^\epsilon^_j & \mbox{ otherwise}
+            0 & \mbox{ if j is Mountain or Ocean} \\
+            e^\lambda^\epsilon^_j & \mbox{ otherwise}
             \end{cases} \quad
-        :return: formula for calculating propensity
+        :return: calculated propensity
         :rtype: float
         """
         if self.propensity_herb_calculated:
@@ -386,16 +384,18 @@ class BaseCell:
 
     @property
     def propensity_migration_carn(self):
-        """
-        Calculates the propensity for a Carnivore to move from one cell
-        to another according to the formula below:
+        r"""
+        Calculates the propensity for a Carnivore to move from one cell to
+        another according to the formula below.
+
         .. math::
             \pi_{i \rightarrow j} =
             \begin{cases}
-                0 & \mbox{ if j is Mountain or Ocean} \\
-                e^\lambda^\epsilon^_j & \mbox{ otherwise}
+            0 & \mbox{ if j is Mountain or Ocean} \\
+            e^\lambda^\epsilon^_j & \mbox{ otherwise}
             \end{cases} \quad
-        :return: formula for calculating propensity
+
+        :return: calculated propensity
         :rtype: float
         """
         if self.propensity_carn_calculated:
