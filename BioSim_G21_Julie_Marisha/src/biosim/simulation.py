@@ -479,7 +479,7 @@ class BioSim:
             self._heat_map_herb_ax.set_title('Herbivores locations')
 
     def _save_file(self):
-        """Saves graphics to file if file name given.
+        """Saves graphics to file if file name given [1]_.
         Author: Hans Ekkehard Plesser
         """
 
@@ -498,7 +498,7 @@ class BioSim:
         .. :note:
             Requires ffmpeg
 
-        The movie is stored as img_base + movie_fmt
+        The movie is stored as img_base + movie_fmt [1]_.
         Author: Hans Ekkehard Plesser
         """
 

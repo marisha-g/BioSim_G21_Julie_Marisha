@@ -22,7 +22,7 @@ total number of animals on the island, total number of animals per species
 and total number of animals per cell. One is also able to visualize the
 simulation results while the simulation runs. The graphics window include:
 the island's geography, total number of animals per species as graph,
-population map for the number of animals per cell and simulation year.
+population map for the number of animals per cell and simulation year [1]_.
 
 
 Modules
@@ -65,6 +65,7 @@ Examples
 
 References
 ----------
+.. [1] Moe, Y. M. (2019). *Modelling the Ecosystem of Rossumøya*.
 
 
 

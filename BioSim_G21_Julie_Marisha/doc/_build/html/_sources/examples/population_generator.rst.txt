@@ -6,3 +6,4 @@ Population generator
 
 References
 ----------
+Smistad, R. *UMB* & Rygg, T. F. *UMB*
