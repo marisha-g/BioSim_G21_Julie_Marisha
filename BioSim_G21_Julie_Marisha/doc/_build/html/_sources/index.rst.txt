@@ -25,13 +25,6 @@ the island's geography, total number of animals per species as graph,
 population map for the number of animals per cell and simulation year.
 
 
-
-Mathematical background
-------------------------
-In order for us to be able to investigate the environment in Rossumøya,
-we had to use some mathematical formulas.
-
-
 Modules
 -----------
 

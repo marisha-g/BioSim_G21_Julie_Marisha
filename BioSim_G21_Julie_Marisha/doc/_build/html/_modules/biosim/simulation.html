@@ -673,6 +673,9 @@
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">sim1</span> <span class="o">=</span> <span class="n">BioSim</span><span class="p">()</span>
     <span class="n">sim1</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">num_years</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">vis_years</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">img_years</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">sim1</span> <span class="o">=</span> <span class="n">BioSim</span><span class="p">(</span><span class="n">img_base</span><span class="o">=</span><span class="n">DEFAULT_IMAGE_BASE</span><span class="p">)</span>
+    <span class="n">sim1</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">num_years</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">vis_years</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">img_years</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">sim1</span><span class="o">.</span><span class="n">make_movie</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
