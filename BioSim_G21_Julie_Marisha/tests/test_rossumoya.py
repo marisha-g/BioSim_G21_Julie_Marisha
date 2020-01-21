@@ -178,7 +178,7 @@ class TestRossumoya:
     def test_choose_cell_callable(self):
         """choose_cell() method is callable."""
         assert isinstance(
-            self.rossumoya._choose_cell((5, 7), "Herbivore"), tuple
+            self.rossumoya.choose_cell((5, 7), "Herbivore"), tuple
         )
 
     def test_migration_callable(self):
