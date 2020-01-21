@@ -34,9 +34,9 @@ import numpy as np
 import os
 import subprocess
 
-from src.biosim.animal import Herbivore, Carnivore
-from src.biosim.cell import Savannah, Jungle
-from src.biosim.rossumoya import Rossumoya, MigrationProbabilityCalculator
+from .animal import Herbivore, Carnivore
+from .cell import Savannah, Jungle
+from .rossumoya import Rossumoya, MigrationProbabilityCalculator
 
 # update these variables to point to your ffmpeg and convert binaries
 FFMPEG = r'C:\Users\be15069901\Documents\NMBU Data 2019-2020\INF200\biosim_project\BioSim_G21_Julie_Marisha\BioSim_G21_Julie_Marisha\ffmpeg\bin\ffmpeg.exe'
@@ -48,7 +48,7 @@ _DEFAULT_GRAPHICS_DIR = os.path.join('..', 'figs')
 _DEFAULT_IMAGE_NAME = 'bio'
 _DEFAULT_IMAGE_FORMAT = "png"
 _DEFAULT_MOVIE_FORMAT = 'mp4'
-DEFAULT_IMAGE_BASE = r'C:\Users\be15069901\Documents\NMBU Data 2019-2020\INF200\biosim_project\BioSim_G21_Julie_Marisha\BioSim_G21_Julie_Marisha\src\figs\bio'
+DEFAULT_IMAGE_BASE = os.path.join(_DEFAULT_GRAPHICS_DIR, _DEFAULT_IMAGE_NAME)
 
 
 class BioSim:
@@ -186,8 +186,8 @@ class BioSim:
             if self._year % vis_years == 0:
                 self._update_graphics()
 
-            """if self._year % img_years == 0:
-                self._save_file()"""
+            if self._year % img_years == 0:
+                self._save_file()
 
             self.rossumoya.single_year()
             self._year += 1
@@ -507,8 +507,9 @@ class BioSim:
 
         movie_fmt = 'mp4'
         try:
+
             subprocess.check_call(f'{FFMPEG} -y -r 2 -i '
-                                  f'{self._image_base}%05d.{self._image_format}'
+                                  f'{self._image_base}_%05d.{self._image_format}'
                                   f' -c:v libx264 -vf fps=25 -pix_fmt '
                                   f'yuv420p '
                                   f'{self._image_base}.{movie_fmt}')
@@ -518,12 +519,9 @@ class BioSim:
 
 
 if __name__ == '__main__':
-<<<<<<< Updated upstream
-    sim1 = BioSim()
-    sim1.simulate(num_years=100, vis_years=2, img_years=5)
-=======
-    sim1 = BioSim(img_base=DEFAULT_IMAGE_BASE)
-    sim1.simulate(num_years=2, vis_years=2, img_years=5)
+    sim1 = BioSim(img_base=DEFAULT_IMAGE_BASE, ymax_animals=500)
+
+    sim1.simulate(num_years=5, vis_years=1, img_years=1)
     sim1.make_movie()
->>>>>>> Stashed changes
+
     plt.show()
