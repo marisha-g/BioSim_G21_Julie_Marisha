@@ -108,6 +108,13 @@ class MigrationProbabilityCalculator:
         """
         Calculates the probabilities for an animal to move from its current
         location to the four neighbouring cells, based on the propensities.
+        The formula for calculating the probability to move form
+        :math: i \mbox{ to } j \in C^(^i^), is given by
+        .. math::
+            p_{i \rightarrow j} =
+            \frac{
+            \pi_{i \rightarrow j}}{\sum_{j \in C^{(i)}} \pi _{i \rightarrow j}
+            }
         :return: self._probabilities: current location and the
                  probabilities to move from that location.
         :rtype: list
