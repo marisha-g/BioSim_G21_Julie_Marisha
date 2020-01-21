@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-:mod: `biosim.simulation` provides the user the interface to the package.
+:mod: `biosim.simulation` provides the user with the interface to the package.
 
 The simulation will run for a given number of years. The user will also be 
 able to visualize the simulation results while the simulation is in progress. 
@@ -42,8 +42,7 @@ from .rossumoya import Rossumoya
 FFMPEG = r'C:\Users\be15069901\Documents\NMBU Data 2019-2020\INF200\biosim_project\BioSim_G21_Julie_Marisha\BioSim_G21_Julie_Marisha\ffmpeg\bin\ffmpeg.exe'
 _CONVERT_BINARY = 'magick'
 
-# update this to the directory and file-name beginning
-# for the graphics files
+# update this to the directory and file-name beginning for the graphics files
 _DEFAULT_GRAPHICS_DIR = os.path.join('..', 'figs')
 _DEFAULT_IMAGE_NAME = 'bio'
 _DEFAULT_IMAGE_FORMAT = "png"
@@ -53,7 +52,7 @@ DEFAULT_IMAGE_BASE = os.path.join(_DEFAULT_GRAPHICS_DIR, _DEFAULT_IMAGE_NAME)
 
 class BioSim:
     """
-    Simulation
+    Simulation interface class.
     """
 
     def __init__(
@@ -78,14 +77,11 @@ class BioSim:
         :param cmax_animals: Color-code limits for animal densities,
                              e.g. {'Herbivore': 100, 'Carnivore': 50}
         :type cmax_animals: dict
-        :param img_base: Beginning of file name for figures,
-                         including path
+        :param img_base: Beginning of file name for figures, including path
+                         If img_base is None, no figures are written to file.
         :type img_base: str
         :param img_fmt: File type for figures, e.g. 'png'
         :type img_fmt: str
-
-        If img_base is None, no figures are written to file.
-        img_base should contain a path and beginning of a file name.
         """
         np.random.seed(seed)
         self.rossumoya = Rossumoya(island_map, ini_pop)
@@ -117,9 +113,9 @@ class BioSim:
 
         self._cmax_herbs = cmax_herbs
         self._cmax_carns = cmax_carns
+        self.vis_years = None
 
         # the following will be initialized by _setup_graphics
-        self.vis_years = None
         self._nested_list = None
         self._fig = None
         self._map_ax = None
@@ -139,8 +135,10 @@ class BioSim:
         """
         Set parameters for animal species.
 
-        :param species: String, name of animal species
-        :param params: Dict with valid parameter specification for species
+        :param species: Name of animal species
+        :type species: str
+        :param params: Valid parameter specification for species
+        :type params: dict
         """
         if species == "Herbivore":
             Herbivore.set_parameters(**params)
@@ -152,8 +150,10 @@ class BioSim:
         """
         Set parameters for landscape type.
 
-        :param landscape: String, code letter for landscape
-        :param params: Dict with valid parameter specification for landscape
+        :param landscape: Letter code for landscape
+        :type landscape: str
+        :param params: Valid parameter specification for landscape
+        :type params: dict
         """
         if landscape == "S":
             Savannah.set_parameters(**params)
@@ -162,15 +162,18 @@ class BioSim:
 
     def simulate(self, num_years, vis_years=1, img_years=None):
         """
-        Run simulation while visualizing the result.
+        Run simulation while visualizing the results.
 
-        :param num_years: number of years to simulate
-        :param vis_years: years between visualization updates
-        :param img_years: years between visualizations saved to files
-         (default: vis_years)
+        :param num_years: Number of years to simulate
+        :type num_years: int
+        :param vis_years: Years between visualization updates
+        :type vis_years: int
+        :param img_years: Years between visualizations saved to files
+                         (default: vis_years)
+        :type img_years: int
 
-        .. note:: Image files will be numbered consecutively.
-
+        .. note::
+            Image files will be numbered consecutively.
         """
 
         if img_years is None:
@@ -195,199 +198,31 @@ class BioSim:
 
     def add_population(self, population):
         """
-        Add a population to the island
+        Adds a population to the island.
 
         :param population: List of dictionaries specifying population
+        :type population: list
         """
         self.rossumoya.add_population(population)
 
-    def _make_map_with_rgb_colours(self):
-        """ Makes map from nested_coordinates_list with rgb colour codes for visualization."""
-        colour_map = self.nested_coordinates_list
-        map_list = self.rossumoya.island_map_string.split('\n')
-
-        for x, cell_row in enumerate(map_list):
-            for y, cell_code in enumerate(cell_row):
-                if cell_code == 'S':
-                    colour_map[x][y] = (200, 200, 50)
-
-                if cell_code == 'J':
-                    colour_map[x][y] = (40, 150, 30)
-
-                if cell_code == 'O':
-                    colour_map[x][y] = (51, 102, 153)
-
-                if cell_code == 'D':
-                    colour_map[x][y] = (175, 104, 22)
-
-                if cell_code == 'M':
-                    colour_map[x][y] = (210, 200, 220)
-        return colour_map
-
-    def _make_population_heat_maps(self):
-        data_frame = self.animal_distribution
-        data_frame.set_index(["Row", "Col"], inplace=True)
-
-        carn_pop_list = self.nested_coordinates_list
-
-        for x, list_ in enumerate(carn_pop_list):
-            for y, _ in enumerate(list_):
-                carn_pop = (
-                    data_frame.loc[(x, y)].Carnivore
-                )
-                carn_pop_list[x][y] = carn_pop
-
-        herb_pop_list = self.nested_coordinates_list
-
-        for x, list_ in enumerate(herb_pop_list):
-            for y, _ in enumerate(list_):
-                herb_pop = (
-                    data_frame.loc[(x, y)].Herbivore
-                )
-                herb_pop_list[x][y] = herb_pop
-
-        return carn_pop_list, herb_pop_list
-
-    @property
-    def nested_coordinates_list(self):
+    def _save_file(self):
         """
-        Make a nested list with None as values, with indexing corresponding
-        to the coordinates of the island map.
-        :return: self._nested_list
-        :type: list
+        Saves graphics to file if file name given [1]_.
         """
-        self._nested_list = []
-        map_size = self.rossumoya.map_size
-        x, y = map_size
-        for x_index in range(x):
-            self._nested_list.append([])
-            for _ in range(y):
-                self._nested_list[x_index].append(None)
-        return self._nested_list
 
-    @property
-    def year(self):
-        """Last year simulated."""
-        return self._year
+        if self._image_base is None:
+            return
 
-    @property
-    def num_animals(self):
-        """Total number of animals on island."""
-        num_animals = 0
-        for cell in self.rossumoya.island_map.values():
-            num_animals += cell.total_population
-        return num_animals
-
-    @property
-    def num_animals_per_species(self):
-        """Number of animals per species in island, as dictionary."""
-        num_herb = 0
-        num_carn = 0
-
-        for cell in self.rossumoya.island_map.values():
-            num_herb += cell.total_herbivores
-            num_carn += cell.total_carnivores
-
-        num_animals_per_species = {'Herbivore': num_herb,
-                                   'Carnivore': num_carn}
-
-        return num_animals_per_species
-
-    @property
-    def animal_distribution(self):
-        """Pandas DataFrame with animal count per species
-         for each cell on island."""
-        data_dict = {'Row': [], 'Col': [], 'Herbivore': [], 'Carnivore': []}
-        for loc, cell in self.rossumoya.island_map.items():
-            x, y = loc
-            data_dict['Row'].append(x)
-            data_dict['Col'].append(y)
-            data_dict['Herbivore'].append(cell.total_herbivores)
-            data_dict['Carnivore'].append(cell.total_carnivores)
-
-        data_frame = pd.DataFrame.from_dict(data_dict)
-
-        return data_frame
-
-    def _update_heat_map(self):
-        """ Update the 2D-view of the map.
-        """
-        data_map = self._make_population_heat_maps()
-        data_map_carn, data_map_herb = data_map
-
-        if self._heat_map_carn_axis is None:
-            self._heat_map_carn_axis = self._heat_map_carn_ax.imshow(
-                data_map_carn,
-                interpolation='nearest',
-                vmin=0,
-                vmax=self._cmax_carns
-            )
-            plt.colorbar(self._heat_map_carn_axis,
-                         ax=self._heat_map_carn_ax,
-                         orientation='vertical')
-        else:
-            self._heat_map_carn_axis.set_data(data_map_carn)
-
-        if self._heat_map_herb_axis is None:
-            self._heat_map_herb_axis = self._heat_map_herb_ax.imshow(
-                data_map_herb,
-                interpolation='nearest',
-                vmin=0,
-                vmax=self._cmax_herbs
-            )
-            plt.colorbar(self._heat_map_herb_axis,
-                         ax=self._heat_map_herb_ax,
-                         orientation='vertical')
-        else:
-            self._heat_map_herb_axis.set_data(data_map_herb)
-
-    def _update_graphics(self):
-        """Updates graph and heat map in figure window."""
-        self._fig.suptitle(f'Year: {self.year}', fontsize=20)
-        self._update_graph()
-        self._update_heat_map()
-        plt.pause(1e-2)
-
-    def _update_graph(self):
-        """Updates population graph."""
-        data_dict = self.num_animals_per_species
-        total_carns = data_dict['Carnivore']
-        total_herbs = data_dict['Herbivore']
-
-        herb_data = self._herb_line.get_ydata()
-        herb_data[self._year] = total_herbs
-        if self.vis_years != 1:
-            herb_data = self._interpolate_gaps(herb_data)
-
-        carn_data = self._carn_line.get_ydata()
-        carn_data[self._year] = total_carns
-        if self.vis_years != 1:
-            carn_data = self._interpolate_gaps(carn_data)
-
-        self._carn_line.set_ydata(carn_data)
-        self._herb_line.set_ydata(herb_data)
-
-    def _interpolate_gaps(self, values):
-        """
-        Fill gaps using linear interpolation, optionally only fill gaps up to a
-        size of `limit` [2]_.
-        """
-        limit = self.vis_years
-        values = np.asarray(values)
-        i = np.arange(values.size)
-        valid = np.isfinite(values)
-        filled = np.interp(i, i[valid], values[valid])
-
-        if limit is not None:
-            invalid = ~valid
-            for n in range(1, limit + 1):
-                invalid[:-n] &= invalid[n:]
-            filled[invalid] = np.nan
-
-        return filled
+        plt.savefig('{base}_{num:05d}.{type}'.format(base=self._image_base,
+                                                     num=self._image_counter,
+                                                     type=self._image_format))
+        self._image_counter += 1
 
     def _setup_graphics(self):
-        """Creates subplots."""
+        """
+        Creates subplots, image of island map, map code legend, initiates
+        graph and heat maps, and sets titles and axis limits.
+        """
         self._nested_list = self.nested_coordinates_list
 
         # create new figure window
@@ -475,36 +310,243 @@ class BioSim:
             self._heat_map_herb_ax.get_yaxis().set_visible(False)
             self._heat_map_herb_ax.set_title('Herbivores locations')
 
-    def _save_file(self):
-        """Saves graphics to file if file name given [1]_.
+    def _update_graphics(self):
         """
-
-        if self._image_base is None:
-            return
-
-        plt.savefig('{base}_{num:05d}.{type}'.format(base=self._image_base,
-                                                     num=self._image_counter,
-                                                     type=self._image_format))
-        self._image_counter += 1
-
-    def make_movie(self, movie_fmt=_DEFAULT_MOVIE_FORMAT):
+        Updates graph and heat maps in figure window.
         """
-        Creates MPEG4 movie from visualization images saved.
+        self._fig.suptitle(f'Year: {self.year}', fontsize=20)
+        self._update_heat_map()
+        self._update_graph()
+        plt.pause(1e-2)
+
+    def _update_heat_map(self):
+        """
+        Updates heat maps.
+        """
+        data_map = self._make_population_heat_maps()
+        data_map_carn, data_map_herb = data_map
+
+        if self._heat_map_carn_axis is None:
+            self._heat_map_carn_axis = self._heat_map_carn_ax.imshow(
+                data_map_carn,
+                interpolation='nearest',
+                vmin=0,
+                vmax=self._cmax_carns
+            )
+            plt.colorbar(self._heat_map_carn_axis,
+                         ax=self._heat_map_carn_ax,
+                         orientation='vertical')
+        else:
+            self._heat_map_carn_axis.set_data(data_map_carn)
+
+        if self._heat_map_herb_axis is None:
+            self._heat_map_herb_axis = self._heat_map_herb_ax.imshow(
+                data_map_herb,
+                interpolation='nearest',
+                vmin=0,
+                vmax=self._cmax_herbs
+            )
+            plt.colorbar(self._heat_map_herb_axis,
+                         ax=self._heat_map_herb_ax,
+                         orientation='vertical')
+        else:
+            self._heat_map_herb_axis.set_data(data_map_herb)
+
+    def _update_graph(self):
+        """
+        Updates populations graph.
+        """
+        data_dict = self.num_animals_per_species
+        total_carns = data_dict['Carnivore']
+        total_herbs = data_dict['Herbivore']
+
+        herb_data = self._herb_line.get_ydata()
+        herb_data[self._year] = total_herbs
+        if self.vis_years != 1:
+            herb_data = self._interpolate_gaps(herb_data)
+
+        carn_data = self._carn_line.get_ydata()
+        carn_data[self._year] = total_carns
+        if self.vis_years != 1:
+            carn_data = self._interpolate_gaps(carn_data)
+
+        self._carn_line.set_ydata(carn_data)
+        self._herb_line.set_ydata(herb_data)
+
+    def _interpolate_gaps(self, values):
+        """
+        Fills gaps using linear interpolation, optionally only
+        fill gaps up to a size of `limit` [2]_.
+        :return: values
+        :rtype: np.array
+        """
+        limit = self.vis_years
+        values = np.asarray(values)
+        i = np.arange(values.size)
+        valid = np.isfinite(values)
+        filled = np.interp(i, i[valid], values[valid])
+
+        if limit is not None:
+            invalid = ~valid
+            for n in range(1, limit + 1):
+                invalid[:-n] &= invalid[n:]
+            filled[invalid] = np.nan
+
+        return filled
+
+    def _make_map_with_rgb_colours(self):
+        """
+        Makes map from nested_coordinates_list with rgb colour codes
+        for visualization.
+        :return colour_map
+        :rtype: list
+        """
+        colour_map = self.nested_coordinates_list
+        map_list = self.rossumoya.island_map_string.split('\n')
+
+        for x, cell_row in enumerate(map_list):
+            for y, cell_code in enumerate(cell_row):
+                if cell_code == 'S':
+                    colour_map[x][y] = (200, 200, 50)
+
+                if cell_code == 'J':
+                    colour_map[x][y] = (40, 150, 30)
+
+                if cell_code == 'O':
+                    colour_map[x][y] = (51, 102, 153)
+
+                if cell_code == 'D':
+                    colour_map[x][y] = (175, 104, 22)
+
+                if cell_code == 'M':
+                    colour_map[x][y] = (210, 200, 220)
+        return colour_map
+
+    def _make_population_heat_maps(self):
+        """
+        Makes a nested list for each species, with the number of animals in
+        all cells at coordinates corresponding to indexes of the lists.
+        :return: carn_pop_list, herb_pop_list
+        :rtype: list, list
+        """
+        data_frame = self.animal_distribution
+        data_frame.set_index(["Row", "Col"], inplace=True)
+
+        carn_pop_list = self.nested_coordinates_list
+
+        for x, list_ in enumerate(carn_pop_list):
+            for y, _ in enumerate(list_):
+                carn_pop = (
+                    data_frame.loc[(x, y)].Carnivore
+                )
+                carn_pop_list[x][y] = carn_pop
+
+        herb_pop_list = self.nested_coordinates_list
+
+        for x, list_ in enumerate(herb_pop_list):
+            for y, _ in enumerate(list_):
+                herb_pop = (
+                    data_frame.loc[(x, y)].Herbivore
+                )
+                herb_pop_list[x][y] = herb_pop
+
+        return carn_pop_list, herb_pop_list
+
+    @property
+    def nested_coordinates_list(self):
+        """
+        Makes a nested list with None as values, with indexing corresponding
+        to the coordinates of the island map.
+        :return: self._nested_list
+        :type: list
+        """
+        self._nested_list = []
+        map_size = self.rossumoya.map_size
+        x, y = map_size
+        for x_index in range(x):
+            self._nested_list.append([])
+            for _ in range(y):
+                self._nested_list[x_index].append(None)
+        return self._nested_list
+
+    @property
+    def year(self):
+        """
+        Last year simulated.
+        :return self._year
+        :rtype: int
+        """
+        return self._year
+
+    @property
+    def num_animals(self):
+        """
+        Finds total number of animals on island.
+        :return: num_animals
+        :rtype: int
+        """
+        num_animals = 0
+        for cell in self.rossumoya.island_map.values():
+            num_animals += cell.total_population
+        return num_animals
+
+    @property
+    def num_animals_per_species(self):
+        """
+        Finds total number of animals per species on the island.
+        :return: num_animals_per_species
+        :rtype: dict
+        """
+        num_herb = 0
+        num_carn = 0
+
+        for cell in self.rossumoya.island_map.values():
+            num_herb += cell.total_herbivores
+            num_carn += cell.total_carnivores
+
+        num_animals_per_species = {'Herbivore': num_herb,
+                                   'Carnivore': num_carn}
+
+        return num_animals_per_species
+
+    @property
+    def animal_distribution(self):
+        """
+        Makes a pandas DataFrame with animal count per species
+        for each cell on the island.
+        :return data_frame: animal distribution
+        :rtype: pd.DataFrame
+        """
+        data_dict = {'Row': [], 'Col': [], 'Herbivore': [], 'Carnivore': []}
+        for loc, cell in self.rossumoya.island_map.items():
+            x, y = loc
+            data_dict['Row'].append(x)
+            data_dict['Col'].append(y)
+            data_dict['Herbivore'].append(cell.total_herbivores)
+            data_dict['Carnivore'].append(cell.total_carnivores)
+
+        data_frame = pd.DataFrame.from_dict(data_dict)
+
+        return data_frame
+
+    def make_movie(self):
+        """
+        Creates mp4 movie from visualization images saved.
 
         .. :note:
             Requires ffmpeg
 
         The movie is stored as img_base + movie_fmt [1]_.
         """
-
+        movie_fmt = 'mp4'
         if self._image_base is None:
             raise RuntimeError("No filename defined.")
 
-        movie_fmt = 'mp4'
         try:
 
             subprocess.check_call(f'{FFMPEG} -y -r 10 -i '
-                                  f'{self._image_base}_%05d.{self._image_format}'
+                                  f'{self._image_base}_%05d.'
+                                  f'{self._image_format}'
                                   f' -c:v libx264 -vf fps=25 -pix_fmt '
                                   f'yuv420p '
                                   f'-vf pad=ceil(iw/2)*2:ceil(ih/2)*2 '
