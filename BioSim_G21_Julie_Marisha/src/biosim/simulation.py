@@ -544,7 +544,7 @@ class BioSim:
 
         try:
 
-            subprocess.check_call(f'{FFMPEG} -y -r 10 -i '
+            subprocess.check_call(f'{FFMPEG} -y -r 20 -i '
                                   f'{self._image_base}_%05d.'
                                   f'{self._image_format}'
                                   f' -c:v libx264 -vf fps=25 -pix_fmt '
