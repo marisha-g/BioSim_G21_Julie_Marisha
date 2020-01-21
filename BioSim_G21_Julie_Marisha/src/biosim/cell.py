@@ -60,12 +60,6 @@ class BaseCell:
             raise ValueError('f_max must be a positive number')
         cls.f_max = f_max
 
-    """@classmethod
-    def reset_propensity_migration_carn_has_been_calculated(cls):
-        cls.propensity_migration_herb_has_been_calculated = False
-        cls.propensity_migration_carn_has_been_calculated = False
-    """
-
     def __init__(self, animals=None):
         """
         Constructor that initiate class Cell.

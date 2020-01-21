@@ -68,6 +68,8 @@ Examples
 ------------
 
 *  :doc:`Population generator <examples/population_generator>`
+*  :doc:`Checkerboard migration demo <examples/checkerboard_migration_demo>`
+
 
 .. toctree::
    :maxdepth: 2
@@ -75,6 +77,7 @@ Examples
    :caption: Examples
 
    examples/population_generator
+   examples/checkerboard_migration_demo
 
 References
 ----------
