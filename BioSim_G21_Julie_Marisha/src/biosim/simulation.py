@@ -503,10 +503,11 @@ class BioSim:
         movie_fmt = 'mp4'
         try:
 
-            subprocess.check_call(f'{FFMPEG} -y -r 2 -i '
+            subprocess.check_call(f'{FFMPEG} -y -r 20 -i '
                                   f'{self._image_base}_%05d.{self._image_format}'
                                   f' -c:v libx264 -vf fps=25 -pix_fmt '
                                   f'yuv420p '
+                                  f'-vf pad=ceil(iw/2)*2:ceil(ih/2)*2 '
                                   f'{self._image_base}.{movie_fmt}')
 
         except subprocess.CalledProcessError as err:
