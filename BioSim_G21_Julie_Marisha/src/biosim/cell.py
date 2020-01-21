@@ -367,10 +367,10 @@ class BaseCell:
         .. math::
             \pi_{i \rightarrow j} =
             \begin{cases}
-                0 & \mbox{ if j is Mountain or Ocean} \\
-                e^\lambda^\epsilon^_j & \mbox{ otherwise}
+            0 & \mbox{ if j is Mountain or Ocean} \\
+            e^\lambda^\epsilon^_j & \mbox{ otherwise}
             \end{cases} \quad
-        :return: formula for calculating propensity
+        :return: calculated propensity
         :rtype: float
         """
         if self.propensity_herb_calculated:
@@ -386,7 +386,7 @@ class BaseCell:
     def propensity_migration_carn(self):
         r"""
         Calculates the propensity for a Carnivore to move from one cell to
-        another according to the formula below:
+        another according to the formula below.
 
         .. math::
             \pi_{i \rightarrow j} =
@@ -395,7 +395,7 @@ class BaseCell:
             e^\lambda^\epsilon^_j & \mbox{ otherwise}
             \end{cases} \quad
 
-        :return: formula for calculating propensity
+        :return: calculated propensity
         :rtype: float
         """
         if self.propensity_carn_calculated:
