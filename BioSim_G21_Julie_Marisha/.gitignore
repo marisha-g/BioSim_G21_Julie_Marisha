@@ -223,3 +223,11 @@ dmypy.json
 
 # Ignore all png files
 *.png
+
+# mp4 files
+*.mp4
+!bio500years.mp4
+
+# pdf files
+*.pdf
+!check_sim.pdf
