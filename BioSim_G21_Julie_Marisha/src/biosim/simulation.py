@@ -518,6 +518,12 @@ class BioSim:
 
 
 if __name__ == '__main__':
+<<<<<<< Updated upstream
     sim1 = BioSim()
     sim1.simulate(num_years=100, vis_years=2, img_years=5)
+=======
+    sim1 = BioSim(img_base=DEFAULT_IMAGE_BASE)
+    sim1.simulate(num_years=2, vis_years=2, img_years=5)
+    sim1.make_movie()
+>>>>>>> Stashed changes
     plt.show()
