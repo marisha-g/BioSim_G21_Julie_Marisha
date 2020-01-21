@@ -237,8 +237,8 @@ class BaseAnimal:
         in a cell. Probability to give birth is given by the variable p.
         :param n: number of animals of the same species in a cell
         :type n: int
-        :return choice: 0 or 1
-        :rtype choice: int
+        :return: 0 or 1
+        :rtype: int
         """
         if self.weight < self.zeta * (self.w_birth + self.sigma_birth):
             return 0
@@ -252,7 +252,7 @@ class BaseAnimal:
         """
         The overall condition of the animal is described by its fitness,
         which is calculated based on age and weight.
-        :return: self._fitness: calculated fitness
+        :return: calculated fitness
         :rtype: float
         """
         if self.fitness_has_been_calculated:
@@ -286,7 +286,7 @@ class BaseAnimal:
         and availability of fodder in neighboring cells. Probability for
         moving is given by the attribute p.
         :return: self._prob_migration: 0 or 1
-        :type: int
+        :rtype: int
         """
         p = self.mu * self.fitness
         self._prob_migration = custom_binomial(p)
@@ -305,8 +305,8 @@ class BaseAnimal:
     def prob_death(self):
         """
         An animal dies with probability p based on its fitness.
-        :return: self._prob_death: 0 or 1
-        :type: int
+        :return: 0 or 1
+        :rtype: int
         """
         if self.fitness == 0:
             self._prob_death = 1
@@ -328,7 +328,7 @@ class BaseAnimal:
 
 class Herbivore(BaseAnimal):
     """Class for the herbivore species in Biosim.
-    Subclass of :class: BaseAnimal."""
+    Subclass of class BaseAnimal."""
 
     @classmethod
     def set_parameters(
@@ -535,7 +535,7 @@ class Carnivore(BaseAnimal):
 
         :param fitness_prey: the fitness of the prey (Herbivore)
         :type fitness_prey: float
-        :return choice: 0 or 1
+        :return: 0 or 1
         :rtype: int
         """
         if self.fitness <= fitness_prey:
@@ -555,6 +555,7 @@ def custom_binomial(p):
      :param p: probability
      :type p: float
      :return: 0 or 1
+     :rtype: int
      """
     x = random.uniform(0, 1)
     if x < p:
