@@ -182,8 +182,9 @@
 <span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Julie Forrisdal&#39;</span><span class="p">,</span> <span class="s1">&#39;Marisha Gnanaseelan&#39;</span>
 <span class="n">__email__</span> <span class="o">=</span> <span class="s1">&#39;juforris@nmbu.no&#39;</span><span class="p">,</span> <span class="s1">&#39;magn@nmbu.no&#39;</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">scipy.special</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">jit</span>
+<span class="kn">import</span> <span class="nn">math</span>
 
 
 <div class="viewcode-block" id="BaseAnimal"><a class="viewcode-back" href="../../modules/animal.html#biosim.animal.BaseAnimal">[docs]</a><span class="k">class</span> <span class="nc">BaseAnimal</span><span class="p">:</span>
@@ -321,7 +322,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">cls</span><span class="o">.</span><span class="n">birth_weight</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">while</span> <span class="bp">cls</span><span class="o">.</span><span class="n">birth_weight</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="bp">cls</span><span class="o">.</span><span class="n">birth_weight</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">w_birth</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">sigma_birth</span><span class="p">)</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">birth_weight</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">gauss</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">w_birth</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">sigma_birth</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">birth_weight</span></div>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -394,7 +395,7 @@
             <span class="k">return</span> <span class="mi">0</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">p</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
-            <span class="n">choice</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+            <span class="n">choice</span> <span class="o">=</span> <span class="n">custom_binomial</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">choice</span></div>
 
     <span class="nd">@property</span>
@@ -409,12 +410,12 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fitness</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">age_sigma</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">expit</span><span class="p">(</span>
-                <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">phi_age</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">a_half</span><span class="p">)</span>
-            <span class="p">)</span>
-            <span class="n">weight_sigma</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">expit</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">phi_weight</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_half</span><span class="p">)</span>
-            <span class="p">)</span>
+            <span class="n">age_sigma</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
+                 <span class="bp">self</span><span class="o">.</span><span class="n">phi_age</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">a_half</span><span class="p">)</span>
+            <span class="p">))</span>
+            <span class="n">weight_sigma</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
+                <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">phi_weight</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_half</span><span class="p">)</span>
+            <span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_fitness</span> <span class="o">=</span> <span class="n">age_sigma</span> <span class="o">*</span> <span class="n">weight_sigma</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fitness_has_been_calculated</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
@@ -443,7 +444,7 @@
 <span class="sd">        :type: int</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_prob_migration</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_prob_migration</span> <span class="o">=</span> <span class="n">custom_binomial</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prob_migration</span>
 
     <span class="nd">@prob_migration</span><span class="o">.</span><span class="n">setter</span>
@@ -464,10 +465,10 @@
 <span class="sd">        :type: int</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_prob_death</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_prob_death</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_prob_death</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_prob_death</span> <span class="o">=</span> <span class="n">custom_binomial</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prob_death</span>
 
@@ -686,9 +687,21 @@
             <span class="k">return</span> <span class="mi">0</span>
         <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">-</span> <span class="n">fitness_prey</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">DeltaPhiMax</span><span class="p">:</span>
             <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">-</span> <span class="n">fitness_prey</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">DeltaPhiMax</span>
-            <span class="n">choice</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
+            <span class="n">choice</span> <span class="o">=</span> <span class="n">custom_binomial</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">choice</span>
         <span class="k">return</span> <span class="mi">1</span></div></div>
+
+
+<div class="viewcode-block" id="custom_binomial"><a class="viewcode-back" href="../../modules/animal.html#biosim.animal.custom_binomial">[docs]</a><span class="nd">@jit</span>
+<span class="k">def</span> <span class="nf">custom_binomial</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Function for drawing random numbers similar to</span>
+<span class="sd">     numpy.random.binomial(n=1, p=p), but faster.&quot;&quot;&quot;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span></div>
+
 </pre></div>
 
            </div>

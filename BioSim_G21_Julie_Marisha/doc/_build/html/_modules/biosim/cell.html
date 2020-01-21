@@ -192,7 +192,7 @@
 <span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Julie Forrisdal&#39;</span><span class="p">,</span> <span class="s1">&#39;Marisha Gnanaseelan&#39;</span>
 <span class="n">__email__</span> <span class="o">=</span> <span class="s1">&#39;juforris@nmbu.no&#39;</span><span class="p">,</span> <span class="s1">&#39;magn@nmbu.no&#39;</span>
 
-<span class="kn">from</span> <span class="nn">biosim.animal</span> <span class="kn">import</span> <span class="n">Carnivore</span><span class="p">,</span> <span class="n">Herbivore</span>
+<span class="kn">from</span> <span class="nn">src.biosim.animal</span> <span class="kn">import</span> <span class="n">Carnivore</span><span class="p">,</span> <span class="n">Herbivore</span>
 <span class="kn">import</span> <span class="nn">math</span>
 
 
@@ -213,6 +213,12 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;f_max must be a positive number&#39;</span><span class="p">)</span>
         <span class="bp">cls</span><span class="o">.</span><span class="n">f_max</span> <span class="o">=</span> <span class="n">f_max</span></div>
 
+    <span class="sd">&quot;&quot;&quot;@classmethod</span>
+<span class="sd">    def reset_propensity_migration_carn_has_been_calculated(cls):</span>
+<span class="sd">        cls.propensity_migration_herb_has_been_calculated = False</span>
+<span class="sd">        cls.propensity_migration_carn_has_been_calculated = False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">animals</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructor that initiate class Cell.</span>
@@ -221,6 +227,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_fodder_in_cell</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">animal_can_enter</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_propensity_migration_carn</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_propensity_migration_herb</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">propensity_migration_carn_has_been_calculated</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">propensity_migration_herb_has_been_calculated</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">animals</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">animals</span> <span class="o">=</span> <span class="p">[]</span>
@@ -263,9 +274,12 @@
 <span class="sd">        :returns: the total amount of Herbivores on Rossumøya.</span>
 <span class="sd">        :type: int</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">([</span>
-            <span class="n">animal</span> <span class="k">for</span> <span class="n">animal</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">animals</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">animal</span><span class="p">,</span> <span class="n">Herbivore</span><span class="p">)</span>
-        <span class="p">])</span>
+        <span class="n">total_herbivores</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">animal</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">animals</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">animal</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;Herbivore&#39;</span><span class="p">:</span>
+                <span class="n">total_herbivores</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">total_herbivores</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">total_carnivores</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -273,9 +287,12 @@
 <span class="sd">        :returns: the total amount of Carnivores on Rossumøya.</span>
 <span class="sd">        :type: int</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">([</span>
-            <span class="n">animal</span> <span class="k">for</span> <span class="n">animal</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">animals</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">animal</span><span class="p">,</span> <span class="n">Carnivore</span><span class="p">)</span>
-        <span class="p">])</span>
+        <span class="n">total_carnivores</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">animal</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">animals</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">animal</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;Carnivore&#39;</span><span class="p">:</span>
+                <span class="n">total_carnivores</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">total_carnivores</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">fodder_in_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -316,11 +333,14 @@
 <span class="sd">        :return: rel_abundance_of_fodder</span>
 <span class="sd">        :type: float</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">list_weights</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">animal</span><span class="o">.</span><span class="n">weight</span> <span class="k">for</span> <span class="n">animal</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">animals</span> <span class="k">if</span>
-            <span class="nb">isinstance</span><span class="p">(</span><span class="n">animal</span><span class="p">,</span> <span class="n">Herbivore</span><span class="p">)</span>
-        <span class="p">]</span>
-        <span class="n">weight_of_herbs</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">list_weights</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;list_weights = [</span>
+<span class="sd">            animal.weight for animal in self.animals if</span>
+<span class="sd">            isinstance(animal, Herbivore)</span>
+<span class="sd">        ]&quot;&quot;&quot;</span>
+        <span class="n">weight_of_herbs</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">animal</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">animals</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">animal</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;Herbivore&#39;</span><span class="p">:</span>
+                <span class="n">weight_of_herbs</span> <span class="o">+=</span> <span class="n">animal</span><span class="o">.</span><span class="n">weight</span>
 
         <span class="n">rel_abundance_of_fodder</span> <span class="o">=</span> <span class="n">weight_of_herbs</span> <span class="o">/</span> <span class="p">(</span>
                 <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_carnivores</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">Carnivore</span><span class="o">.</span><span class="n">F</span>
@@ -340,7 +360,8 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Grow back initial fodder amount.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fodder_in_cell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">f_max</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fodder_in_cell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">f_max</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">propensity_migration_herb_has_been_calculated</span> <span class="o">=</span> <span class="kc">False</span></div>
 
     <span class="k">def</span> <span class="nf">animals_age_and_lose_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">animal</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">animals</span><span class="p">:</span>
@@ -355,8 +376,13 @@
 <span class="sd">        :return: sorted_herbivores or list_of_herbivores</span>
 <span class="sd">        :type: list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">list_of_herbivores</span> <span class="o">=</span> <span class="p">[</span><span class="n">animal</span> <span class="k">for</span> <span class="n">animal</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">animals</span>
-                              <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">animal</span><span class="p">,</span> <span class="n">Herbivore</span><span class="p">)]</span>
+        <span class="sd">&quot;&quot;&quot;list_of_herbivores = [animal for animal in self.animals</span>
+<span class="sd">                              if isinstance(animal, Herbivore)]&quot;&quot;&quot;</span>
+        <span class="n">list_of_herbivores</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">animal</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">animals</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">animal</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;Herbivore&#39;</span><span class="p">:</span>
+                <span class="n">list_of_herbivores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">animal</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_of_herbivores</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">sorted_herbivores</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">list_of_herbivores</span><span class="p">,</span>
                                        <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">fitness</span><span class="p">,</span>
@@ -373,8 +399,13 @@
 <span class="sd">        :return: sorted_carnivores or list of carnivores</span>
 <span class="sd">        :type: list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">list_of_carnivores</span> <span class="o">=</span> <span class="p">[</span><span class="n">animal</span> <span class="k">for</span> <span class="n">animal</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">animals</span>
-                              <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">animal</span><span class="p">,</span> <span class="n">Carnivore</span><span class="p">)]</span>
+        <span class="sd">&quot;&quot;&quot;list_of_carnivores = [animal for animal in self.animals</span>
+<span class="sd">                              if isinstance(animal, Carnivore)]&quot;&quot;&quot;</span>
+        <span class="n">list_of_carnivores</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">animal</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">animals</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">animal</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;Carnivore&#39;</span><span class="p">:</span>
+                <span class="n">list_of_carnivores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">animal</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_of_carnivores</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">sorted_carnivores</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">list_of_carnivores</span><span class="p">,</span>
                                        <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">fitness</span><span class="p">,</span>
@@ -402,7 +433,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Carnivore with the highest fitness eat first. The Carnivore tries to</span>
 <span class="sd">        kill the Herbivore with lowest fitness first. The increase in weight</span>
-<span class="sd">        of the Carnivore is proportional to the weight of the Herbivore killed.</span>
+<span class="sd">        of the Carnivore is proportional to the amount of food eaten.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">carnivore</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_of_sorted_carnivores_by_fitness</span><span class="p">:</span>
             <span class="n">food_eaten</span> <span class="o">=</span> <span class="mi">0</span>
@@ -410,18 +441,19 @@
             <span class="k">for</span> <span class="n">herbivore</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span>
                     <span class="nb">reversed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_of_sorted_herbivores_by_fitness</span><span class="p">)</span>
             <span class="p">):</span>
-                <span class="k">if</span> <span class="n">food_eaten</span> <span class="o">&gt;=</span> <span class="n">carnivore</span><span class="o">.</span><span class="n">F</span><span class="p">:</span>
-                    <span class="k">break</span>
-                <span class="k">if</span> <span class="n">carnivore</span><span class="o">.</span><span class="n">prob_carnivore_kill</span><span class="p">(</span><span class="n">herbivore</span><span class="o">.</span><span class="n">fitness</span><span class="p">):</span>
-                    <span class="n">killed_herbivores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">herbivore</span><span class="p">)</span>
-                    <span class="n">weight_prey</span> <span class="o">=</span> <span class="n">herbivore</span><span class="o">.</span><span class="n">weight</span>
-                    <span class="n">food_eaten</span> <span class="o">+=</span> <span class="n">weight_prey</span>
-                    <span class="n">carnivore</span><span class="o">.</span><span class="n">weight_gain</span><span class="p">(</span><span class="n">weight_prey</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">food_eaten</span> <span class="o">&lt;</span> <span class="n">carnivore</span><span class="o">.</span><span class="n">F</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">carnivore</span><span class="o">.</span><span class="n">prob_carnivore_kill</span><span class="p">(</span><span class="n">herbivore</span><span class="o">.</span><span class="n">fitness</span><span class="p">):</span>
+                        <span class="n">killed_herbivores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">herbivore</span><span class="p">)</span>
+                        <span class="n">weight_prey</span> <span class="o">=</span> <span class="n">herbivore</span><span class="o">.</span><span class="n">weight</span>
+                        <span class="k">if</span> <span class="n">food_eaten</span> <span class="o">+</span> <span class="n">weight_prey</span> <span class="o">&gt;</span> <span class="n">carnivore</span><span class="o">.</span><span class="n">F</span><span class="p">:</span>
+                            <span class="n">food_eaten</span> <span class="o">=</span> <span class="n">carnivore</span><span class="o">.</span><span class="n">F</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">food_eaten</span> <span class="o">+=</span> <span class="n">weight_prey</span>
+            <span class="n">carnivore</span><span class="o">.</span><span class="n">weight_gain</span><span class="p">(</span><span class="n">food_eaten</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">remove_animals</span><span class="p">(</span><span class="n">killed_herbivores</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">procreation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">herb_procreation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">total_herbs_at_start_of_breeding_season</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_herbivores</span>
-        <span class="n">total_carns_at_start_of_breeding_season</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_carnivores</span>
         <span class="k">for</span> <span class="n">animal</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">animals</span><span class="p">:</span>
             <span class="n">species</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">animal</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
 
@@ -429,12 +461,20 @@
                 <span class="n">animal_gives_birth</span> <span class="o">=</span> <span class="n">animal</span><span class="o">.</span><span class="n">prob_procreation</span><span class="p">(</span>
                     <span class="n">total_herbs_at_start_of_breeding_season</span>
                 <span class="p">)</span>
+                <span class="k">if</span> <span class="n">animal_gives_birth</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">add_offspring</span><span class="p">(</span><span class="n">animal</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">carn_procreation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">total_carns_at_start_of_breeding_season</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_carnivores</span>
+        <span class="k">for</span> <span class="n">animal</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">animals</span><span class="p">:</span>
+            <span class="n">species</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">animal</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+
             <span class="k">if</span> <span class="n">species</span> <span class="o">==</span> <span class="s1">&#39;Carnivore&#39;</span><span class="p">:</span>
                 <span class="n">animal_gives_birth</span> <span class="o">=</span> <span class="n">animal</span><span class="o">.</span><span class="n">prob_procreation</span><span class="p">(</span>
                     <span class="n">total_carns_at_start_of_breeding_season</span>
                 <span class="p">)</span>
-            <span class="k">if</span> <span class="n">animal_gives_birth</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">add_offspring</span><span class="p">(</span><span class="n">animal</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">animal_gives_birth</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">add_offspring</span><span class="p">(</span><span class="n">animal</span><span class="p">)</span>
 
 <div class="viewcode-block" id="BaseCell.add_offspring"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.BaseCell.add_offspring">[docs]</a>    <span class="k">def</span> <span class="nf">add_offspring</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">animal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -444,14 +484,14 @@
 <span class="sd">        :type: type</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">weight</span> <span class="o">=</span> <span class="n">animal</span><span class="o">.</span><span class="n">draw_birth_weight</span><span class="p">()</span>
-        <span class="n">offspring</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="p">{</span><span class="s1">&#39;species&#39;</span><span class="p">:</span> <span class="nb">type</span><span class="p">(</span><span class="n">animal</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
-             <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-             <span class="s1">&#39;weight&#39;</span><span class="p">:</span> <span class="n">weight</span><span class="p">}</span>
-        <span class="p">]</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">add_population</span><span class="p">(</span><span class="n">offspring</span><span class="p">)</span>
-        <span class="n">animal</span><span class="o">.</span><span class="n">weight_loss_birth</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="n">weight</span> <span class="o">*</span> <span class="n">animal</span><span class="o">.</span><span class="n">xi</span> <span class="o">&lt;</span> <span class="n">animal</span><span class="o">.</span><span class="n">weight</span><span class="p">:</span>
+            <span class="n">offspring</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s1">&#39;species&#39;</span><span class="p">:</span> <span class="nb">type</span><span class="p">(</span><span class="n">animal</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                 <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                 <span class="s1">&#39;weight&#39;</span><span class="p">:</span> <span class="n">weight</span><span class="p">}</span>
+            <span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_population</span><span class="p">(</span><span class="n">offspring</span><span class="p">)</span>
+            <span class="n">animal</span><span class="o">.</span><span class="n">weight_loss_birth</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="BaseCell.find_migrating_animals"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.BaseCell.find_migrating_animals">[docs]</a>    <span class="k">def</span> <span class="nf">find_migrating_animals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -482,9 +522,14 @@
 <span class="sd">        :return: formula for calculating propensity</span>
 <span class="sd">        :type: float</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
-            <span class="n">Herbivore</span><span class="o">.</span><span class="n">lambda_</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">abundance_of_fodder_herbivores</span>
-        <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">propensity_migration_herb_has_been_calculated</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_propensity_migration_herb</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_propensity_migration_herb</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
+                <span class="n">Herbivore</span><span class="o">.</span><span class="n">lambda_</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">abundance_of_fodder_herbivores</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">propensity_migration_herb_has_been_calculated</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_propensity_migration_herb</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">propensity_migration_carn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -494,9 +539,15 @@
 <span class="sd">        :return: formula for calculating propensity</span>
 <span class="sd">        :type: float</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
-            <span class="n">Carnivore</span><span class="o">.</span><span class="n">lambda_</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">abundance_of_fodder_carnivores</span>
-        <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">propensity_migration_carn_has_been_calculated</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_propensity_migration_carn</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_propensity_migration_carn</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
+                <span class="n">Carnivore</span><span class="o">.</span><span class="n">lambda_</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">abundance_of_fodder_carnivores</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">propensity_migration_carn_has_been_calculated</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_propensity_migration_carn</span>
 
 <div class="viewcode-block" id="BaseCell.remove_animals"><a class="viewcode-back" href="../../modules/cell.html#biosim.cell.BaseCell.remove_animals">[docs]</a>    <span class="k">def</span> <span class="nf">remove_animals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gone_animals</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -546,7 +597,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates regrowth of fodder in cell type Savannah.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fodder_in_cell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fodder_in_cell</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fodder_in_cell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fodder_in_cell</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">f_max</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">fodder_in_cell</span>
         <span class="p">)</span></div></div>
 
