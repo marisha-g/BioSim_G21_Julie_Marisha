@@ -257,13 +257,10 @@ class BaseAnimal:
             return self._fitness
 
         if self.weight > 0:
-            age_sigma = 1 / (1 + math.exp(
-                 self.phi_age * (self.age - self.a_half)
-            ))
-            weight_sigma = 1 / (1 + math.exp(
-                - self.phi_weight * (self.weight - self.w_half)
-            ))
-            self._fitness = age_sigma * weight_sigma
+            self.fitness = fitness_calculator(
+                self.phi_age, self.age, self.a_half,
+                self.phi_weight, self.weight, self.w_half
+            )
             self.fitness_has_been_calculated = True
         else:
             self._fitness = 0
@@ -548,4 +545,30 @@ def custom_binomial(p):
         return 1
     else:
         return 0
+
+@jit
+def fitness_calculator(
+        phi_age, age, a_half, phi_weight, weight, w_half
+):
+    """
+    Calculator with numba.jit decorator for faster fitness calculation.
+    :param phi_age: constant
+    :type phi_age: float
+    :param age: The animals age
+    :type age: int
+    :param a_half: constant
+    :type a_half: float
+    :param phi_weight: constant
+    :type phi_weight: float
+    :param weight: The weight of the animal
+    :type weight: float
+    :param w_half: constant
+    :type w_half: float
+    :return fitness: Calculated fitness
+    :type fitness: float
+    """
+    age_sigma = 1 / (1 + math.exp(phi_age * (age - a_half)))
+    weight_sigma = 1 / (1 + math.exp(- phi_weight * (weight - w_half)))
+    fitness = age_sigma * weight_sigma
+    return fitness
 
