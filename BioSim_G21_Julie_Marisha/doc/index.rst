@@ -25,6 +25,19 @@ the island's geography, total number of animals per species as graph,
 population map for the number of animals per cell and simulation year. [1]_
 
 
+Installation
+-------------
+The BioSim project requires a couple of libraries and other setups in order to run.
+Read more about how you can install our BioSim project :doc:`here.<installation/guide>`
+
+
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: Installation
+
+   installation/guide
+
 Modules
 -----------
 
