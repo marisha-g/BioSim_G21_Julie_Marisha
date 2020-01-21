@@ -457,8 +457,13 @@ class Savannah(BaseCell):
         super().__init__()
 
     def regrow_fodder(self):
-        """
-        Calculates regrowth of fodder in cell type Savannah.
+        r"""
+        Calculates regrowth of fodder in cell type Savannah by using the
+        formula below.
+
+        .. math::
+            f_{ij} \leftarrow f_{ij} + \alpha \times (f^{Sav}_{max} - f_{ij})
+
         """
         self._fodder_in_cell = self.fodder_in_cell + self.alpha * (
                 self.f_max - self.fodder_in_cell
