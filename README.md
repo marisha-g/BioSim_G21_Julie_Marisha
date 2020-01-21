@@ -43,8 +43,6 @@ Alternatively, you can manually pull this repository and run the
 Documentation
 --------------
 You can read the full documentation on `readthedocs <https://group-lasso.readthedocs.io/en/latest/maths.html>`_.
-.. math::
-            \pi_{i \rightarrow j} = \left\{ begin{array}{cols} row1 \\ row2 \\ . . . rowm \end{array}
 
 
 References
