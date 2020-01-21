@@ -60,8 +60,8 @@ class MigrationProbabilityCalculator:
         """
         Calculates the propensity to migrate from the current location to the
         four neighbouring cells for Herbivores.
-        :return: propensities: List with the four neighbouring cells
-                 corresponding propensities.
+        :return: List with the four neighbouring cells corresponding
+                 propensities.
         :rtype: list
         """
         self._propensity_herb = []
