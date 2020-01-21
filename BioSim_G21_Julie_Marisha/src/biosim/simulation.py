@@ -105,8 +105,8 @@ class BioSim:
         self._ymax = ymax_animals
 
         if cmax_animals is None:
-            cmax_herbs = 150
-            cmax_carns = 150
+            cmax_herbs = 100
+            cmax_carns = 100
         else:
             cmax_herbs = cmax_animals['Herbivore']
             cmax_carns = cmax_animals['Carnivore']
@@ -260,6 +260,7 @@ class BioSim:
             self._graph_ax = self._fig.add_subplot(gs[:2, 7:])
             self._graph_ax.set_ylim(0, self._ymax)
             self._graph_ax.set_xlim(0, self._final_year + 1)
+            self._graph_ax.set(xlabel='Year', ylabel='Population')
         else:
             self._graph_ax.set_ylim(0, self._ymax)
             self._graph_ax.set_xlim(0, self._final_year + 1)
