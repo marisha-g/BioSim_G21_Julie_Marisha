@@ -39,7 +39,7 @@ classes:
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
 __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
-from src.biosim.animal import Carnivore, Herbivore
+from .animal import Carnivore, Herbivore
 import math
 
 

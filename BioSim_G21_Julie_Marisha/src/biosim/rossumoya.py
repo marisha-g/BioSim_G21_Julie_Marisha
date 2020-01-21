@@ -22,8 +22,8 @@ __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 import textwrap
 import random
 
-from src.biosim.animal import Herbivore, Carnivore
-from src.biosim.cell import Savannah, Jungle, Desert, Mountain, Ocean
+from .animal import Herbivore, Carnivore
+from .cell import Savannah, Jungle, Desert, Mountain, Ocean
 
 
 class MigrationProbabilityCalculator:
