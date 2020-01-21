@@ -6,4 +6,4 @@ Simulation
 
 References
 ----------
-.. [1] Plesser, H. E. (2018). *Randvis project*. [Source code].
+.. [1] Plesser, H. E. (2018). *Randvis project*. [`Source code <https://github.com/yngvem/INF200-2019/tree/master/Project/SampleProjects/randvis_project/randvis>`_].
