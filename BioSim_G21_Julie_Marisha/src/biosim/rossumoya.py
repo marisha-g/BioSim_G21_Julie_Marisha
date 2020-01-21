@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 """
-:mod: `biosim.rossumoya provides the user the annual cycle on Rossumøya.
+:mod: `biosim.rossumoya provides the user with the annual cycle on Rossumøya.
 
 This file can also be imported as a module and contains the following classes:
 
-    *   MigrationProbabilityCalculator - calculates the probabilites for an
+    *   MigrationProbabilityCalculator - calculates the probabilities for an
         animal to migrate.
     *   Rossumoya - class where the user creates the island map and initial
         population. This is also where the different methods for the annual
@@ -32,12 +32,12 @@ class MigrationProbabilityCalculator:
     def __init__(self, loc, island_map, species):
         """
         Constructor that initiate MigrationProbabilityCalculator.
-        :param loc: Coordinates for the current position
-        :type: tuple
+        :param loc: Coordinates for the current position of an animal
+        :type loc: tuple
         :param island_map: Dictionary with all cells and their locations
-        :type: dict
+        :type island_map: dict
         :param: species: Herbivore or Carnivore
-        :type: str
+        :type species: str
         """
 
         x, y = loc
@@ -58,10 +58,11 @@ class MigrationProbabilityCalculator:
     @property
     def propensity_herb(self):
         """
-        Calculate the propensities of the four cells for Herbivores.
+        Calculates the propensity to migrate from the current location to the
+        four neighbouring cells for Herbivores.
         :return: propensities: List with the four neighbouring cells
                  corresponding propensities.
-        :type: list
+        :rtype: list
         """
         self._propensity_herb = []
         for coordinates in self.locations:
@@ -71,15 +72,21 @@ class MigrationProbabilityCalculator:
 
     @propensity_herb.setter
     def propensity_herb(self, value):
+        """
+        Sets the self._propensity_herb to a new value.
+        :param value: new value
+        :type value: float
+        """
         self._propensity_herb = value
 
     @property
     def propensity_carn(self):
         """
-        Calculate the propensities of the four cells for Carnivores.
+        Calculates the propensity to migrate from the current location to the
+        four neighbouring cells for Carnivores.
         :return: propensities: List with the four neighbouring cells
                  corresponding propensities.
-        :type: list
+        :rtype: list
         """
         self._propensity_carn = []
         for cell in self.locations:
@@ -89,16 +96,21 @@ class MigrationProbabilityCalculator:
 
     @propensity_carn.setter
     def propensity_carn(self, value):
+        """
+        Sets self.propensity_carn to a new value.
+        :param value: new value
+        :type value: float
+        """
         self._propensity_carn = value
 
     @property
     def probabilities(self):
         """
-        Calculates probability for an animal to move from one cell to
-        another using the propensities.
-        :return: self.locations, probabilities: current location and the
+        Calculates the probabilities for an animal to move from its current
+        location to the four neighbouring cells, based on the propensities.
+        :return: self._probabilities: current location and the
                  probabilities to move from that location.
-        :type: tuple, list
+        :rtype: list
         """
         if self._species == 'Herbivore':
             propensities = self.propensity_herb
@@ -116,13 +128,18 @@ class MigrationProbabilityCalculator:
 
     @probabilities.setter
     def probabilities(self, prob_list):
+        """
+        Sets self._probabilities to a new value.
+        :param prob_list: new value
+        :type prob_list: list
+        """
         if sum(prob_list) != 1:
             raise ValueError('Probabilities must sum up to 1')
         self._probabilities = prob_list
 
 
 class Rossumoya:
-    """Island class in simulation BioSim."""
+    """Class for island in BioSim."""
 
     default_ini_herbs = [
         {
@@ -136,11 +153,11 @@ class Rossumoya:
             "loc": (10, 13),
             "pop": [
                 {"species": "Carnivore", "age": 5, "weight": 20}
-                for _ in range(40)
+                for _ in range(70)
             ],
         }
     ]
-    default_map = """\
+    default_map_string = """\
                           OOOOOOOOOOOOOOOOOOOOO
                           OSSSSSJJJJMMJJJJJJJOO
                           OSSSSSJJJJMMJJJJJJJOO
@@ -164,17 +181,17 @@ class Rossumoya:
                           OOOSSSSSSOOOOOOOOOOOO
                           OOOOOOOOOOOOOOOOOOOOO"""
 
-    default_map = textwrap.dedent(default_map)
+    default_map = textwrap.dedent(default_map_string)
 
-    cell_code = {"S": Savannah,
-                 "J": Jungle,
-                 "D": Desert,
-                 "O": Ocean,
-                 "M": Mountain}
+    cell_codes = {"S": Savannah,
+                  "J": Jungle,
+                  "D": Desert,
+                  "O": Ocean,
+                  "M": Mountain}
 
     def __init__(self, island_map=None, ini_pop=None):
         """
-        Constructor that initiate Rossumoya class instance.
+        Constructor that initiates Rossumoya class instances.
         :param island_map: Multiline string indicating geography of the island.
         :type: str
         :param ini_pop: List of dictionaries indicating
@@ -216,9 +233,9 @@ class Rossumoya:
         otherwise.
         :param island_map: Multiline string indicating the geography
                of the island.
-        :type: str
+        :type island_map: str
         :return: True
-        :type: bool
+        :rtype: bool
         """
         # All lines must be of same length
         island_map_list = island_map.split("\n")
@@ -230,7 +247,7 @@ class Rossumoya:
         # All cells must be of valid landscape type
         for row in island_map_list:
             for cell in row:
-                if cell not in Rossumoya.cell_code:
+                if cell not in Rossumoya.cell_codes:
                     raise ValueError("Invalid landscape type.")
 
         # All outer cells must be of type Ocean
@@ -251,16 +268,16 @@ class Rossumoya:
     def make_geography_coordinates(input_map):
         """
         Makes a dictionary with coordinates as keys and Cell subclass
-        instances (Savannah, Jungle, Desert, MountainAndOcean) as values,
+        instances (Savannah, Jungle, Desert, Mountain, Ocean) as values,
         initiated with default parameters.
         :return: geography_map
-        :type: dict
+        :rtype: dict
         """
         list_island_map = input_map.split('\n')
         geography_map = {}
         for i_index, line in enumerate(list_island_map):
             for j_index, cell in enumerate(line):
-                cell_instance = Rossumoya.cell_code[cell]
+                cell_instance = Rossumoya.cell_codes[cell]
                 geography_map[(i_index, j_index)] = cell_instance()
         return geography_map
 
@@ -269,7 +286,7 @@ class Rossumoya:
         Add population to the island.
         :param population: List of dictionaries specifying
                            population and locations.
-        :type: list
+        :type population: list
         """
         for cell_dict in population:
             location = cell_dict['loc']
@@ -283,9 +300,7 @@ class Rossumoya:
 
     def procreation(self):
         """
-        If an animal gives birth, a new animal of the same species with
-        age zero and weight drawn from draw_birth_weight is added to the same
-        cell.
+        Checks for animals in the cells and initiate mating season.
         """
         for cell in self.island_map.values():
             if cell.total_herbivores > 1:
@@ -293,16 +308,50 @@ class Rossumoya:
             if cell.total_carnivores > 1:
                 cell.carn_procreation()
 
-    def _choose_cell(self, loc, species):
+    def migration(self):
         """
-        Calculate propensities and returns
+        Finds witch animals wants to migrate, and calls _migrate method to
+        initiate migration process.
+        """
+        for loc, cell in self.island_map.items():
+            if cell.total_population > 0:
+                migrating_animals = cell.find_migrating_animals()
+                if len(migrating_animals) > 0:
+                    self.migrate(migrating_animals, loc)
+
+    def migrate(self, migrating_animals, old_loc):
+        """
+        Calls the choose_cell method to get new locations for each migrating
+        animal, and moves them there. Then removes all the animals
+        from the old location. Also resets indicator for calculating
+        propensities.
+        :param migrating_animals: List of animals.
+        :type migrating_animals: list
+        :param old_loc: Coordinates where the animals migrate from.
+        :type old_loc: tuple
+        """
+        for animal in migrating_animals:
+            new_loc = self.choose_cell(old_loc, type(animal).__name__)
+            self.island_map[new_loc].add_animals([animal])
+            self.island_map[old_loc].remove_animals([animal])
+
+            self.island_map[new_loc].propensity_migration_herb_has_been_calculated = False
+            self.island_map[new_loc].propensity_migration_carn_has_been_calculated = False
+
+        self.island_map[old_loc].propensity_migration_carn_has_been_calculated = False
+        self.island_map[old_loc].propensity_migration_herb_has_been_calculated = False
+
+    def choose_cell(self, loc, species):
+        """
+        Uses :class: MigrationProbabilityCalculator to get the probabilities
+        for migrating to each neighbouring cell, and chooses a cell. Returns
         coordinates of chosen cell to migrate to.
-        :param: loc: Location coordinates before migration.
-        :type: tuple
+        :param: loc: Location coordinates to migrate from.
+        :type loc: tuple
         :param: species: Herbivore or Carnivore
-        :type: str
-        :return: choice: Chosen cell coordinates to migrate to.
-        :type: tuple
+        :type species: str
+        :return choice: Chosen cell coordinates to migrate to.
+        :rtype: tuple
         """
         calculator = MigrationProbabilityCalculator(
             loc, self.island_map, species
@@ -315,36 +364,10 @@ class Rossumoya:
         )
         return choice[0]
 
-    def migration(self):
-        """
-        Finds witch animals wants to migrate, and calls _migrate method.
-        """
-        for loc, cell in self.island_map.items():
-            if cell.total_population > 0:
-                migrating_animals = cell.find_migrating_animals()
-                if len(migrating_animals) > 0:
-                    self._migrate(migrating_animals, loc)
-
-    def _migrate(self, migrating_animals, old_loc):
-        """
-        Chooses new locations for each migrating animal,
-        and moves them there. Then removes all the animals
-        from the old location.
-        """
-        for animal in migrating_animals:
-            new_loc = self._choose_cell(old_loc, type(animal).__name__)
-            self.island_map[new_loc].add_animals([animal])
-            self.island_map[old_loc].remove_animals([animal])
-
-        # reset propensity calculation
-        self.island_map[old_loc].propensity_migration_carn_has_been_calculated = False
-        self.island_map[old_loc].propensity_migration_herb_has_been_calculated = False
-        self.island_map[new_loc].propensity_migration_herb_has_been_calculated = False
-        self.island_map[new_loc].propensity_migration_carn_has_been_calculated = False
-
     def death(self):
         """
-        Animals are removed if prob_death returns 1.
+        Finds all animals that dies, and removes them from their location.
+        Animals die if the prob_death method returns 1.
         """
         for cell in self.island_map.values():
             dead_animals = []
@@ -355,7 +378,7 @@ class Rossumoya:
 
     def single_year(self):
         """
-        Run one single simulation.
+        Simulates one year at Rossumoya.
         """
 
         # Fodder regrows
@@ -369,30 +392,31 @@ class Rossumoya:
                 if cell.total_carnivores > 0:
                     cell.carnivores_eat()
 
-        # Animals mate
+        # Some animals mate
         self.procreation()
 
-        # Animals migrate
+        # Some animals migrate
         self.migration()
 
-        # reset migration
+        # Reset migration indicator
         for cell in self.island_map.values():
             cell.reset_migration()
 
-        # Animals age and loose weight
+        # All animals age and loose weight
         for cell in self.island_map.values():
             cell.animals_age_and_lose_weight()
 
-        # Animals die
+        # Some animals die
         self.death()
 
     def map_size(self):
-        """ Find size of the island_map.
+        """
+        Finds the size of the island_map.
         :return: lower right corner coordinates (max values for row and column)
-        :type: tuple
+        :rtype: tuple
         """
         coordinates = self.island_map.keys()
         list_coordinates = list(coordinates)
         x, y = list_coordinates[-1]
-        size = (x+1, y+1)
+        size = (x + 1, y + 1)
         return size
