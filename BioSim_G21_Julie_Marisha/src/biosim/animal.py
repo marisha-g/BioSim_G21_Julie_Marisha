@@ -164,7 +164,7 @@ class BaseAnimal:
         """
         Birth weight is drawn from a Gaussian distribution based on mean and
         standard deviation.
-        :return: birth_weight
+        :return: birth weight
         :rtype: float
         """
         cls.birth_weight = 0
@@ -174,7 +174,7 @@ class BaseAnimal:
 
     def __init__(self, age=None, weight=None):
         """
-        Constructor that initiate :class: Animal.
+        Constructor that initiate class BaseAnimal.
         :param age: initial age
         :type age: float
         :param weight: initial weight
@@ -419,7 +419,7 @@ class Herbivore(BaseAnimal):
 
 class Carnivore(BaseAnimal):
     """Class for the carnivore species in Biosim.
-    Subclass of :class: BaseAnimal."""
+    Subclass of class BaseAnimal."""
     @classmethod
     def set_parameters(
             cls,
@@ -519,9 +519,20 @@ class Carnivore(BaseAnimal):
         self._prob_carnivore_kill = None
 
     def prob_carnivore_kill(self, fitness_prey):
-        """
+        r"""
         Calculates the probability for a Carnivore to kill a Herbivore,
-        and decides accordingly.
+        and decides accordingly. The formula for calculating this probability
+        is given below.
+
+        .. math::
+            p =
+            \begin{cases}
+            0 & \mbox { if } \Phi_{carn} \leq \Phi_{herb} \\
+            \frac{\Phi_{carn} - \Phi_{herb}}{\Delta \Phi_{max}} &
+            \mbox { if } 0 < \Phi_{carn} - \Phi_{herb < \Delta \Phi_{max}} \\
+            0 & \mbox { otherwise }
+            \end{cases} \quad
+
         :param fitness_prey: the fitness of the prey (Herbivore)
         :type fitness_prey: float
         :return choice: 0 or 1
