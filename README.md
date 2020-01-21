@@ -1,4 +1,3 @@
-# BioSim_G21_Julie_Marisha
 
 BioSim project
 ===============
@@ -40,6 +39,10 @@ Alternatively, you can manually pull this repository and run the
     git clone https://github.com/marisha-g/BioSim_G21_Julie_Marisha.git
     cd BioSim_G21_Julie_Marisha
     python setup.py
+
+Documentation
+--------------
+You can read the full documentation on `readthedocs <https://group-lasso.readthedocs.io/en/latest/maths.html>`_.
 
 
 References
