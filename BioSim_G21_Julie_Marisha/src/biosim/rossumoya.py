@@ -335,11 +335,11 @@ class Rossumoya:
             self.island_map[new_loc].add_animals([animal])
             self.island_map[old_loc].remove_animals([animal])
 
-            self.island_map[new_loc].propensity_migration_herb_has_been_calculated = False
-            self.island_map[new_loc].propensity_migration_carn_has_been_calculated = False
+            self.island_map[new_loc].propensity_herb_calculated = False
+            self.island_map[new_loc].propensity_carn_calculated = False
 
-        self.island_map[old_loc].propensity_migration_carn_has_been_calculated = False
-        self.island_map[old_loc].propensity_migration_herb_has_been_calculated = False
+        self.island_map[old_loc].propensity_herb_calculated = False
+        self.island_map[old_loc].propensity_carn_calculated = False
 
     def choose_cell(self, loc, species):
         """

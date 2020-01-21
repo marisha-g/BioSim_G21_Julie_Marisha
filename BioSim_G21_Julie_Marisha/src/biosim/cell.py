@@ -51,7 +51,7 @@ class BaseCell:
         """
         Set default parameters for class Cell.
         :param f_max: maximum fodder available in a cell type
-        :type: float
+        :type f_max: float
         """
         if f_max is None:
             f_max = 0
@@ -60,23 +60,19 @@ class BaseCell:
             raise ValueError('f_max must be a positive number')
         cls.f_max = f_max
 
-    def __init__(self, animals=None):
+    def __init__(self):
         """
         Constructor that initiate class Cell.
-        :param animals: list of all the animals in a cell
-        :type: list
         """
         self._fodder_in_cell = None
         self.animal_can_enter = True
         self._propensity_migration_carn = None
         self._propensity_migration_herb = None
 
-        self.propensity_migration_carn_has_been_calculated = False
-        self.propensity_migration_herb_has_been_calculated = False
+        self.propensity_carn_calculated = False
+        self.propensity_herb_calculated = False
 
-        if animals is None:
-            animals = []
-        self.animals = animals
+        self.animals = []
 
         self.set_parameters()
         self.fodder_first_year(self.f_max)
@@ -85,7 +81,7 @@ class BaseCell:
         """
         Add new animals in cell.
         :param pop_list: list of dictionaries indicating population.
-        :type: list
+        :type pop_list: list
         """
         for pop_dict in pop_list:
             species = pop_dict['species']
@@ -105,7 +101,7 @@ class BaseCell:
         """
         Returns the total amount of animals on Rossumøya.
         :return: length of the Animal list
-        :type: int
+        :rtype: int
         """
         return len(self.animals)
 
@@ -113,7 +109,7 @@ class BaseCell:
     def total_herbivores(self):
         """
         :returns: the total amount of Herbivores on Rossumøya.
-        :type: int
+        :rtype: int
         """
         total_herbivores = 0
         for animal in self.animals:
@@ -126,7 +122,7 @@ class BaseCell:
     def total_carnivores(self):
         """
         :returns: the total amount of Carnivores on Rossumøya.
-        :type: int
+        :rtype: int
         """
         total_carnivores = 0
         for animal in self.animals:
@@ -140,7 +136,7 @@ class BaseCell:
         """
         Fodder available in cell.
         :return: self._fodder_in_cell
-        :type: float
+        :rtype: float
         """
         return self._fodder_in_cell
 
@@ -150,7 +146,7 @@ class BaseCell:
         Set the amount of fodder in cell. Setting this to a
         new value will reconfigure the cell automatically.
         :param value: new value
-        :type: float
+        :type value: float
         """
         self._fodder_in_cell = value
 
@@ -159,7 +155,7 @@ class BaseCell:
         """
         Calculates the relative abundance of fodder for Herbivores.
         :return: rel_abundance_of_fodder
-        :type: float
+        :rtype: float
         """
         rel_abundance_of_fodder = self.fodder_in_cell / (
                 (self.total_herbivores + 1) * Herbivore.F
@@ -172,12 +168,8 @@ class BaseCell:
         """
         Calculates the relative abundance of fodder for Carnivores.
         :return: rel_abundance_of_fodder
-        :type: float
+        :rtype: float
         """
-        """list_weights = [
-            animal.weight for animal in self.animals if
-            isinstance(animal, Herbivore)
-        ]"""
         weight_of_herbs = 0
         for animal in self.animals:
             if type(animal).__name__ == 'Herbivore':
@@ -193,7 +185,7 @@ class BaseCell:
         """
         Sets max fodder in Savannah and Jungle cells.
         :param f_max: maximum fodder available in a cell type
-        :type: float
+        :type f_max: float
         """
         self.fodder_in_cell = f_max
 
@@ -202,9 +194,12 @@ class BaseCell:
         Grow back initial fodder amount.
         """
         self.fodder_in_cell = self.f_max
-        self.propensity_migration_herb_has_been_calculated = False
+        self.propensity_herb_calculated = False
 
     def animals_age_and_lose_weight(self):
+        """
+        Once a year all animals lose weight and age.
+        """
         for animal in self.animals:
             animal.aging()
             animal.weight_loss()
@@ -215,7 +210,7 @@ class BaseCell:
         Sorts all Herbivores by fitness in descending order if there
         are more than one Herbivore in the cell.
         :return: sorted_herbivores or list_of_herbivores
-        :type: list
+        :rtype: list
         """
         """list_of_herbivores = [animal for animal in self.animals
                               if isinstance(animal, Herbivore)]"""
@@ -238,7 +233,7 @@ class BaseCell:
         Sorts all Carnivores by fitness in descending order if there
         are more than one Carnivore in the cell.
         :return: sorted_carnivores or list of carnivores
-        :type: list
+        :rtype: list
         """
         """list_of_carnivores = [animal for animal in self.animals
                               if isinstance(animal, Carnivore)]"""
@@ -294,6 +289,10 @@ class BaseCell:
             self.remove_animals(killed_herbivores)
 
     def herb_procreation(self):
+        """
+        Herbivores at the start of the breeding season procreate if the
+        propability to procreate is equal to 1.
+        """
         total_herbs_at_start_of_breeding_season = self.total_herbivores
         for animal in self.animals:
             species = type(animal).__name__
@@ -306,6 +305,10 @@ class BaseCell:
                     self.add_offspring(animal)
 
     def carn_procreation(self):
+        """
+        Carnivores at the start of the breeding season procreate if the
+        propability to procreate is equal to 1.
+        """
         total_carns_at_start_of_breeding_season = self.total_carnivores
         for animal in self.animals:
             species = type(animal).__name__
@@ -322,7 +325,7 @@ class BaseCell:
         Adds offspring to the cell, and decrease weight of the
         mother.
         :param animal: Mother who gives birth
-        :type: type
+        :type animal: type
         """
         weight = animal.draw_birth_weight()
         if weight * animal.xi < animal.weight:
@@ -339,7 +342,7 @@ class BaseCell:
         Makes a list of the animals who wants to migrate out
         of the cell.
         :return: migrating_animals
-        :type: list
+        :rtype: list
         """
         migrating_animals = []
         for animal in self.animals:
@@ -359,17 +362,23 @@ class BaseCell:
     def propensity_migration_herb(self):
         """
         Calculates the propensity for a Herbivore to move from one cell
-        to another.
+        to another according to the formula below:
+        .. math::
+            \pi_{i \rightarrow j} =
+            \begin{cases}
+                0 & \mbox{ if j is Mountain or Ocean} \\
+                e^(\lambda\epsilon_j) & \mbox{ otherwise}
+            \end{cases} \quad
         :return: formula for calculating propensity
-        :type: float
+        :rtype: float
         """
-        if self.propensity_migration_herb_has_been_calculated:
+        if self.propensity_herb_calculated:
             return self._propensity_migration_herb
         else:
             self._propensity_migration_herb = math.exp(
                 Herbivore.lambda_ * self.abundance_of_fodder_herbivores
             )
-            self.propensity_migration_herb_has_been_calculated = True
+            self.propensity_herb_calculated = True
             return self._propensity_migration_herb
 
     @property
@@ -380,13 +389,13 @@ class BaseCell:
         :return: formula for calculating propensity
         :type: float
         """
-        if self.propensity_migration_carn_has_been_calculated:
+        if self.propensity_carn_calculated:
             return self._propensity_migration_carn
         else:
             self._propensity_migration_carn = math.exp(
                 Carnivore.lambda_ * self.abundance_of_fodder_carnivores
             )
-            self.propensity_migration_carn_has_been_calculated = True
+            self.propensity_carn_calculated = True
 
             return self._propensity_migration_carn
 
