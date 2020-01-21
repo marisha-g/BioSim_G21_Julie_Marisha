@@ -192,7 +192,7 @@ class Rossumoya:
                 self.island_map_string = island_map
                 self.island_map = self.make_geography_coordinates(island_map)
 
-        self.map_size = self._map_size()
+        self.map_size = self.map_size()
 
         if ini_pop is None:
             self.add_population(Rossumoya.default_ini_herbs)
@@ -293,7 +293,7 @@ class Rossumoya:
             if cell.total_carnivores > 1:
                 cell.carn_procreation()
 
-    def choose_cell(self, loc, species):
+    def _choose_cell(self, loc, species):
         """
         Calculate propensities and returns
         coordinates of chosen cell to migrate to.
@@ -332,7 +332,7 @@ class Rossumoya:
         from the old location.
         """
         for animal in migrating_animals:
-            new_loc = self.choose_cell(old_loc, type(animal).__name__)
+            new_loc = self._choose_cell(old_loc, type(animal).__name__)
             self.island_map[new_loc].add_animals([animal])
             self.island_map[old_loc].remove_animals([animal])
 
@@ -386,7 +386,7 @@ class Rossumoya:
         # Animals die
         self.death()
 
-    def _map_size(self):
+    def map_size(self):
         """ Find size of the island_map.
         :return: lower right corner coordinates (max values for row and column)
         :type: tuple
