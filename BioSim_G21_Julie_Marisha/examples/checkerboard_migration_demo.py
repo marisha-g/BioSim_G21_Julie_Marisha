@@ -1,8 +1,16 @@
 # -*- coding: utf-8 -*-
 
 """
-This is a small demo script running a BioSim simulation that demonstrates
-the behaviour of the animals when the probability to migrate is set to 1.
+:mod: `BioSim_G21_Julie_Marisha.checkerboard_migration_demo` is a small demo
+script running a BioSim simulation that demonstrates the behaviour of the
+animals when the probability to migrate is set to 1.
+
+The user can define:
+#. Rossumøya's geography
+#. The number of each species that are put on every defined coordinate
+#. The coordinates that the animals in that species should occupy
+#. Number of years to simulate
+
 """
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
