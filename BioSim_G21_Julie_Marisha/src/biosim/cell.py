@@ -387,7 +387,7 @@ class BaseCell:
         Calculates the propensity for a Carnivore to move from one cell
         to another.
         :return: formula for calculating propensity
-        :type: float
+        :rtype: float
         """
         if self.propensity_carn_calculated:
             return self._propensity_migration_carn
@@ -403,7 +403,7 @@ class BaseCell:
         """
         Removes animal that has migrated.
         :param gone_animals: list of animals that has migrated
-        :type: list
+        :type gone_animals: list
         """
         for gone_animal in gone_animals:
             self.animals.remove(gone_animal)
@@ -422,9 +422,9 @@ class Savannah(BaseCell):
         """
         Set default parameters for class instance Savannah.
         :param f_max: maximum fodder available in cell type Savannah
-        :type: float
+        :type f_max: float
         :param alpha: constant
-        :type: float
+        :type alpha: float
         """
         if f_max is None:
             f_max = 300.0
@@ -460,7 +460,7 @@ class Jungle(BaseCell):
         """
         Set default parameters for class instance Jungle.
         :param f_max: maximum fodder available in cell type Jungle
-        :type: float
+        :type f_max: float
         """
         super(Jungle, cls).set_parameters(f_max)
 
@@ -479,7 +479,7 @@ class Desert(BaseCell):
         """
         Set default parameters for class instance Desert.
         :param f_max: maximum fodder available in cell type Desert
-        :type: float
+        :type f_max: float
         """
         super(Desert, cls).set_parameters(f_max)
 
@@ -499,7 +499,7 @@ class Mountain(BaseCell):
         """
         Set default parameters for class instance Mountain.
         :param f_max: maximum fodder available in cell type Mountain
-        :type: float
+        :type f_max: float
         """
         super(Mountain, cls).set_parameters(f_max)
 
@@ -517,7 +517,7 @@ class Mountain(BaseCell):
         Sets the propensity for a Herbivore to migrate to zero,
         because Mountain cells are impassable.
         :return: 0
-        :type: int
+        :rtype: int
         """
         return 0
 
@@ -527,7 +527,7 @@ class Mountain(BaseCell):
         Sets the propensity for a Carnivore to migrate to zero,
         because Mountain cells are impassable.
         :return: 0
-        :type: int
+        :rtype: int
         """
         return 0
 
@@ -540,7 +540,7 @@ class Ocean(BaseCell):
         """
         Set default parameters for class instance Ocean.
         :param f_max: maximum fodder available in cell type Ocean
-        :type: float
+        :type f_max: float
         """
         super(Ocean, cls).set_parameters(f_max)
 
@@ -558,7 +558,7 @@ class Ocean(BaseCell):
         Sets the propensity for a Herbivore to migrate to zero,
         because Ocean cells are impassable.
         :return: 0
-        :type: int
+        :rtype: int
         """
         return 0
 
@@ -568,6 +568,6 @@ class Ocean(BaseCell):
         Sets the propensity for a Carnivore to migrate to zero,
         because Ocean cells are impassable.
         :return: 0
-        :type: int
+        :rtype: int
         """
         return 0
