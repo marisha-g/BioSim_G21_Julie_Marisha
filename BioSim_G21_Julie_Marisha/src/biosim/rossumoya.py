@@ -192,7 +192,7 @@ class Rossumoya:
                 self.island_map_string = island_map
                 self.island_map = self.make_geography_coordinates(island_map)
 
-        self.map_size = self._map_size()
+        self.map_size = self.map_size()
 
         if ini_pop is None:
             self.add_population(Rossumoya.default_ini_herbs)
@@ -386,7 +386,7 @@ class Rossumoya:
         # Animals die
         self.death()
 
-    def _map_size(self):
+    def map_size(self):
         """ Find size of the island_map.
         :return: lower right corner coordinates (max values for row and column)
         :type: tuple
