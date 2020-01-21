@@ -519,5 +519,5 @@ class BioSim:
 
 if __name__ == '__main__':
     sim1 = BioSim()
-    sim1.simulate(num_years=30, vis_years=2, img_years=5)
+    sim1.simulate(num_years=100, vis_years=2, img_years=5)
     plt.show()

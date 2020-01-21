@@ -187,9 +187,9 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
 
-<span class="kn">from</span> <span class="nn">biosim.animal</span> <span class="kn">import</span> <span class="n">Herbivore</span><span class="p">,</span> <span class="n">Carnivore</span>
-<span class="kn">from</span> <span class="nn">biosim.cell</span> <span class="kn">import</span> <span class="n">Savannah</span><span class="p">,</span> <span class="n">Jungle</span>
-<span class="kn">from</span> <span class="nn">biosim.rossumoya</span> <span class="kn">import</span> <span class="n">Rossumoya</span><span class="p">,</span> <span class="n">MigrationProbabilityCalculator</span>
+<span class="kn">from</span> <span class="nn">src.biosim.animal</span> <span class="kn">import</span> <span class="n">Herbivore</span><span class="p">,</span> <span class="n">Carnivore</span>
+<span class="kn">from</span> <span class="nn">src.biosim.cell</span> <span class="kn">import</span> <span class="n">Savannah</span><span class="p">,</span> <span class="n">Jungle</span>
+<span class="kn">from</span> <span class="nn">src.biosim.rossumoya</span> <span class="kn">import</span> <span class="n">Rossumoya</span><span class="p">,</span> <span class="n">MigrationProbabilityCalculator</span>
 
 <span class="c1"># update these variables to point to your ffmpeg and convert binaries</span>
 <span class="n">FFMPEG</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\Users\be15069901\Documents\NMBU Data 2019-2020\INF200\biosim_project\BioSim_G21_Julie_Marisha\BioSim_G21_Julie_Marisha\ffmpeg\bin\ffmpeg.exe&#39;</span>
@@ -258,12 +258,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_image_counter</span> <span class="o">=</span> <span class="mi">0</span>
 
         <span class="k">if</span> <span class="n">ymax_animals</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">ymax_animals</span> <span class="o">=</span> <span class="mi">1000</span>
+            <span class="n">ymax_animals</span> <span class="o">=</span> <span class="mi">15000</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ymax</span> <span class="o">=</span> <span class="n">ymax_animals</span>
 
         <span class="k">if</span> <span class="n">cmax_animals</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">cmax_herbs</span> <span class="o">=</span> <span class="mi">200</span>
-            <span class="n">cmax_carns</span> <span class="o">=</span> <span class="mi">200</span>
+            <span class="n">cmax_herbs</span> <span class="o">=</span> <span class="mi">150</span>
+            <span class="n">cmax_carns</span> <span class="o">=</span> <span class="mi">150</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">cmax_herbs</span> <span class="o">=</span> <span class="n">cmax_animals</span><span class="p">[</span><span class="s1">&#39;Herbivore&#39;</span><span class="p">]</span>
             <span class="n">cmax_carns</span> <span class="o">=</span> <span class="n">cmax_animals</span><span class="p">[</span><span class="s1">&#39;Carnivore&#39;</span><span class="p">]</span>
@@ -272,6 +272,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_cmax_carns</span> <span class="o">=</span> <span class="n">cmax_carns</span>
 
         <span class="c1"># the following will be initialized by _setup_graphics</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vis_years</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_nested_list</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_fig</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_map_ax</span> <span class="o">=</span> <span class="kc">None</span>
@@ -323,11 +324,12 @@
 
 <span class="sd">        .. note:: Image files will be numbered consecutively.</span>
 
-<span class="sd">        Author: Hans Ekkehard Plesser</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">img_years</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">img_years</span> <span class="o">=</span> <span class="n">vis_years</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">vis_years</span> <span class="o">=</span> <span class="n">vis_years</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_final_year</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_year</span> <span class="o">+</span> <span class="n">num_years</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_setup_graphics</span><span class="p">()</span>
@@ -337,8 +339,8 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_year</span> <span class="o">%</span> <span class="n">vis_years</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_update_graphics</span><span class="p">()</span>
 
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_year</span> <span class="o">%</span> <span class="n">img_years</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_save_file</span><span class="p">()</span>
+            <span class="sd">&quot;&quot;&quot;if self._year % img_years == 0:</span>
+<span class="sd">                self._save_file()&quot;&quot;&quot;</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">rossumoya</span><span class="o">.</span><span class="n">single_year</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_year</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -495,8 +497,8 @@
     <span class="k">def</span> <span class="nf">_update_graphics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Updates graph and heat map in figure window.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Year: </span><span class="si">{self.year}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_update_heat_map</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_graph</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_heat_map</span><span class="p">()</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">pause</span><span class="p">(</span><span class="mf">1e-2</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_update_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -507,12 +509,38 @@
 
         <span class="n">herb_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_herb_line</span><span class="o">.</span><span class="n">get_ydata</span><span class="p">()</span>
         <span class="n">herb_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_year</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_herbs</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vis_years</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">herb_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interpolate_gaps</span><span class="p">(</span><span class="n">herb_data</span><span class="p">)</span>
 
         <span class="n">carn_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_carn_line</span><span class="o">.</span><span class="n">get_ydata</span><span class="p">()</span>
         <span class="n">carn_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_year</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_carns</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vis_years</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">carn_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interpolate_gaps</span><span class="p">(</span><span class="n">carn_data</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_carn_line</span><span class="o">.</span><span class="n">set_ydata</span><span class="p">(</span><span class="n">carn_data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_herb_line</span><span class="o">.</span><span class="n">set_ydata</span><span class="p">(</span><span class="n">herb_data</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_interpolate_gaps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fill gaps using linear interpolation, optionally only fill gaps up to a</span>
+<span class="sd">        size of `limit`.</span>
+
+<span class="sd">        Code originates from:</span>
+<span class="sd">        https://stackoverflow.com/questions/36455083/working-with-nan-values-in-matplotlib</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">limit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vis_years</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="n">valid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+        <span class="n">filled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">[</span><span class="n">valid</span><span class="p">],</span> <span class="n">values</span><span class="p">[</span><span class="n">valid</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">limit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">invalid</span> <span class="o">=</span> <span class="o">~</span><span class="n">valid</span>
+            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">limit</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">invalid</span><span class="p">[:</span><span class="o">-</span><span class="n">n</span><span class="p">]</span> <span class="o">&amp;=</span> <span class="n">invalid</span><span class="p">[</span><span class="n">n</span><span class="p">:]</span>
+            <span class="n">filled</span><span class="p">[</span><span class="n">invalid</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+        <span class="k">return</span> <span class="n">filled</span>
 
     <span class="k">def</span> <span class="nf">_setup_graphics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Creates subplots.&quot;&quot;&quot;</span>
@@ -632,8 +660,6 @@
 
         <span class="n">movie_fmt</span> <span class="o">=</span> <span class="s1">&#39;mp4&#39;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="c1"># Parameters chosen according to http://trac.ffmpeg.org/wiki/Encode/H.264,</span>
-            <span class="c1"># section &quot;Compatibility&quot;</span>
             <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{FFMPEG}</span><span class="s1"> -y -r 2 -i &#39;</span>
                                   <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self._image_base}%05d</span><span class="s1">.</span><span class="si">{self._image_format}</span><span class="s1">&#39;</span>
                                   <span class="sa">f</span><span class="s1">&#39; -c:v libx264 -vf fps=25 -pix_fmt &#39;</span>
@@ -645,25 +671,8 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;island_map = &quot;OOOOOOO\nOOOMOOO\nOJJJJOO\nOJJSJJO\nOOMJJOO\nOOOJJOO\nOOOOOOO&quot;</span>
-<span class="sd">    ini_pop = [</span>
-<span class="sd">        {</span>
-<span class="sd">            &quot;loc&quot;: (2, 2),</span>
-<span class="sd">            &quot;pop&quot;: [{&quot;species&quot;: &quot;Herbivore&quot;, &quot;age&quot;: 5, &quot;weight&quot;: 20}</span>
-<span class="sd">                    for _ in range(100)],</span>
-<span class="sd">        },</span>
-<span class="sd">        {</span>
-<span class="sd">            &quot;loc&quot;: (2, 3),</span>
-<span class="sd">            &quot;pop&quot;: [</span>
-<span class="sd">                {&quot;species&quot;: &quot;Carnivore&quot;, &quot;age&quot;: 5, &quot;weight&quot;: 20}</span>
-<span class="sd">                for _ in range(40)</span>
-<span class="sd">            ],</span>
-<span class="sd">        }</span>
-<span class="sd">    ]</span>
-<span class="sd">    sim1 = BioSim(ini_pop=ini_pop, island_map=island_map, ymax_animals=700, cmax_animals={&#39;Herbivore&#39;: 100,</span>
-<span class="sd">                                                                                          &#39;Carnivore&#39;: 100})&quot;&quot;&quot;</span>
-    <span class="n">sim1</span> <span class="o">=</span> <span class="n">BioSim</span><span class="p">(</span><span class="n">img_base</span><span class="o">=</span><span class="n">DEFAULT_IMAGE_BASE</span><span class="p">)</span>
-    <span class="n">sim1</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">num_years</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">vis_years</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">img_years</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">sim1</span> <span class="o">=</span> <span class="n">BioSim</span><span class="p">()</span>
+    <span class="n">sim1</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">num_years</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">vis_years</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">img_years</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 

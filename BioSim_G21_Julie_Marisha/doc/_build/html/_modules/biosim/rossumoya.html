@@ -173,10 +173,10 @@
 <span class="n">__email__</span> <span class="o">=</span> <span class="s1">&#39;juforris@nmbu.no&#39;</span><span class="p">,</span> <span class="s1">&#39;magn@nmbu.no&#39;</span>
 
 <span class="kn">import</span> <span class="nn">textwrap</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">random</span>
 
-<span class="kn">from</span> <span class="nn">biosim.animal</span> <span class="kn">import</span> <span class="n">Herbivore</span><span class="p">,</span> <span class="n">Carnivore</span>
-<span class="kn">from</span> <span class="nn">biosim.cell</span> <span class="kn">import</span> <span class="n">Savannah</span><span class="p">,</span> <span class="n">Jungle</span><span class="p">,</span> <span class="n">Desert</span><span class="p">,</span> <span class="n">Mountain</span><span class="p">,</span> <span class="n">Ocean</span>
+<span class="kn">from</span> <span class="nn">src.biosim.animal</span> <span class="kn">import</span> <span class="n">Herbivore</span><span class="p">,</span> <span class="n">Carnivore</span>
+<span class="kn">from</span> <span class="nn">src.biosim.cell</span> <span class="kn">import</span> <span class="n">Savannah</span><span class="p">,</span> <span class="n">Jungle</span><span class="p">,</span> <span class="n">Desert</span><span class="p">,</span> <span class="n">Mountain</span><span class="p">,</span> <span class="n">Ocean</span>
 
 
 <div class="viewcode-block" id="MigrationProbabilityCalculator"><a class="viewcode-back" href="../../modules/rossumoya.html#biosim.rossumoya.MigrationProbabilityCalculator">[docs]</a><span class="k">class</span> <span class="nc">MigrationProbabilityCalculator</span><span class="p">:</span>
@@ -441,8 +441,10 @@
 <span class="sd">        cell.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">island_map</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">cell</span><span class="o">.</span><span class="n">total_herbivores</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">cell</span><span class="o">.</span><span class="n">total_carnivores</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">cell</span><span class="o">.</span><span class="n">procreation</span><span class="p">()</span></div>
+            <span class="k">if</span> <span class="n">cell</span><span class="o">.</span><span class="n">total_herbivores</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">cell</span><span class="o">.</span><span class="n">herb_procreation</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">cell</span><span class="o">.</span><span class="n">total_carnivores</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">cell</span><span class="o">.</span><span class="n">carn_procreation</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Rossumoya.choose_cell"><a class="viewcode-back" href="../../modules/rossumoya.html#biosim.rossumoya.Rossumoya.choose_cell">[docs]</a>    <span class="k">def</span> <span class="nf">choose_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loc</span><span class="p">,</span> <span class="n">species</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -461,9 +463,10 @@
         <span class="n">probabilities</span> <span class="o">=</span> <span class="n">calculator</span><span class="o">.</span><span class="n">probabilities</span>
         <span class="n">locations</span> <span class="o">=</span> <span class="n">calculator</span><span class="o">.</span><span class="n">locations</span>
 
-        <span class="n">choice</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">probabilities</span><span class="p">)</span>
-        <span class="n">chosen_cell</span> <span class="o">=</span> <span class="n">locations</span><span class="p">[</span><span class="n">choice</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">chosen_cell</span></div>
+        <span class="n">choice</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span>
+            <span class="n">locations</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">probabilities</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">choice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="Rossumoya.migration"><a class="viewcode-back" href="../../modules/rossumoya.html#biosim.rossumoya.Rossumoya.migration">[docs]</a>    <span class="k">def</span> <span class="nf">migration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -486,6 +489,12 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">island_map</span><span class="p">[</span><span class="n">new_loc</span><span class="p">]</span><span class="o">.</span><span class="n">add_animals</span><span class="p">([</span><span class="n">animal</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">island_map</span><span class="p">[</span><span class="n">old_loc</span><span class="p">]</span><span class="o">.</span><span class="n">remove_animals</span><span class="p">([</span><span class="n">animal</span><span class="p">])</span>
 
+        <span class="c1"># reset propensity calculation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">island_map</span><span class="p">[</span><span class="n">old_loc</span><span class="p">]</span><span class="o">.</span><span class="n">propensity_migration_carn_has_been_calculated</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">island_map</span><span class="p">[</span><span class="n">old_loc</span><span class="p">]</span><span class="o">.</span><span class="n">propensity_migration_herb_has_been_calculated</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">island_map</span><span class="p">[</span><span class="n">new_loc</span><span class="p">]</span><span class="o">.</span><span class="n">propensity_migration_herb_has_been_calculated</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">island_map</span><span class="p">[</span><span class="n">new_loc</span><span class="p">]</span><span class="o">.</span><span class="n">propensity_migration_carn_has_been_calculated</span> <span class="o">=</span> <span class="kc">False</span>
+
 <div class="viewcode-block" id="Rossumoya.death"><a class="viewcode-back" href="../../modules/rossumoya.html#biosim.rossumoya.Rossumoya.death">[docs]</a>    <span class="k">def</span> <span class="nf">death</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Animals are removed if prob_death returns 1.</span>
@@ -501,6 +510,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run one single simulation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="c1"># Fodder regrows</span>
         <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">island_map</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="n">cell</span><span class="o">.</span><span class="n">regrow_fodder</span><span class="p">()</span>
@@ -509,16 +519,18 @@
         <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">island_map</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">cell</span><span class="o">.</span><span class="n">total_herbivores</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">cell</span><span class="o">.</span><span class="n">herbivores_eat</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">cell</span><span class="o">.</span><span class="n">total_carnivores</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">cell</span><span class="o">.</span><span class="n">carnivores_eat</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">cell</span><span class="o">.</span><span class="n">total_carnivores</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">cell</span><span class="o">.</span><span class="n">carnivores_eat</span><span class="p">()</span>
 
         <span class="c1"># Animals mate</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">procreation</span><span class="p">()</span>
 
         <span class="c1"># Animals migrate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">migration</span><span class="p">()</span>
+
+        <span class="c1"># reset migration</span>
         <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">island_map</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="n">cell</span><span class="o">.</span><span class="n">reset_migration</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">migration</span><span class="p">()</span>
 
         <span class="c1"># Animals age and loose weight</span>
         <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">island_map</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
