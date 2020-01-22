@@ -26,7 +26,6 @@ Example of list returned:
       'pop': [{'species': 'Carnivore', 'age': 3, 'weight': 35},
               {'species': 'Carnivore', 'age': 5, 'weight': 20},
               {'species': 'Carnivore', 'age': 8, 'weight': 5}]}]
-
 """
 __author__ = "Ragnhild Smistad, UMB and Toril Fjeldaas Rygg, UMB"
 

@@ -244,7 +244,12 @@ class BaseAnimal:
         is calculated with the following formula.
 
         .. math::
+
             min(1, \gamma \times \Phi \times (N - 1))
+
+
+            \mbox { where } \gamma \mbox { is a constant, } \Phi \mbox
+            { is fitness and } N \mbox { is the number of animals i a cell.}
 
         :param n: Number of animals of the same species in a cell
         :type n: int
@@ -599,7 +604,7 @@ def fitness_calculator(
 
     where
 
-    .. math::
+   .. math::
         q^\pm(x, x_{\frac{1}{2}}, \phi) =
         \frac{1}{1 + e^{\pm \phi(x - x_{\frac{1}{2}})}}
 
