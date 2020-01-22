@@ -42,7 +42,7 @@ Alternatively, you can manually pull this repository and run the
 
 Documentation
 --------------
-You can read the full documentation on `readthedocs <https://group-lasso.readthedocs.io/en/latest/maths.html>`_.
+You can read the full documentation on our sphinx page. 
 
 
 References
