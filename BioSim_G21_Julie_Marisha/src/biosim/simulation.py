@@ -17,11 +17,12 @@ The visualization is given in one graphics window with the following elements:
 This file can be imported as a module and contains the following
 class:
 
-    *   BioSim - 
+    *   BioSim - Simulation interface module
 
 .. note::
-    *   This script requires that `math` is installed within the Python
-        environment you are running this script in.
+    *   This script requires that `pandas`, `matplotlib` and `numpy`
+        is installed within the Python environment you are
+        running this script in. Also requires ffmpeg.
 
 """
 
@@ -75,10 +76,10 @@ class BioSim:
         :param ymax_animals: y-axis limit for graph showing animal numbers
         :type ymax_animals: int
         :param cmax_animals: Color-code limits for animal densities,
-                             e.g. {'Herbivore': 100, 'Carnivore': 50}
+                                e.g. {'Herbivore': 100, 'Carnivore': 50}
         :type cmax_animals: dict
-        :param img_base: Beginning of file name for figures, including path
-                         If img_base is None, no figures are written to file.
+        :param img_base: Beginning of file name for figures, including path If
+                            img_base is None, no figures are written to file.
         :type img_base: str
         :param img_fmt: File type for figures, e.g. 'png'
         :type img_fmt: str
@@ -169,7 +170,7 @@ class BioSim:
         :param vis_years: Years between visualization updates
         :type vis_years: int
         :param img_years: Years between visualizations saved to files
-                         (default: vis_years)
+                            (default: vis_years)
         :type img_years: int
 
         .. note::
@@ -378,6 +379,7 @@ class BioSim:
         """
         Fills gaps using linear interpolation, optionally only
         fill gaps up to a size of `limit` [1]_.
+
         :return: values
         :rtype: np.array
         """
@@ -399,7 +401,8 @@ class BioSim:
         """
         Makes map from nested_coordinates_list with rgb colour codes
         for visualization.
-        :return colour_map
+
+        :return colour map
         :rtype: list
         """
         colour_map = self.nested_coordinates_list
@@ -427,7 +430,8 @@ class BioSim:
         """
         Makes a nested list for each species, with the number of animals in
         all cells at coordinates corresponding to indexes of the lists.
-        :return: carn_pop_list, herb_pop_list
+
+        :return: Carnivore and Herbivore population lists
         :rtype: list, list
         """
         data_frame = self.animal_distribution
@@ -458,8 +462,8 @@ class BioSim:
         """
         Makes a nested list with None as values, with indexing corresponding
         to the coordinates of the island map.
-        :return: self._nested_list
-        :type: list
+
+            :type: list
         """
         self._nested_list = []
         map_size = self.rossumoya.map_size
@@ -474,8 +478,8 @@ class BioSim:
     def year(self):
         """
         Last year simulated.
-        :return self._year
-        :rtype: int
+
+            :type: int
         """
         return self._year
 
@@ -483,8 +487,8 @@ class BioSim:
     def num_animals(self):
         """
         Finds total number of animals on island.
-        :return: num_animals
-        :rtype: int
+
+            :type: int
         """
         num_animals = 0
         for cell in self.rossumoya.island_map.values():
@@ -495,8 +499,8 @@ class BioSim:
     def num_animals_per_species(self):
         """
         Finds total number of animals per species on the island.
-        :return: num_animals_per_species
-        :rtype: dict
+
+            :type: dict
         """
         num_herb = 0
         num_carn = 0
@@ -515,8 +519,8 @@ class BioSim:
         """
         Makes a pandas DataFrame with animal count per species
         for each cell on the island.
-        :return data_frame: animal distribution
-        :rtype: pd.DataFrame
+
+            :type: pandas.DataFrame
         """
         data_dict = {'Row': [], 'Col': [], 'Herbivore': [], 'Carnivore': []}
         for loc, cell in self.rossumoya.island_map.items():
