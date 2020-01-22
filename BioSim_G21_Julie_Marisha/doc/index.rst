@@ -70,7 +70,6 @@ Examples
 *  :doc:`Population generator <examples/population_generator>`
 *  :doc:`Checkerboard migration demo <examples/checkerboard_migration_demo>`
 
-
 .. toctree::
    :maxdepth: 2
    :hidden:
