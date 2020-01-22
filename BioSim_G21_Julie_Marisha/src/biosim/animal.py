@@ -247,7 +247,7 @@ class BaseAnimal:
 
             min(1, \gamma \times \Phi \times (N - 1))
 
-
+        .. math::
             \mbox { where } \gamma \mbox { is a constant, } \Phi \mbox
             { is fitness and } N \mbox { is the number of animals i a cell.}
 
@@ -552,6 +552,13 @@ class Carnivore(BaseAnimal):
             0 & \mbox { otherwise }
             \end{cases} \quad
 
+        .. math::
+
+            \mbox { where } \Phi_{carn} \mbox
+            { is the fitness of the carnivore, } \Phi_{herb} \mbox
+            { is the fitness of the herbivore and }
+            \Delta\Phi_{max} \mbox { is a constant.}
+
         :param fitness_prey: The fitness of the prey (Herbivore)
         :type fitness_prey: float
         :return: Either 0 or 1
@@ -604,26 +611,27 @@ def fitness_calculator(
 
     where
 
-   .. math::
+    .. math::
         q^\pm(x, x_{\frac{1}{2}}, \phi) =
         \frac{1}{1 + e^{\pm \phi(x - x_{\frac{1}{2}})}}
 
     Note that :math:`0 \leq \Phi \leq 1`.
 
-    :param phi_age: Constant
-    :type phi_age: float
-    :param age: The age of the animal
-    :type age: int
-    :param a_half: Constant
-    :type a_half: float
-    :param phi_weight: Constant
-    :type phi_weight: float
-    :param weight: The weight of the animal
-    :type weight: float
-    :param w_half: Constant
-    :type w_half: float
-    :return: Calculated fitness
-    :rtype: float
+
+        :param phi_age: Constant
+        :type phi_age: float
+        :param age: The age of the animal
+        :type age: int
+        :param a_half: Constant
+        :type a_half: float
+        :param phi_weight: Constant
+        :type phi_weight: float
+        :param weight: The weight of the animal
+        :type weight: float
+        :param w_half: Constant
+        :type w_half: float
+        :return: Calculated fitness
+        :rtype: float
     """
     age_sigma = 1 / (1 + math.exp(phi_age * (age - a_half)))
     weight_sigma = 1 / (1 + math.exp(- phi_weight * (weight - w_half)))
