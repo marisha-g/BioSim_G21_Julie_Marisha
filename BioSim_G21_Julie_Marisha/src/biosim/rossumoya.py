@@ -107,7 +107,12 @@ class MigrationProbabilityCalculator:
         location to the four neighbouring cells, based on the propensities.
         The formula for calculating the probability to move form
 
-        :math: i \mbox{ to } j \in C^(^i^), is given by
+        .. math::
+            \begin{equation}
+            i \mbox{ to } j \in C_{(i)},
+            \end{equation}
+
+        is given by
 
         .. math::
             \begin{equation}
@@ -117,9 +122,8 @@ class MigrationProbabilityCalculator:
             }
             \end{equation}
 
-
-            :setter: Sets the probabilty list values.
-            :type: list
+        :setter: Sets the probabilty list values.
+        :type: list
         """
         if self._species == 'Herbivore':
             propensities = self.propensity_herb
