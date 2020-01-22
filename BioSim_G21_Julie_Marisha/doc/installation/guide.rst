@@ -16,6 +16,8 @@ otherwise they can be installed using ``pip``::
     pip install textwrap
     pip install subprocess
 
+The module also requires the program ``ffmpeg`` which is available from
+`<https://ffmpeg.org>`_.
 
 Installing BioSim
 --------------------
@@ -29,3 +31,7 @@ Alternatively, you can manually pull this repository and run the
     git clone https://github.com/marisha-g/BioSim_G21_Julie_Marisha.git
     cd BioSim_G21_Julie_Marisha
     python setup.py
+
+References
+----------
+*   Moe, Y.M. (2019). *Group-Lasso*. `<https://group-lasso.readthedocs.io/en/latest/installation.html>`_.
