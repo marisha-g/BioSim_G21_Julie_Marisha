@@ -1,0 +1,468 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Rossumøya &mdash; BioSim 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Cell" href="cell.html" />
+    <link rel="prev" title="Simulation" href="simulation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> BioSim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/guide.html">Guide</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Modules</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Rossumøya</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cell.html">Cell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="animal.html">Animal</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/population_generator.html">Population generator </a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/checkerboard_migration_demo.html">Checkerboard migration demo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/bio500years.html">BioSim movie demo</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BioSim</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Rossumøya</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/modules/rossumoya.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-biosim.rossumoya">
+<span id="rossumoya"></span><h1>Rossumøya<a class="headerlink" href="#module-biosim.rossumoya" title="Permalink to this headline">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">mod</dt>
+<dd class="field-odd"><p><cite>biosim.rossumoya</cite> provides the user with the annual cycle on Rossumøya.</p>
+</dd>
+</dl>
+<p>This file can also be imported as a module and contains the following classes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>MigrationProbabilityCalculator - calculates the probabilities for an
+animal to migrate.</p></li>
+<li><p>Rossumoya - class where the user creates the island map and initial
+population. This is also where the different methods for the annual
+cycle are run.</p></li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>This script requires that <cite>textwrap</cite> are installed within
+the Python environment you are running this script in.</p></li>
+</ul>
+</div>
+<dl class="class">
+<dt id="biosim.rossumoya.MigrationProbabilityCalculator">
+<em class="property">class </em><code class="sig-prename descclassname">biosim.rossumoya.</code><code class="sig-name descname">MigrationProbabilityCalculator</code><span class="sig-paren">(</span><em class="sig-param">loc</em>, <em class="sig-param">island_map</em>, <em class="sig-param">species</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/rossumoya.html#MigrationProbabilityCalculator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.rossumoya.MigrationProbabilityCalculator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class used to calculate probabilities for migration.</p>
+<p>Constructor that initiate MigrationProbabilityCalculator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>loc</strong> (<em>tuple</em>) – Coordinates for the current position of an animal</p></li>
+<li><p><strong>island_map</strong> (<em>dict</em>) – Dictionary with all cells and their locations</p></li>
+</ul>
+</dd>
+<dt class="field-even">Param</dt>
+<dd class="field-even"><p>species: Herbivore or Carnivore</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="biosim.rossumoya.MigrationProbabilityCalculator.propensity_herb">
+<em class="property">property </em><code class="sig-name descname">propensity_herb</code><a class="headerlink" href="#biosim.rossumoya.MigrationProbabilityCalculator.propensity_herb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the propensity to migrate from the current location to the
+four neighbouring cells for Herbivores.</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">setter</dt>
+<dd class="field-odd"><p>Sets the propensity list values</p>
+</dd>
+<dt class="field-even">type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.rossumoya.MigrationProbabilityCalculator.propensity_carn">
+<em class="property">property </em><code class="sig-name descname">propensity_carn</code><a class="headerlink" href="#biosim.rossumoya.MigrationProbabilityCalculator.propensity_carn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the propensity to migrate from the current location to the
+four neighbouring cells for Carnivores.</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">setter</dt>
+<dd class="field-odd"><p>Sets the propensity list values.</p>
+</dd>
+<dt class="field-even">type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.rossumoya.MigrationProbabilityCalculator.probabilities">
+<em class="property">property </em><code class="sig-name descname">probabilities</code><a class="headerlink" href="#biosim.rossumoya.MigrationProbabilityCalculator.probabilities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the probabilities for an animal to move from its current
+location to the four neighbouring cells, based on the propensities.
+The formula for calculating the probability to move form</p>
+<div class="math notranslate nohighlight">
+\[\begin{equation}
+i \mbox{ to } j \in C_{(i)},
+\end{equation}\]</div>
+<p>is given by</p>
+<div class="math notranslate nohighlight">
+\[\begin{equation}
+p_{i \rightarrow j} =
+\frac{
+\pi_{i \rightarrow j}}{\sum_{j \in C^{(i)}} \pi _{i \rightarrow j}
+}
+\end{equation}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Setter</dt>
+<dd class="field-odd"><p>Sets the probabilty list values.</p>
+</dd>
+<dt class="field-even">Type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="biosim.rossumoya.Rossumoya">
+<em class="property">class </em><code class="sig-prename descclassname">biosim.rossumoya.</code><code class="sig-name descname">Rossumoya</code><span class="sig-paren">(</span><em class="sig-param">island_map=None</em>, <em class="sig-param">ini_pop=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/rossumoya.html#Rossumoya"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.rossumoya.Rossumoya" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for island in BioSim.</p>
+<p>Constructor that initiates Rossumoya class instances.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>island_map</strong> – Multiline string indicating geography of the island.</p></li>
+<li><p><strong>ini_pop</strong> – List of dictionaries indicating
+initial population and location.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="biosim.rossumoya.Rossumoya.check_map_input">
+<em class="property">static </em><code class="sig-name descname">check_map_input</code><span class="sig-paren">(</span><em class="sig-param">island_map</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/rossumoya.html#Rossumoya.check_map_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.rossumoya.Rossumoya.check_map_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raises ValueError if input map is not compatible and does not
+follow restrictions for the geography of the island. Returns True
+otherwise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>island_map</strong> (<em>str</em>) – Multiline string indicating the geography
+of the island.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.rossumoya.Rossumoya.make_geography_coordinates">
+<em class="property">static </em><code class="sig-name descname">make_geography_coordinates</code><span class="sig-paren">(</span><em class="sig-param">input_map</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/rossumoya.html#Rossumoya.make_geography_coordinates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.rossumoya.Rossumoya.make_geography_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a dictionary with coordinates as keys and Cell subclass
+instances (Savannah, Jungle, Desert, Mountain, Ocean) as values,
+initiated with default parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>geography_map</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.rossumoya.Rossumoya.add_population">
+<code class="sig-name descname">add_population</code><span class="sig-paren">(</span><em class="sig-param">population</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/rossumoya.html#Rossumoya.add_population"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.rossumoya.Rossumoya.add_population" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add population to the island.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>population</strong> (<em>list</em>) – List of dictionaries specifying
+population and locations.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.rossumoya.Rossumoya.procreation">
+<code class="sig-name descname">procreation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/rossumoya.html#Rossumoya.procreation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.rossumoya.Rossumoya.procreation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks for animals in the cells and initiate mating season.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.rossumoya.Rossumoya.migration">
+<code class="sig-name descname">migration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/rossumoya.html#Rossumoya.migration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.rossumoya.Rossumoya.migration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds witch animals wants to migrate, and calls _migrate method to
+initiate migration process.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.rossumoya.Rossumoya.migrate">
+<code class="sig-name descname">migrate</code><span class="sig-paren">(</span><em class="sig-param">migrating_animals</em>, <em class="sig-param">old_loc</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/rossumoya.html#Rossumoya.migrate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.rossumoya.Rossumoya.migrate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls the choose_cell method to get new locations for each migrating
+animal, and moves them there. Then removes all the animals
+from the old location. Also resets indicator for calculating
+propensities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>migrating_animals</strong> (<em>list</em>) – List of animals.</p></li>
+<li><p><strong>old_loc</strong> (<em>tuple</em>) – Coordinates where the animals migrate from.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.rossumoya.Rossumoya.choose_cell">
+<code class="sig-name descname">choose_cell</code><span class="sig-paren">(</span><em class="sig-param">loc</em>, <em class="sig-param">species</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/rossumoya.html#Rossumoya.choose_cell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.rossumoya.Rossumoya.choose_cell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses :class: MigrationProbabilityCalculator to get the probabilities
+for migrating to each neighbouring cell, and chooses a cell. Returns
+coordinates of chosen cell to migrate to.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Param</dt>
+<dd class="field-odd"><p>loc: Location coordinates to migrate from.</p>
+</dd>
+<dt class="field-even">Param</dt>
+<dd class="field-even"><p>species: Herbivore or Carnivore</p>
+</dd>
+<dt class="field-odd">Return choice</dt>
+<dd class="field-odd"><p>Chosen cell coordinates to migrate to.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.rossumoya.Rossumoya.death">
+<code class="sig-name descname">death</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/rossumoya.html#Rossumoya.death"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.rossumoya.Rossumoya.death" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds all animals that dies, and removes them from their location.
+Animals die if the prob_death method returns 1.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.rossumoya.Rossumoya.single_year">
+<code class="sig-name descname">single_year</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/rossumoya.html#Rossumoya.single_year"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.rossumoya.Rossumoya.single_year" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulates one year at Rossumoya.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.rossumoya.Rossumoya.map_size">
+<code class="sig-name descname">map_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/biosim/rossumoya.html#Rossumoya.map_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.rossumoya.Rossumoya.map_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the size of the island_map.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>lower right corner coordinates (max values for row and column)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="cell.html" class="btn btn-neutral float-right" title="Cell" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="simulation.html" class="btn btn-neutral float-left" title="Simulation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Julie Førrisdal &amp; Marisha Gnanaseelan
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
