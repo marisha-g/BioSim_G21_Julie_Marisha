@@ -238,9 +238,13 @@ class BaseAnimal:
         self.fitness_has_been_calculated = False
 
     def prob_procreation(self, n):
-        """
+        r"""
         Animals can mate if there are at least two animals of the same species
-        in a cell. Probability to give birth is given by the variable p.
+        in a cell. Probability to give birth is given by the variable p which
+        is calculated with the following formula.
+
+        .. math::
+            min(1, \gamma \times \Phi \times (N - 1))
 
         :param n: Number of animals of the same species in a cell
         :type n: int
@@ -580,9 +584,26 @@ def custom_binomial(p):
 def fitness_calculator(
         phi_age, age, a_half, phi_weight, weight, w_half
 ):
-    """
-    Calculates fitness based on age and weight.
+    r"""
     Uses the numba.jit decorator.
+    Calculates fitness based on age and weight. The fitness is calculated by
+    using the following formula.
+
+    .. math::
+        \Phi =
+        \begin{cases}
+        0 & w \leq 0 \\
+        q^+(a, a_{\frac{1}{2}, \phi_{age}}) \times q^-(w, w_{\frac{1}{2},
+        \phi_{weight}}) & else
+        \end{cases}
+
+    where
+
+    .. math::
+        q^\pm(x, x_{\frac{1}{2}}, \phi) =
+        \frac{1}{1 + e^{\pm \phi(x - x_{\frac{1}{2}})}}
+
+    Note that :math:`0 \leq \Phi \leq 1`.
 
     :param phi_age: Constant
     :type phi_age: float
