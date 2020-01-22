@@ -38,7 +38,7 @@ class TestBiosim:
     def test_default_num_animals(self):
         """num_animals property returns
         default value before simulation."""
-        assert self.biosim.num_animals == 190
+        assert self.biosim.num_animals == 220
 
     def test_num_animals_per_species(self):
         """num_animals_per_species returns a dictionary."""
@@ -48,7 +48,7 @@ class TestBiosim:
         """animal_per_species property returns default values
         before simulation."""
         num_animals_per_species = {'Herbivore': 150,
-                                   'Carnivore': 40}
+                                   'Carnivore': 70}
         assert self.biosim.num_animals_per_species == num_animals_per_species
 
     def test_default_animal_distribution(self):
@@ -56,7 +56,7 @@ class TestBiosim:
         data_frame = self.biosim.animal_distribution
         data_frame.set_index(["Row", "Col"], inplace=True)
         assert data_frame.loc[(10, 13)].Herbivore == 150
-        assert data_frame.loc[(10, 13)].Carnivore == 40
+        assert data_frame.loc[(10, 13)].Carnivore == 70
 
     def test_set_animal_parameters_callable(self):
         """set_animal_parameters method can be called."""
