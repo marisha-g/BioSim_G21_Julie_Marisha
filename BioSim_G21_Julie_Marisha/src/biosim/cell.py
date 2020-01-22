@@ -1,39 +1,35 @@
 # -*- coding: utf-8 -*-
 
 """
-:mod: `biosim.cell` provides the user the information that is stored in the
-       different landscape cells in Rossumøya.
+:mod: `biosim.cell` provides the user with the information stored
+        in the different landscape cells at Rossumøya.
 
-Rossumøya is divided into squares (or cells), where each square is of one of
-the following five types: ocean, jungle, savannah, desert and mountain.
-The superclass and subclasses in this script carries all the information that
-are stores in these different landscape cells.
+Rossumøya is divided into squares (or cells), where each square has its own
+location and is of one of the following five geography types:
+ocean, jungle, savannah, desert or mountain. The superclass and subclasses
+in this script holds all the information that
+are stored in all the landscape cells.
 
 This file can be imported as a module and contains the following
 classes:
 
-    *   BaseCell - Superclass and the basic characteristics that all of the cell
-        types in Rossumøya has in common.
+    *   BaseCell - Superclass with the basic characteristics that all of
+        the cell types in Rossumøya has in common.
 
-    *   Savannah(BaseCell) - Subclass of BaseCell and characteristics for
+    *   Savannah(BaseCell) - Subclass of BaseCell with characteristics for
         the cell type Savannah.
 
-    *   Jungle(BaseCell) - Subclass of BaseCell and characteristics for
+    *   Jungle(BaseCell) - Subclass of BaseCell with characteristics for
         the cell type Jungle.
 
-    *   Desert(BaseCell) - Subclass of BaseCell and characteristics for
+    *   Desert(BaseCell) - Subclass of BaseCell with characteristics for
         the cell type Desert.
 
-    *   Mountain(BaseCell) - Subclass of BaseCell and characteristics for
+    *   Mountain(BaseCell) - Subclass of BaseCell with characteristics for
         the cell type Mountain.
 
-    *   Ocean(BaseCell) - Subclass of BaseCell and characteristics for
+    *   Ocean(BaseCell) - Subclass of BaseCell with characteristics for
         the cell type Ocean.
-
-.. note::
-    *   This script requires that `math` is installed within the Python
-        environment you are running this script in.
-
 """
 
 __author__ = 'Julie Forrisdal', 'Marisha Gnanaseelan'
@@ -50,7 +46,8 @@ class BaseCell:
     def set_parameters(cls, f_max=None):
         """
         Set default parameters for class Cell.
-        :param f_max: maximum fodder available in a cell type
+
+        :param f_max: Maximum fodder available in a cell
         :type f_max: float
         """
         if f_max is None:
@@ -62,7 +59,7 @@ class BaseCell:
 
     def __init__(self):
         """
-        Constructor that initiate class Cell.
+        Constructor that initiates class Cell.
         """
         self._fodder_in_cell = None
         self.animal_can_enter = True
@@ -79,7 +76,8 @@ class BaseCell:
 
     def add_population(self, pop_list):
         """
-        Add new animals in cell.
+        Adds new animals in cell.
+
         :param pop_list: list of dictionaries indicating population.
         :type pop_list: list
         """
@@ -99,17 +97,18 @@ class BaseCell:
     @property
     def total_population(self):
         """
-        Returns the total amount of animals on Rossumøya.
-        :return: length of the Animal list
-        :rtype: int
+        Total number of animals in the cell.
+
+        :type: int
         """
         return len(self.animals)
 
     @property
     def total_herbivores(self):
         """
-        :return: the total amount of Herbivores on Rossumøya.
-        :rtype: int
+        The total number of Herbivores in the cell.
+
+        :type: int
         """
         total_herbivores = 0
         for animal in self.animals:
@@ -121,8 +120,9 @@ class BaseCell:
     @property
     def total_carnivores(self):
         """
-        :return: the total amount of Carnivores on Rossumøya.
-        :rtype: int
+        The total number of Carnivores in the cell.
+
+        :type: int
         """
         total_carnivores = 0
         for animal in self.animals:
@@ -135,8 +135,9 @@ class BaseCell:
     def fodder_in_cell(self):
         """
         Fodder available in cell.
-        :return: self._fodder_in_cell
-        :rtype: float
+
+            :setter: Sets the amount of fodder.
+            :type: float
         """
         return self._fodder_in_cell
 
@@ -145,8 +146,6 @@ class BaseCell:
         """
         Set the amount of fodder in cell. Setting this to a
         new value will reconfigure the cell automatically.
-        :param value: new value
-        :type value: float
         """
         self._fodder_in_cell = value
 
@@ -159,8 +158,7 @@ class BaseCell:
         .. math::
             \epsilon_k = \frac{f_k}{(n_k + 1)F'}
 
-        :return: rel_abundance_of_fodder
-        :rtype: float
+        :type: float
         """
         rel_abundance_of_fodder = self.fodder_in_cell / (
                 (self.total_herbivores + 1) * Herbivore.F
@@ -170,10 +168,14 @@ class BaseCell:
 
     @property
     def abundance_of_fodder_carnivores(self):
-        """
-        Calculates the relative abundance of fodder for Carnivores.
-        :return: rel_abundance_of_fodder
-        :rtype: float
+        r"""
+        Calculates the relative abundance of fodder for Carnivores according
+        to the formula below.
+
+        .. math::
+            \epsilon_k = \frac{f_k}{(n_k + 1)F'}
+
+        :type: float
         """
         weight_of_herbs = 0
         for animal in self.animals:
@@ -188,7 +190,8 @@ class BaseCell:
 
     def fodder_first_year(self, f_max):
         """
-        Sets max fodder in Savannah and Jungle cells.
+        Sets maximum fodder for Savannah and Jungle cells.
+
         :param f_max: maximum fodder available in a cell type
         :type f_max: float
         """
@@ -203,7 +206,7 @@ class BaseCell:
 
     def animals_age_and_lose_weight(self):
         """
-        Once a year all animals lose weight and age.
+        Once a year all animals age and lose weight.
         """
         for animal in self.animals:
             animal.aging()
@@ -214,7 +217,8 @@ class BaseCell:
         """
         Sorts all Herbivores by fitness in descending order if there
         are more than one Herbivore in the cell.
-        :return: sorted_herbivores or list_of_herbivores
+
+        :return: List of herbivores
         :rtype: list
         """
         list_of_herbivores = []
@@ -235,7 +239,8 @@ class BaseCell:
         """
         Sorts all Carnivores by fitness in descending order if there
         are more than one Carnivore in the cell.
-        :return: sorted_carnivores or list of carnivores
+
+        :return: list of carnivores
         :rtype: list
         """
         list_of_carnivores = []
@@ -253,8 +258,8 @@ class BaseCell:
 
     def herbivores_eat(self):
         """
-        Herbivore with the highest fitness eat first. The Herbivore's weight
-        increases proportional to the amount of fodder it has eaten.
+        Herbivores eat in order of highest fitness. The Herbivore's weight
+        increases.
         """
         if self.fodder_in_cell != 0:
             for herbivore in self.list_of_sorted_herbivores_by_fitness:
@@ -268,9 +273,9 @@ class BaseCell:
 
     def carnivores_eat(self):
         """
-        Carnivore with the highest fitness eat first. The Carnivore tries to
-        kill the Herbivore with lowest fitness first. The increase in weight
-        of the Carnivore is proportional to the amount of food eaten.
+        Carnivores eat in order of highest fitness. The Carnivore tries to
+        kill the Herbivore with lowest fitness first. The Carnivore's weight
+        increases.
         """
         for carnivore in self.list_of_sorted_carnivores_by_fitness:
             food_eaten = 0
@@ -292,7 +297,7 @@ class BaseCell:
     def herb_procreation(self):
         """
         Herbivores at the start of the breeding season procreate if the
-        probability to procreate is equal to 1.
+        `prob_procreation` method returns 1.
         """
         total_herbs_at_start_of_breeding_season = self.total_herbivores
         for animal in self.animals:
@@ -308,7 +313,7 @@ class BaseCell:
     def carn_procreation(self):
         """
         Carnivores at the start of the breeding season procreate if the
-        probability to procreate is equal to 1.
+        `prob_procreation` method returns 1.
         """
         total_carns_at_start_of_breeding_season = self.total_carnivores
         for animal in self.animals:
@@ -325,6 +330,7 @@ class BaseCell:
         """
         Adds offspring to the cell, and decrease weight of the
         mother.
+
         :param animal: Mother who gives birth
         :type animal: type
         """
@@ -340,8 +346,8 @@ class BaseCell:
 
     def find_migrating_animals(self):
         """
-        Makes a list of the animals who wants to migrate out
-        of the cell.
+        Makes a list of the animals who wants to migrate out of the cell.
+
         :return: migrating_animals
         :rtype: list
         """
@@ -354,7 +360,8 @@ class BaseCell:
 
     def reset_migration(self):
         """
-        Sets has_migrated to False for all animals in the cell.
+        Resets the `has_migrated` attribute to False
+        for all animals in the cell.
         """
         for animal in self.animals:
             animal.has_migrated = False
@@ -372,6 +379,7 @@ class BaseCell:
             0 & \mbox { if j is Mountain or Ocean} \\
            e^{\lambda \epsilon_j} & \mbox { otherwise }
             \end{cases} \quad
+
 
         :return: calculated propensity
         :rtype: float
@@ -415,6 +423,7 @@ class BaseCell:
     def remove_animals(self, gone_animals):
         """
         Removes animal that has migrated.
+
         :param gone_animals: list of animals that has migrated
         :type gone_animals: list
         """
@@ -422,7 +431,12 @@ class BaseCell:
             self.animals.remove(gone_animal)
 
     def add_animals(self, new_animals):
-        """Adds animals to animals list."""
+        """
+        Adds new animals to the animals list.
+
+        :param new_animals: List of new animals
+        :type new_animals: list
+        """
         for new_animal in new_animals:
             self.animals.append(new_animal)
 
@@ -434,9 +448,10 @@ class Savannah(BaseCell):
     def set_parameters(cls, f_max=None, alpha=None):
         """
         Set default parameters for class instance Savannah.
-        :param f_max: maximum fodder available in cell type Savannah
+
+        :param f_max: Maximum fodder available in cell type Savannah
         :type f_max: float
-        :param alpha: constant
+        :param alpha: Constant
         :type alpha: float
         """
         if f_max is None:
@@ -477,7 +492,8 @@ class Jungle(BaseCell):
     def set_parameters(cls, f_max=800.0):
         """
         Set default parameters for class instance Jungle.
-        :param f_max: maximum fodder available in cell type Jungle
+
+        :param f_max: Maximum fodder available in cell type Jungle
         :type f_max: float
         """
         super(Jungle, cls).set_parameters(f_max)
@@ -496,7 +512,8 @@ class Desert(BaseCell):
     def set_parameters(cls, f_max=None):
         """
         Set default parameters for class instance Desert.
-        :param f_max: maximum fodder available in cell type Desert
+
+        :param f_max: Maximum fodder available in cell type Desert
         :type f_max: float
         """
         super(Desert, cls).set_parameters(f_max)
@@ -515,8 +532,9 @@ class Mountain(BaseCell):
     @classmethod
     def set_parameters(cls, f_max=0):
         """
-        Set default parameters for class instance Mountain.
-        :param f_max: maximum fodder available in cell type Mountain
+        Sets default parameters for class instance Mountain.
+
+        :param f_max: Maximum fodder available in cell type Mountain
         :type f_max: float
         """
         super(Mountain, cls).set_parameters(f_max)
@@ -534,8 +552,6 @@ class Mountain(BaseCell):
         """
         Sets the propensity for a Herbivore to migrate to zero,
         because Mountain cells are impassable.
-        :return: 0
-        :rtype: int
         """
         return 0
 
@@ -544,8 +560,6 @@ class Mountain(BaseCell):
         """
         Sets the propensity for a Carnivore to migrate to zero,
         because Mountain cells are impassable.
-        :return: 0
-        :rtype: int
         """
         return 0
 
@@ -557,7 +571,8 @@ class Ocean(BaseCell):
     def set_parameters(cls, f_max=0):
         """
         Set default parameters for class instance Ocean.
-        :param f_max: maximum fodder available in cell type Ocean
+
+        :param f_max: Maximum fodder available in cell type Ocean
         :type f_max: float
         """
         super(Ocean, cls).set_parameters(f_max)
@@ -575,8 +590,6 @@ class Ocean(BaseCell):
         """
         Sets the propensity for a Herbivore to migrate to zero,
         because Ocean cells are impassable.
-        :return: 0
-        :rtype: int
         """
         return 0
 
@@ -585,7 +598,5 @@ class Ocean(BaseCell):
         """
         Sets the propensity for a Carnivore to migrate to zero,
         because Ocean cells are impassable.
-        :return: 0
-        :rtype: int
         """
         return 0
