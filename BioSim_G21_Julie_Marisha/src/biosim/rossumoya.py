@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-:mod: `biosim.rossumoya provides the user with the annual cycle on Rossumøya.
+:mod: `biosim.rossumoya` provides the user with the annual cycle on Rossumøya.
 
 This file can also be imported as a module and contains the following classes:
 
@@ -12,7 +12,7 @@ This file can also be imported as a module and contains the following classes:
         cycle are run.
 
 .. note::
-    *   This script requires that `textwrap` and `numpy` are installed within
+    *   This script requires that `textwrap` are installed within
         the Python environment you are running this script in.
 """
 
@@ -32,6 +32,7 @@ class MigrationProbabilityCalculator:
     def __init__(self, loc, island_map, species):
         """
         Constructor that initiate MigrationProbabilityCalculator.
+
         :param loc: Coordinates for the current position of an animal
         :type loc: tuple
         :param island_map: Dictionary with all cells and their locations
@@ -60,9 +61,9 @@ class MigrationProbabilityCalculator:
         """
         Calculates the propensity to migrate from the current location to the
         four neighbouring cells for Herbivores.
-        :return: List with the four neighbouring cells corresponding
-                 propensities.
-        :rtype: list
+
+            :setter: Sets the propensity list values
+            :type: list
         """
         self._propensity_herb = []
         for coordinates in self.locations:
@@ -74,8 +75,6 @@ class MigrationProbabilityCalculator:
     def propensity_herb(self, value):
         """
         Sets the self._propensity_herb to a new value.
-        :param value: new value
-        :type value: float
         """
         self._propensity_herb = value
 
@@ -84,9 +83,9 @@ class MigrationProbabilityCalculator:
         """
         Calculates the propensity to migrate from the current location to the
         four neighbouring cells for Carnivores.
-        :return: propensities: List with the four neighbouring cells
-                 corresponding propensities.
-        :rtype: list
+
+            :setter: Sets the propensity list values.
+            :type: list
         """
         self._propensity_carn = []
         for cell in self.locations:
@@ -98,27 +97,29 @@ class MigrationProbabilityCalculator:
     def propensity_carn(self, value):
         """
         Sets self.propensity_carn to a new value.
-        :param value: new value
-        :type value: float
         """
         self._propensity_carn = value
 
     @property
     def probabilities(self):
-        """
+        r"""
         Calculates the probabilities for an animal to move from its current
         location to the four neighbouring cells, based on the propensities.
         The formula for calculating the probability to move form
+
         :math: i \mbox{ to } j \in C^(^i^), is given by
+
         .. math::
+            \begin{equation}
             p_{i \rightarrow j} =
             \frac{
             \pi_{i \rightarrow j}}{\sum_{j \in C^{(i)}} \pi _{i \rightarrow j}
             }
-        
-        :return: self._probabilities: current location and the
-                 probabilities to move from that location.
-        :rtype: list
+            \end{equation}
+
+
+            :setter: Sets the probabilty list values.
+            :type: list
         """
         if self._species == 'Herbivore':
             propensities = self.propensity_herb
@@ -138,8 +139,6 @@ class MigrationProbabilityCalculator:
     def probabilities(self, prob_list):
         """
         Sets self._probabilities to a new value.
-        :param prob_list: new value
-        :type prob_list: list
         """
         if sum(prob_list) != 1:
             raise ValueError('Probabilities must sum up to 1')
@@ -200,10 +199,11 @@ class Rossumoya:
     def __init__(self, island_map=None, ini_pop=None):
         """
         Constructor that initiates Rossumoya class instances.
+
         :param island_map: Multiline string indicating geography of the island.
         :type: str
         :param ini_pop: List of dictionaries indicating
-               initial population and location.
+                        initial population and location.
         :type: list
         """
         if island_map is None:
@@ -239,8 +239,9 @@ class Rossumoya:
         Raises ValueError if input map is not compatible and does not
         follow restrictions for the geography of the island. Returns True
         otherwise.
+
         :param island_map: Multiline string indicating the geography
-               of the island.
+                            of the island.
         :type island_map: str
         :return: True
         :rtype: bool
@@ -278,6 +279,7 @@ class Rossumoya:
         Makes a dictionary with coordinates as keys and Cell subclass
         instances (Savannah, Jungle, Desert, Mountain, Ocean) as values,
         initiated with default parameters.
+
         :return: geography_map
         :rtype: dict
         """
@@ -292,8 +294,9 @@ class Rossumoya:
     def add_population(self, population):
         """
         Add population to the island.
+
         :param population: List of dictionaries specifying
-                           population and locations.
+                            population and locations.
         :type population: list
         """
         for cell_dict in population:
@@ -333,6 +336,7 @@ class Rossumoya:
         animal, and moves them there. Then removes all the animals
         from the old location. Also resets indicator for calculating
         propensities.
+
         :param migrating_animals: List of animals.
         :type migrating_animals: list
         :param old_loc: Coordinates where the animals migrate from.
@@ -354,6 +358,7 @@ class Rossumoya:
         Uses :class: MigrationProbabilityCalculator to get the probabilities
         for migrating to each neighbouring cell, and chooses a cell. Returns
         coordinates of chosen cell to migrate to.
+
         :param: loc: Location coordinates to migrate from.
         :type loc: tuple
         :param: species: Herbivore or Carnivore
@@ -420,6 +425,7 @@ class Rossumoya:
     def map_size(self):
         """
         Finds the size of the island_map.
+
         :return: lower right corner coordinates (max values for row and column)
         :rtype: tuple
         """
