@@ -8,7 +8,7 @@ __email__ = 'juforris@nmbu.no', 'magn@nmbu.no'
 
 import os
 
-from .simulation import BioSim
+from biosim.simulation import BioSim
 
 DEFAULT_IMAGE_BASE = r'C:\Users\be15069901\Documents\NMBU Data 2019-2020\INF200\biosim_project\BioSim_G21_Julie_MarishaBioSim_G21_Julie_Marisha\src\figs\bio'
 
