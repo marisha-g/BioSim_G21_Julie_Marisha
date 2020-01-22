@@ -1,4 +1,4 @@
-Population generator [3]_
+Population generator [1]_
 ================================
 
 .. automodule:: examples.population_generator
@@ -6,4 +6,4 @@ Population generator [3]_
 
 References
 --------------
-.. [3] This source code is authored by Smistad, R. & Rygg, T. F. from UMB
+.. [1] This source code is authored by Smistad, R. & Rygg, T. F. from UMB
