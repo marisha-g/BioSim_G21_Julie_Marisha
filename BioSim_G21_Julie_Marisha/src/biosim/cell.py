@@ -156,7 +156,9 @@ class BaseCell:
         to the formula below.
 
         .. math::
+            \begin{equation}
             \epsilon_k = \frac{f_k}{(n_k + 1)F'}
+            \end{equation}
 
         .. math::
             \begin{equation}
@@ -182,7 +184,9 @@ class BaseCell:
         to the formula below.
 
         .. math::
+            \begin{equation}
             \epsilon_k = \frac{f_k}{(n_k + 1)F'}
+            \end{equation}
 
         .. math::
             \begin{equation}
@@ -391,11 +395,13 @@ class BaseCell:
         given below.
 
         .. math::
+            \begin{equation}
             \pi_{i \rightarrow j} =
             \begin{cases}
             0 & \mbox { if j is Mountain or Ocean} \\
            e^{\lambda \epsilon_j} & \mbox { otherwise }
             \end{cases} \quad
+            \end{equation}
 
 
         :return: calculated propensity
@@ -418,11 +424,13 @@ class BaseCell:
         given below.
 
         .. math::
+            \begin{equation}
             \pi_{i \rightarrow j} =
             \begin{cases}
             0 & \mbox { if j is Mountain or Ocean} \\
             e^{\lambda \epsilon_j} & \mbox { otherwise }
             \end{cases} \quad
+            \end{equation}
 
         :return: calculated propensity
         :rtype: float

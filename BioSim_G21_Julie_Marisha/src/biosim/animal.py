@@ -244,12 +244,15 @@ class BaseAnimal:
         is calculated with the following formula.
 
         .. math::
-
+            \begin{equation}
             min(1, \gamma \times \Phi \times (N - 1))
+            \end{equation}
 
         .. math::
+            \begin{equation}
             \mbox { where } \gamma \mbox { is a constant, } \Phi \mbox
             { is fitness and } N \mbox { is the number of animals i a cell.}
+            \end{equation}
 
         :param n: Number of animals of the same species in a cell
         :type n: int
@@ -544,6 +547,7 @@ class Carnivore(BaseAnimal):
         is given below.
 
         .. math::
+            \begin{equation}
             p =
             \begin{cases}
             0 & \mbox { if } \Phi_{carn} \leq \Phi_{herb} \\
@@ -551,6 +555,7 @@ class Carnivore(BaseAnimal):
             \mbox { if } 0 < \Phi_{carn} - \Phi_{herb < \Delta \Phi_{max}} \\
             0 & \mbox { otherwise }
             \end{cases} \quad
+            \end{equation}
 
         .. math::
             \begin{equation}
@@ -602,18 +607,22 @@ def fitness_calculator(
     using the following formula.
 
     .. math::
+        \begin{equation}
         \Phi =
         \begin{cases}
         0 & w \leq 0 \\
         q^+(a, a_{\frac{1}{2}, \phi_{age}}) \times q^-(w, w_{\frac{1}{2},
         \phi_{weight}}) & else
         \end{cases}
+        \end{equation}
 
     where
 
     .. math::
+        \begin{equation}
         q^\pm(x, x_{\frac{1}{2}}, \phi) =
         \frac{1}{1 + e^{\pm \phi(x - x_{\frac{1}{2}})}}
+        \end{equation}
 
     Note that :math:`0 \leq \Phi \leq 1`.
 
