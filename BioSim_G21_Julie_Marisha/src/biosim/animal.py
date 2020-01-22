@@ -302,7 +302,7 @@ class BaseAnimal:
         and availability of fodder in neighboring cells. Probability for
         moving is given by the variable p.
 
-            :setter: Sets the probability value
+            :setter: Sets the probability value.
             :type: int
         """
         p = self.mu * self.fitness
@@ -556,7 +556,7 @@ class Carnivore(BaseAnimal):
 
             \mbox { where } \Phi_{carn} \mbox
             { is the fitness of the carnivore, } \Phi_{herb} \mbox
-            { is the fitness of the herbivore and }
+            { is the fitness of the herbivore and }\\
             \Delta\Phi_{max} \mbox { is a constant.}
 
         :param fitness_prey: The fitness of the prey (Herbivore)
@@ -576,9 +576,8 @@ class Carnivore(BaseAnimal):
 @jit
 def custom_binomial(p):
     """Function for drawing random numbers similar to
-     numpy.random.binomial(n=1, p=p), but with built_in method
-     `random.uniform` for faster code execution.
-      Uses the numba.jit decorator.
+    numpy.random.binomial(n=1, p=p), but with built_in method
+    `random.uniform` for faster code execution. Uses the numba.jit decorator.
 
      :param p: Probability
      :type p: float
