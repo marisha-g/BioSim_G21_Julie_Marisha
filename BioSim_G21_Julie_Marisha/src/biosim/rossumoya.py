@@ -115,6 +115,7 @@ class MigrationProbabilityCalculator:
             \frac{
             \pi_{i \rightarrow j}}{\sum_{j \in C^{(i)}} \pi _{i \rightarrow j}
             }
+        
         :return: self._probabilities: current location and the
                  probabilities to move from that location.
         :rtype: list

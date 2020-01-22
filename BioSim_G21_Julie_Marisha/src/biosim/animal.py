@@ -553,11 +553,12 @@ class Carnivore(BaseAnimal):
             \end{cases} \quad
 
         .. math::
-
+            \begin{equation}
             \mbox { where } \Phi_{carn} \mbox
             { is the fitness of the carnivore, } \Phi_{herb} \mbox
             { is the fitness of the herbivore and }\\
             \Delta\Phi_{max} \mbox { is a constant.}
+            \end{equation}
 
         :param fitness_prey: The fitness of the prey (Herbivore)
         :type fitness_prey: float
