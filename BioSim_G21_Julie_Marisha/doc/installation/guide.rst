@@ -16,6 +16,8 @@ otherwise they can be installed using ``pip``::
     pip install textwrap
     pip install subprocess
 
+The module also requires the program ``ffmpeg`` which is available from
+`<https://ffmpeg.org>`_.
 
 Installing BioSim
 --------------------
