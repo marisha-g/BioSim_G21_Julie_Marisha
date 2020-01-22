@@ -140,11 +140,9 @@ class TestCell:
                 'weight': 10}
                for _ in range(40)]
         self.cell.add_population(pop)
-
+        self.cell.animals.append(self.carnivore)
         self.carnivore.fitness = 1
         self.carnivore.F = 100
-
-        self.cell.animals.append(self.carnivore)
         ini_weight = self.carnivore.weight
         self.cell.carnivores_eat()
         assert ini_weight < self.carnivore.weight
