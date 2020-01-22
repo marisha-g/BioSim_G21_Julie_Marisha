@@ -377,7 +377,7 @@ class BioSim:
     def _interpolate_gaps(self, values):
         """
         Fills gaps using linear interpolation, optionally only
-        fill gaps up to a size of `limit` [2]_.
+        fill gaps up to a size of `limit` [1]_.
         :return: values
         :rtype: np.array
         """
@@ -537,7 +537,7 @@ class BioSim:
         .. :note:
             Requires ffmpeg
 
-        The movie is stored as img_base + movie_fmt [1]_.
+        The movie is stored as img_base + movie_fmt [2]_.
         """
         movie_fmt = 'mp4'
         if self._image_base is None:
