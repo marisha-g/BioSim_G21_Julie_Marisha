@@ -158,6 +158,15 @@ class BaseCell:
         .. math::
             \epsilon_k = \frac{f_k}{(n_k + 1)F'}
 
+        .. math::
+            \begin{equation}
+            \mbox { where } F_k \mbox
+            { is the amount of relevant fodder available in cell } k, \\ n_k
+            \mbox { is the number of animals of the same species in cell } \\
+            k \mbox { and } F' \mbox { is the "appetite" of the species.}
+            \end{equation}
+
+
         :type: float
         """
         rel_abundance_of_fodder = self.fodder_in_cell / (
@@ -174,6 +183,14 @@ class BaseCell:
 
         .. math::
             \epsilon_k = \frac{f_k}{(n_k + 1)F'}
+
+        .. math::
+            \begin{equation}
+            \mbox { where } F_k \mbox
+            { is the amount of relevant fodder available in cell } k, \\ n_k
+            \mbox { is the number of animals of the same species in cell } \\
+            k \mbox { and } F' \mbox { is the "appetite" of the species.}
+            \end{equation}
 
         :type: float
         """
