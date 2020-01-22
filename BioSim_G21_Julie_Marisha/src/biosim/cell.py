@@ -239,8 +239,7 @@ class BaseCell:
         Sorts all Herbivores by fitness in descending order if there
         are more than one Herbivore in the cell.
 
-        :return: List of herbivores
-        :rtype: list
+            :type: list
         """
         list_of_herbivores = []
         for animal in self.animals:
@@ -261,8 +260,7 @@ class BaseCell:
         Sorts all Carnivores by fitness in descending order if there
         are more than one Carnivore in the cell.
 
-        :return: list of carnivores
-        :rtype: list
+            :type: list
         """
         list_of_carnivores = []
         for animal in self.animals:
@@ -403,9 +401,7 @@ class BaseCell:
             \end{cases} \quad
             \end{equation}
 
-
-        :return: calculated propensity
-        :rtype: float
+        :type: float
         """
         if self.propensity_herb_calculated:
             return self._propensity_migration_herb
@@ -432,8 +428,7 @@ class BaseCell:
             \end{cases} \quad
             \end{equation}
 
-        :return: calculated propensity
-        :rtype: float
+        :type: float
         """
         if self.propensity_carn_calculated:
             return self._propensity_migration_carn
